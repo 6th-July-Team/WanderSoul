@@ -1,5 +1,3 @@
-using System.Resources;
-using UnityEngine;
 
 public class GameManager : SingletonBehaviour<GameManager>
 {

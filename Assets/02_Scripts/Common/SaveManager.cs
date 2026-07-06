@@ -1,6 +1,42 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SaveManager
 {
-    
+    public List<IUserData> userDataList { get; private set; } = new List<IUserData>();
+
+    public void Init()
+    {
+        
+    }
+
+    public void SetDefaultUserData()
+    {
+        for (int i = 0; i < userDataList.Count; i++)
+        {
+            userDataList[i].SetDefaultData();
+        }
+    }
+
+    public void LoadAllUserData()
+    {
+        for (int i = 0; i < userDataList.Count; i++)
+        {
+            userDataList[i].LoadData();
+        }
+    }
+
+    public void SaveAllUserData()
+    {
+        for (int i = 0; i < userDataList.Count; i++)
+        {
+            userDataList[i].SaveData();
+        }
+    }
+
+    public T GetUserData<T>() where T : class, IUserData
+    {
+        return userDataList.OfType<T>().FirstOrDefault();
+    }
 }
