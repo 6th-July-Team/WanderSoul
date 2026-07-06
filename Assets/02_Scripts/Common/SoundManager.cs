@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
@@ -24,7 +24,7 @@ public class SoundManager
     //    SoundData data = GameManager.DataTable.GetSoundData(soundDataId);
     //    if (null == data)
     //    {
-    //        Debug.LogError($"»ç¿îµå µ¥ÀÌÅÍ¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù: {soundDataId}");
+    //        Debug.LogError($"ì‚¬ìš´ë“œ ë°ì´í„°ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤: {soundDataId}");
     //        return;
     //    }
 
@@ -36,7 +36,7 @@ public class SoundManager
     //    SoundData data = GameManager.DataTable.GetSoundData(soundDataId);
     //    if (null == data)
     //    {
-    //        Debug.LogError($"»ç¿îµå µ¥ÀÌÅÍ¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù: {soundDataId}");
+    //        Debug.LogError($"ì‚¬ìš´ë“œ ë°ì´í„°ë¥¼ ì°¾ì„ ìˆ˜ ì—†ìŠµë‹ˆë‹¤: {soundDataId}");
     //        return;
     //    }
 

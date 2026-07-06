@@ -1,4 +1,4 @@
-using Cysharp.Threading.Tasks;
+ï»¿using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -50,13 +50,13 @@ public static class Utils
         return null;
     }
 
-    // TODO(±èÀÍÈ¯): Pooling ¸®ÆåÅä¸µ Àû¿ë ÈÄ ÇÔ¼ö Àç»ı¼º
+    // TODO(ê¹€ìµí™˜): Pooling ë¦¬í™í† ë§ ì ìš© í›„ í•¨ìˆ˜ ì¬ìƒì„±
     //public static void LoadAndPlayAudioClip(AudioSource audioSource, string path, bool isLoop = false, float volume = 1f)
     //{
     //    AudioClip clip = GameManager.Resource.GetLoadedAsset<AudioClip>(path);
     //    if (null == clip)
     //    {
-    //        Debug.LogError($"¿Àµğ¿À Å¬¸³ ·Îµå ½ÇÆĞ: {path}");
+    //        Debug.LogError($"ì˜¤ë””ì˜¤ í´ë¦½ ë¡œë“œ ì‹¤íŒ¨: {path}");
     //        return;
     //    }
 
@@ -73,14 +73,14 @@ public static class Utils
     //    }
     //}
 
-    // TODO(±èÀÍÈ¯): Pooling ¸®ÆåÅä¸µ Àû¿ë ÈÄ ÇÔ¼ö Àç»ı¼º
+    // TODO(ê¹€ìµí™˜): Pooling ë¦¬í™í† ë§ ì ìš© í›„ í•¨ìˆ˜ ì¬ìƒì„±
     //public static async UniTaskVoid LoadAndSetSprite(Image targetImage, string path)
     //{
     //    targetImage.gameObject.SetActive(false);
     //    Sprite sprite = await GameManager.Resource.LoadAssetAsync<Sprite>(path);
     //    if (null == sprite)
     //    {
-    //        Debug.LogError($"½ºÇÁ¶óÀÌÆ® ·Îµå ½ÇÆĞ: {path}");
+    //        Debug.LogError($"ìŠ¤í”„ë¼ì´íŠ¸ ë¡œë“œ ì‹¤íŒ¨: {path}");
     //        return;
     //    }
     //    targetImage.sprite = sprite;
