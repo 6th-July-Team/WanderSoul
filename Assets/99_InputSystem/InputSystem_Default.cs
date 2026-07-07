@@ -120,7 +120,7 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""ActiveSkill"",
+                    ""name"": ""UltimateSkill"",
                     ""type"": ""Button"",
                     ""id"": ""9081c4e0-2a06-41c2-b1c0-2e53e47cf21c"",
                     ""expectedControlType"": """",
@@ -197,7 +197,7 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""ActiveSkill"",
+                    ""action"": ""UltimateSkill"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -524,7 +524,7 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_LeftClick = m_Player.FindAction("LeftClick", throwIfNotFound: true);
         m_Player_RightClick = m_Player.FindAction("RightClick", throwIfNotFound: true);
-        m_Player_ActiveSkill = m_Player.FindAction("ActiveSkill", throwIfNotFound: true);
+        m_Player_UltimateSkill = m_Player.FindAction("UltimateSkill", throwIfNotFound: true);
         m_Player_Point = m_Player.FindAction("Point", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
@@ -621,7 +621,7 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_LeftClick;
     private readonly InputAction m_Player_RightClick;
-    private readonly InputAction m_Player_ActiveSkill;
+    private readonly InputAction m_Player_UltimateSkill;
     private readonly InputAction m_Player_Point;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Move;
@@ -649,9 +649,9 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @RightClick => m_Wrapper.m_Player_RightClick;
         /// <summary>
-        /// Provides access to the underlying input action "Player/ActiveSkill".
+        /// Provides access to the underlying input action "Player/UltimateSkill".
         /// </summary>
-        public InputAction @ActiveSkill => m_Wrapper.m_Player_ActiveSkill;
+        public InputAction @UltimateSkill => m_Wrapper.m_Player_UltimateSkill;
         /// <summary>
         /// Provides access to the underlying input action "Player/Point".
         /// </summary>
@@ -699,9 +699,9 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
             @RightClick.started += instance.OnRightClick;
             @RightClick.performed += instance.OnRightClick;
             @RightClick.canceled += instance.OnRightClick;
-            @ActiveSkill.started += instance.OnActiveSkill;
-            @ActiveSkill.performed += instance.OnActiveSkill;
-            @ActiveSkill.canceled += instance.OnActiveSkill;
+            @UltimateSkill.started += instance.OnUltimateSkill;
+            @UltimateSkill.performed += instance.OnUltimateSkill;
+            @UltimateSkill.canceled += instance.OnUltimateSkill;
             @Point.started += instance.OnPoint;
             @Point.performed += instance.OnPoint;
             @Point.canceled += instance.OnPoint;
@@ -731,9 +731,9 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
             @RightClick.started -= instance.OnRightClick;
             @RightClick.performed -= instance.OnRightClick;
             @RightClick.canceled -= instance.OnRightClick;
-            @ActiveSkill.started -= instance.OnActiveSkill;
-            @ActiveSkill.performed -= instance.OnActiveSkill;
-            @ActiveSkill.canceled -= instance.OnActiveSkill;
+            @UltimateSkill.started -= instance.OnUltimateSkill;
+            @UltimateSkill.performed -= instance.OnUltimateSkill;
+            @UltimateSkill.canceled -= instance.OnUltimateSkill;
             @Point.started -= instance.OnPoint;
             @Point.performed -= instance.OnPoint;
             @Point.canceled -= instance.OnPoint;
@@ -967,12 +967,12 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnRightClick(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "ActiveSkill" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "UltimateSkill" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnActiveSkill(InputAction.CallbackContext context);
+        void OnUltimateSkill(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Point" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

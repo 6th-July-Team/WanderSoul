@@ -4,14 +4,14 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputHandle : MonoBehaviour
 {
-    public Vector2 MoveInput => _moveInput;
+    public Vector2 MoveInputV2 => _moveInput;
+    public Vector3 MoveInputV3 => new Vector3(_moveInput.x, 0f, _moveInput.y);
     public Vector2 PointInput { get; private set; }
 
+    public event Action OnUltimateSkillEvent;
     public event Action OnLeftClickEvent;
-    
-    // Click
-    [SerializeField] private LayerMask _groundLayer;
-    [SerializeField] private float _rayDistance = 5f;
+    public event Action OnRightClickEvent;
+    public event Action OnDashEvent;
 
     // Move
     private Vector2 _moveInput;
@@ -32,7 +32,7 @@ public class PlayerInputHandle : MonoBehaviour
         _inputSystem.Player.RightClick.started += OnRightClick;
         _inputSystem.Player.Dash.started += OnDash;
         _inputSystem.Player.Interact.started += OnInteract;
-        _inputSystem.Player.ActiveSkill.started += OnActiveSkill;
+        _inputSystem.Player.UltimateSkill.started += OnUltimateSkill;
         _inputSystem.Player.Point.performed += OnPoint;
 
         _inputSystem.Player.Move.performed += OnMove;
@@ -48,7 +48,7 @@ public class PlayerInputHandle : MonoBehaviour
         _inputSystem.Player.RightClick.started -= OnRightClick;
         _inputSystem.Player.Dash.started -= OnDash;
         _inputSystem.Player.Interact.started -= OnInteract;
-        _inputSystem.Player.ActiveSkill.started -= OnActiveSkill;
+        _inputSystem.Player.UltimateSkill.started -= OnUltimateSkill;
         _inputSystem.Player.Point.performed -= OnPoint;
 
         _inputSystem.Player.Move.performed -= OnMove;
@@ -56,32 +56,20 @@ public class PlayerInputHandle : MonoBehaviour
         _inputSystem.Player.Move.canceled -= StopMove;
     }
 
-    public void OnLeftClick(InputAction.CallbackContext context) 
-    {
-        OnLeftClickEvent?.Invoke();
-    }
+    public void OnLeftClick(InputAction.CallbackContext context) => OnLeftClickEvent?.Invoke();
 
-    public void OnMove(InputAction.CallbackContext context) 
-    {
-        _moveInput = context.ReadValue<Vector2>();
-    }
+    public void OnMove(InputAction.CallbackContext context) => _moveInput = context.ReadValue<Vector2>();
 
-    public void OnPoint(InputAction.CallbackContext context) 
-    {
-        PointInput = context.ReadValue<Vector2>();
-    }
+    public void OnPoint(InputAction.CallbackContext context) => PointInput = context.ReadValue<Vector2>();
 
-    private void StopMove(InputAction.CallbackContext context)
-    {
-        _moveInput = Vector2.zero;
-    }
+    private void StopMove(InputAction.CallbackContext context) => _moveInput = Vector2.zero;
+
+    public void OnDash(InputAction.CallbackContext context) => OnDashEvent?.Invoke();
+    public void OnRightClick(InputAction.CallbackContext context) => OnRightClickEvent?.Invoke();
+    public void OnUltimateSkill(InputAction.CallbackContext context) => OnUltimateSkillEvent?.Invoke();
 
 
 
 
-
-    public void OnRightClick(InputAction.CallbackContext context) { }
-    public void OnDash(InputAction.CallbackContext context) { }
     public void OnInteract(InputAction.CallbackContext context) { }
-    public void OnActiveSkill(InputAction.CallbackContext context) { }
 }

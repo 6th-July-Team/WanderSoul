@@ -34,7 +34,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "ActiveSkill",
+                    "name": "UltimateSkill",
                     "type": "Button",
                     "id": "9081c4e0-2a06-41c2-b1c0-2e53e47cf21c",
                     "expectedControlType": "",
@@ -111,7 +111,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "ActiveSkill",
+                    "action": "UltimateSkill",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

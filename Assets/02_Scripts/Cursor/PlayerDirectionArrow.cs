@@ -7,9 +7,6 @@ public class PlayerDirectionArrow : MonoBehaviour
     [SerializeField] private PlayerAimHandler _aimHandler;
     private Camera _mainCamera;
 
-    [Header("Ground")]
-    [SerializeField] private float _arrowHeightOffset = 0.0f;
-
     [Header("Rotation")]
     [SerializeField] private float _yawOffset = 0f;
 
