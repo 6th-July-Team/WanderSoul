@@ -4,17 +4,20 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputHandle : MonoBehaviour
 {
-    public event Action<Vector3> OnMoveClickEvent;
-    public event Action<Vector3> OnClickEvent;
+    public Vector2 MoveInput => _moveInput;
 
-    private InputSystem_Default _inputSystem;
+    public event Action<Vector3> OnLeftClickEvent;
     
-    // Click Move
+    // Click
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private float _rayDistance = 5f;
     private Vector3 _movePosition;
-    private Vector2 _screenPosition;
 
+    // Move
+    private Vector2 _moveInput;
+
+    // Input System
+    private InputSystem_Default _inputSystem;
 
     void Awake()
     {
@@ -25,43 +28,65 @@ public class PlayerInputHandle : MonoBehaviour
     {
         _inputSystem.Player.Enable();
 
-        _inputSystem.Player.MoveClick.started += OnMoveClick;
+        _inputSystem.Player.LeftClick.started += OnLeftClick;
+        _inputSystem.Player.RightClick.started += OnRightClick;
+        _inputSystem.Player.Dash.started += OnDash;
+        _inputSystem.Player.Interact.started += OnInteract;
+        _inputSystem.Player.ActiveSkill.started += OnActiveSkill;
+
+        _inputSystem.Player.Move.performed += OnMove;
+
+        _inputSystem.Player.Move.canceled += StopMove;
     }
 
     void OnDisable()
     {
         _inputSystem.Player.Disable();
 
-        _inputSystem.Player.MoveClick.started -= OnMoveClick;
+        _inputSystem.Player.LeftClick.started -= OnLeftClick;
+        _inputSystem.Player.RightClick.started -= OnRightClick;
+        _inputSystem.Player.Dash.started -= OnDash;
+        _inputSystem.Player.Interact.started -= OnInteract;
+        _inputSystem.Player.ActiveSkill.started -= OnActiveSkill;
+
+        _inputSystem.Player.Move.performed -= OnMove;
+
+        _inputSystem.Player.Move.canceled -= StopMove;
     }
 
-    public void OnMoveClick(InputAction.CallbackContext context)
+    public void OnLeftClick(InputAction.CallbackContext context) 
     {
-        _screenPosition = _inputSystem.Player.Point.ReadValue<Vector2>();
+        Vector2 mouseScreenPosition = _inputSystem.Player.Point.ReadValue<Vector2>();
 
-        // TODO(김익환): 캐싱 생각해봐야함.
-        Ray ray = Camera.main.ScreenPointToRay(_screenPosition);
+        float distanceFromCameraToPlayer = Vector3.Dot(transform.position - Camera.main.transform.position, Camera.main.transform.forward);
 
-        // TODO(김익환): 만약 히트가 잘못되어 position이 설정이 이상할 경우를 대비해 젤 처음 플레이어 위치를 넣어줘야 할 듯.
-        if (Physics.Raycast(ray, out RaycastHit hit, _rayDistance, _groundLayer))
+        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(
+            new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, distanceFromCameraToPlayer)
+        );
+
+        Vector3 direction = mouseWorldPosition - transform.position;
+        direction.y = 0f;
+
+        if (direction.sqrMagnitude > 0.001f)
         {
-            _movePosition = hit.point;
+            direction.Normalize();
         }
 
-        OnMoveClickEvent?.Invoke(_movePosition);
-        OnClickEvent?.Invoke(_movePosition);
+        OnLeftClickEvent?.Invoke(direction);
     }
 
-
-    public void OnAttack(InputAction.CallbackContext context) { }
-
+    public void OnRightClick(InputAction.CallbackContext context) { }
+    public void OnDash(InputAction.CallbackContext context) { }
     public void OnInteract(InputAction.CallbackContext context) { }
+    public void OnActiveSkill(InputAction.CallbackContext context) { }
 
-    public void OnSkill1(InputAction.CallbackContext context) { }
+    public void OnMove(InputAction.CallbackContext context) 
+    {
+        _moveInput = context.ReadValue<Vector2>();
+    }
 
-    public void OnSkill2(InputAction.CallbackContext context) { }
-
-    public void OnSkill3(InputAction.CallbackContext context) { }
-
-    public void OnSkill4(InputAction.CallbackContext context) { }
+    private void StopMove(InputAction.CallbackContext context)
+    {
+        _moveInput = Vector2.zero;
+    }
 }

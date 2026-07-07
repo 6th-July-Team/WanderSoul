@@ -10,7 +10,7 @@ public class CursorHandler
         _clickEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
     }
 
-    public void OnClickEffect(Vector3 position)
+    public void OnLeftClickEffect(Vector3 position)
     {
         if (_clickEffect == null)
         {

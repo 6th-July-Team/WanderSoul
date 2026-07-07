@@ -15,11 +15,11 @@ public class InputBinder
 
     public void Bind()
     {
-        _inputHandle.OnClickEvent += _cursor.OnClickEffect;
+        _inputHandle.OnLeftClickEvent += _cursor.OnLeftClickEffect;
     }
 
     public void UnBind()
     {
-        _inputHandle.OnClickEvent -= _cursor.OnClickEffect;
+        _inputHandle.OnLeftClickEvent -= _cursor.OnLeftClickEffect;
     }
 }
