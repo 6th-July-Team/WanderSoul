@@ -56,6 +56,8 @@ public class PlayerMovement : MonoBehaviour
         if (GameManager.Time.IsPaused)
             return;
 
+        UpdateDash();
+        UpdateChargeDash();
         Move();
     }
 
@@ -76,8 +78,6 @@ public class PlayerMovement : MonoBehaviour
             moveDirection.Normalize();
 
         ApplyGravity();
-        UpdateDash();
-        UpdateChargeDash();
 
         Vector3 velocity;
 
