@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerInputHandle : MonoBehaviour
 {
     public event Action<Vector3> OnMoveClickEvent;
+    public event Action<Vector3> OnClickEvent;
 
     private InputSystem_Default _inputSystem;
     
@@ -48,6 +49,7 @@ public class PlayerInputHandle : MonoBehaviour
         }
 
         OnMoveClickEvent?.Invoke(_movePosition);
+        OnClickEvent?.Invoke(_movePosition);
     }
 
 
