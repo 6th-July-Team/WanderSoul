@@ -5,13 +5,13 @@ using UnityEngine.InputSystem;
 public class PlayerInputHandle : MonoBehaviour
 {
     public Vector2 MoveInput => _moveInput;
+    public Vector2 PointInput { get; private set; }
 
-    public event Action<Vector3> OnLeftClickEvent;
+    public event Action OnLeftClickEvent;
     
     // Click
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] private float _rayDistance = 5f;
-    private Vector3 _movePosition;
 
     // Move
     private Vector2 _moveInput;
@@ -33,6 +33,7 @@ public class PlayerInputHandle : MonoBehaviour
         _inputSystem.Player.Dash.started += OnDash;
         _inputSystem.Player.Interact.started += OnInteract;
         _inputSystem.Player.ActiveSkill.started += OnActiveSkill;
+        _inputSystem.Player.Point.performed += OnPoint;
 
         _inputSystem.Player.Move.performed += OnMove;
 
@@ -48,6 +49,7 @@ public class PlayerInputHandle : MonoBehaviour
         _inputSystem.Player.Dash.started -= OnDash;
         _inputSystem.Player.Interact.started -= OnInteract;
         _inputSystem.Player.ActiveSkill.started -= OnActiveSkill;
+        _inputSystem.Player.Point.performed -= OnPoint;
 
         _inputSystem.Player.Move.performed -= OnMove;
 
@@ -56,37 +58,30 @@ public class PlayerInputHandle : MonoBehaviour
 
     public void OnLeftClick(InputAction.CallbackContext context) 
     {
-        Vector2 mouseScreenPosition = _inputSystem.Player.Point.ReadValue<Vector2>();
-
-        float distanceFromCameraToPlayer = Vector3.Dot(transform.position - Camera.main.transform.position, Camera.main.transform.forward);
-
-        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(
-            new Vector3(mouseScreenPosition.x, mouseScreenPosition.y, distanceFromCameraToPlayer)
-        );
-
-        Vector3 direction = mouseWorldPosition - transform.position;
-        direction.y = 0f;
-
-        if (direction.sqrMagnitude > 0.001f)
-        {
-            direction.Normalize();
-        }
-
-        OnLeftClickEvent?.Invoke(direction);
+        OnLeftClickEvent?.Invoke();
     }
-
-    public void OnRightClick(InputAction.CallbackContext context) { }
-    public void OnDash(InputAction.CallbackContext context) { }
-    public void OnInteract(InputAction.CallbackContext context) { }
-    public void OnActiveSkill(InputAction.CallbackContext context) { }
 
     public void OnMove(InputAction.CallbackContext context) 
     {
         _moveInput = context.ReadValue<Vector2>();
     }
 
+    public void OnPoint(InputAction.CallbackContext context) 
+    {
+        PointInput = context.ReadValue<Vector2>();
+    }
+
     private void StopMove(InputAction.CallbackContext context)
     {
         _moveInput = Vector2.zero;
     }
+
+
+
+
+
+    public void OnRightClick(InputAction.CallbackContext context) { }
+    public void OnDash(InputAction.CallbackContext context) { }
+    public void OnInteract(InputAction.CallbackContext context) { }
+    public void OnActiveSkill(InputAction.CallbackContext context) { }
 }

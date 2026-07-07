@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem.XR;
 
 [RequireComponent(typeof(PlayerInputHandle))]
 public class PlayerController : MonoBehaviour
@@ -17,12 +14,15 @@ public class PlayerController : MonoBehaviour
 
     private PlayerInputHandle _inputHandle;
     private CharacterController _characterController;
+    private PlayerAimHandler _aimHandler;
     private InputBinder _inputBinder;
 
 
     // TEST: 일반 공격 방향 체크
-    private void OnBasicAttack(Vector3 direction)
+    private void OnBasicAttack()
     {
+        var direction =_aimHandler.AimDirection;
+
         BasicAttackTestProjectile a = Instantiate(Utils.ResourcesLoad<BasicAttackTestProjectile>("BasicAttackTestProjectile"), transform.position, Quaternion.LookRotation(direction));
         a.Init(direction);
     }
@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     {
         _inputHandle = GetComponent<PlayerInputHandle>();
         _characterController = GetComponent<CharacterController>();
+        _aimHandler = GetComponent<PlayerAimHandler>();
 
         _inputBinder = new InputBinder(_inputHandle);
     }

@@ -160,7 +160,7 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""de9a5294-99b7-40d6-b105-4b25fa8ace08"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
@@ -193,7 +193,7 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""4b6929fb-d5d9-48e8-b040-3e01cebe0ee5"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -215,7 +215,7 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""aae04720-2fd8-47c2-9ab3-4abb7479a376"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
