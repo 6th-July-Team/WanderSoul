@@ -17,7 +17,7 @@ public partial class UIManager
 
     public void Init()
     {
-        var uiHandler = GameObject.Instantiate(Resources.Load<GameObject>("UICanvas"));
+        var uiHandler = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/UICanvas"));
 
         if (uiHandler.TryGetComponent(out UIManagerHandler handler))
         {
