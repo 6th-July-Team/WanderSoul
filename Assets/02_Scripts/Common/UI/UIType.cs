@@ -1,4 +1,4 @@
-﻿public enum UIType
+﻿public enum UIType : byte
 {
     TitleUI,
     InventoryUI,
@@ -12,7 +12,7 @@
     DialogueUI
 }
 
-public enum UIRootType
+public enum UIRootType : byte
 {
     Background,
     Main,

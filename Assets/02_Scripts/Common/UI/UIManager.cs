@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIManager
+public partial class UIManager
 {
     private Canvas _backgroundRoot;
     private Canvas _mainRoot;
@@ -15,7 +15,7 @@ public class UIManager
 
     private HashSet<UIType> _activeUI = new HashSet<UIType>();
 
-    private void Init()
+    public void Init()
     {
         var uiHandler = GameObject.Instantiate(Resources.Load<GameObject>("UICanvas"));
 
@@ -30,7 +30,7 @@ public class UIManager
 
         else
         {
-            Debug.LogWarning("UI Root Canvas Prefab에 UIMgrHandler 컴포넌트가 없습니다.");
+            Debug.LogWarning("UI Root Canvas Prefab에 UIManagerHandler 컴포넌트가 없습니다.");
         }
     }
 
