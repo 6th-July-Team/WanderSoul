@@ -1,16 +1,24 @@
-﻿using UnityEngine;
-
-public class ResourceHudViewModel : MonoBehaviour
+﻿public class ResourceHudViewModel : BaseViewModel<ResourceModel>
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    public ResourceHudViewModel (ResourceModel model) : base(model)
     {
-        
+
+    }
+    public override void PropertyChangedOnInit()
+    {
+        base.PropertyChangedOnInit();
     }
 
-    // Update is called once per frame
-    void Update()
+    public int Soul { get { return _model.Soul; } }
+    public int Money { get { return _model.Money; } }
+
+    public void AddSoul(int amount)
     {
-        
+        _model.Soul += amount;
+    }
+    public void AddMoney(int amount)
+    {
+        _model.Money += amount;
     }
 }
