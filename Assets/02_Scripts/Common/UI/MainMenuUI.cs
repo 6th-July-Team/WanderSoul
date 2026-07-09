@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class MainMenuUI : BaseUI<MainMenuUI>
+public class MainMenuUI : BaseUI
 {
     [SerializeField] private UIButton _inventoryButton;
     [SerializeField] private UIButton _characterButton;

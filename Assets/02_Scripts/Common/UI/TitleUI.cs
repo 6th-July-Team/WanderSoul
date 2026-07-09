@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class TitleUI : BaseUI<TitleUI>
+public class TitleUI : BaseUI
 {
     [SerializeField] private UIButton _startButton;
     [SerializeField] private UIButton _optionButton;
@@ -16,7 +16,25 @@ public class TitleUI : BaseUI<TitleUI>
     private void OnClickStart()
     {
         Debug.Log("게임 시작");
-        // GameManager.UI.OpenUI<MainUI>(UIType.MainUI);
+        GameManager.UI.CloseUI(UIType.TitleUI);
+
+        GameManager.UI.OpenUI<MainMenuUI>(UIType.MainMenuUI);
+
+
+
+        //테스트용
+        var model = new ResourceModel();
+        model.Soul = 12413451;
+        model.Money = 8520;
+
+        var viewModel = new ResourceHudViewModel(model);
+
+        var view = GameManager.UI.OpenUI<ResourceHudUIView>(UIType.ResourceHudUIView);
+
+        if (view != null)
+        {
+            view.BindViewModel(viewModel);
+        }
     }
 
     // 설정 버튼 - 설정 UI 열기

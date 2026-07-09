@@ -468,7 +468,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -672,9 +672,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6062c41a14188064ab69e2d0cb99395e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TitleUI
-  _startButton: {fileID: 0}
-  _optionButton: {fileID: 0}
-  _quitButton: {fileID: 0}
+  _startButton: {fileID: 897706079033180291}
+  _optionButton: {fileID: 4229147889630821566}
+  _quitButton: {fileID: 1487943966970415123}
 --- !u!1 &8469512428079407858
 GameObject:
   m_ObjectHideFlags: 0
