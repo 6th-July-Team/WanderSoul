@@ -1,3 +1,5 @@
+﻿
+using UnityEngine;
 
 public class GameManager : SingletonBehaviour<GameManager>
 {
@@ -19,10 +21,18 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     #endregion
 
+    #region
+
+    public Transform PlayerTransfrom { get; private set; }
+    // 마차 위치도 생각
+
+    #endregion
+
     protected override void Init()
     {
         base.Init();
     }
 
+    
 
 }
