@@ -9,7 +9,8 @@
     QuestHudUI,
     PopupUI,
     MapUI,
-    DialogueUI
+    DialogueUI,
+    ResourceHudUI
 }
 
 public enum UIRootType : byte
