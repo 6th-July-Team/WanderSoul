@@ -1,0 +1,1755 @@
+fileFormatVersion: 2
+guid: 2c903c3ea04433449b278c42fb0ebb2a
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: MarkersAtlas1_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 1796
+        width: 252
+        height: 248
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ec7a329ff37ee14aa63eca6f9ebbbaf
+      internalID: 513101845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_1
+      rect:
+        serializedVersion: 2
+        x: 329
+        y: 1966
+        width: 149
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 422e6b1f01be2b5458fe656d4d7f3fc9
+      internalID: -1449135383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_2
+      rect:
+        serializedVersion: 2
+        x: 525
+        y: 1886
+        width: 233
+        height: 140
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 468af36ccd78f9d4aad0bde01c48631f
+      internalID: 55156827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_3
+      rect:
+        serializedVersion: 2
+        x: 889
+        y: 1941
+        width: 14
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d480797f3dfeeab4b9c60864c7d2974e
+      internalID: -1893656535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_4
+      rect:
+        serializedVersion: 2
+        x: 1029
+        y: 1943
+        width: 101
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0d4a073fa5760a418c1218227800758
+      internalID: -946793557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_5
+      rect:
+        serializedVersion: 2
+        x: 1175
+        y: 1943
+        width: 101
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e71426b100ba54448ff821bcd804efb
+      internalID: 1062942472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_6
+      rect:
+        serializedVersion: 2
+        x: 1283
+        y: 1795
+        width: 250
+        height: 250
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 455a646d39e33ff4eadf64d03abd94ff
+      internalID: 2092051234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_7
+      rect:
+        serializedVersion: 2
+        x: 1543
+        y: 1948
+        width: 93
+        height: 93
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 942220961763add45ab8110ac4314066
+      internalID: -1538684335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_8
+      rect:
+        serializedVersion: 2
+        x: 1692
+        y: 1948
+        width: 93
+        height: 93
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98e4347d28eeb044387c3ffd2d0d2543
+      internalID: 1054311994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_9
+      rect:
+        serializedVersion: 2
+        x: 1863
+        y: 2003
+        width: 114
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f1c0251bd1bed24f9e90c8b2e8fa9af
+      internalID: -1937597858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_10
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 1959
+        width: 72
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac79ee659c22a1c408359023c1574602
+      internalID: 523280479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_11
+      rect:
+        serializedVersion: 2
+        x: 339
+        y: 1926
+        width: 149
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d117b3571b10e3419953bc07db45e3b
+      internalID: 1977598527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_12
+      rect:
+        serializedVersion: 2
+        x: 1793
+        y: 1863
+        width: 44
+        height: 114
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef93fdf0678ed8e41a026fdfdeb16b41
+      internalID: 1498711376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_13
+      rect:
+        serializedVersion: 2
+        x: 2003
+        y: 1863
+        width: 44
+        height: 114
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49a2fea5a5fb0f84f969861c336f80dc
+      internalID: -1914713930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_14
+      rect:
+        serializedVersion: 2
+        x: 270
+        y: 1920
+        width: 72
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bf4bddc49cfe194682172d8d79b0ae1
+      internalID: 918971436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_15
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 1887
+        width: 149
+        height: 67
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7312bbf0cefd3574b955c73e2fc6b8a9
+      internalID: -70367726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_16
+      rect:
+        serializedVersion: 2
+        x: 769
+        y: 1913
+        width: 105
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 201b03845a3cc1f469ca05e9f57d6649
+      internalID: -506064450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_17
+      rect:
+        serializedVersion: 2
+        x: 889
+        y: 1913
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2f997dbe2a681444bcddaa0e39e8bc6
+      internalID: -579774713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_18
+      rect:
+        serializedVersion: 2
+        x: 918
+        y: 1913
+        width: 105
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2eba587b629f9ea4f9feb0d693338196
+      internalID: 2064448302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_19
+      rect:
+        serializedVersion: 2
+        x: 281
+        y: 1880
+        width: 72
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3f1be99e13713c4eadbb1ead25f456f
+      internalID: 379579655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_20
+      rect:
+        serializedVersion: 2
+        x: 889
+        y: 1793
+        width: 14
+        height: 106
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b528eb932ee11042945e6df144c0076
+      internalID: -1373979265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_21
+      rect:
+        serializedVersion: 2
+        x: 1029
+        y: 1796
+        width: 101
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4d54c55228c4e74a907aa4f8c3dd799
+      internalID: 656060035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_22
+      rect:
+        serializedVersion: 2
+        x: 1175
+        y: 1796
+        width: 101
+        height: 101
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f32e91d036d8c442bfb9f52855d5a3f
+      internalID: -387162835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_23
+      rect:
+        serializedVersion: 2
+        x: 1543
+        y: 1799
+        width: 93
+        height: 93
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff357843286dcbf48b363a7fea5a3c8b
+      internalID: 1675459695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_24
+      rect:
+        serializedVersion: 2
+        x: 1692
+        y: 1799
+        width: 93
+        height: 93
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21ce9d8a94df4224a8aeba45ae56c66c
+      internalID: 558268035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_25
+      rect:
+        serializedVersion: 2
+        x: 358
+        y: 1807
+        width: 53
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d723b4e29d7163945a31db44ac57db0b
+      internalID: 1435780907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_26
+      rect:
+        serializedVersion: 2
+        x: 613
+        y: 1814
+        width: 53
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d652b24cb3a312d49afac73849fbad1e
+      internalID: -234315821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_27
+      rect:
+        serializedVersion: 2
+        x: 1863
+        y: 1793
+        width: 114
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed45561089ef78b4eb58304323d7aed0
+      internalID: 1832883882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_28
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 1569
+        width: 248
+        height: 190
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d332825024ad444aa416243bc2f13d1
+      internalID: 1592521194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_29
+      rect:
+        serializedVersion: 2
+        x: 267
+        y: 1546
+        width: 235
+        height: 235
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34b9a74414617784ca6be829c527e155
+      internalID: 85054854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_30
+      rect:
+        serializedVersion: 2
+        x: 571
+        y: 1537
+        width: 139
+        height: 253
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 448fd436353e1984785378d5c9ad24b4
+      internalID: -2032371888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_31
+      rect:
+        serializedVersion: 2
+        x: 827
+        y: 1599
+        width: 166
+        height: 137
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dcfd7eaf619a42b45ad09dc8b1a6fadc
+      internalID: -583708987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_32
+      rect:
+        serializedVersion: 2
+        x: 1051
+        y: 1640
+        width: 60
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e26a9d3f936ffc14cb30225a2285fe57
+      internalID: 1174150833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_33
+      rect:
+        serializedVersion: 2
+        x: 1102
+        y: 1662
+        width: 125
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8db2bbad6576a7c4fa15c6de3014457b
+      internalID: 325038246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_34
+      rect:
+        serializedVersion: 2
+        x: 1120
+        y: 1631
+        width: 125
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0f5af94fa166554585b46341dc4472a
+      internalID: -1330299788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_35
+      rect:
+        serializedVersion: 2
+        x: 1138
+        y: 1600
+        width: 125
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 046c3a203b4fa85468bcc884992f4660
+      internalID: -806570748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_36
+      rect:
+        serializedVersion: 2
+        x: 1323
+        y: 1585
+        width: 187
+        height: 149
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6581bb59fe8c8dd4b93ce36c204c47df
+      internalID: 797204652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_37
+      rect:
+        serializedVersion: 2
+        x: 1540
+        y: 1637
+        width: 61
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5892687791c9924191bf651f067bfb6
+      internalID: 172126378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_38
+      rect:
+        serializedVersion: 2
+        x: 1581
+        y: 1640
+        width: 207
+        height: 137
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 476a968005b08ab4a96cd59fd4d6ef76
+      internalID: 153810155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_39
+      rect:
+        serializedVersion: 2
+        x: 1795
+        y: 1537
+        width: 252
+        height: 252
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb65eb7819711e24f8b5f6750eb0cece
+      internalID: -55389932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_40
+      rect:
+        serializedVersion: 2
+        x: 804
+        y: 1591
+        width: 55
+        height: 68
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22d2adc797925304ca5481e6b77d7fbf
+      internalID: -255077708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_41
+      rect:
+        serializedVersion: 2
+        x: 1069
+        y: 1609
+        width: 60
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e23901f5ef0ca2543902bacbcf5f0063
+      internalID: -1850171869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_42
+      rect:
+        serializedVersion: 2
+        x: 1087
+        y: 1577
+        width: 60
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2309565964702414ba3cb160cc3db220
+      internalID: 561494983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_43
+      rect:
+        serializedVersion: 2
+        x: 1638
+        y: 1548
+        width: 53
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: adc2f52b6ce900f4da7b1efc70bb3bf9
+      internalID: 2106900178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_44
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1336
+        width: 128
+        height: 144
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffcb092bf66c6ef49a7cc439dc3e3f7d
+      internalID: 1570379596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_45
+      rect:
+        serializedVersion: 2
+        x: 110
+        y: 1280
+        width: 146
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18fe75e8db490ee4bbafc644f3046a75
+      internalID: -1457235600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_46
+      rect:
+        serializedVersion: 2
+        x: 260
+        y: 1281
+        width: 249
+        height: 253
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c1ecaefabda0de489ad109949c68fcd
+      internalID: -1569908456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_47
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 1472
+        width: 61
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 028812d933b864c44819a1c26f6aca36
+      internalID: -957843295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_48
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 1472
+        width: 61
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e74a215e42cbaf042ba3cc3604d3e5ac
+      internalID: 817035144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_49
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 1452
+        width: 82
+        height: 82
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d83c7a3b8c50d474ca752f1d7794e256
+      internalID: 600976698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_50
+      rect:
+        serializedVersion: 2
+        x: 940
+        y: 1452
+        width: 82
+        height: 82
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e178a74d1c36cc345a91e8366ea7e563
+      internalID: 1636573504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_51
+      rect:
+        serializedVersion: 2
+        x: 1039
+        y: 1294
+        width: 227
+        height: 227
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a46e8725d68549d438991c27262c1c76
+      internalID: -1568357630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_52
+      rect:
+        serializedVersion: 2
+        x: 1281
+        y: 1024
+        width: 767
+        height: 512
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb4c5a54b13746f4ea25e9a4c4eb3153
+      internalID: -2014861790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_53
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 1283
+        width: 61
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5d244ae875982b40a1d33cec8de8244
+      internalID: 159424408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_54
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 1283
+        width: 61
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2aa0f070831d914faf5d13f7c9a35ad
+      internalID: -1037018859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_55
+      rect:
+        serializedVersion: 2
+        x: 770
+        y: 1282
+        width: 82
+        height: 82
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0604cbf1b169b424fbe96cf880ab62ba
+      internalID: 1612196232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_56
+      rect:
+        serializedVersion: 2
+        x: 941
+        y: 1282
+        width: 82
+        height: 81
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9879c67cd721684c9d0a220f39ab167
+      internalID: 455595750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_57
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1070
+        width: 512
+        height: 169
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58bbf11870abdcb43863601fbb361114
+      internalID: 1821901458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_58
+      rect:
+        serializedVersion: 2
+        x: 513
+        y: 1024
+        width: 252
+        height: 254
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08866f402febffc4bb96b8dc9caaec3c
+      internalID: -1785344268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_59
+      rect:
+        serializedVersion: 2
+        x: 774
+        y: 1030
+        width: 244
+        height: 244
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6dd43c980a729245a1f9ac182501531
+      internalID: 518743722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_60
+      rect:
+        serializedVersion: 2
+        x: 1033
+        y: 1030
+        width: 240
+        height: 243
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cad797e06b434bf4ca716874bd261c07
+      internalID: 16921229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_61
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 518
+        width: 503
+        height: 503
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed309c12e9e431942a944d67d1d4081a
+      internalID: 1410754703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_62
+      rect:
+        serializedVersion: 2
+        x: 522
+        y: 534
+        width: 500
+        height: 474
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 063df871898b43b42b0ae990f9c11040
+      internalID: -953182147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_63
+      rect:
+        serializedVersion: 2
+        x: 1042
+        y: 526
+        width: 237
+        height: 461
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f201db3791d64f49b77111e3d6acd6e
+      internalID: 1961904943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_64
+      rect:
+        serializedVersion: 2
+        x: 1281
+        y: 549
+        width: 237
+        height: 460
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69a31e0f1dc1be64285cee783268df70
+      internalID: 1023012014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_65
+      rect:
+        serializedVersion: 2
+        x: 1545
+        y: 518
+        width: 496
+        height: 498
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8e098807e222a64a882a9e5618b873d
+      internalID: 1317064908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_66
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 4
+        width: 505
+        height: 504
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18e1e833c13f39841aa736091f876d0a
+      internalID: 333759293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_67
+      rect:
+        serializedVersion: 2
+        x: 530
+        y: 19
+        width: 478
+        height: 475
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8920900801a4c044857836d5d3489af
+      internalID: 455876358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_68
+      rect:
+        serializedVersion: 2
+        x: 1041
+        y: 21
+        width: 484
+        height: 469
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5ae087d9f8c5ea41bbfd27e431203e7
+      internalID: -568744665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MarkersAtlas1_69
+      rect:
+        serializedVersion: 2
+        x: 1540
+        y: 1
+        width: 490
+        height: 503
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bc4d7a10734d92429cc1a2d58607d3b
+      internalID: 646887077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 88e41346251499c438612406a37e38ee
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      MarkersAtlas1_0: 513101845
+      MarkersAtlas1_1: -1449135383
+      MarkersAtlas1_10: 523280479
+      MarkersAtlas1_11: 1977598527
+      MarkersAtlas1_12: 1498711376
+      MarkersAtlas1_13: -1914713930
+      MarkersAtlas1_14: 918971436
+      MarkersAtlas1_15: -70367726
+      MarkersAtlas1_16: -506064450
+      MarkersAtlas1_17: -579774713
+      MarkersAtlas1_18: 2064448302
+      MarkersAtlas1_19: 379579655
+      MarkersAtlas1_2: 55156827
+      MarkersAtlas1_20: -1373979265
+      MarkersAtlas1_21: 656060035
+      MarkersAtlas1_22: -387162835
+      MarkersAtlas1_23: 1675459695
+      MarkersAtlas1_24: 558268035
+      MarkersAtlas1_25: 1435780907
+      MarkersAtlas1_26: -234315821
+      MarkersAtlas1_27: 1832883882
+      MarkersAtlas1_28: 1592521194
+      MarkersAtlas1_29: 85054854
+      MarkersAtlas1_3: -1893656535
+      MarkersAtlas1_30: -2032371888
+      MarkersAtlas1_31: -583708987
+      MarkersAtlas1_32: 1174150833
+      MarkersAtlas1_33: 325038246
+      MarkersAtlas1_34: -1330299788
+      MarkersAtlas1_35: -806570748
+      MarkersAtlas1_36: 797204652
+      MarkersAtlas1_37: 172126378
+      MarkersAtlas1_38: 153810155
+      MarkersAtlas1_39: -55389932
+      MarkersAtlas1_4: -946793557
+      MarkersAtlas1_40: -255077708
+      MarkersAtlas1_41: -1850171869
+      MarkersAtlas1_42: 561494983
+      MarkersAtlas1_43: 2106900178
+      MarkersAtlas1_44: 1570379596
+      MarkersAtlas1_45: -1457235600
+      MarkersAtlas1_46: -1569908456
+      MarkersAtlas1_47: -957843295
+      MarkersAtlas1_48: 817035144
+      MarkersAtlas1_49: 600976698
+      MarkersAtlas1_5: 1062942472
+      MarkersAtlas1_50: 1636573504
+      MarkersAtlas1_51: -1568357630
+      MarkersAtlas1_52: -2014861790
+      MarkersAtlas1_53: 159424408
+      MarkersAtlas1_54: -1037018859
+      MarkersAtlas1_55: 1612196232
+      MarkersAtlas1_56: 455595750
+      MarkersAtlas1_57: 1821901458
+      MarkersAtlas1_58: -1785344268
+      MarkersAtlas1_59: 518743722
+      MarkersAtlas1_6: 2092051234
+      MarkersAtlas1_60: 16921229
+      MarkersAtlas1_61: 1410754703
+      MarkersAtlas1_62: -953182147
+      MarkersAtlas1_63: 1961904943
+      MarkersAtlas1_64: 1023012014
+      MarkersAtlas1_65: 1317064908
+      MarkersAtlas1_66: 333759293
+      MarkersAtlas1_67: 455876358
+      MarkersAtlas1_68: -568744665
+      MarkersAtlas1_69: 646887077
+      MarkersAtlas1_7: -1538684335
+      MarkersAtlas1_8: 1054311994
+      MarkersAtlas1_9: -1937597858
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
