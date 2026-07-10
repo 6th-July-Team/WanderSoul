@@ -9,6 +9,8 @@ public class GameManager : SingletonBehaviour<GameManager>
     public static DataTable DataTable { get { return Instance._dataTable; } }
     public static SaveManager Save { get { return Instance._userDataManager; } }
     public static TimeManager Time { get { return Instance._timeManager; } }
+    public static PetPartyController PetParty { get { return Instance._petPartyController; } }
+
 
     #region Manager Varialbes
 
@@ -18,6 +20,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     private DataTable _dataTable = new();
     private SaveManager _userDataManager = new();
     private TimeManager _timeManager = new();
+    private PetPartyController _petPartyController = new(); // TODO(김익환): 추후 필요시 new 하기
 
     #endregion
 
