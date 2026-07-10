@@ -35,6 +35,11 @@ public class PlayerAimHandler : MonoBehaviour
         if (_inputHandle == null || _mainCamera == null)
             return;
 
+        Vector2 screenPosition = _inputHandle.PointInput;
+
+        Debug.Log(
+            $"Mouse: {screenPosition}");
+
         if (!TryGetGroundPoint(_inputHandle.PointInput, out Vector3 groundPoint))
             return;
 
