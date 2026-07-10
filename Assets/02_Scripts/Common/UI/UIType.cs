@@ -10,8 +10,9 @@
     PopupUI,
     MapUI,
     DialogueUI,
+    MainMenuUI,
     ResourceHudUIView,
-    MainMenuUI
+    PartyHudUIView,
 }
 
 public enum UIRootType : byte

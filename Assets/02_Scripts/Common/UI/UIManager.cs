@@ -113,9 +113,11 @@ public partial class UIManager
                 return UIRootType.Content;
             case UIType.DialogueUI:
                 return UIRootType.Popup;
+            case UIType.MainMenuUI:
+                return UIRootType.Main;
             case UIType.ResourceHudUIView:
                 return UIRootType.Main;
-            case UIType.MainMenuUI:
+            case UIType.PartyHudUIView:
                 return UIRootType.Main;
             default:
                 Debug.LogError($"{uiType}에 지정된 UIRootType이 없습니다.");
