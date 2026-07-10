@@ -429,6 +429,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Editor",
+            "id": "cd4a59b5-c832-4e0e-b2c9-0ba78d39f3a2",
+            "actions": [
+                {
+                    "name": "FullScreen",
+                    "type": "Button",
+                    "id": "3e3b4e68-3f21-44c9-81e2-5176e3b15694",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "7d4380c8-ad58-455a-a456-38082ff7f1a5",
+                    "path": "<Keyboard>/backslash",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FullScreen",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []
