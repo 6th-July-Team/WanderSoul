@@ -9,6 +9,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     public static DataTable DataTable { get { return Instance._dataTable; } }
     public static SaveManager Save { get { return Instance._userDataManager; } }
     public static TimeManager Time { get { return Instance._timeManager; } }
+    public static UIManager UI { get { return Instance._uiManager; } }
 
     #region Manager Varialbes
 
@@ -18,6 +19,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     private DataTable _dataTable = new();
     private SaveManager _userDataManager = new();
     private TimeManager _timeManager = new();
+    private UIManager _uiManager = new();
 
     #endregion
 
@@ -31,6 +33,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     protected override void Init()
     {
         base.Init();
+        _uiManager.Init();
     }
 
     

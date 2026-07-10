@@ -34,7 +34,7 @@ public partial class UIManager
         }
     }
 
-    private T GetCreatUI<T>(UIType uiType) where T : BaseUI<T>
+    private T GetCreatUI<T>(UIType uiType) where T : BaseUI
     {
         string path = GetUIPath(uiType);
 
@@ -113,6 +113,12 @@ public partial class UIManager
                 return UIRootType.Content;
             case UIType.DialogueUI:
                 return UIRootType.Popup;
+            case UIType.MainMenuUI:
+                return UIRootType.Main;
+            case UIType.ResourceHudUIView:
+                return UIRootType.Main;
+            case UIType.PartyHudUIView:
+                return UIRootType.Main;
             default:
                 Debug.LogError($"{uiType}에 지정된 UIRootType이 없습니다.");
                 return UIRootType.Main;
