@@ -20,24 +20,11 @@ public class TitleUI : BaseUI
 
         GameManager.UI.OpenUI<MainMenuUI>(UIType.MainMenuUI);
 
-
-
-        //테스트용
-        var model = new ResourceModel();
-        model.Soul = 12413451;
-        model.Money = 8520;
-
-        var viewModel = new ResourceHudViewModel(model);
-
-        var view = GameManager.UI.OpenUI<ResourceHudUIView>(UIType.ResourceHudUIView);
-
-        if (view != null)
-        {
-            view.BindViewModel(viewModel);
-        }
+        // 테스트용
+        OpenResourceHudTest();
+        OpenPartyHudTest();
     }
 
-    // 설정 버튼 - 설정 UI 열기
     private void OnClickOption()
     {
         Debug.Log("설정 열기");
@@ -48,5 +35,34 @@ public class TitleUI : BaseUI
     {
         Debug.Log("게임 종료");
         Application.Quit();
+    }
+
+    private void OpenResourceHudTest()
+    {
+        var model = new ResourceModel();
+        model.Soul = 12413451;
+        model.Money = 8520;
+
+        var viewModel = new ResourceHudViewModel(model);
+        var view = GameManager.UI.OpenUI<ResourceHudUIView>(UIType.ResourceHudUIView);
+        if (view != null)
+        {
+            view.BindViewModel(viewModel);
+        }
+    }
+
+    private void OpenPartyHudTest()
+    {
+        var model = new PartyMemberModel();
+        model.Name = "피슬";
+        model.MaxHp = 1000;
+        model.CurrentHp = 800;
+
+        var viewModel = new PartyHudViewModel(model);
+        var view = GameManager.UI.OpenUI<PartyHudUIView>(UIType.PartyHudUIView);
+        if (view != null)
+        {
+            view.BindViewModel(viewModel);
+        }
     }
 }
