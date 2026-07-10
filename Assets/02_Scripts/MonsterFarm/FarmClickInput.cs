@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
 
 public class FarmClickInput : MonoBehaviour
 {
 
     [SerializeField] private GameObject _summonPanel;
+    [SerializeField] private MonsterCorral _monsterCorral;
+    [SerializeField] private CorralPanel _corralPanel;
 
     private void Awake()
     {
         _summonPanel.SetActive(false);
+        _corralPanel.Close();
     }
 
     private void Update()
@@ -34,6 +36,11 @@ public class FarmClickInput : MonoBehaviour
         if (farmFacility.FacilityType == FarmFacilityType.SummonCircle)
         {
             _summonPanel.SetActive(true);
+        }
+
+        if (farmFacility.FacilityType == FarmFacilityType.Corral)
+        {
+            _corralPanel.Open(_monsterCorral);
         }
     }
 }

@@ -9,6 +9,7 @@ public class SummonPanel : MonoBehaviour
     [SerializeField] private Button _summonTenButton;
     [SerializeField] private Transform _summonResultRoot;
     [SerializeField] private GameObject _summonResultCardTemplate;
+    [SerializeField] private MonsterCorral _monsterCorral;
 
     [SerializeField] private int _twistedSoulCount = 3;
 
@@ -65,6 +66,12 @@ public class SummonPanel : MonoBehaviour
         RefreshButtons();
     }
 
+    public void Close()
+    {
+        gameObject.SetActive(false);
+    }
+
+
     private void ShowSummonResultCards(int count)
     {
         ClearResultCards();
@@ -72,6 +79,7 @@ public class SummonPanel : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             string petName = _dummyPetNames[Random.Range(0, _dummyPetNames.Length)];
+            _monsterCorral.AddMonster(petName);
             GameObject card = Instantiate(_summonResultCardTemplate, _summonResultRoot);
             card.SetActive(true);
 
