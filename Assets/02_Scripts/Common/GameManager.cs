@@ -1,7 +1,5 @@
-﻿
-using Cysharp.Threading.Tasks;
-using System;
-using Unity.VisualScripting;
+﻿using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : SingletonBehaviour<GameManager>
@@ -12,6 +10,9 @@ public class GameManager : SingletonBehaviour<GameManager>
     public static DataTable DataTable { get { return Instance._dataTable; } }
     public static SaveManager Save { get { return Instance._userDataManager; } }
     public static TimeManager Time { get { return Instance._timeManager; } }
+    public static ConvoyManager Convoy { get { return Instance._convoyManager; } }
+    public static PetPartyController PetParty { get { return Instance._petPartyController; } }
+
 
     #region Manager Varialbes
 
@@ -21,6 +22,8 @@ public class GameManager : SingletonBehaviour<GameManager>
     private DataTable _dataTable = new();
     private SaveManager _userDataManager = new();
     private TimeManager _timeManager = new();
+    private ConvoyManager _convoyManager = new();
+    private PetPartyController _petPartyController = new();
 
     #endregion
 
@@ -48,6 +51,24 @@ public class GameManager : SingletonBehaviour<GameManager>
 
         InitAsync().Forget();
     }
+
+    #region TEST Functions
+    public void TestStartConvoy()
+    {
+        List<string> testSelectedPetIds = new List<string> { "Test_Pet1", "Test_Pet2", "Test_Pet3" };
+        _convoyManager.InitConvoy("TEST", testSelectedPetIds);
+    }
+
+    public void TestPlayerFollowMode()
+    {
+        _petPartyController.SetPetCommand(EPetCommand.PlayerFollow);
+    }
+
+    public void TestWagonDefenseMode()
+    {
+        _petPartyController.SetPetCommand(EPetCommand.GuardWagon);
+    }
+    #endregion
 
     private async UniTaskVoid InitAsync()
     {
