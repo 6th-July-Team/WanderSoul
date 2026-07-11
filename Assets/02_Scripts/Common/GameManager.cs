@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : SingletonBehaviour<GameManager>
@@ -26,18 +27,32 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     #endregion
 
-    #region
+    #region Variables
 
+    private Transform _poolRoot = null;
+
+    #endregion
+
+    #region Test Variables
+    [SerializeField] private bool _skipStartupUIForTest = false;
     public Transform PlayerTransfrom { get; private set; }
-    // 마차 위치도 생각
 
     #endregion
 
     protected override void Init()
     {
         base.Init();
+
+        _dataTable.LoadAllData();
+
+        _userDataManager.Init();
+        _userDataManager.LoadAllUserData();
+        SetLoadData();
+
+        InitAsync().Forget();
     }
 
+    #region TEST Functions
     public void TestStartConvoy()
     {
         List<string> testSelectedPetIds = new List<string> { "Test_Pet1", "Test_Pet2", "Test_Pet3" };
@@ -52,11 +67,46 @@ public class GameManager : SingletonBehaviour<GameManager>
     public void TestWagonDefenseMode()
     {
         _petPartyController.SetPetCommand(EPetCommand.GuardWagon);
+    }
+    #endregion
 
+    private async UniTaskVoid InitAsync()
+    {
+        if (_skipStartupUIForTest)
+        {
+            await _resourceManager.Init();
+            InitNonAsync();
+
+            // 여기에 로딩은 없어도 초기화 해야할 것 넣기
+
+
+            return;
+        }
+
+        // 여기에서 로딩 UI 오픈
+
+        InitNonAsync();
     }
 
-    public void TestAggressive()
+    private void InitNonAsync()
     {
-        _petPartyController.SetPetCommand(EPetCommand.Aggressive);
+        _soundManager.Init(this.gameObject);
+        PoolInit();
+    }
+
+    private void PoolInit()
+    {
+        if (null == _poolRoot)
+        {
+            _poolRoot = Utils.CreateEmptyGameObject("PoolRoot", this.gameObject.transform).transform;
+        }
+
+        _poolManager.Init(_poolRoot);
+    }
+
+    private void SetLoadData()
+    {
+        // 여기에서 세이브 데이터 로드하여 설정할 것들 설정하기
+        // ex) 저장된 골드, 레벨
     }
 }
