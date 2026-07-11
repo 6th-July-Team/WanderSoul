@@ -5,7 +5,13 @@ using UnityEngine;
 
 public class DataTable
 {
-    
+    #region Variables
+
+    public Dictionary<string, PreLoadAssetData> PreLoadAssetDataTable { get; private set; } = new();
+    public Dictionary<string, PoolData> PoolDataTable { get; private set; } = new();
+
+    #endregion
+
 
     [Serializable]
     class SerializationWrapper<T>
@@ -26,8 +32,16 @@ public class DataTable
         _reputationGradeDataTable = LoadData<ReputationGradeData>("ReputationGrade");
         _itemDataTable = LoadData<ItemData>("Item");
         _characterDataTable = LoadData<CharacterData>("Character");
+        PoolDataTable = LoadData<PoolData>("Pool");
+
     }
 
+    #region Getters
+
+
+
+
+    #endregion
 
     Dictionary<string, T> LoadData<T>(string tableNmae) where T : BaseData
     {

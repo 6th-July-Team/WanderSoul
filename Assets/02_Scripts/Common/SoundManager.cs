@@ -19,51 +19,33 @@ public class SoundManager
         BGMSourcePlayer = Utils.GetOrAddComponentInChild<AudioSource>(gameManager, "BGMSourcePlayer");
     }
 
-    //public void PlaySFX(string soundDataId)
-    //{
-    //    SoundData data = GameManager.DataTable.GetSoundData(soundDataId);
-    //    if (null == data)
-    //    {
-    //        Debug.LogError($"사운드 데이터를 찾을 수 없습니다: {soundDataId}");
-    //        return;
-    //    }
+    public void PlaySFX(string soundDataId)
+    {
+        
 
-    //    Utils.LoadAndPlayAudioClip(SFXSourcePlayer, data.Name, data.IsLoop, data.Volume);
-    //}
+        //Utils.LoadAndPlayAudioClip(SFXSourcePlayer, data.Address, data.IsLoop, data.Volume);
+    }
 
-    //public void PlayBGM(string soundDataId)
-    //{
-    //    SoundData data = GameManager.DataTable.GetSoundData(soundDataId);
-    //    if (null == data)
-    //    {
-    //        Debug.LogError($"사운드 데이터를 찾을 수 없습니다: {soundDataId}");
-    //        return;
-    //    }
+    public void PlayBGM(string soundDataId)
+    {
+        
 
-    //    Utils.LoadAndPlayAudioClip(BGMSourcePlayer, data.Name, data.IsLoop, data.Volume);
-    //}
+        //Utils.LoadAndPlayAudioClip(BGMSourcePlayer, data.Address, data.IsLoop, data.Volume);
+    }
+    public void SetBGMVolume(float volumeRatio)
+    {
+        
+    }
 
-    //public void StopBGM()
-    //{
-    //    if (null == BGMSourcePlayer) return;
+    public void SetSFXVolume(float volumeRatio)
+    {
 
-    //    BGMSourcePlayer.Stop();
-    //}
+    }
 
-    //public void SetBGMVolume(string soundDataId, float volumeRatio)
-    //{
-    //    if (null == BGMSourcePlayer) return;
+    public void StopBGM()
+    {
+        if (null == BGMSourcePlayer) return;
 
-    //    SoundData data = GameManager.DataTable.GetSoundData(soundDataId);
-    //    float baseVolume = data != null ? data.Volume : 1f;
-
-    //    BGMSourcePlayer.volume = Mathf.Clamp01(volumeRatio) * baseVolume;
-    //}
-
-    //public void SetBGMPitch(float pitch)
-    //{
-    //    if (null == BGMSourcePlayer) return;
-
-    //    BGMSourcePlayer.pitch = Mathf.Clamp(pitch, 0f, 2f);
-    //}
+        BGMSourcePlayer.Stop();
+    }
 }

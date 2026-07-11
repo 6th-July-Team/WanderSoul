@@ -54,3 +54,16 @@ public class ItemData : BaseData
     public int SellingPrice;
     public string IconPath;
 }
+
+[Serializable]
+public class PoolData : BaseData
+{
+    public int InitSize;
+}
+
+[Serializable]
+public class PreLoadAssetData : BaseData
+{
+    public string Address;
+    public string AssetType;
+}
