@@ -2,7 +2,7 @@
 
 public partial class UIManager
 {
-    public T OpenUI<T>(UIType uiType) where T : BaseUI<T>
+    public T OpenUI<T>(UIType uiType) where T : BaseUI
     {
         T ui = GetCreatUI<T>(uiType);
 

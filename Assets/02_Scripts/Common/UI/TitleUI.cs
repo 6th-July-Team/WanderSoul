@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class TitleUI : BaseUI<TitleUI>
+public class TitleUI : BaseUI
 {
     [SerializeField] private UIButton _startButton;
     [SerializeField] private UIButton _optionButton;
@@ -16,10 +16,16 @@ public class TitleUI : BaseUI<TitleUI>
     private void OnClickStart()
     {
         Debug.Log("게임 시작");
-        // GameManager.UI.OpenUI<MainUI>(UIType.MainUI);
+        GameManager.UI.CloseUI(UIType.TitleUI);
+
+        GameManager.UI.OpenUI<MainMenuUI>(UIType.MainMenuUI);
+
+        // 테스트용
+        OpenResourceHudTest();
+        OpenPartyHudTest();
+        OpenVillageInfoHudTest();
     }
 
-    // 설정 버튼 - 설정 UI 열기
     private void OnClickOption()
     {
         Debug.Log("설정 열기");
@@ -30,5 +36,48 @@ public class TitleUI : BaseUI<TitleUI>
     {
         Debug.Log("게임 종료");
         Application.Quit();
+    }
+
+    private void OpenResourceHudTest()
+    {
+        var model = new ResourceModel();
+        model.Soul = 12413451;
+        model.Money = 8520;
+
+        var viewModel = new ResourceHudViewModel(model);
+        var view = GameManager.UI.OpenUI<ResourceHudUIView>(UIType.ResourceHudUIView);
+        if (view != null)
+        {
+            view.BindViewModel(viewModel);
+        }
+    }
+
+    private void OpenPartyHudTest()
+    {
+        var model = new PartyMemberModel();
+        model.Name = "피슬";
+        model.MaxHp = 1000;
+        model.CurrentHp = 800;
+
+        var viewModel = new PartyHudViewModel(model);
+        var view = GameManager.UI.OpenUI<PartyHudUIView>(UIType.PartyHudUIView);
+        if (view != null)
+        {
+            view.BindViewModel(viewModel);
+        }
+    }
+
+    private void OpenVillageInfoHudTest()
+    {
+        var model = new VillageModel();
+        model.TownDataId = "town_lavendil";
+        model.CurrentReputation = 50;
+
+        var viewModel = new VillageInfoViewModel(model);
+        var view = GameManager.UI.OpenUI<VillageInfoHudUIView>(UIType.VillageInfoHudUIView);
+        if (view != null)
+        {
+            view.BindViewModel(viewModel);
+        }
     }
 }

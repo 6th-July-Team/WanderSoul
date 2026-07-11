@@ -9,7 +9,11 @@
     QuestHudUI,
     PopupUI,
     MapUI,
-    DialogueUI
+    DialogueUI,
+    MainMenuUI,
+    ResourceHudUIView,
+    PartyHudUIView,
+    VillageInfoHudUIView,
 }
 
 public enum UIRootType : byte

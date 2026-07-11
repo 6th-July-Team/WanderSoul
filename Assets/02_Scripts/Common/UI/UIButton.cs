@@ -16,10 +16,10 @@ public class UIButton : MonoBehaviour, IPointerClickHandler
 
     private void OnDisable()
     {
-        if (_button != null)
-        {
-            _button.onClick.RemoveAllListeners();
-        }
+        //if (_button != null)
+        //{
+        //    _button.onClick.RemoveAllListeners();
+        //}
     }
 
     private void InitButton()
@@ -40,9 +40,11 @@ public class UIButton : MonoBehaviour, IPointerClickHandler
     {
         if (_button == null)
         {
+            Debug.LogWarning($"{gameObject.name}: _button이 null!");
             return;
         }
-
+        Debug.Log($"{gameObject.name}: 버튼 바인딩 성공");
+        _button.onClick.RemoveAllListeners();
         _button.onClick.AddListener(new UnityEngine.Events.UnityAction(onClickCallback));
     }
 
