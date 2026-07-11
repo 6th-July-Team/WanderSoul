@@ -52,6 +52,8 @@ public class GameManager : SingletonBehaviour<GameManager>
         _userDataManager.LoadAllUserData();
         SetLoadData();
 
+        _uiManager.Init();
+
         InitAsync().Forget();
     }
 
@@ -95,7 +97,6 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         _soundManager.Init(this.gameObject);
         PoolInit();
-        _uiManager.Init();
     }
 
     private void PoolInit()
