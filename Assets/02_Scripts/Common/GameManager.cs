@@ -11,7 +11,9 @@ public class GameManager : SingletonBehaviour<GameManager>
     public static SaveManager Save { get { return Instance._userDataManager; } }
     public static TimeManager Time { get { return Instance._timeManager; } }
     public static ConvoyManager Convoy { get { return Instance._convoyManager; } }
+    public static UIManager UI { get { return Instance._uiManager; } }
     public static PetPartyController PetParty { get { return Instance._petPartyController; } }
+
 
 
     #region Manager Varialbes
@@ -23,6 +25,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     private SaveManager _userDataManager = new();
     private TimeManager _timeManager = new();
     private ConvoyManager _convoyManager = new();
+    private UIManager _uiManager = new();
     private PetPartyController _petPartyController = new();
 
     #endregion
@@ -92,6 +95,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         _soundManager.Init(this.gameObject);
         PoolInit();
+        _uiManager.Init();
     }
 
     private void PoolInit()
