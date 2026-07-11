@@ -48,7 +48,7 @@ public enum EPetCommand
 {
     PlayerFollow,
     Aggressive,
-    GuardCart,
+    GuardWagon,
     COUNT
 }
 

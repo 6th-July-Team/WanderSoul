@@ -1,21 +1,9 @@
-﻿using UnityEngine;
-
+﻿
 public interface IPetSkillable
 {
     bool CanExecuteSkill();
     void Execute();
 }
-
-// 제거
-//public interface IPetCommandState
-//{
-//    PetCommandResult GetCommandResult(SOPetSearch __SOPetSearch);
-//}
-
-//public interface IPetCommandState
-//{
-//    PetCommandResult Evaluate(PetCommandContext context);
-//}
 
 public interface IPetSkillEffectHandler
 {

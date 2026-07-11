@@ -7,36 +7,66 @@ public class PetMovement : MonoBehaviour
     [SerializeField] private float _stopDistanceFromAnchor = 1.5f;
     [SerializeField] private float _attackStopDistance = 1.8f;
     [SerializeField] private float _destinationUpdateDistance = 0.5f;
+    [SerializeField] private float _destinationRefreshInterval = 0.1f;
 
     private NavMeshAgent _agent;
 
+    private IPositionProvider _anchor;
+    private ITargetable _target;
+
+
     private Vector3 _lastDestination;
     private bool _hasDestination;
+    private float _refreshTimer;
+
 
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
     }
 
-    public void Init(float moveSpeed)
+    public void Init(string petId)
     {
-        _agent.speed = moveSpeed;
+        // TODO(김익환): petId로 PetData들 설정하기.
+        _agent.speed = 5f;
     }
 
     public void ApplyCommand(PetCommandResult result)
     {
-        if (result.Target != null && result.Target.IsAlive)
+        _anchor = result.Anchor;
+        _target = result.Target;
+
+        RefreshDestination(true);
+    }
+
+    private void Update()
+    {
+        _refreshTimer += Time.deltaTime;
+
+        if (_refreshTimer < _destinationRefreshInterval)
+            return;
+
+        _refreshTimer = 0f;
+
+        RefreshDestination(false);
+    }
+
+    public void RefreshDestination(bool force)
+    {
+        if (_target != null && _target.IsAlive)
         {
-            MoveToTarget(result.Target);
+            MoveToTarget(_target, force);
             return;
         }
 
-        MoveToAnchor(result);
+        MoveToAnchor(force);
     }
 
-    private void MoveToTarget(ITargetable target)
+    private void MoveToTarget(ITargetable target, bool force)
     {
-        float distanceSqr = (target.Position - transform.position).sqrMagnitude;
+        Vector3 targetPosition = target.Position;
+
+        float distanceSqr = (targetPosition - transform.position).sqrMagnitude;
         float stopDistanceSqr = _attackStopDistance * _attackStopDistance;
 
         if (distanceSqr <= stopDistanceSqr)
@@ -45,12 +75,18 @@ public class PetMovement : MonoBehaviour
             return;
         }
 
-        SetDestinationIfNeeded(target.Position);
+        SetDestination(targetPosition, force);
     }
 
-    private void MoveToAnchor(PetCommandResult result)
+    private void MoveToAnchor(bool force)
     {
-        Vector3 destination = GetAnchorDestination(result);
+        if (_anchor == null)
+        {
+            Stop();
+            return;
+        }
+
+        Vector3 destination = _anchor.Position;
 
         float distanceSqr = (destination - transform.position).sqrMagnitude;
         float stopDistanceSqr = _stopDistanceFromAnchor * _stopDistanceFromAnchor;
@@ -61,33 +97,12 @@ public class PetMovement : MonoBehaviour
             return;
         }
 
-        SetDestinationIfNeeded(destination);
+        SetDestination(destination, force);
     }
 
-    private Vector3 GetAnchorDestination(PetCommandResult result)
+    private void SetDestination(Vector3 destination, bool force)
     {
-        return result.Command switch
-        {
-            EPetCommand.PlayerFollow => result.AnchorPosition + GetFollowOffset(),
-            EPetCommand.GuardCart => result.AnchorPosition + GetGuardOffset(),
-            EPetCommand.Aggressive => transform.position,
-            _ => result.AnchorPosition
-        };
-    }
-
-    private Vector3 GetFollowOffset()
-    {
-        return new Vector3(-1.5f, 0f, -1.5f);
-    }
-
-    private Vector3 GetGuardOffset()
-    {
-        return new Vector3(1.5f, 0f, 0f);
-    }
-
-    private void SetDestinationIfNeeded(Vector3 destination)
-    {
-        if (!ShouldUpdateDestination(destination))
+        if (!force && !CheckUpdateDestination(destination))
             return;
 
         _agent.isStopped = false;
@@ -104,7 +119,7 @@ public class PetMovement : MonoBehaviour
         _hasDestination = false;
     }
 
-    private bool ShouldUpdateDestination(Vector3 destination)
+    private bool CheckUpdateDestination(Vector3 destination)
     {
         if (!_hasDestination)
             return true;

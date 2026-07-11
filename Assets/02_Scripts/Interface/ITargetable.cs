@@ -1,8 +1,6 @@
-﻿using UnityEngine;
-
-public interface ITargetable
+﻿
+public interface ITargetable : IPositionProvider
 {
-    Vector3 Position { get; }
     bool IsAlive { get; }
     EntityType EntityType { get; }
 }
@@ -12,5 +10,6 @@ public enum EntityType
     Player,
     Enemy,
     Pet,
+    Wagon,
     COUNT
 }

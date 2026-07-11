@@ -1,37 +1,44 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
-public class PetPartyController
+public class PetPartyController //: IPetElementProvider
 {
-    private PetCommandController _petCommandController;
-
     private List<PetController> _pets = new();
 
-    // TODO(김익환): 가지고 있는 펫 전부에게 명령 때리기
-    // TODO(김익환): 펫 속성 비중 확인
+    private PlayerMovement _player;
+    private Wagon _wagon;
 
-    public void RegisterPet(PetController pet)
+    public void Init(PlayerMovement player, Wagon wagon, List<PetController> selectedPets)
     {
-        if(!_pets.Contains(pet))
+        _player = player;
+        _wagon = wagon;
+
+        RegisterPet(selectedPets);
+
+        SetPetCommand(EPetCommand.PlayerFollow);
+    }
+
+    private void RegisterPet(List<PetController> selectedPets)
+    {
+        _pets.Clear();
+
+        for (int i = 0; i < selectedPets.Count; i++)
         {
-            _pets.Add(pet);
+            _pets.Add(selectedPets[i]);
         }
     }
 
-    public void UnregisterPet(PetController pet)
+    public void UnregisterPet()
     {
-        if(_pets.Contains(pet))
-        {
-            _pets.Remove(pet);
-        }
+        _pets.Clear();
     }
 
     public void SetPetCommand(EPetCommand commandMode)
     {
-        _petCommandController.SetCommandMode(commandMode);
-        foreach(var pet in _pets)
+        foreach (var pet in _pets)
         {
-            //pet.SetCommandState(_petCommandController.CurrentCommandState);
-        } 
+            pet.SetCommandMode(commandMode);
+        }
     }
 
     public EPetElement GetDominantElement()
@@ -42,49 +49,19 @@ public class PetPartyController
         return EPetElement.COUNT;
     }
 
-    //private void Update()
-    //{
-    //    _timer += Time.deltaTime;
-
-    //    if (_timer < _decisionInterval)
-    //        return;
-
-    //    _timer = 0f;
-
-    //    EvaluatePets();
-    //}
-
-    //private void EvaluatePets()
-    //{
-    //    foreach (var pet in _pets)
+    // TODO(김익환): 편성된 펫 속성 비중 계산
+    //    public EResolvedElement GetCurrentElement()
     //    {
-    //        if (pet == null || !pet.IsAlive)
-    //            continue;
-
-    //        var targets = pet.ScanTargets();
-
-    //        var context = new PetCommandContext(
-    //            pet: pet,
-    //            player: _player,
-    //            cart: _cart,
-    //            detectedTargets: targets,
-    //            attackRange: 2f,
-    //            followDistance: 2f,
-    //            maxGuardDistance: 8f
-    //        );
-
-    //        PetCommandResult result = _commandController.Evaluate(context);
-    //        pet.ApplyCommandResult(result);
+    //        return EResolvedElement.Magic;
     //    }
-    //}
 }
 
 // 이거 고민
-public enum EResolvedElement
-{
-    Fire,
-    Water,
-    Earth,
-    Air,
-    Magic
-}
+//public enum EResolvedElement
+//{
+//    Fire,
+//    Water,
+//    Earth,
+//    Air,
+//    Magic
+//}

@@ -1,103 +1,72 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-
-// 현재 펫 명령어 저장 -> 파티 전체 
-// 명령 모드 변경
-// 명령에 맞는 State 제공
-
-
+﻿using UnityEngine;
 
 public class PetCommandController
 {
     //private Dictionary<EPetCommand, IPetCommandState> _commandStates = new();
 
-    public EPetCommand CurrentMode { get; private set; }
-    //public IPetCommandState CurrentCommandState { get; private set; }
+    public EPetCommand CurrentCommand { get; private set; }
 
-    //public PetCommandController()
-    //{
-    //    _commandStates = new()
-    //    {
-    //        { EPetCommand.PlayerFollow, new PlayerFollowState() },
-    //        //{ },
-    //        //{ },
-    //    };
+    private Collider[] _searchBuffer;
+    private LayerMask _enemyLayerMask;
+    private SOPetSearch _searchData;
 
-    //    SetCommandMode(EPetCommand.PlayerFollow);
-    //}
+    IPositionProvider _playerAnchor;
+    IPositionProvider _wagonPosAnchor;
+    IPositionProvider _petAnchor;
 
-    //public void SetCommandMode(EPetCommand commandMode)
-    //{
-    //    if (!_commandStates.TryGetValue(commandMode, out var commandState))
-    //        return;
-
-    //    CurrentMode = commandMode;
-    //    CurrentCommandState = commandState;
-    //}
-
-    private readonly Collider[] _searchBuffer;
-
-    private readonly LayerMask _enemyLayerMask;
-    private readonly SOPetSearch _searchData;
-
-    public EPetCommand CurrentCommand { get; private set; } = EPetCommand.PlayerFollow;
-
-    public PetCommandController(
-        SOPetSearch searchData,
-        LayerMask enemyLayerMask,
-        int bufferSize = 32)
+    public PetCommandController(IPositionProvider playerAnchor, IPositionProvider wagonPosAnchor, IPositionProvider petAnchor
+        , SOPetSearch searchData, int bufferSize = 32)
     {
-        _searchData = searchData;
-        _enemyLayerMask = enemyLayerMask;
+        _playerAnchor = playerAnchor;
+        _wagonPosAnchor = wagonPosAnchor;
+        _petAnchor = petAnchor;
+
+        _searchData = searchData; // TODO(김익환): 추후 데이터가 추가되면 id로 데이터 가져오기
         _searchBuffer = new Collider[bufferSize];
+
+        _enemyLayerMask = LayerMask.GetMask("Enemy");
+
+        SetCommandMode(EPetCommand.PlayerFollow);
     }
 
     public void SetCommandMode(EPetCommand command)
     {
+        Debug.Log($"펫 명령 모드 변경: {CurrentCommand} -> {command}");
         CurrentCommand = command;
     }
 
-    public PetCommandResult Decide(PetController pet, Transform player, Transform cart)
+    public PetCommandResult GetCommandResult()
     {
-        Vector3 anchorPosition = GetAnchorPosition(pet, player, cart);
-        float searchRadius = GetSearchRadius();
+        IPositionProvider anchor = GetAnchor();
+        float searchRadius = GetSearchRadius("TEMP 이후 펫 ID 할당하기");
 
-        ITargetable target = SearchUtil.FindNearestTarget(
-            anchorPosition,
-            searchRadius,
-            _enemyLayerMask,
-            _searchBuffer
-        );
+        ITargetable target = SearchUtil.FindNearestTarget(anchor.Position, searchRadius, _enemyLayerMask, _searchBuffer);
 
-        return new PetCommandResult(
-            CurrentCommand,
-            anchorPosition,
-            target
-        );
+        return new PetCommandResult(CurrentCommand, anchor, target);
     }
 
-    private Vector3 GetAnchorPosition(
-        PetController pet,
-        Transform player,
-        Transform cart)
+    private IPositionProvider GetAnchor()
     {
         return CurrentCommand switch
         {
-            EPetCommand.PlayerFollow => player.position,
-            EPetCommand.GuardCart => cart.position,
-            EPetCommand.Aggressive => pet.Position,
-            _ => player.position
+            EPetCommand.PlayerFollow => _playerAnchor,
+            EPetCommand.GuardWagon => _wagonPosAnchor,
+            EPetCommand.Aggressive => _petAnchor,
+            _ => throw new System.ArgumentOutOfRangeException("잘못된 명령 모드")
         };
     }
 
-    private float GetSearchRadius()
+    private float GetSearchRadius(string petId)
     {
+        // TODO(김익환): 추후 데이터가 추가되면 petId로 데이터 가져오기
+        //var searchRadiusData = GameManager.Instance.GetSearchData(petId);
+
         return CurrentCommand switch
         {
             EPetCommand.PlayerFollow => _searchData.RangeWhenFollowPlayer,
-            EPetCommand.GuardCart => _searchData.RangeWhenGuardCart,
+            EPetCommand.GuardWagon => _searchData.RangeWhenGuardCart,
             EPetCommand.Aggressive => _searchData.RangeWhenAggressive,
-            _ => _searchData.RangeWhenFollowPlayer
+            _ => throw new System.ArgumentOutOfRangeException("잘못된 명령 모드")
         };
     }
 }
@@ -105,79 +74,13 @@ public class PetCommandController
 public struct PetCommandResult
 {
     public EPetCommand Command;
-    public Vector3 AnchorPosition;
+    public IPositionProvider Anchor;
     public ITargetable Target;
 
-    public PetCommandResult(EPetCommand command, Vector3 anchorPosition, ITargetable target)
+    public PetCommandResult(EPetCommand command, IPositionProvider anchor, ITargetable target)
     {
         Command = command;
-        AnchorPosition = anchorPosition;
+        Anchor = anchor;
         Target = target;
     }
 }
-
-public struct PetCommandContext
-{
-    public float SearchRadius;
-
-    public PetCommandContext(float searchRadius)
-    {
-        SearchRadius = searchRadius;
-    }
-}
-
-//public enum EPetMoveIntent
-//{
-//    None,
-//    Stop,
-//    MoveToPosition,
-//    ChaseTarget,
-//    ReturnToAnchor
-//}
-
-//public readonly struct PetCommandResult
-//{
-//    public readonly EPetMoveIntent MoveIntent;
-//    public readonly Vector3 Destination;
-//    public readonly ITargetable Target;
-
-//    public PetCommandResult(
-//        EPetMoveIntent moveIntent,
-//        Vector3 destination,
-//        ITargetable target)
-//    {
-//        MoveIntent = moveIntent;
-//        Destination = destination;
-//        Target = target;
-//    }
-//}
-
-//public readonly struct PetCommandContext
-//{
-//    public readonly PetController Pet;
-//    public readonly Transform Player;
-//    public readonly Transform Cart;
-//    public readonly IReadOnlyList<ITargetable> DetectedTargets;
-
-//    public readonly float AttackRange;
-//    public readonly float FollowDistance;
-//    public readonly float MaxGuardDistance;
-
-//    public PetCommandContext(
-//        PetController pet,
-//        Transform player,
-//        Transform cart,
-//        IReadOnlyList<ITargetable> detectedTargets,
-//        float attackRange,
-//        float followDistance,
-//        float maxGuardDistance)
-//    {
-//        Pet = pet;
-//        Player = player;
-//        Cart = cart;
-//        DetectedTargets = detectedTargets;
-//        AttackRange = attackRange;
-//        FollowDistance = followDistance;
-//        MaxGuardDistance = maxGuardDistance;
-//    }
-//}

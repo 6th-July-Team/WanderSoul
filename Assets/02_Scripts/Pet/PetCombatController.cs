@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
 /// 일반 공격 쿨타임 관리
-// 특수 스킬 쿨타임 관리
+/// 일반 공격 쿨타임 관리
 /// 특수 스킬 쿨타임 관리
 /// 현재 타겟 검증
 /// 공격 가능 거리 확인
