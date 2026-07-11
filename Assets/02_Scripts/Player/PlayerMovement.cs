@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(PlayerInputHandle))]
-public class PlayerMovement : MonoBehaviour
+[RequireComponent(typeof(CharacterController))]
+public class PlayerMovement : MonoBehaviour, ITargetable
 {
     [Header("Movement")]
     [SerializeField] private float _moveSpeed = 5f;
@@ -28,6 +29,11 @@ public class PlayerMovement : MonoBehaviour
     private PlayerInputHandle _inputHandle;
     private CharacterController _characterController;
 
+    public bool IsAlive => true;
+
+    public EntityType EntityType => EntityType.Player;
+
+    public Vector3 Position => transform.position;
 
     private void Awake()
     {

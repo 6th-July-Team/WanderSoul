@@ -515,6 +515,34 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Editor"",
+            ""id"": ""cd4a59b5-c832-4e0e-b2c9-0ba78d39f3a2"",
+            ""actions"": [
+                {
+                    ""name"": ""FullScreen"",
+                    ""type"": ""Button"",
+                    ""id"": ""3e3b4e68-3f21-44c9-81e2-5176e3b15694"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""7d4380c8-ad58-455a-a456-38082ff7f1a5"",
+                    ""path"": ""<Keyboard>/backslash"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FullScreen"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -537,12 +565,16 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
         m_UI_RightClick = m_UI.FindAction("RightClick", throwIfNotFound: true);
         m_UI_MiddleClick = m_UI.FindAction("MiddleClick", throwIfNotFound: true);
         m_UI_ScrollWheel = m_UI.FindAction("ScrollWheel", throwIfNotFound: true);
+        // Editor
+        m_Editor = asset.FindActionMap("Editor", throwIfNotFound: true);
+        m_Editor_FullScreen = m_Editor.FindAction("FullScreen", throwIfNotFound: true);
     }
 
     ~@InputSystem_Default()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, InputSystem_Default.Player.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, InputSystem_Default.UI.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Editor.enabled, "This will cause a leak and performance issues, InputSystem_Default.Editor.Disable() has not been called.");
     }
 
     /// <summary>
@@ -938,6 +970,102 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
     /// Provides a new <see cref="UIActions" /> instance referencing this action map.
     /// </summary>
     public UIActions @UI => new UIActions(this);
+
+    // Editor
+    private readonly InputActionMap m_Editor;
+    private List<IEditorActions> m_EditorActionsCallbackInterfaces = new List<IEditorActions>();
+    private readonly InputAction m_Editor_FullScreen;
+    /// <summary>
+    /// Provides access to input actions defined in input action map "Editor".
+    /// </summary>
+    public struct EditorActions
+    {
+        private @InputSystem_Default m_Wrapper;
+
+        /// <summary>
+        /// Construct a new instance of the input action map wrapper class.
+        /// </summary>
+        public EditorActions(@InputSystem_Default wrapper) { m_Wrapper = wrapper; }
+        /// <summary>
+        /// Provides access to the underlying input action "Editor/FullScreen".
+        /// </summary>
+        public InputAction @FullScreen => m_Wrapper.m_Editor_FullScreen;
+        /// <summary>
+        /// Provides access to the underlying input action map instance.
+        /// </summary>
+        public InputActionMap Get() { return m_Wrapper.m_Editor; }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
+        public void Enable() { Get().Enable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
+        public void Disable() { Get().Disable(); }
+        /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
+        public bool enabled => Get().enabled;
+        /// <summary>
+        /// Implicitly converts an <see ref="EditorActions" /> to an <see ref="InputActionMap" /> instance.
+        /// </summary>
+        public static implicit operator InputActionMap(EditorActions set) { return set.Get(); }
+        /// <summary>
+        /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <param name="instance">Callback instance.</param>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
+        /// </remarks>
+        /// <seealso cref="EditorActions" />
+        public void AddCallbacks(IEditorActions instance)
+        {
+            if (instance == null || m_Wrapper.m_EditorActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_EditorActionsCallbackInterfaces.Add(instance);
+            @FullScreen.started += instance.OnFullScreen;
+            @FullScreen.performed += instance.OnFullScreen;
+            @FullScreen.canceled += instance.OnFullScreen;
+        }
+
+        /// <summary>
+        /// Removes <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
+        /// </summary>
+        /// <remarks>
+        /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
+        /// </remarks>
+        /// <seealso cref="EditorActions" />
+        private void UnregisterCallbacks(IEditorActions instance)
+        {
+            @FullScreen.started -= instance.OnFullScreen;
+            @FullScreen.performed -= instance.OnFullScreen;
+            @FullScreen.canceled -= instance.OnFullScreen;
+        }
+
+        /// <summary>
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="EditorActions.UnregisterCallbacks(IEditorActions)" />.
+        /// </summary>
+        /// <seealso cref="EditorActions.UnregisterCallbacks(IEditorActions)" />
+        public void RemoveCallbacks(IEditorActions instance)
+        {
+            if (m_Wrapper.m_EditorActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        /// <summary>
+        /// Replaces all existing callback instances and previously registered input action callbacks associated with them with callbacks provided via <param cref="instance" />.
+        /// </summary>
+        /// <remarks>
+        /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
+        /// </remarks>
+        /// <seealso cref="EditorActions.AddCallbacks(IEditorActions)" />
+        /// <seealso cref="EditorActions.RemoveCallbacks(IEditorActions)" />
+        /// <seealso cref="EditorActions.UnregisterCallbacks(IEditorActions)" />
+        public void SetCallbacks(IEditorActions instance)
+        {
+            foreach (var item in m_Wrapper.m_EditorActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_EditorActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    /// <summary>
+    /// Provides a new <see cref="EditorActions" /> instance referencing this action map.
+    /// </summary>
+    public EditorActions @Editor => new EditorActions(this);
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Player" which allows adding and removing callbacks.
     /// </summary>
@@ -1051,5 +1179,20 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnScrollWheel(InputAction.CallbackContext context);
+    }
+    /// <summary>
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Editor" which allows adding and removing callbacks.
+    /// </summary>
+    /// <seealso cref="EditorActions.AddCallbacks(IEditorActions)" />
+    /// <seealso cref="EditorActions.RemoveCallbacks(IEditorActions)" />
+    public interface IEditorActions
+    {
+        /// <summary>
+        /// Method invoked when associated input action "FullScreen" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnFullScreen(InputAction.CallbackContext context);
     }
 }
