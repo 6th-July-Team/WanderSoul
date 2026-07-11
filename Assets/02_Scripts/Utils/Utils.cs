@@ -50,42 +50,27 @@ public static class Utils
         return null;
     }
 
-    // TODO(김익환): Pooling 리펙토링 적용 후 함수 재생성
-    //public static void LoadAndPlayAudioClip(AudioSource audioSource, string path, bool isLoop = false, float volume = 1f)
-    //{
-    //    AudioClip clip = GameManager.Resource.GetLoadedAsset<AudioClip>(path);
-    //    if (null == clip)
-    //    {
-    //        Debug.LogError($"오디오 클립 로드 실패: {path}");
-    //        return;
-    //    }
+    public static void LoadAndPlayAudioClip(AudioSource audioSource, string address, bool isLoop = false, float volume = 1f)
+    {
+        AudioClip clip = GameManager.Resource.GetLoadedAsset<AudioClip>(address);
+        if (null == clip)
+        {
+            Debug.LogError($"오디오 클립 로드 실패: {address}");
+            return;
+        }
 
-    //    if (isLoop)
-    //    {
-    //        audioSource.clip = clip;
-    //        audioSource.loop = true;
-    //        audioSource.volume = volume;
-    //        audioSource.Play();
-    //    }
-    //    else
-    //    {
-    //        audioSource.PlayOneShot(clip, volume);
-    //    }
-    //}
-
-    // TODO(김익환): Pooling 리펙토링 적용 후 함수 재생성
-    //public static async UniTaskVoid LoadAndSetSprite(Image targetImage, string path)
-    //{
-    //    targetImage.gameObject.SetActive(false);
-    //    Sprite sprite = await GameManager.Resource.LoadAssetAsync<Sprite>(path);
-    //    if (null == sprite)
-    //    {
-    //        Debug.LogError($"스프라이트 로드 실패: {path}");
-    //        return;
-    //    }
-    //    targetImage.sprite = sprite;
-    //    targetImage.gameObject.SetActive(true);
-    //}
+        if (isLoop)
+        {
+            audioSource.clip = clip;
+            audioSource.loop = true;
+            audioSource.volume = volume;
+            audioSource.Play();
+        }
+        else
+        {
+            audioSource.PlayOneShot(clip, volume);
+        }
+    }
 
     public static T ResourcesLoad<T>(string path) where T : Object
     {
