@@ -119,6 +119,8 @@ public partial class UIManager
                 return UIRootType.Main;
             case UIType.PartyHudUIView:
                 return UIRootType.Main;
+            case UIType.VillageInfoHudUIView:
+                return UIRootType.Main;
             default:
                 Debug.LogError($"{uiType}에 지정된 UIRootType이 없습니다.");
                 return UIRootType.Main;

@@ -13,6 +13,7 @@
     MainMenuUI,
     ResourceHudUIView,
     PartyHudUIView,
+    VillageInfoHudUIView,
 }
 
 public enum UIRootType : byte
