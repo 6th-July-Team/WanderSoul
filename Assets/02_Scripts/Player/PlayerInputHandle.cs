@@ -8,9 +8,9 @@ public class PlayerInputHandle : MonoBehaviour
     public Vector3 MoveInputV3 => new Vector3(_moveInput.x, 0f, _moveInput.y);
     public Vector2 PointInput { get; private set; }
 
+    public event Action OnBasicAttackEvent;
+    public event Action OnSpecialAttackEvent;
     public event Action OnUltimateSkillEvent;
-    public event Action OnLeftClickEvent;
-    public event Action OnRightClickEvent;
     public event Action OnDashEvent;
 
     // Move
@@ -28,11 +28,12 @@ public class PlayerInputHandle : MonoBehaviour
     {
         _inputSystem.Player.Enable();
 
-        _inputSystem.Player.LeftClick.started += OnLeftClick;
-        _inputSystem.Player.RightClick.started += OnRightClick;
+        //_inputSystem.Player.BasicAttack.performed += OnBasocAttack;
+        _inputSystem.Player.SpecialAttak.started += OnSpecialAttack;
+        _inputSystem.Player.UltimateAttack.started += OnUltimateAttack;
         _inputSystem.Player.Dash.started += OnDash;
         _inputSystem.Player.Interact.started += OnInteract;
-        _inputSystem.Player.UltimateSkill.started += OnUltimateSkill;
+        _inputSystem.Player.Point.started += OnPoint;
         _inputSystem.Player.Point.performed += OnPoint;
 
         _inputSystem.Player.Move.performed += OnMove;
@@ -44,11 +45,12 @@ public class PlayerInputHandle : MonoBehaviour
     {
         _inputSystem.Player.Disable();
 
-        _inputSystem.Player.LeftClick.started -= OnLeftClick;
-        _inputSystem.Player.RightClick.started -= OnRightClick;
+        //_inputSystem.Player.BasicAttack.performed -= OnBasocAttack;
+        _inputSystem.Player.SpecialAttak.started -= OnSpecialAttack;
+        _inputSystem.Player.UltimateAttack.started -= OnUltimateAttack;
         _inputSystem.Player.Dash.started -= OnDash;
         _inputSystem.Player.Interact.started -= OnInteract;
-        _inputSystem.Player.UltimateSkill.started -= OnUltimateSkill;
+        _inputSystem.Player.Point.started -= OnPoint;
         _inputSystem.Player.Point.performed -= OnPoint;
 
         _inputSystem.Player.Move.performed -= OnMove;
@@ -56,7 +58,15 @@ public class PlayerInputHandle : MonoBehaviour
         _inputSystem.Player.Move.canceled -= StopMove;
     }
 
-    public void OnLeftClick(InputAction.CallbackContext context) => OnLeftClickEvent?.Invoke();
+    private void Update()
+    {
+        if (_inputSystem.Player.BasicAttack.IsPressed())
+        {
+            OnBasicAttackEvent?.Invoke();
+        }
+    }
+
+    public void OnBasocAttack(InputAction.CallbackContext context) => OnBasicAttackEvent?.Invoke();
 
     public void OnMove(InputAction.CallbackContext context) => _moveInput = context.ReadValue<Vector2>();
 
@@ -65,8 +75,8 @@ public class PlayerInputHandle : MonoBehaviour
     private void StopMove(InputAction.CallbackContext context) => _moveInput = Vector2.zero;
 
     public void OnDash(InputAction.CallbackContext context) => OnDashEvent?.Invoke();
-    public void OnRightClick(InputAction.CallbackContext context) => OnRightClickEvent?.Invoke();
-    public void OnUltimateSkill(InputAction.CallbackContext context) => OnUltimateSkillEvent?.Invoke();
+    public void OnSpecialAttack(InputAction.CallbackContext context) => OnSpecialAttackEvent?.Invoke();
+    public void OnUltimateAttack(InputAction.CallbackContext context) => OnUltimateSkillEvent?.Invoke();
 
 
 

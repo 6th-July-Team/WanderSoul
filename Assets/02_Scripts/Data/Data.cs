@@ -67,3 +67,51 @@ public class PreLoadAssetData : BaseData
     public string Address;
     public string AssetType;
 }
+
+[Serializable]
+public class SkillDefinition : BaseData
+{
+    public string Name;
+    public string Description;
+    public string SkillType;
+    public float ManaCost;
+    public float Cooldown;
+    public string IconPath;
+}
+
+[Serializable]
+public class PlayerStatData : BaseData
+{
+    public float MaxHealth;
+    public float BasicAttackPower;
+    public float Defense;
+    public float FireResistance;
+    public float ColdResistance;
+    public float ElectricResistance;
+    public float ElementalResistance;
+    public float MoveSpeed;
+    public float HealthRegeneration;
+    public float ManaRegeneration;
+    public float CooldownReduction;
+    public float MaxMana;
+
+    public float GetBaseValue(PlayerStatType statType)
+    {
+        return statType switch
+        {
+            PlayerStatType.MaxHealth => MaxHealth,
+            PlayerStatType.BasicAttackPower => BasicAttackPower,
+            PlayerStatType.Defense => Defense,
+            PlayerStatType.FireResistance => FireResistance,
+            PlayerStatType.ColdResistance => ColdResistance,
+            PlayerStatType.ElectricResistance => ElectricResistance,
+            PlayerStatType.ElementalResistance => ElementalResistance,
+            PlayerStatType.MoveSpeed => MoveSpeed,
+            PlayerStatType.HealthRegeneration => HealthRegeneration,
+            PlayerStatType.ManaRegeneration => ManaRegeneration,
+            PlayerStatType.CooldownReduction => CooldownReduction,
+            PlayerStatType.MaxMana => MaxMana,
+            _ => 0f
+        };
+    }
+}   

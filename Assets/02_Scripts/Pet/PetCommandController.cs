@@ -4,7 +4,7 @@ public class PetCommandController
 {
     //private Dictionary<EPetCommand, IPetCommandState> _commandStates = new();
 
-    public EPetCommand CurrentCommand { get; private set; }
+    public PetCommand CurrentCommand { get; private set; }
 
     private Collider[] _searchBuffer;
     private LayerMask _enemyLayerMask;
@@ -26,10 +26,10 @@ public class PetCommandController
 
         _enemyLayerMask = LayerMask.GetMask("Enemy");
 
-        SetCommandMode(EPetCommand.PlayerFollow);
+        SetCommandMode(PetCommand.PlayerFollow);
     }
 
-    public void SetCommandMode(EPetCommand command)
+    public void SetCommandMode(PetCommand command)
     {
         Debug.Log($"펫 명령 모드 변경: {CurrentCommand} -> {command}");
         CurrentCommand = command;
@@ -49,9 +49,9 @@ public class PetCommandController
     {
         return CurrentCommand switch
         {
-            EPetCommand.PlayerFollow => _playerAnchor,
-            EPetCommand.GuardWagon => _wagonPosAnchor,
-            EPetCommand.Aggressive => _petAnchor,
+            PetCommand.PlayerFollow => _playerAnchor,
+            PetCommand.GuardWagon => _wagonPosAnchor,
+            PetCommand.Aggressive => _petAnchor,
             _ => throw new System.ArgumentOutOfRangeException("잘못된 명령 모드")
         };
     }
@@ -63,9 +63,9 @@ public class PetCommandController
 
         return CurrentCommand switch
         {
-            EPetCommand.PlayerFollow => _searchData.RangeWhenFollowPlayer,
-            EPetCommand.GuardWagon => _searchData.RangeWhenGuardCart,
-            EPetCommand.Aggressive => _searchData.RangeWhenAggressive,
+            PetCommand.PlayerFollow => _searchData.RangeWhenFollowPlayer,
+            PetCommand.GuardWagon => _searchData.RangeWhenGuardCart,
+            PetCommand.Aggressive => _searchData.RangeWhenAggressive,
             _ => throw new System.ArgumentOutOfRangeException("잘못된 명령 모드")
         };
     }
@@ -73,11 +73,11 @@ public class PetCommandController
 
 public struct PetCommandResult
 {
-    public EPetCommand Command;
+    public PetCommand Command;
     public IPositionProvider Anchor;
     public ITargetable Target;
 
-    public PetCommandResult(EPetCommand command, IPositionProvider anchor, ITargetable target)
+    public PetCommandResult(PetCommand command, IPositionProvider anchor, ITargetable target)
     {
         Command = command;
         Anchor = anchor;

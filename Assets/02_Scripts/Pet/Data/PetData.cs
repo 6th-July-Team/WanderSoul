@@ -1,8 +1,9 @@
 ﻿using System;
 using UnityEngine;
 
-public enum EPetElement
+public enum PetElement
 {
+    None,
     Fire,
     Water,
     Earth,
@@ -10,7 +11,7 @@ public enum EPetElement
     COUNT
 }
 
-public enum EPetRole
+public enum PetRole
 {
     Attacker,
     Defender,
@@ -18,14 +19,14 @@ public enum EPetRole
     COUNT
 }
 
-public enum EPetSkillType
+public enum PetSkillType
 {
     NormalAttack,
     Special,
     COUNT
 }
 
-public enum EPetSkillTrigger
+public enum PetSkillTrigger
 {
     AutoAttack,
     AutoInterval,
@@ -33,7 +34,7 @@ public enum EPetSkillTrigger
     COUNT
 }
 
-public enum ESkillBehavior
+public enum SkillBehavior
 {
     MeleeConeDamage,
     ProjectileAttack,
@@ -44,7 +45,7 @@ public enum ESkillBehavior
     COUNT
 }
 
-public enum EPetCommand
+public enum PetCommand
 {
     PlayerFollow,
     Aggressive,

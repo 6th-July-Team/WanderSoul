@@ -16,16 +16,16 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "LeftClick",
-                    "type": "Button",
+                    "name": "BasicAttack",
+                    "type": "Value",
                     "id": "165a779d-7985-4c91-9f71-0a0ea408c602",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
-                    "name": "RightClick",
+                    "name": "SpecialAttak",
                     "type": "Button",
                     "id": "1efb97ba-72c3-4923-af29-2381c86ad7f4",
                     "expectedControlType": "",
@@ -34,7 +34,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "UltimateSkill",
+                    "name": "UltimateAttack",
                     "type": "Button",
                     "id": "9081c4e0-2a06-41c2-b1c0-2e53e47cf21c",
                     "expectedControlType": "",
@@ -89,7 +89,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "LeftClick",
+                    "action": "BasicAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -100,7 +100,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "RightClick",
+                    "action": "SpecialAttak",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -111,7 +111,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "UltimateSkill",
+                    "action": "UltimateAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
