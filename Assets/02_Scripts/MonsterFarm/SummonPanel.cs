@@ -14,20 +14,13 @@ public class SummonPanel : MonoBehaviour
     [SerializeField] private GameObject _summonResultCardTemplate;
     [SerializeField] private MonsterCorral _monsterCorral;
 
+    [SerializeField] private SOPetDefinition[] _PetDefinitions;
+
     [SerializeField] private int _twistedSoulCount = 3;
 
     private const int SUMMON_ONE_COST = 1;
     private const int SUMMON_FIVE_COST = 5;
     private const int SUMMON_TEN_COST = 10;
-
-    private readonly string[] _dummyPetNames =
-    {
-        "Fire Dragon",
-        "Water Serpent",
-        "Earth Golem",
-        "Wind Sprite",
-        "Thunder Beast"
-    };
 
     private int _lastSummonCount;
 
@@ -70,6 +63,11 @@ public class SummonPanel : MonoBehaviour
 
     private void TrySummon(int cost, int count)
     {
+        if (_PetDefinitions == null || _PetDefinitions.Length == 0)
+        {
+            return;
+        }
+
         if (_twistedSoulCount < cost)
         {
             return;
@@ -88,18 +86,15 @@ public class SummonPanel : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            string petName = _dummyPetNames[Random.Range(0, _dummyPetNames.Length)];
-            
-            _monsterCorral.AddMonster(petName);
+            SOPetDefinition petDefinition = _PetDefinitions[Random.Range(0, _PetDefinitions.Length)];
+
+            _monsterCorral.AddMonster(petDefinition);
 
             GameObject card = Instantiate(_summonResultCardTemplate, _summonResultRoot);
-            
             card.SetActive(true);
+            card.GetComponentInChildren<TMP_Text>().text = petDefinition.Name;
 
-            // 임시 카드 UI
-            card.GetComponentInChildren<TMP_Text>().text = petName;
-
-            Debug.Log($"Summoned: {petName}");
+            Debug.Log($"Summoned: {petDefinition.Name}");
         }
     }
 

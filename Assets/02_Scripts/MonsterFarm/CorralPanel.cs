@@ -23,7 +23,7 @@ public class CorralPanel : MonoBehaviour
     {
         ClearList();
 
-        if (monsterCorral.MonsterNames.Count == 0)
+        if (monsterCorral.Monsters.Count == 0)
         {
             CreateListItem(_petTemplate, "No monsters stored.");
             CreateListItem(_productTemplate, "No products in production.");
@@ -31,11 +31,11 @@ public class CorralPanel : MonoBehaviour
             return;
         }
 
-        foreach (string monsterName in monsterCorral.MonsterNames)
+        foreach (SOPetDefinition monster in monsterCorral.Monsters)
         {
-            CreateListItem(_petTemplate, monsterName);
+            CreateListItem(_petTemplate, monster.Name);
 
-            CreateListItem(_productTemplate, $"{monsterName}'s specialty");
+            CreateListItem(_productTemplate, $"{monster.Name}'s specialty");
         }
     }
 
