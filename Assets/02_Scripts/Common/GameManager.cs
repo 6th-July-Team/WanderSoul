@@ -14,10 +14,6 @@ public class GameManager : SingletonBehaviour<GameManager>
     public static UIManager UI { get { return Instance._uiManager; } }
     public static PetPartyController PetParty { get { return Instance._petPartyController; } }
 
-=========
-    public static UIManager UI { get { return Instance._uiManager; } }
->>>>>>>>> Temporary merge branch 2
-
 
     #region Manager Varialbes
 
@@ -30,9 +26,6 @@ public class GameManager : SingletonBehaviour<GameManager>
     private ConvoyManager _convoyManager = new();
     private UIManager _uiManager = new();
     private PetPartyController _petPartyController = new();
-=========
-    private UIManager _uiManager = new();
->>>>>>>>> Temporary merge branch 2
 
     #endregion
 
