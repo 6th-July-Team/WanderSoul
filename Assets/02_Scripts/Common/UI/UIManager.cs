@@ -36,6 +36,12 @@ public partial class UIManager
 
     private T GetCreatUI<T>(UIType uiType) where T : BaseUI
     {
+
+        if (_createdUIDic.ContainsKey(uiType) == true)
+        {
+            return _createdUIDic[uiType] as T;
+        }
+
         string path = GetUIPath(uiType);
 
         if (string.IsNullOrEmpty(path))
@@ -95,30 +101,49 @@ public partial class UIManager
         {
             case UIType.TitleUI:
                 return UIRootType.Main;
+
             case UIType.InventoryUI:
                 return UIRootType.Main;
+
             case UIType.PetInfoUI:
                 return UIRootType.Content;
+
             case UIType.TopUI:
                 return UIRootType.Main;
+
             case UIType.MainUI:
                 return UIRootType.Main;
+
             case UIType.PlayerHudUI:
                 return UIRootType.Main;
+
             case UIType.QuestHudUI:
                 return UIRootType.Main;
+
             case UIType.PopupUI:
                 return UIRootType.Popup;
+
             case UIType.MapUI:
                 return UIRootType.Content;
+
             case UIType.DialogueUI:
                 return UIRootType.Popup;
+
             case UIType.MainMenuUI:
                 return UIRootType.Main;
+
             case UIType.ResourceHudUIView:
                 return UIRootType.Main;
+
             case UIType.PartyHudUIView:
                 return UIRootType.Main;
+
+            case UIType.VillageInfoHudUIView:
+                return UIRootType.Main;
+
+            case UIType.InventoryUIView:
+                return UIRootType.Content;
+
             default:
                 Debug.LogError($"{uiType}에 지정된 UIRootType이 없습니다.");
                 return UIRootType.Main;
