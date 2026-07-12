@@ -23,6 +23,7 @@ public class TitleUI : BaseUI
         // 테스트용
         OpenResourceHudTest();
         OpenPartyHudTest();
+        OpenVillageInfoHudTest();
     }
 
     private void OnClickOption()
@@ -60,6 +61,20 @@ public class TitleUI : BaseUI
 
         var viewModel = new PartyHudViewModel(model);
         var view = GameManager.UI.OpenUI<PartyHudUIView>(UIType.PartyHudUIView);
+        if (view != null)
+        {
+            view.BindViewModel(viewModel);
+        }
+    }
+
+    private void OpenVillageInfoHudTest()
+    {
+        var model = new VillageModel();
+        model.TownDataId = "town_lavendil";
+        model.CurrentReputation = 50;
+
+        var viewModel = new VillageInfoViewModel(model);
+        var view = GameManager.UI.OpenUI<VillageInfoHudUIView>(UIType.VillageInfoHudUIView);
         if (view != null)
         {
             view.BindViewModel(viewModel);
