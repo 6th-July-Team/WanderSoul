@@ -14,6 +14,7 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable
     public Vector3 Position => transform.position;
     public EntityType EntityType => EntityType.Pet;
     public bool IsAlive => _petStausController.IsAlive;
+    public PetElement Element => __SOPetDefinition.Element;
 
     [Header("TEMP Pet Data")]
     [SerializeField] private SOPetDefinition __SOPetDefinition;
@@ -67,7 +68,7 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable
         _petStausController.TakeDamage(damageInfo);
     }
 
-    public void SetCommandMode(EPetCommand commandMode)
+    public void SetCommandMode(PetCommand commandMode)
     {
         _petCommandController.SetCommandMode(commandMode);
         GetCommandAndApply();

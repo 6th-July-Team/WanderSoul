@@ -2,7 +2,7 @@
 
 [RequireComponent(typeof(PlayerInputHandle))]
 [RequireComponent(typeof(CharacterController))]
-public class PlayerMovement : MonoBehaviour, ITargetable
+public class PlayerMovement : MonoBehaviour, ITargetable // MoveMent에 필요없는 인터페이스임
 {
     [Header("Movement")]
     [SerializeField] private float _moveSpeed = 5f;

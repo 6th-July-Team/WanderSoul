@@ -20,7 +20,7 @@ public class PlayerAimHandler : MonoBehaviour
         FindCamera();
     }
 
-    private void LateUpdate()
+    private void Update()
     {
         if (_mainCamera == null || !_mainCamera.isActiveAndEnabled)
             FindCamera();
@@ -36,9 +36,6 @@ public class PlayerAimHandler : MonoBehaviour
             return;
 
         Vector2 screenPosition = _inputHandle.PointInput;
-
-        Debug.Log(
-            $"Mouse: {screenPosition}");
 
         if (!TryGetGroundPoint(_inputHandle.PointInput, out Vector3 groundPoint))
             return;
@@ -75,14 +72,7 @@ public class PlayerAimHandler : MonoBehaviour
 
         if (_mainCamera == null)
         {
-            Debug.LogWarning($"{nameof(PlayerAimHandler)}: " + "MainCamera 태그가 지정된 활성 Camera를 찾지 못했습니다."
-                , this);
+            Debug.LogWarning($"{GetType()}: " + "MainCamera 태그가 지정된 활성 Camera를 찾지 못했습니다.");
         }
-
-        Debug.Log(
-        $"사용 카메라: {_mainCamera.name}, " +
-        $"Position: {_mainCamera.transform.position}, " +
-        $"Rotation: {_mainCamera.transform.eulerAngles}",
-        this);
     }
 }

@@ -102,16 +102,16 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""LeftClick"",
-                    ""type"": ""Button"",
+                    ""name"": ""BasicAttack"",
+                    ""type"": ""Value"",
                     ""id"": ""165a779d-7985-4c91-9f71-0a0ea408c602"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": false
+                    ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""RightClick"",
+                    ""name"": ""SpecialAttak"",
                     ""type"": ""Button"",
                     ""id"": ""1efb97ba-72c3-4923-af29-2381c86ad7f4"",
                     ""expectedControlType"": """",
@@ -120,7 +120,7 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""UltimateSkill"",
+                    ""name"": ""UltimateAttack"",
                     ""type"": ""Button"",
                     ""id"": ""9081c4e0-2a06-41c2-b1c0-2e53e47cf21c"",
                     ""expectedControlType"": """",
@@ -175,7 +175,7 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""LeftClick"",
+                    ""action"": ""BasicAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -186,7 +186,7 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""RightClick"",
+                    ""action"": ""SpecialAttak"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -197,7 +197,7 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""UltimateSkill"",
+                    ""action"": ""UltimateAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -550,9 +550,9 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
-        m_Player_LeftClick = m_Player.FindAction("LeftClick", throwIfNotFound: true);
-        m_Player_RightClick = m_Player.FindAction("RightClick", throwIfNotFound: true);
-        m_Player_UltimateSkill = m_Player.FindAction("UltimateSkill", throwIfNotFound: true);
+        m_Player_BasicAttack = m_Player.FindAction("BasicAttack", throwIfNotFound: true);
+        m_Player_SpecialAttak = m_Player.FindAction("SpecialAttak", throwIfNotFound: true);
+        m_Player_UltimateAttack = m_Player.FindAction("UltimateAttack", throwIfNotFound: true);
         m_Player_Point = m_Player.FindAction("Point", throwIfNotFound: true);
         m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
@@ -651,9 +651,9 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Interact;
-    private readonly InputAction m_Player_LeftClick;
-    private readonly InputAction m_Player_RightClick;
-    private readonly InputAction m_Player_UltimateSkill;
+    private readonly InputAction m_Player_BasicAttack;
+    private readonly InputAction m_Player_SpecialAttak;
+    private readonly InputAction m_Player_UltimateAttack;
     private readonly InputAction m_Player_Point;
     private readonly InputAction m_Player_Dash;
     private readonly InputAction m_Player_Move;
@@ -673,17 +673,17 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         /// <summary>
-        /// Provides access to the underlying input action "Player/LeftClick".
+        /// Provides access to the underlying input action "Player/BasicAttack".
         /// </summary>
-        public InputAction @LeftClick => m_Wrapper.m_Player_LeftClick;
+        public InputAction @BasicAttack => m_Wrapper.m_Player_BasicAttack;
         /// <summary>
-        /// Provides access to the underlying input action "Player/RightClick".
+        /// Provides access to the underlying input action "Player/SpecialAttak".
         /// </summary>
-        public InputAction @RightClick => m_Wrapper.m_Player_RightClick;
+        public InputAction @SpecialAttak => m_Wrapper.m_Player_SpecialAttak;
         /// <summary>
-        /// Provides access to the underlying input action "Player/UltimateSkill".
+        /// Provides access to the underlying input action "Player/UltimateAttack".
         /// </summary>
-        public InputAction @UltimateSkill => m_Wrapper.m_Player_UltimateSkill;
+        public InputAction @UltimateAttack => m_Wrapper.m_Player_UltimateAttack;
         /// <summary>
         /// Provides access to the underlying input action "Player/Point".
         /// </summary>
@@ -725,15 +725,15 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
-            @LeftClick.started += instance.OnLeftClick;
-            @LeftClick.performed += instance.OnLeftClick;
-            @LeftClick.canceled += instance.OnLeftClick;
-            @RightClick.started += instance.OnRightClick;
-            @RightClick.performed += instance.OnRightClick;
-            @RightClick.canceled += instance.OnRightClick;
-            @UltimateSkill.started += instance.OnUltimateSkill;
-            @UltimateSkill.performed += instance.OnUltimateSkill;
-            @UltimateSkill.canceled += instance.OnUltimateSkill;
+            @BasicAttack.started += instance.OnBasicAttack;
+            @BasicAttack.performed += instance.OnBasicAttack;
+            @BasicAttack.canceled += instance.OnBasicAttack;
+            @SpecialAttak.started += instance.OnSpecialAttak;
+            @SpecialAttak.performed += instance.OnSpecialAttak;
+            @SpecialAttak.canceled += instance.OnSpecialAttak;
+            @UltimateAttack.started += instance.OnUltimateAttack;
+            @UltimateAttack.performed += instance.OnUltimateAttack;
+            @UltimateAttack.canceled += instance.OnUltimateAttack;
             @Point.started += instance.OnPoint;
             @Point.performed += instance.OnPoint;
             @Point.canceled += instance.OnPoint;
@@ -757,15 +757,15 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
-            @LeftClick.started -= instance.OnLeftClick;
-            @LeftClick.performed -= instance.OnLeftClick;
-            @LeftClick.canceled -= instance.OnLeftClick;
-            @RightClick.started -= instance.OnRightClick;
-            @RightClick.performed -= instance.OnRightClick;
-            @RightClick.canceled -= instance.OnRightClick;
-            @UltimateSkill.started -= instance.OnUltimateSkill;
-            @UltimateSkill.performed -= instance.OnUltimateSkill;
-            @UltimateSkill.canceled -= instance.OnUltimateSkill;
+            @BasicAttack.started -= instance.OnBasicAttack;
+            @BasicAttack.performed -= instance.OnBasicAttack;
+            @BasicAttack.canceled -= instance.OnBasicAttack;
+            @SpecialAttak.started -= instance.OnSpecialAttak;
+            @SpecialAttak.performed -= instance.OnSpecialAttak;
+            @SpecialAttak.canceled -= instance.OnSpecialAttak;
+            @UltimateAttack.started -= instance.OnUltimateAttack;
+            @UltimateAttack.performed -= instance.OnUltimateAttack;
+            @UltimateAttack.canceled -= instance.OnUltimateAttack;
             @Point.started -= instance.OnPoint;
             @Point.performed -= instance.OnPoint;
             @Point.canceled -= instance.OnPoint;
@@ -1081,26 +1081,26 @@ public partial class @InputSystem_Default: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnInteract(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "LeftClick" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "BasicAttack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnLeftClick(InputAction.CallbackContext context);
+        void OnBasicAttack(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "RightClick" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "SpecialAttak" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnRightClick(InputAction.CallbackContext context);
+        void OnSpecialAttak(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "UltimateSkill" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "UltimateAttack" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnUltimateSkill(InputAction.CallbackContext context);
+        void OnUltimateAttack(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Point" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

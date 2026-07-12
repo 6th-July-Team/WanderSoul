@@ -1,0 +1,17 @@
+[
+  {
+    "Id": "테스트 직업 아이디",
+    "MaxHealth": 0,
+    "BasicAttackPower": 0,
+    "Defense": 0,
+    "FireResistance": 0,
+    "ColdResistance": 0,
+    "ElectricResistance": 0,
+    "ElementalResistance": 0,
+    "MoveSpeed": 0,
+    "HealthRegeneration": 0,
+    "ManaRegeneration": 10,
+    "CooldownReduction": 0,
+    "MaxMana": 100
+  }
+]
