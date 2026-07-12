@@ -13,6 +13,14 @@ public class MonsterCorral : MonoBehaviour
         Debug.Log($"획득 몬스터: {monsterName}");
     }
 
+    public void RemoveLastMonsters(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            int lastIndex = _monsterNames.Count - 1;
+            _monsterNames.RemoveAt(lastIndex);
+        }
+    }
     public void PrintStoredMonsters()
     {
         if (_monsterNames.Count == 0)

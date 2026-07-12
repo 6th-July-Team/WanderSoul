@@ -1,12 +1,15 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class SummonPanel : MonoBehaviour
 {
     [SerializeField] private Button _summonOneButton;
     [SerializeField] private Button _summonFiveButton;
     [SerializeField] private Button _summonTenButton;
+    [SerializeField] private Button _rerollButton;
+
     [SerializeField] private Transform _summonResultRoot;
     [SerializeField] private GameObject _summonResultCardTemplate;
     [SerializeField] private MonsterCorral _monsterCorral;
@@ -26,16 +29,11 @@ public class SummonPanel : MonoBehaviour
         "Thunder Beast"
     };
 
+    private int _lastSummonCount;
+
     private void OnEnable()
     {
         RefreshButtons();
-    }
-
-    private void RefreshButtons()
-    {
-        _summonOneButton.interactable = _twistedSoulCount >= SUMMON_ONE_COST;
-        _summonFiveButton.interactable = _twistedSoulCount >= SUMMON_FIVE_COST;
-        _summonTenButton.interactable = _twistedSoulCount >= SUMMON_TEN_COST;
     }
 
     public void SummonOne()
@@ -53,6 +51,23 @@ public class SummonPanel : MonoBehaviour
         TrySummon(SUMMON_TEN_COST, 10);
     }
 
+    public void Reroll()
+    {
+        if (_lastSummonCount == 0)
+        {
+            return;
+        }
+
+        _monsterCorral.RemoveLastMonsters(_lastSummonCount);
+        ShowSummonResultCards(_lastSummonCount);
+    }
+
+    public void Close()
+    {
+        _lastSummonCount = 0;
+        gameObject.SetActive(false);
+    }
+
     private void TrySummon(int cost, int count)
     {
         if (_twistedSoulCount < cost)
@@ -61,16 +76,11 @@ public class SummonPanel : MonoBehaviour
         }
 
         _twistedSoulCount -= cost;
+        _lastSummonCount = count;
 
         ShowSummonResultCards(count);
         RefreshButtons();
     }
-
-    public void Close()
-    {
-        gameObject.SetActive(false);
-    }
-
 
     private void ShowSummonResultCards(int count)
     {
@@ -79,8 +89,11 @@ public class SummonPanel : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             string petName = _dummyPetNames[Random.Range(0, _dummyPetNames.Length)];
+            
             _monsterCorral.AddMonster(petName);
+
             GameObject card = Instantiate(_summonResultCardTemplate, _summonResultRoot);
+            
             card.SetActive(true);
 
             // 임시 카드 UI
@@ -88,6 +101,13 @@ public class SummonPanel : MonoBehaviour
 
             Debug.Log($"Summoned: {petName}");
         }
+    }
+
+    private void RefreshButtons()
+    {
+        _summonOneButton.interactable = _twistedSoulCount >= SUMMON_ONE_COST;
+        _summonFiveButton.interactable = _twistedSoulCount >= SUMMON_FIVE_COST;
+        _summonTenButton.interactable = _twistedSoulCount >= SUMMON_TEN_COST;
     }
 
     private void ClearResultCards()
@@ -101,6 +121,4 @@ public class SummonPanel : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
-
-
 }

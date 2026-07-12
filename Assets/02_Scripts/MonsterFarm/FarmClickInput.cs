@@ -7,11 +7,13 @@ public class FarmClickInput : MonoBehaviour
     [SerializeField] private GameObject _summonPanel;
     [SerializeField] private MonsterCorral _monsterCorral;
     [SerializeField] private CorralPanel _corralPanel;
+    [SerializeField] private ManagementPanel _managementPanel;
 
     private void Awake()
     {
         _summonPanel.SetActive(false);
         _corralPanel.Close();
+        _managementPanel.Close();
     }
 
     private void Update()
@@ -41,6 +43,11 @@ public class FarmClickInput : MonoBehaviour
         if (farmFacility.FacilityType == FarmFacilityType.Corral)
         {
             _corralPanel.Open(_monsterCorral);
+        }
+
+        if (farmFacility.FacilityType == FarmFacilityType.Storage)
+        {
+            _managementPanel.Open();
         }
     }
 }
