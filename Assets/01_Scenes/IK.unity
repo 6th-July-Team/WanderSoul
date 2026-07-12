@@ -1160,6 +1160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   _skipStartupUIForTest: 0
+  TestSkillDefinition_ScholarBasicSkill: {fileID: 0}
 --- !u!4 &1763174595
 Transform:
   m_ObjectHideFlags: 0
@@ -1330,6 +1331,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   _skipStartupUIForTest: 0
+  TestSkillDefinition_ScholarBasicSkill: {fileID: 11400000, guid: 1cb5e9c161b01cf4aa44c78908ad5e46, type: 2}
 --- !u!1001 &5400477723724691889
 PrefabInstance:
   m_ObjectHideFlags: 0

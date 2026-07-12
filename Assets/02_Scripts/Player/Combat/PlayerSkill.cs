@@ -40,6 +40,6 @@ public class PlayerSkill
 
         _execution.Execute(context, skillDamage);
 
-        _remainingCooldown = _statController.GetValue(PlayerStatType.CooldownReduction) - Definition.Cooldown;
+        _remainingCooldown = Definition.Cooldown - _statController.GetValue(PlayerStatType.CooldownReduction);
     }
 }
