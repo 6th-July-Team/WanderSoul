@@ -15,6 +15,7 @@
     PartyHudUIView,
     VillageInfoHudUIView,
     InventoryUIView,
+    PlayerHudUIView,
 }
 
 public enum UIRootType : byte

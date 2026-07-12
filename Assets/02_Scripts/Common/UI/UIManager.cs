@@ -144,6 +144,9 @@ public partial class UIManager
             case UIType.InventoryUIView:
                 return UIRootType.Content;
 
+            case UIType.PlayerHudUIView:
+                return UIRootType.Main;
+
             default:
                 Debug.LogError($"{uiType}에 지정된 UIRootType이 없습니다.");
                 return UIRootType.Main;
