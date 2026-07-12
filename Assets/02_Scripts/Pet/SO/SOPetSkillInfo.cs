@@ -12,8 +12,8 @@ public class SOPetSkillInfo : ScriptableObject
     public float Duration;
     public float Radius;
 
-    public EPetSkillType SkillSlot;
-    public EPetSkillTrigger TriggerType;
+    public PetSkillType SkillSlot;
+    public PetSkillTrigger TriggerType;
 
-    public ESkillBehavior BehaviorType;
+    public SkillBehavior BehaviorType;
 }

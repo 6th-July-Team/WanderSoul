@@ -2,7 +2,7 @@
 
 public class TimeManager
 {
-    public float GameDeltaTIme
+    public float GameDeltaTime
     {
         get
         {

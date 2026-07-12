@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class PetPartyController //: IPetElementProvider
+public class PetPartyController : IPetPartyReader
 {
     private List<PetController> _pets = new();
 
     private PlayerMovement _player;
     private Wagon _wagon;
+
+    public int Count => _pets.Count;
 
     public void Init(PlayerMovement player, Wagon wagon, List<PetController> selectedPets)
     {
@@ -15,7 +17,7 @@ public class PetPartyController //: IPetElementProvider
 
         RegisterPet(selectedPets);
 
-        SetPetCommand(EPetCommand.PlayerFollow);
+        SetPetCommand(PetCommand.PlayerFollow);
     }
 
     private void RegisterPet(List<PetController> selectedPets)
@@ -33,7 +35,7 @@ public class PetPartyController //: IPetElementProvider
         _pets.Clear();
     }
 
-    public void SetPetCommand(EPetCommand commandMode)
+    public void SetPetCommand(PetCommand commandMode)
     {
         foreach (var pet in _pets)
         {
@@ -41,12 +43,21 @@ public class PetPartyController //: IPetElementProvider
         }
     }
 
-    public EPetElement GetDominantElement()
+    public PetElement GetPriorityPetElement()
     {
-        // Fire, Water, Earth, Air 개수 계산
-        // 같은 속성 2마리 이상이면 해당 속성
-        // 모두 다르면 Magic 같은 별도 결과 반환
-        return EPetElement.COUNT;
+        int elementMask = 0;
+
+        foreach (PetController pet in _pets)
+        {
+            int bitPosition = 1 << (int)pet.Element;
+
+            if ((elementMask & bitPosition) != 0)
+                return pet.Element;
+
+            elementMask |= bitPosition;
+        }
+
+        return PetElement.None;
     }
 
     // TODO(김익환): 편성된 펫 속성 비중 계산

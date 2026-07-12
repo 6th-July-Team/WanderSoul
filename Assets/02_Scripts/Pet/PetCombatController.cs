@@ -50,7 +50,7 @@ public class PetCombatController
 
     private bool HasValidTarget(PetCombatRuntime runtime, PetCombatContext context)
     {
-        if (runtime.SkillData.Trigger == EPetSkillTrigger.AutoInterval)
+        if (runtime.SkillData.Trigger == PetSkillTrigger.AutoInterval)
             return true;
 
         return context.Target != null && context.Target.IsAlive;
@@ -88,8 +88,8 @@ public class PetSkillData
     public string SkillId;
     public string DisplayName;
 
-    public EPetSkillType SkillType;
-    public EPetSkillTrigger Trigger;
+    public PetSkillType SkillType;
+    public PetSkillTrigger Trigger;
 
     public float Cooldown;
     public float CastRange;
