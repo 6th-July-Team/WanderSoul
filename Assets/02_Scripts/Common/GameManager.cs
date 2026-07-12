@@ -37,6 +37,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     #region Test Variables
     [SerializeField] private bool _skipStartupUIForTest = false;
+    public SOSkillDefinition TestSkillDefinition_ScholarBasicSkill;
     public Transform PlayerTransfrom { get; private set; }
 
     #endregion
@@ -65,12 +66,12 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     public void TestPlayerFollowMode()
     {
-        _petPartyController.SetPetCommand(EPetCommand.PlayerFollow);
+        _petPartyController.SetPetCommand(PetCommand.PlayerFollow);
     }
 
     public void TestWagonDefenseMode()
     {
-        _petPartyController.SetPetCommand(EPetCommand.GuardWagon);
+        _petPartyController.SetPetCommand(PetCommand.GuardWagon);
     }
     #endregion
 
