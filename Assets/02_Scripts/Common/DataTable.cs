@@ -16,6 +16,7 @@ public class DataTable
     public Dictionary<string, CharacterData> CharacterDataTable { get; private set; } = new();
     public Dictionary<string, PlayerStatData> PlayerStatDataTable { get; private set; } = new();
     public Dictionary<string, EnemySpawnData> EnemySpawnDataTable { get; private set; } = new();
+    public Dictionary<string, EnemyData> EnemyDataTable { get; private set; } = new();
 
     #endregion
 
@@ -35,6 +36,7 @@ public class DataTable
         //PoolDataTable = LoadData<PoolData>("Pool");
         PlayerStatDataTable = LoadData<PlayerStatData>("PlayerStatData");
         //EnemySpawnDataTable = LoadData<EnemySpawnData>("EnemySpawnData");
+        EnemyDataTable = LoadData<EnemyData>(nameof(EnemyData));
     }
 
     #region Getters

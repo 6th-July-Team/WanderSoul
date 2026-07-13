@@ -1,0 +1,16 @@
+﻿[
+  {
+    "Id": "Test",
+    "TargetPolicy": "PriorityBased",
+    "EnemyAttackType": "Melee",
+    "MaxHp": 50,
+    "DetectRange": 15,
+    "LeashRange": 20,
+    "Attack": 1,
+    "AttackSpeed": 1,
+    "AttackRange": 1.5,
+    "PreferredDistance": 0,
+    "CanMove": true,
+    "MoveSpeed": 3.5
+  }
+]

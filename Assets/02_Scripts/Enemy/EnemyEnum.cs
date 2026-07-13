@@ -2,7 +2,7 @@
 public enum TargetPolicy
 {
     PriorityBased,
-    CaravanOnly,
+    WagonOnly,
     PlayerOnly
 }
 
