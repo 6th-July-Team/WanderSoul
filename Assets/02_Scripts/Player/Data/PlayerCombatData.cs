@@ -28,8 +28,8 @@ public enum PlayerStatType
 public enum StatModifierOperation
 {
     Flat,
-    AdditivePercent,
-    MultiplicativePercent
+    AddPercent,
+    MultiplePercent
 }
 
 
