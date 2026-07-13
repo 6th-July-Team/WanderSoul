@@ -51,9 +51,15 @@ public abstract class BaseUI<TView, TViewModel> : BaseUI where TView : BaseUI<TV
 
     public void BindViewModel(TViewModel viewModel)
     {
+        if (_viewModel != null)
+        {
+            _viewModel.OnPropertyChanged_View -= OnPropertyChanged;
+            _viewModel.Dispose();
+        }
         _viewModel = viewModel;
         _viewModel.OnPropertyChanged_View += OnPropertyChanged;
         _viewModel.PropertyChangedOnInit();
+         
     }
 
     protected virtual void OnDestroy()
@@ -67,6 +73,3 @@ public abstract class BaseUI<TView, TViewModel> : BaseUI where TView : BaseUI<TV
 
     protected abstract void OnPropertyChanged(string propertyName);
 }
-//public abstract class BaseUI<T> : BaseUI where T : BaseUI<T>
-//{
-//}
