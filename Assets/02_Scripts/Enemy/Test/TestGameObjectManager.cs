@@ -29,7 +29,7 @@ public class TestGameObjectManager : MonoBehaviour
 
         MoveableEnemyView view = enemy.GetComponent<MoveableEnemyView>();
 
-        GameManager.DataTable.EnemyDataList.TryGetValue("Test", out EnemyData enemyData);
+        GameManager.DataTable.EnemyDataTable.TryGetValue("Test", out EnemyData enemyData);
 
         if (enemyData == null)
         {

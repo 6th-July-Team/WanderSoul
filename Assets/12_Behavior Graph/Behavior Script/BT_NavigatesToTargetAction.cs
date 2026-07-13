@@ -9,16 +9,16 @@ using UnityEngine.AI;
 [NodeDescription(name: "Navigates to Target", story: "[EnemySelf] Navigates to [Target]", category: "Action", id: "ae19bd74860c77d30fd3160bcb074737")]
 public partial class BT_NavigatesToTargetAction : Action
 {
-    [SerializeReference] public BlackboardVariable<GameObject> EnemySelf; // 적 자기 자신
-    [SerializeReference] public BlackboardVariable<GameObject> Target; // 타겟
-    [SerializeReference] public BlackboardVariable<float> MoveSpeed; // 이동 속도
-    [SerializeReference] public BlackboardVariable<float> StopDistance; // 정지 거리
-    [SerializeReference] public BlackboardVariable<float> RepathInterval; // 경로 재계산 최소 시간
-    
-    private static readonly int SPEED_MAGNITUDE_HASH = Animator.StringToHash(SPEED_PARAM); // SPEED_PARAM를 Animator에 전달해주기 위한 Hash
+    [SerializeReference] public BlackboardVariable<GameObject> EnemySelf;
+    [SerializeReference] public BlackboardVariable<GameObject> Target;
+    [SerializeReference] public BlackboardVariable<float> MoveSpeed;
+    [SerializeReference] public BlackboardVariable<float> StopDistance;
+    [SerializeReference] public BlackboardVariable<float> RepathInterval;
+
+    private const string SPEED_PARAM = "SpeedMagnitude";
+    private static readonly int SPEED_MAGNITUDE_HASH = Animator.StringToHash(SPEED_PARAM);
 
     private const float REPATH_DISTANCE = 0.5f; // 경로 재계산 최소 거리
-    private const string SPEED_PARAM = "SpeedMagnitude"; // Animator의 이동 속도 파라미터
 
     private const float PROGRESS_EPSILON = 0.25f; // 이만큼도 목적지에 가까워지지 못하면 진전 없음으로 간주 (군중 속에서 옆으로 밀리는 건 이동으로 안 침)
     private const float STUCK_TIME = 1.5f; // 이 시간 동안 진전이 없으면 대기 모드로 변경
@@ -85,13 +85,13 @@ public partial class BT_NavigatesToTargetAction : Action
             return Status.Success;
         }
 
-        if (_waitTimer > 0f)                            // 대기 모드: 밀지 않고 가만히
+        if (_waitTimer > 0f)
         {
             _waitTimer -= Time.deltaTime;
 
             if (_waitTimer <= 0f)
             {
-                _navMeshAgent_enemySelf.isStopped = false;   // 대기 끝 — 재시도 (앞줄이 죽어 빈자리가 났을 수 있음)
+                _navMeshAgent_enemySelf.isStopped = false;
             }
 
             return Status.Running;
@@ -104,7 +104,6 @@ public partial class BT_NavigatesToTargetAction : Action
         return Status.Running;
     }
 
-    // 노드 종료 시 navMeshAgent가 있고, navMesh 위에 있을 경우 ResetPath(=경로 초기화) 및 애니메이터가 있을 경우 Animator의 SpeedMagnitude(=이동 속도)값을 0으로 만든 후, navMeshAgent와 Animator를 초기화함
     protected override void OnEnd()
     {
         if (_navMeshAgent_enemySelf != null && _navMeshAgent_enemySelf.isOnNavMesh)
@@ -124,10 +123,9 @@ public partial class BT_NavigatesToTargetAction : Action
         _view = null;
     }
 
-    // _navMeshAgent_enemySelf가 pathPending(=경로 탐색) 중인지, reminingDistance(=목표와의 거리)가 stoppingDistance(=멈춰야 하는 거리)와 같거나 작은지 체크해서 bool값을 리턴하는 메서드
     private bool IsArrived()
     {
-        if (_navMeshAgent_enemySelf.pathPending) // SetDestination 직후에 경로 계산이 끝나기 전까지는 remainingDistance가 부정확하므로 도착 판정을 보류함
+        if (_navMeshAgent_enemySelf.pathPending)
         {
             return false;
         }
@@ -137,18 +135,16 @@ public partial class BT_NavigatesToTargetAction : Action
         return isArrived;
     }
 
-    // 목적지까지의 남은 거리가 STUCK_TIME 동안 줄어들지 않으면(속도가 아니라 "진전" 기준 — 군중에 밀려 옆으로 흔들리는 것은 진전이 아님)
-    // 밀기를 포기하고 잠시 대기 모드로 전환하는 메서드. 대기가 끝나면 재시도함 (앞줄이 죽어 빈자리가 났을 수 있음)
     private void UpdateStuckState()
     {
-        if (_navMeshAgent_enemySelf.pathPending) // 경로 계산 중엔 remainingDistance가 부정확하므로 판정 보류
+        if (_navMeshAgent_enemySelf.pathPending)
         {
             return;
         }
 
         float remainingDistance = _navMeshAgent_enemySelf.remainingDistance;
 
-        if (remainingDistance < _bestRemainingDistance - PROGRESS_EPSILON) // 목적지에 실제로 가까워졌는가?
+        if (remainingDistance < _bestRemainingDistance - PROGRESS_EPSILON)
         {
             _bestRemainingDistance = remainingDistance;
             _stuckTimer = 0f;

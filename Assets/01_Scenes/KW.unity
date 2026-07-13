@@ -397,6 +397,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cf7f1c9c9068a24f872ab953ef9d848, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  _skipStartupUIForTest: 0
+  TestSkillDefinition_ScholarBasicSkill: {fileID: 0}
 --- !u!4 &154838557
 Transform:
   m_ObjectHideFlags: 0
@@ -1026,7 +1028,7 @@ GameObject:
   - component: {fileID: 510603616}
   - component: {fileID: 510603615}
   - component: {fileID: 510603614}
-  m_Layer: 6
+  m_Layer: 11
   m_Name: PetTagObject
   m_TagString: Pet
   m_Icon: {fileID: 0}
@@ -1120,7 +1122,7 @@ Transform:
   m_GameObject: {fileID: 510603613}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.8, y: 1.21, z: 0.8808403}
+  m_LocalPosition: {x: 27.6, y: -0.11, z: 20.06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2393,7 +2395,7 @@ Transform:
   m_GameObject: {fileID: 1740318924}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.5580096, y: 0.46, z: -7.06}
+  m_LocalPosition: {x: 16.11, y: -0.14, z: 33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

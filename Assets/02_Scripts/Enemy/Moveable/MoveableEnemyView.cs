@@ -155,7 +155,20 @@ public class MoveableEnemyView : BaseView<MoveableEnemyViewModel>, IDamageable, 
             }
 
             IDamageable damageable = target.GetComponent<IDamageable>();
-            damageable?.TakeDamage(_viewModel.Attack);
+
+            if (damageable != null)
+            {
+                Vector3 hitDirection = (target.transform.position - transform.position).normalized;
+
+                DamageInfo damageInfo = new DamageInfo(
+                    attacker: this,
+                    sourceId: "EnemyMeleeAttack",       // [TODO] 소스ID 규칙은 팀 협의
+                    damageAmount: _viewModel.Attack,
+                    damageType: EDamageType.Physical, // 근접 물리 공격 — 추후 몬스터별 속성이 생기면 데이터로 이동
+                    hitDirection: hitDirection);
+
+                damageable.TakeDamage(damageInfo);
+            }
         }
     }
 
@@ -167,12 +180,14 @@ public class MoveableEnemyView : BaseView<MoveableEnemyViewModel>, IDamageable, 
         }
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(DamageInfo damageInfo)
     {
         if (_viewModel.EnemyState == BT_MoveableEnemyState.Dead)
         {
             return;
         }
+
+        int damage = Mathf.RoundToInt(damageInfo.DamageAmount);
 
         bool isDamaged = _viewModel.TakeDamage(damage);
 

@@ -9,9 +9,9 @@ public class TestWagon : MonoBehaviour, IDamageable
         Hp = 1000;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(DamageInfo damageInfo)
     {
-        Hp -= damage;
+        Hp -= Mathf.RoundToInt(damageInfo.DamageAmount);
 
         Debug.Log($"남은 체력 : {Hp}");
 
