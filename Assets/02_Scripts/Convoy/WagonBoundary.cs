@@ -4,7 +4,7 @@ public class WagonBoundary : MonoBehaviour
 {
     private WagonViewModel _viewModel;
 
-    private float _warningDuration = 20f;
+    private float _warningDuration = 10f;
     private float _warningTimer = 0f;
     private bool _isWarningActive = false;
 
