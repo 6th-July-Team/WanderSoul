@@ -3,10 +3,7 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags:
-  - Pet
-  - Enemy
-  - Wagon
+  tags: []
   layers:
   - Default
   - TransparentFX
@@ -14,11 +11,11 @@ TagManager:
   - 
   - Water
   - UI
-  - Pet
+  - 
   - Player
   - Enemy
-  - EnemySensor
   - 
+  - Ground
   - 
   - 
   - 
