@@ -44,8 +44,8 @@ public class PlayerStatController
         float baseValue = GetBaseValue(statType);
 
         float flat = 0f;
-        float additivePercent = 0f;
-        float multiplicativeMultiplier = 1f;
+        float addPercent = 0f;
+        float multipleMultiplier = 1f;
 
         foreach (StatModifier modifier in _modifiers)
         {
@@ -58,20 +58,20 @@ public class PlayerStatController
                     flat += modifier.Value;
                     break;
 
-                case StatModifierOperation.AdditivePercent:
-                    additivePercent += modifier.Value;
+                case StatModifierOperation.AddPercent:
+                    addPercent += modifier.Value;
                     break;
 
-                case StatModifierOperation.MultiplicativePercent:
-                    multiplicativeMultiplier *= 1f + modifier.Value;
+                case StatModifierOperation.MultiplePercent:
+                    multipleMultiplier *= 1f + modifier.Value;
                     break;
             }
         }
 
         float result =
             (baseValue + flat) *
-            (1f + additivePercent) *
-            multiplicativeMultiplier;
+            (1f + addPercent) *
+            multipleMultiplier;
 
         return ApplyLimit(statType, result);
     }

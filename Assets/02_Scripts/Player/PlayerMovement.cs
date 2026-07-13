@@ -2,7 +2,7 @@
 
 [RequireComponent(typeof(PlayerInputHandle))]
 [RequireComponent(typeof(CharacterController))]
-public class PlayerMovement : MonoBehaviour, ITargetable // MoveMent에 필요없는 인터페이스임
+public class PlayerMovement : MonoBehaviour // MoveMent에 필요없는 인터페이스임
 {
     [Header("Movement")]
     [SerializeField] private float _moveSpeed = 5f;
@@ -28,12 +28,6 @@ public class PlayerMovement : MonoBehaviour, ITargetable // MoveMent에 필요�
     // Components
     private PlayerInputHandle _inputHandle;
     private CharacterController _characterController;
-
-    public bool IsAlive => true;
-
-    public EntityType EntityType => EntityType.Player;
-
-    public Vector3 Position => transform.position;
 
     private void Awake()
     {
