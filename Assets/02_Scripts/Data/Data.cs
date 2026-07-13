@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 [Serializable]
 public class BaseData
@@ -114,4 +115,11 @@ public class PlayerStatData : BaseData
             _ => 0f
         };
     }
-}   
+}
+
+[Serializable]
+public class EnemySpawnData : BaseData
+{
+    public float SpawnInterval;
+    public List<string> EnemyIds;
+}

@@ -6,7 +6,8 @@ public class ConvoyManager
     private string _selectedQuestId;
     private List<string> _selectedPetIds = new();
 
-    
+    private Wagon _wagon;
+
     // 의뢰 시작 -> 펫 선택 -> 로딩 UI를 보여주며 아래 init 함수 호출.
     public void InitConvoy(string questId, List<string> selectedPetIds)
     {
@@ -18,8 +19,28 @@ public class ConvoyManager
         StartConvoyAsync();
     }
 
+    public void FaildConvoy()
+    {
 
-    public void StartConvoyAsync()
+    }
+
+    public void SuccessConvoy()
+    {
+    }
+
+    public string Release()
+    {
+        // 게임 상태 변경
+        // 풀 사용한거 Despawn - 몬스터
+        // 펫 소환 해제
+        // 플레이어 제거.
+        // 마차 제거
+
+        // TODO 결과에 따라 실패 시 의뢰 출발 마을 ID, 성공 시 도착 마을 ID 반환
+        return "테스트 ID";
+    }
+
+    private void StartConvoyAsync()
     {
         // LoadingUI.Show();
 
@@ -68,7 +89,7 @@ public class ConvoyManager
         // 아래 TEST용
         // 마차
         GameObject wagonInstance = GameObject.Instantiate(Utils.ResourcesLoad<GameObject>("Test_Wagon"));
-        Wagon wagon = wagonInstance.GetComponent<Wagon>();
+        _wagon = wagonInstance.GetComponent<Wagon>();
 
         // 플레이어
         // PetPartyController petParty = player.GetComponent<PetPartyController>();
@@ -90,7 +111,7 @@ public class ConvoyManager
         // 펫 파티
 
 
-        GameManager.PetParty.Init(playerMovement, wagon, petControllers);
+        GameManager.PetParty.Init(playerMovement, _wagon, petControllers);
     }
 
     private void StartBattle()
