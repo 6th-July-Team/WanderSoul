@@ -275,6 +275,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cf7f1c9c9068a24f872ab953ef9d848, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
+  _skipStartupUIForTest: 0
+  TestSkillDefinition_ScholarBasicSkill: {fileID: 0}
 --- !u!4 &605303300
 Transform:
   m_ObjectHideFlags: 0

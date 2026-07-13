@@ -24,6 +24,7 @@ public class TitleUI : BaseUI
         OpenResourceHudTest();
         OpenPartyHudTest();
         OpenVillageInfoHudTest();
+        OpenSkillHudTest();
     }
 
     private void OnClickOption()
@@ -78,6 +79,15 @@ public class TitleUI : BaseUI
         if (view != null)
         {
             view.BindViewModel(viewModel);
+        }
+    }
+
+    private void OpenSkillHudTest()
+    {
+        var view = GameManager.UI.OpenUI<SkillHudUIView>(UIType.SkillHudUIView);
+        if (view == null)
+        {
+            Debug.LogWarning("스킬 HUD를 열 수 없습니다");
         }
     }
 }
