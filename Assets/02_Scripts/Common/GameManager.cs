@@ -1,4 +1,4 @@
-
+﻿
 public class GameManager : SingletonBehaviour<GameManager>
 {
     public static ResourceManager Resource { get { return Instance._resourceManager; } }
@@ -22,6 +22,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     protected override void Init()
     {
         base.Init();
+        DataTable.LoadAllData();
     }
 
 

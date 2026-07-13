@@ -23,13 +23,19 @@ public class EnemyTargetSensor : MonoBehaviour
 
     private void GetAndSetCollider()
     {
-        _collider = GetComponent<SphereCollider>();
-        _collider.isTrigger = true;
+        if (_collider == null)
+        {
+            _collider = GetComponent<SphereCollider>();
+            _collider.isTrigger = true;
+        }
     }
 
     private void GetAndSetISensorListener()
     {
-        _listener = GetComponentInParent<ISensorListener>();
+        if (_listener == null)
+        {
+            _listener = GetComponentInParent<ISensorListener>();
+        }
     }
 
     private void OnTriggerEnter(Collider other)

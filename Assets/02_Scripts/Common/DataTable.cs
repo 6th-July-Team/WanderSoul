@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DataTable
 {
-    
+    public Dictionary<string, EnemyData> EnemyDataList {  get; private set; }
 
     [Serializable]
     class SerializationWrapper<T>
@@ -16,7 +16,12 @@ public class DataTable
 
     public void LoadAllData()
     {
-        
+        LoadEnemyData();
+    }
+
+    private void LoadEnemyData()
+    {
+        EnemyDataList = LoadData<EnemyData>(nameof(EnemyData));
     }
 
 
