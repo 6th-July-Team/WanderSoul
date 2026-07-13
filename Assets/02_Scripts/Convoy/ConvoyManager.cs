@@ -19,6 +19,15 @@ public class ConvoyManager
         StartConvoyAsync();
     }
 
+    public void FaildConvoy()
+    {
+
+    }
+
+    public void SuccessConvoy()
+    {
+    }
+
     public string Release()
     {
         // 게임 상태 변경
