@@ -15,6 +15,8 @@ public class DataTable
     public Dictionary<string, ItemData> ItemDataTable { get; private set; } = new();
     public Dictionary<string, CharacterData> CharacterDataTable { get; private set; } = new();
     public Dictionary<string, PlayerStatData> PlayerStatDataTable { get; private set; } = new();
+    public Dictionary<string, QuestData> QuestDataTable { get; private set; } = new();
+    public Dictionary<string, StageData> StageDataTable { get; private set; } = new();
 
     #endregion
 
@@ -26,13 +28,15 @@ public class DataTable
 
     public void LoadAllData()
     {
-        TownDataTable = LoadData<TownData>("Town");
-        RegionDataTable = LoadData<RegionData>("Region");
-        ReputationGradeDataTable = LoadData<ReputationGradeData>("ReputationGrade");
-        ItemDataTable = LoadData<ItemData>("Item");
-        CharacterDataTable = LoadData<CharacterData>("Character");
+        TownDataTable = LoadData<TownData>("TownData");
+        RegionDataTable = LoadData<RegionData>("RegionData");
+        ReputationGradeDataTable = LoadData<ReputationGradeData>("ReputationGradeData");
+        ItemDataTable = LoadData<ItemData>("ItemData");
+        CharacterDataTable = LoadData<CharacterData>("CharacterData");
         PoolDataTable = LoadData<PoolData>("Pool");
         PlayerStatDataTable = LoadData<PlayerStatData>("PlayerStatData");
+        QuestDataTable = LoadData<QuestData>("QuestData");
+        StageDataTable = LoadData<StageData>("StageData");
     }
 
     #region Getters
@@ -112,6 +116,38 @@ public class DataTable
     {
         if (null == PlayerStatDataTable || string.IsNullOrEmpty(id)) return null;
         return PlayerStatDataTable.TryGetValue(id, out var data) ? data : null;
+    }
+
+    public QuestData GetQuestData(string questId)
+    {
+        if (string.IsNullOrEmpty(questId))
+        {
+            return null;
+        }
+
+        if (QuestDataTable.ContainsKey(questId) == false)
+        {
+            Debug.LogWarning($"퀘스트 데이터를 찾을 수 없습니다: {questId}");
+            return null;
+        }
+
+        return QuestDataTable[questId];
+    }
+
+    public StageData GetStageData(string stageId)
+    {
+        if (string.IsNullOrEmpty(stageId))
+        {
+            return null;
+        }
+
+        if (StageDataTable.ContainsKey(stageId) == false)
+        {
+            Debug.LogWarning($"스테이지 데이터를 찾을 수 없습니다: {stageId}");
+            return null;
+        }
+
+        return StageDataTable[stageId];
     }
 
 

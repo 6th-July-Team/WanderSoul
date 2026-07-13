@@ -56,6 +56,31 @@ public class ItemData : BaseData
 }
 
 [Serializable]
+public class QuestData : BaseData
+{
+    public string Name;
+    public string Description;
+    public string QuestType;
+    public int Difficulty;
+    public int RequiredReputation;
+    public string StageId;
+    public int GoldReward;
+    public int ReputationReward;
+}
+
+[Serializable]
+public class StageData : BaseData
+{
+    public string Name;
+    public string StagePrefabPath;
+    public string WagonId;
+    public string TerrainType;
+    public string Description;
+    public string StartTownId;
+    public string ArrivalTownId;
+}
+
+[Serializable]
 public class PoolData : BaseData
 {
     public int InitSize;
