@@ -19,17 +19,16 @@ public class ConvoyManager
         StartConvoyAsync();
     }
 
-    public void GetResult()
-    {
-
-    }
-
-    public void Release()
+    public string Release()
     {
         // 게임 상태 변경
-        // HUD 제거
+        // 풀 사용한거 Despawn - 몬스터
         // 펫 소환 해제
+        // 플레이어 제거.
         // 마차 제거
+
+        // TODO 결과에 따라 실패 시 의뢰 출발 마을 ID, 성공 시 도착 마을 ID 반환
+        return "테스트 ID";
     }
 
     private void StartConvoyAsync()
