@@ -49,6 +49,7 @@ public class InventoryUIView : BaseUI<InventoryUIView, InventoryViewModel>
         _isClosing = false;
         CacheOriginPositions();
         GameManager.Time.OnPause();
+        GameManager.UI.SlideOutHud();
         PlayOpenAnimation();
 
         _detailPanel.SetActive(false);
@@ -70,6 +71,7 @@ public class InventoryUIView : BaseUI<InventoryUIView, InventoryViewModel>
             return;
         }
         _isClosing = true;
+        GameManager.UI.SlideInHud();
         PlayCloseAnimation();
     }
 
@@ -96,27 +98,35 @@ public class InventoryUIView : BaseUI<InventoryUIView, InventoryViewModel>
 
     private void PlayOpenAnimation()
     {
+        _dimCanvasGroup.DOKill();
         _dimCanvasGroup.alpha = 0f;
         _dimCanvasGroup.DOFade(1f, ANIM_DURATION);
 
+        _topRect.DOKill();
         _topRect.anchoredPosition = _topOriginPos + new Vector2(0f, SLIDE_DISTANCE);
         _topRect.DOAnchorPos(_topOriginPos, ANIM_DURATION).SetEase(Ease.OutCubic);
 
+        _leftRect.DOKill();
         _leftRect.anchoredPosition = _leftOriginPos + new Vector2(-SLIDE_DISTANCE, 0f);
         _leftRect.DOAnchorPos(_leftOriginPos, ANIM_DURATION).SetEase(Ease.OutCubic);
 
+        _rightRect.DOKill();
         _rightRect.anchoredPosition = _rightOriginPos + new Vector2(SLIDE_DISTANCE, 0f);
         _rightRect.DOAnchorPos(_rightOriginPos, ANIM_DURATION).SetEase(Ease.OutCubic);
     }
 
     private void PlayCloseAnimation()
     {
+        _dimCanvasGroup.DOKill();
         _dimCanvasGroup.DOFade(0f, ANIM_DURATION);
 
+        _topRect.DOKill();
         _topRect.DOAnchorPos(_topOriginPos + new Vector2(0f, SLIDE_DISTANCE), ANIM_DURATION).SetEase(Ease.InCubic);
 
+        _leftRect.DOKill();
         _leftRect.DOAnchorPos(_leftOriginPos + new Vector2(-SLIDE_DISTANCE, 0f), ANIM_DURATION).SetEase(Ease.InCubic);
 
+        _rightRect.DOKill();
         _rightRect.DOAnchorPos(_rightOriginPos + new Vector2(SLIDE_DISTANCE, 0f), ANIM_DURATION).SetEase(Ease.InCubic).OnComplete(OnCloseAnimationComplete);
     }
 

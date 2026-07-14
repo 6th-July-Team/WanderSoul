@@ -10,6 +10,7 @@ public partial class UIManager
     private Canvas _popupRoot;
     private Canvas _veryFrontRoot;
 
+    private List<UISlideAnimation> _hudAnimations = new List<UISlideAnimation>();
 
     private Dictionary<UIType, BaseUI> _createdUIDic = new Dictionary<UIType, BaseUI>();
 
@@ -147,6 +148,9 @@ public partial class UIManager
             case UIType.PlayerHudUIView:
                 return UIRootType.Main;
 
+            case UIType.SkillHudUIView:
+                return UIRootType.Main;
+
             default:
                 Debug.LogError($"{uiType}에 지정된 UIRootType이 없습니다.");
                 return UIRootType.Main;
@@ -172,4 +176,51 @@ public partial class UIManager
                 return null;
         }
     }
+    public void RegisterHudAnimation(UISlideAnimation animation)
+    {
+        if (animation == null)
+        {
+            return;
+        }
+
+        if (_hudAnimations.Contains(animation) == true)
+        {
+            return;
+        }
+
+        _hudAnimations.Add(animation);
+    }
+
+    public void UnregisterHudAnimation(UISlideAnimation animation)
+    {
+        if (animation == null)
+        {
+            return;
+        }
+
+        _hudAnimations.Remove(animation);
+    }
+
+    public void SlideOutHud()
+    {
+        foreach (var animation in _hudAnimations)
+        {
+            if (animation != null)
+            {
+                animation.SlideOut();
+            }
+        }
+    }
+
+    public void SlideInHud()
+    {
+        foreach (var animation in _hudAnimations)
+        {
+            if (animation != null)
+            {
+                animation.SlideIn();
+            }
+        }
+    }
+
 }
