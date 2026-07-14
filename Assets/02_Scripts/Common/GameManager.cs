@@ -39,6 +39,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     #region Test Variables
     [SerializeField] private bool _skipStartupUIForTest = false;
     public SOSkillDefinition TestSkillDefinition_ScholarBasicSkill;
+    public SOPetSkillInfo TestSOPetSkillInfo;
     public Transform PlayerTransfrom { get; private set; }
 
     #endregion
@@ -116,7 +117,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         // 해당 시점 이전에 의뢰 선택 및 펫 선택이 완료되어야 합니다.
         // 선택된 의뢰 ID 및 선택된 펫 ID 리스트가 아래 필요합니다.
-        List<string> testSelectedPetIds = new List<string> { "Test_Pet1", "Test_Pet2", "Test_Pet3" };
+        List<string> testSelectedPetIds = new List<string> { "pet_fire_001", "pet_water_002", "pet_earth_003" };
         _convoyManager.InitConvoy("TEST", testSelectedPetIds);
 
         ExitVillage();
@@ -140,6 +141,11 @@ public class GameManager : SingletonBehaviour<GameManager>
     public void TestWagonDefenseMode()
     {
         _petPartyController.SetPetCommand(PetCommand.GuardWagon);
+    }
+
+    public void TestWagonAggressiveMode()
+    {
+        _petPartyController.SetPetCommand(PetCommand.Aggressive);
     }
     #endregion
 }

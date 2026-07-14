@@ -5,15 +5,14 @@ public class SOPetSkillInfo : ScriptableObject
 {
     public string Id;
     public string Name;
-
+    public float BaseDamage;
     public float Cooldown;
-    public float Range;
+    public float CastRange;
     public float Power;
     public float Duration;
     public float Radius;
 
-    public PetSkillType SkillSlot;
-    public PetSkillTrigger TriggerType;
+    public PetSkillSlot SkillSlot;
 
-    public SkillBehavior BehaviorType;
+    public string Effect;
 }

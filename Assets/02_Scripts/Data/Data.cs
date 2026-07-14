@@ -172,3 +172,42 @@ public class EnemyData : BaseData, ISerializationCallbackReceiver
     public bool CanMove; // 고정형인지 아닌지
     public float MoveSpeed; // 이동속도
 }
+
+[Serializable]
+public class PetStatData : BaseData
+{
+    public float MaxHealth;
+    public float BasicPower;
+    public float Defense;
+    public float FireResistance;
+    public float ColdResistance;
+    public float ElectricResistance;
+    public float MagicResistance;
+    public float MoveSpeed;
+    public float HealthRegeneration;
+    public float CooldownReduction;
+    public float CritChance;
+    public float CritMultiplier;
+    public float LifeSteal;
+
+    public float GetBaseValue(PetStatType statType)
+    {
+        return statType switch
+        {
+            PetStatType.MaxHealth => MaxHealth,
+            PetStatType.BasicPower => BasicPower,
+            PetStatType.Defense => Defense,
+            PetStatType.FireResistance => FireResistance,
+            PetStatType.ColdResistance => ColdResistance,
+            PetStatType.ElectricResistance => ElectricResistance,
+            PetStatType.MagicResistance => MagicResistance,
+            PetStatType.MoveSpeed => MoveSpeed,
+            PetStatType.HealthRegeneration => HealthRegeneration,
+            PetStatType.CooldownReduction => CooldownReduction,
+            PetStatType.CritChance => CritChance,
+            PetStatType.CritMultiplier => CritMultiplier,
+            PetStatType.LifeSteal => LifeSteal,
+            _ => 0f
+        };
+    }
+}

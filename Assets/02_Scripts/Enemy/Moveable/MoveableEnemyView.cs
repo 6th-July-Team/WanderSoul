@@ -161,11 +161,8 @@ public class MoveableEnemyView : BaseView<MoveableEnemyViewModel>, IDamageable, 
                 Vector3 hitDirection = (target.transform.position - transform.position).normalized;
 
                 DamageInfo damageInfo = new DamageInfo(
-                    attacker: this,
-                    sourceId: "EnemyMeleeAttack",       // [TODO] 소스ID 규칙은 팀 협의
-                    damageAmount: _viewModel.Attack,
-                    damageType: EDamageType.Physical, // 근접 물리 공격 — 추후 몬스터별 속성이 생기면 데이터로 이동
-                    hitDirection: hitDirection);
+                    damageAmount: _viewModel.Attack
+                    , hitDirection: hitDirection);
 
                 damageable.TakeDamage(damageInfo);
             }
@@ -174,6 +171,8 @@ public class MoveableEnemyView : BaseView<MoveableEnemyViewModel>, IDamageable, 
 
     public void Died()
     {
+        OnEnemyDied?.Invoke();
+
         if (_viewModel.EnemyState == BT_MoveableEnemyState.Dead)
         {
             Animator_Self.SetBool(IS_DEAD_HASH, true);

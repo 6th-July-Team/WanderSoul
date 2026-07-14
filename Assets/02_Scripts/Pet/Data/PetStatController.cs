@@ -1,35 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 
-public class PlayerStatController
+public class PetStatController
 {
-    private readonly Dictionary<PlayerStatType, float> _baseValues = new();
-    private readonly List<PlayerStatModifier> _modifiers = new();
+    private readonly Dictionary<PetStatType, float> _baseValues = new();
+    private readonly List<PetStatModifier> _modifiers = new();
 
-    public PlayerStatController(PlayerStatData data)
+    public PetStatController(PetStatData data)
     {
-        for (int i = 0; i < (int)PlayerStatType.COUNT; i++)
+        for (int i = 0; i < (int)PetStatType.COUNT; i++)
         {
-            _baseValues[(PlayerStatType)i] = data.GetBaseValue((PlayerStatType)i);
+            _baseValues[(PetStatType)i] = data.GetBaseValue((PetStatType)i);
         }
     }
 
-    public void SetBaseValue(PlayerStatType statType, float value)
+    public void SetBaseValue(PetStatType statType, float value)
     {
         _baseValues[statType] = value;
     }
 
-    public float GetBaseValue(PlayerStatType statType)
+    public float GetBaseValue(PetStatType statType)
     {
         return _baseValues.TryGetValue(statType, out float value) ? value : 0f;
     }
 
-    public void AddModifier(PlayerStatModifier modifier)
+    public void AddModifier(PetStatModifier modifier)
     {
         _modifiers.Add(modifier);
     }
 
-    public void RemoveModifiers(PlayerStatType statType)
+    public void RemoveModifiers(PetStatType statType)
     {
         _modifiers.RemoveAll(modifier => modifier.StatType == statType);
     }
@@ -39,7 +39,7 @@ public class PlayerStatController
         _modifiers.Clear();
     }
 
-    public float GetValue(PlayerStatType statType)
+    public float GetValue(PetStatType statType)
     {
         float baseValue = GetBaseValue(statType);
 
@@ -47,7 +47,7 @@ public class PlayerStatController
         float addPercent = 0f;
         float multipleMultiplier = 1f;
 
-        foreach (PlayerStatModifier modifier in _modifiers)
+        foreach (PetStatModifier modifier in _modifiers)
         {
             if (modifier.StatType != statType)
                 continue;
@@ -76,18 +76,18 @@ public class PlayerStatController
         return ApplyLimit(statType, result);
     }
 
-    private float ApplyLimit(PlayerStatType statType, float value)
+    private float ApplyLimit(PetStatType statType, float value)
     {
         return statType switch
         {
             // TODO(김익환): 아래 임시 값, 제한 값 따로 존재한다면 데이터 드리븐이로 가져오기
             // 임시 수치
-            PlayerStatType.FireResistance => Math.Clamp(value, 0f, 0.8f),
-            PlayerStatType.ColdResistance => Math.Clamp(value, 0f, 0.8f),
-            PlayerStatType.ElectricResistance => Math.Clamp(value, 0f, 0.8f),
-            PlayerStatType.ElementalResistance => Math.Clamp(value, 0f, 0.8f),
-            PlayerStatType.CooldownReduction => Math.Clamp(value, 0f, 0.6f),
-            PlayerStatType.MoveSpeed => Math.Max(0f, value),
+            PetStatType.FireResistance => Math.Clamp(value, 0f, 0.8f),
+            PetStatType.ColdResistance => Math.Clamp(value, 0f, 0.8f),
+            PetStatType.ElectricResistance => Math.Clamp(value, 0f, 0.8f),
+            PetStatType.MagicResistance => Math.Clamp(value, 0f, 0.8f),
+            PetStatType.CooldownReduction => Math.Clamp(value, 0f, 0.6f),
+            PetStatType.MoveSpeed => Math.Max(0f, value),
             _ => value
         };
     }

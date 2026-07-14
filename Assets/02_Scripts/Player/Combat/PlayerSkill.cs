@@ -8,11 +8,11 @@ public class PlayerSkill
 
     private PlayerStatController _statController;
     private ManaPool _manaPool;
-    private readonly ISkillExecution _execution;
+    private readonly IPlayerSkillExecution _execution;
     private float _remainingCooldtime;
 
 
-    public PlayerSkill(SOSkillDefinition definition, ISkillExecution execution, ManaPool manaPool, PlayerStatController statController)
+    public PlayerSkill(SOSkillDefinition definition, IPlayerSkillExecution execution, ManaPool manaPool, PlayerStatController statController)
     {
         Definition = definition;
         _execution = execution;
@@ -28,7 +28,7 @@ public class PlayerSkill
         _remainingCooldtime = Mathf.Max(0f, _remainingCooldtime - deltaTime);
     }
 
-    public void TryExecuteSkill(SkillUseContext context)
+    public void TryExecuteSkill(PlayerSkillUseContext context)
     {
         if (!IsReady)
             return;

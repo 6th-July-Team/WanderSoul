@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: TEST_Angel_SOPetSearch
   m_EditorClassIdentifier: Assembly-CSharp::SOPetSearch
   RangeWhenFollowPlayer: 6
-  RangeWhenDefense: 4
-  RangeWhenCombat: 10
+  RangeWhenGuardCart: 4
+  RangeWhenAggressive: 10
