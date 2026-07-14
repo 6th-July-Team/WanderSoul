@@ -22,11 +22,16 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable
 
     private PetMovement _petMovement;
 
+    private PetStatController _petStatController;
     private PetStausController _petStausController;
-    private PetCombatController _petCombatController;
-    private PetCommandController _petCommandController;
+    private PetCommandController _petCommandController; 
+
+    private PetCombatController _combatController;
+    private PetSkillMaker _skillMaker;
 
     private bool isInitialized = false;
+
+    private PetCommandResult _commandResult;
 
     private void Awake()
     {
@@ -37,7 +42,13 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable
     public void Init(string petId, IPositionProvider playerAnchor, IPositionProvider wagonAnchor)
     {
         _petStausController = new();
-        _petCombatController = new();
+
+        PetStatData petStatData = GameManager.DataTable.GetPetStatData(petId);
+        _petStatController = new(petStatData);
+
+        _skillMaker = new();
+        _combatController = _skillMaker.CreateCombatController(petId, _petStatController);
+
         _petCommandController = new(playerAnchor, wagonAnchor, this, __SOPetSearch, 32);
 
         _petMovement.Init(petId);
@@ -51,7 +62,18 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable
         if (false == isInitialized)
             return;
 
-        _commandRefreshTimer += Time.deltaTime;
+        if(GameManager.Time.IsPaused)
+            return;
+
+        _combatController.Update(Time.deltaTime);
+
+        UpdateCommand(Time.deltaTime);
+        UpdateCombat();
+    }
+
+    private void UpdateCommand(float deltaTime)
+    {
+        _commandRefreshTimer += deltaTime;
 
         if (_commandRefreshTimer < _commandRefreshInterval)
             return;
@@ -59,12 +81,43 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable
         _commandRefreshTimer = 0f;
 
         GetCommandAndApply();
+    }
 
-        //_petCombatController.SetTarget(result.Target);
+    private void UpdateCombat()
+    {
+        ITargetable target = _commandResult.Target;
+
+        if (null == target || !target.IsAlive)
+            return;
+
+        if (_combatController.IsBusy)
+        {
+            _petMovement.Stop();
+            return;
+        }
+
+        PetActiveSkill selectedSkill = _combatController.SelectSkill(target);
+
+        if (selectedSkill == null)
+            return;
+
+        float castRange = selectedSkill.CastRange;
+
+        _petMovement.SetCombatRange(castRange);
+
+        if (!_petMovement.IsTargetInRange(target, castRange))
+            return;
+
+        _petMovement.Stop();
+
+        PetSkillUseContext context = new PetSkillUseContext();
+
+        _combatController.TryExecute(selectedSkill, context);
     }
 
     public void TakeDamage(DamageInfo damageInfo)
     {
+        // TODO(김익환): 저항 적용하기
         _petStausController.TakeDamage(damageInfo);
     }
 
@@ -76,10 +129,20 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable
 
     private void GetCommandAndApply()
     {
-        PetCommandResult result = _petCommandController.GetCommandResult();
-        _petMovement.ApplyCommand(result);
+        _commandResult = _petCommandController.GetCommandResult();
+
+        _petMovement.ApplyCommand(_commandResult);
     }
 
-    // 명령에 따른 행동 실행
-    // 전투 시퀀스 실행
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, __SOPetSearch.RangeWhenGuardCart);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, __SOPetSearch.RangeWhenFollowPlayer);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, __SOPetSearch.RangeWhenAggressive);
+    }
 }

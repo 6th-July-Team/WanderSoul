@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerAimHandler))]
@@ -16,19 +16,23 @@ public class PlayerCombatController : MonoBehaviour
 
     // skill
     private PlayerClassSkillBuild _skillBuild;
-
     private PlayerClassSkillMaker _skillMaker;
+
+    private bool isInitialized = false;
 
     private void Awake()
     {
         _inputHandle = GetComponent<PlayerInputHandle>();
         _aimHandler = GetComponent<PlayerAimHandler>();
 
-        Init();
+        // TODO(김익환): 추후 Init 함수는 플레이어가 소환될 때 호출하기.
+        Init().Forget();
     }
 
-    public void Init()
+    // TEST: Awkae에서 호출하다 보니 플로우 문제가 있음 이후 삭제 예정
+    public async UniTask Init()
     {
+        await UniTask.WaitForSeconds(0.1f);
         PlayerStatData playerStatData = GameManager.DataTable.GetPlayerStatData("테스트 직업 아이디");
         _statController = new(playerStatData);
 
@@ -36,6 +40,8 @@ public class PlayerCombatController : MonoBehaviour
         _skillMaker = new(ManaPool);
 
         _skillBuild = _skillMaker.CreateSkillBuild("테스트 직업 아이디", _statController);
+
+        isInitialized = true;
     }
 
     private void OnEnable()
@@ -54,7 +60,7 @@ public class PlayerCombatController : MonoBehaviour
 
     private void Update()
     {
-        if (GameManager.Time.IsPaused)
+        if (GameManager.Time.IsPaused || !isInitialized)
             return;
 
         ManaPool.Update(Time.deltaTime);
@@ -86,8 +92,8 @@ public class PlayerCombatController : MonoBehaviour
         _skillBuild.TryExecuteSkill(skillSlot, CreateSkillUseContext());
     }
 
-    private SkillUseContext CreateSkillUseContext()
+    private PlayerSkillUseContext CreateSkillUseContext()
     {
-        return new SkillUseContext(_aimHandler.transform, _aimHandler.AimDirection, _aimHandler.AimWorldPoint);
+        return new PlayerSkillUseContext(_aimHandler.transform, _aimHandler.AimDirection, _aimHandler.AimWorldPoint);
     }
 }

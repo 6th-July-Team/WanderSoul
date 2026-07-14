@@ -16,9 +16,11 @@ public class DataTable
     public Dictionary<string, CharacterData> CharacterDataTable { get; private set; } = new();
     public Dictionary<string, PlayerStatData> PlayerStatDataTable { get; private set; } = new();
     public Dictionary<string, PetData> PetDataTable { get; private set; } = new();
-    public Dictionary<string, PetStatData> PetStatDataTable { get; private set; } = new();
     public Dictionary<string, QuestData> QuestDataTable { get; private set; } = new();
     public Dictionary<string, StageData> StageDataTable { get; private set; } = new();
+    public Dictionary<string, EnemySpawnData> EnemySpawnDataTable { get; private set; } = new();
+    public Dictionary<string, EnemyData> EnemyDataTable { get; private set; } = new();
+    public Dictionary<string, PetStatData> PetStatDataTable { get; private set; } = new();
 
     #endregion
 
@@ -38,9 +40,11 @@ public class DataTable
         PoolDataTable = LoadData<PoolData>("Pool");
         PlayerStatDataTable = LoadData<PlayerStatData>("PlayerStatData");
         PetDataTable = LoadData<PetData>("PetData");
-        PetStatDataTable = LoadData<PetStatData>("PetStatData");
         QuestDataTable = LoadData<QuestData>("QuestData");
         StageDataTable = LoadData<StageData>("StageData");
+        //EnemySpawnDataTable = LoadData<EnemySpawnData>("EnemySpawnData");
+        EnemyDataTable = LoadData<EnemyData>(nameof(EnemyData));
+        PetStatDataTable = LoadData<PetStatData>(nameof(PetStatData));
     }
 
     #region Getters
@@ -69,12 +73,6 @@ public class DataTable
         return CharacterDataTable.TryGetValue(characterId, out var data) ? data : null;
     }
 
-    public PlayerStatData GetPlayerStatData(string id)
-    {
-        if (null == PlayerStatDataTable || string.IsNullOrEmpty(id)) return null;
-        return PlayerStatDataTable.TryGetValue(id, out var data) ? data : null;
-    }
-
     public QuestData GetQuestData(string questId)
     {
         if (null == QuestDataTable || string.IsNullOrEmpty(questId)) return null;
@@ -91,12 +89,6 @@ public class DataTable
     {
         if (null == PetDataTable || string.IsNullOrEmpty(id)) return null;
         return PetDataTable.TryGetValue(id, out var data) ? data : null;
-    }
-
-    public PetStatData GetPetStatData(string id)
-    {
-        if (null == PetStatDataTable || string.IsNullOrEmpty(id)) return null;
-        return PetStatDataTable.TryGetValue(id, out var data) ? data : null;
     }
 
     public ReputationGradeData GetReputationGradeByValue(int reputation)
@@ -116,7 +108,24 @@ public class DataTable
         return null;
     }
 
+    public PlayerStatData GetPlayerStatData(string id)
+    {
+        if (null == PlayerStatDataTable || string.IsNullOrEmpty(id)) return null;
+        return PlayerStatDataTable.TryGetValue(id, out var data) ? data : null;
+    }
+    
+    public EnemySpawnData GetEnemySpawnData(string id)
+    {
+        if (null == EnemySpawnDataTable || string.IsNullOrEmpty(id)) return null;
+        return EnemySpawnDataTable.TryGetValue(id, out var data) ? data : null;
+    }
 
+    public PetStatData GetPetStatData(string id)
+    {
+        if (null == PetStatDataTable || string.IsNullOrEmpty(id)) return null;
+        return PetStatDataTable.TryGetValue(id, out var data) ? data : null;
+    }
+    
     #endregion
 
     Dictionary<string, T> LoadData<T>(string tableNmae) where T : BaseData

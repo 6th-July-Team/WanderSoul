@@ -11,37 +11,10 @@ public enum PetElement
     COUNT
 }
 
-public enum PetRole
+public enum PetSkillSlot
 {
-    Attacker,
-    Defender,
-    Support,
-    COUNT
-}
-
-public enum PetSkillType
-{
-    NormalAttack,
+    Normal,
     Special,
-    COUNT
-}
-
-public enum PetSkillTrigger
-{
-    AutoAttack,
-    AutoInterval,
-    Passive,
-    COUNT
-}
-
-public enum SkillBehavior
-{
-    MeleeConeDamage,
-    ProjectileAttack,
-    AreaHeal,
-    Shield,
-    BuffAura,
-    Taunt,
     COUNT
 }
 
@@ -53,57 +26,8 @@ public enum PetCommand
     COUNT
 }
 
-[Serializable]
-public class ResistanceInfo
-{
-    public float FireResistance;
-    public float WaterResistance;
-    public float EarthResistance;
-    public float AirResistance;
-}
 
-
-
-public readonly struct PetCombatContext
-{
-    public readonly PetController Pet;
-    public readonly ITargetable Target;
-    public readonly Transform Player;
-    public readonly Transform Cart;
-
-    public readonly LayerMask TargetLayerMask;
-    public readonly Collider[] SearchBuffer;
-
-    public PetCombatContext(
-        PetController pet,
-        ITargetable target,
-        Transform player,
-        Transform cart,
-        LayerMask targetLayerMask,
-        Collider[] searchBuffer)
-    {
-        Pet = pet;
-        Target = target;
-        Player = player;
-        Cart = cart;
-        TargetLayerMask = targetLayerMask;
-        SearchBuffer = searchBuffer;
-    }
-
-    public PetCombatContext WithTarget(ITargetable target)
-    {
-        return new PetCombatContext(
-            Pet,
-            target,
-            Player,
-            Cart,
-            TargetLayerMask,
-            SearchBuffer
-        );
-    }
-}
-
-public enum EDamageType
+public enum PetDamageType
 {
     None,
     Physical,
@@ -112,4 +36,41 @@ public enum EDamageType
     Electric,
     Magic,
     TrueDamage
+}
+
+public struct PetSkillUseContext
+{
+
+}
+
+public enum PetStatType
+{
+    MaxHealth,
+    BasicPower,
+    Defense,
+    FireResistance,
+    ColdResistance,
+    ElectricResistance,
+    MagicResistance,
+    MoveSpeed,
+    HealthRegeneration,
+    CooldownReduction,
+    CritChance,
+    CritMultiplier,
+    LifeSteal,
+    COUNT
+}
+
+public struct PetStatModifier
+{
+    public PetStatType StatType { get; }
+    public StatModifierOperation Operation { get; }
+    public float Value { get; }
+
+    public PetStatModifier(PetStatType statType, StatModifierOperation operation, float value)
+    {
+        StatType = statType;
+        Operation = operation;
+        Value = value;
+    }
 }

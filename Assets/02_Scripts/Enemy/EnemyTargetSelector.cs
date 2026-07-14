@@ -5,18 +5,20 @@ using UnityEngine;
 public class EnemyTargetSelector
 {
     private readonly TargetPolicy _policy;
-    private readonly GameObject _caravan;
+    private readonly GameObject _wagon;
     private readonly GameObject _player;
 
     private readonly float _leashRange;
 
+    public GameObject CurrentTarget => _currentTarget;
     private GameObject _currentTarget;
 
-    // 생성자의 _leashRange, leashRange => 마차가 중심인 어그로 범위 // IReadOnlyList<GameObject> => 몬스터의 콜라이더가 탐지한 오브젝트 ( 일단은 몬스터, 펫만 넣어둠! )
-    public EnemyTargetSelector(TargetPolicy policy, GameObject caravan, GameObject player, float leashRange)
+    private readonly Dictionary<GameObject, float> _excludedTargets = new();
+
+    public EnemyTargetSelector(TargetPolicy policy, GameObject wagon, GameObject player, float leashRange)
     {
         _policy = policy;
-        _caravan = caravan;
+        _wagon = wagon;
         _player = player;
         _leashRange = leashRange;
     }
@@ -31,17 +33,19 @@ public class EnemyTargetSelector
     {
         if (_policy == TargetPolicy.PlayerOnly)
         {
-            if (_player != null)
+            if(IsAlive(_player))
             {
                 return _player;
             }
+
+            return null;
         }
 
-        if (_policy == TargetPolicy.CaravanOnly)
+        if (_policy == TargetPolicy.WagonOnly)
         {
-            if (_caravan != null)
+            if (_wagon != null)
             {
-                return _caravan;
+                return _wagon;
             }
         }
 
@@ -57,11 +61,16 @@ public class EnemyTargetSelector
             return pet;
         }
 
-        return _caravan;
+        return _wagon;
     }
 
     private bool IsPlayerTargetable(IReadOnlyList<GameObject> candidates)
     {
+        if(IsExcluded(_player))
+        {
+            return false;
+        }
+
         if (IsInsideLeash(_player) == false)
         {
             return false;
@@ -74,16 +83,23 @@ public class EnemyTargetSelector
 
     private GameObject FindTargetablePet(IReadOnlyList<GameObject> candidates)
     {
+
         if (IsPet(_currentTarget) && IsInsideLeash(_currentTarget))
         {
-            return _currentTarget;
+            if(IsExcluded(_currentTarget) == false)
+            {
+                return _currentTarget;
+            }
         }
 
         foreach (GameObject candidate in candidates)
         {
             if (IsPet(candidate) && IsInsideLeash(candidate))
             {
-                return candidate;
+                if (IsExcluded(candidate) == false)
+                {
+                    return candidate;
+                }
             }
         }
 
@@ -97,9 +113,9 @@ public class EnemyTargetSelector
             return false;
         }
 
-        float distanceFromCaravan = Vector3.Distance(target.transform.position, _caravan.transform.position);
+        float distanceFromwagon = Vector3.Distance(target.transform.position, _wagon.transform.position);
 
-        bool isInsideLeash = (distanceFromCaravan <= _leashRange);
+        bool isInsideLeash = (distanceFromwagon <= _leashRange);
 
         return isInsideLeash;
 
@@ -117,5 +133,36 @@ public class EnemyTargetSelector
         bool isPet = (target != null && target != _player && target.CompareTag("Pet"));
 
         return isPet;
+    }
+
+    public GameObject ExcludeCurrentAndReselect(IReadOnlyList<GameObject> candidates, float ExcludeDuration)
+    {
+        if(_currentTarget != null)
+        {
+            _excludedTargets[_currentTarget] = Time.time + ExcludeDuration;
+        }
+
+        return SelectTarget(candidates);
+    }
+
+    private bool IsExcluded(GameObject target)
+    {
+        if (target == null)
+        {
+            return false;
+        }
+
+        if (_excludedTargets.TryGetValue(target, out float excludeUntil) == false)
+        {
+            return false;
+        }
+
+        if (Time.time < excludeUntil)
+        {
+            return true;
+        }
+
+        _excludedTargets.Remove(target);
+        return false;
     }
 }

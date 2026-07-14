@@ -38,9 +38,12 @@ public class GameManager : SingletonBehaviour<GameManager>
     #region Test Variables
     [SerializeField] private bool _skipStartupUIForTest = false;
     public SOSkillDefinition TestSkillDefinition_ScholarBasicSkill;
+    public SOPetSkillInfo TestSOPetSkillInfo;
     public Transform PlayerTransfrom { get; private set; }
 
     #endregion
+
+    #region Init
 
     protected override void Init()
     {
@@ -56,24 +59,6 @@ public class GameManager : SingletonBehaviour<GameManager>
 
         InitAsync().Forget();
     }
-
-    #region TEST Functions
-    public void TestStartConvoy()
-    {
-        List<string> testSelectedPetIds = new List<string> { "Test_Pet1", "Test_Pet2", "Test_Pet3" };
-        _convoyManager.InitConvoy("TEST", testSelectedPetIds);
-    }
-
-    public void TestPlayerFollowMode()
-    {
-        _petPartyController.SetPetCommand(PetCommand.PlayerFollow);
-    }
-
-    public void TestWagonDefenseMode()
-    {
-        _petPartyController.SetPetCommand(PetCommand.GuardWagon);
-    }
-    #endregion
 
     private async UniTaskVoid InitAsync()
     {
@@ -114,4 +99,52 @@ public class GameManager : SingletonBehaviour<GameManager>
         // 여기에서 세이브 데이터 로드하여 설정할 것들 설정하기
         // ex) 저장된 골드, 레벨
     }
+
+    #endregion
+
+    public void EnterVillage(string villageId)
+    {
+
+    }
+
+    public void ExitVillage()
+    {
+
+    }
+
+    public void StartConvoy()
+    {
+        // 해당 시점 이전에 의뢰 선택 및 펫 선택이 완료되어야 합니다.
+        // 선택된 의뢰 ID 및 선택된 펫 ID 리스트가 아래 필요합니다.
+        List<string> testSelectedPetIds = new List<string> { "pet_fire_001", "pet_water_002", "pet_earth_003" };
+        _convoyManager.InitConvoy("TEST", testSelectedPetIds);
+
+        ExitVillage();
+    }
+
+    public void EndConvoy()
+    { 
+        // TODO 간단 로딩 실행
+        string resultVillageId = _convoyManager.Release();
+        EnterVillage(resultVillageId);
+    }
+
+
+    #region TEST Functions
+
+    public void TestPlayerFollowMode()
+    {
+        _petPartyController.SetPetCommand(PetCommand.PlayerFollow);
+    }
+
+    public void TestWagonDefenseMode()
+    {
+        _petPartyController.SetPetCommand(PetCommand.GuardWagon);
+    }
+
+    public void TestWagonAggressiveMode()
+    {
+        _petPartyController.SetPetCommand(PetCommand.Aggressive);
+    }
+    #endregion
 }

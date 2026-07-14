@@ -3,16 +3,16 @@
 public class PlayerSkill
 {
     public SOSkillDefinition Definition { get; private set; }
-    public float RemainingCooldown => _remainingCooldown;
-    public bool IsReady => _remainingCooldown <= 0f;
+    public float RemainingCooldTime => _remainingCooldtime;
+    public bool IsReady => _remainingCooldtime <= 0f;
 
     private PlayerStatController _statController;
     private ManaPool _manaPool;
-    private readonly ISkillExecution _execution;
-    private float _remainingCooldown;
+    private readonly IPlayerSkillExecution _execution;
+    private float _remainingCooldtime;
 
 
-    public PlayerSkill(SOSkillDefinition definition, ISkillExecution execution, ManaPool manaPool, PlayerStatController statController)
+    public PlayerSkill(SOSkillDefinition definition, IPlayerSkillExecution execution, ManaPool manaPool, PlayerStatController statController)
     {
         Definition = definition;
         _execution = execution;
@@ -22,13 +22,13 @@ public class PlayerSkill
 
     public void Update(float deltaTime)
     {
-        if (_remainingCooldown <= 0f)
+        if (_remainingCooldtime <= 0f)
             return;
 
-        _remainingCooldown = Mathf.Max(0f, _remainingCooldown - deltaTime);
+        _remainingCooldtime = Mathf.Max(0f, _remainingCooldtime - deltaTime);
     }
 
-    public void TryExecuteSkill(SkillUseContext context)
+    public void TryExecuteSkill(PlayerSkillUseContext context)
     {
         if (!IsReady)
             return;
@@ -40,6 +40,6 @@ public class PlayerSkill
 
         _execution.Execute(context, skillDamage);
 
-        _remainingCooldown = Definition.Cooldown - _statController.GetValue(PlayerStatType.CooldownReduction);
+        _remainingCooldtime = Definition.Cooldown - _statController.GetValue(PlayerStatType.CooldownReduction);
     }
 }

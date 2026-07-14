@@ -2,5 +2,5 @@
 
 public interface IElementArrowVariant
 {
-    void Fire(SkillUseContext context, float damage);
+    void Fire(PlayerSkillUseContext context, float damage);
 }

@@ -1,11 +1,11 @@
 ﻿
-public enum DamageType
+public enum ScholarDamageType
 {
-    Physical,
     Fire,
-    Cold,
+    Ice,
     Electric,
-    Neutral
+    Rock,
+    Magic
 }
 
 public enum ScholarElementMode
@@ -14,5 +14,5 @@ public enum ScholarElementMode
     Water,
     Earth,
     Wind,
-    Arcane
+    Magic
 }
