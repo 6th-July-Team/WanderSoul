@@ -15,6 +15,10 @@ public class DataTable
     public Dictionary<string, ItemData> ItemDataTable { get; private set; } = new();
     public Dictionary<string, CharacterData> CharacterDataTable { get; private set; } = new();
     public Dictionary<string, PlayerStatData> PlayerStatDataTable { get; private set; } = new();
+    public Dictionary<string, PetData> PetDataTable { get; private set; } = new();
+    public Dictionary<string, PetStatData> PetStatDataTable { get; private set; } = new();
+    public Dictionary<string, QuestData> QuestDataTable { get; private set; } = new();
+    public Dictionary<string, StageData> StageDataTable { get; private set; } = new();
 
     #endregion
 
@@ -26,75 +30,79 @@ public class DataTable
 
     public void LoadAllData()
     {
-        TownDataTable = LoadData<TownData>("Town");
-        RegionDataTable = LoadData<RegionData>("Region");
-        ReputationGradeDataTable = LoadData<ReputationGradeData>("ReputationGrade");
-        ItemDataTable = LoadData<ItemData>("Item");
-        CharacterDataTable = LoadData<CharacterData>("Character");
+        TownDataTable = LoadData<TownData>("TownData");
+        RegionDataTable = LoadData<RegionData>("RegionData");
+        ReputationGradeDataTable = LoadData<ReputationGradeData>("ReputationGradeData");
+        ItemDataTable = LoadData<ItemData>("ItemData");
+        CharacterDataTable = LoadData<CharacterData>("CharacterData");
         PoolDataTable = LoadData<PoolData>("Pool");
         PlayerStatDataTable = LoadData<PlayerStatData>("PlayerStatData");
+        PetDataTable = LoadData<PetData>("PetData");
+        PetStatDataTable = LoadData<PetStatData>("PetStatData");
+        QuestDataTable = LoadData<QuestData>("QuestData");
+        StageDataTable = LoadData<StageData>("StageData");
     }
 
     #region Getters
 
     public TownData GetTownData(string townId)
     {
-        if (string.IsNullOrEmpty(townId))
-        {
-            return null;
-        }
-        if (TownDataTable.ContainsKey(townId) == false)
-        {
-            Debug.LogWarning($"마을 데이터를 찾을 수 없습니다: {townId}");
-            return null;
-        }
-        return TownDataTable[townId];
+        if (null == TownDataTable || string.IsNullOrEmpty(townId)) return null;
+        return TownDataTable.TryGetValue(townId, out var data) ? data : null;
     }
 
     public RegionData GetRegionData(string regionId)
     {
-        if (string.IsNullOrEmpty(regionId))
-        {
-            return null;
-        }
-        if (RegionDataTable.ContainsKey(regionId) == false)
-        {
-            Debug.LogWarning($"지역 데이터를 찾을 수 없습니다: {regionId}");
-            return null;
-        }
-        return RegionDataTable[regionId];
+        if (null == RegionDataTable || string.IsNullOrEmpty(regionId)) return null;
+        return RegionDataTable.TryGetValue(regionId, out var data) ? data : null;
     }
 
     public ItemData GetItemData(string itemId)
     {
-        if (string.IsNullOrEmpty(itemId))
-        {
-            return null;
-        }
-        if (ItemDataTable.ContainsKey(itemId) == false)
-        {
-            Debug.LogWarning($"아이템 데이터를 찾을 수 없습니다: {itemId}");
-            return null;
-        }
-        return ItemDataTable[itemId];
+        if (null == ItemDataTable || string.IsNullOrEmpty(itemId)) return null;
+        return ItemDataTable.TryGetValue(itemId, out var data) ? data : null;
     }
 
     public CharacterData GetCharacterData(string characterId)
     {
-        if (string.IsNullOrEmpty(characterId))
-        {
-            return null;
-        }
-        if (CharacterDataTable.ContainsKey(characterId) == false)
-        {
-            Debug.LogWarning($"캐릭터 데이터를 찾을 수 없습니다: {characterId}");
-            return null;
-        }
-        return CharacterDataTable[characterId];
+        if (null == CharacterDataTable || string.IsNullOrEmpty(characterId)) return null;
+        return CharacterDataTable.TryGetValue(characterId, out var data) ? data : null;
+    }
+
+    public PlayerStatData GetPlayerStatData(string id)
+    {
+        if (null == PlayerStatDataTable || string.IsNullOrEmpty(id)) return null;
+        return PlayerStatDataTable.TryGetValue(id, out var data) ? data : null;
+    }
+
+    public QuestData GetQuestData(string questId)
+    {
+        if (null == QuestDataTable || string.IsNullOrEmpty(questId)) return null;
+        return QuestDataTable.TryGetValue(questId, out var data) ? data : null;
+    }
+
+    public StageData GetStageData(string stageId)
+    {
+        if (null == StageDataTable || string.IsNullOrEmpty(stageId)) return null;
+        return StageDataTable.TryGetValue(stageId, out var data) ? data : null;
+    }
+
+    public PetData GetPetData(string id)
+    {
+        if (null == PetDataTable || string.IsNullOrEmpty(id)) return null;
+        return PetDataTable.TryGetValue(id, out var data) ? data : null;
+    }
+
+    public PetStatData GetPetStatData(string id)
+    {
+        if (null == PetStatDataTable || string.IsNullOrEmpty(id)) return null;
+        return PetStatDataTable.TryGetValue(id, out var data) ? data : null;
     }
 
     public ReputationGradeData GetReputationGradeByValue(int reputation)
     {
+        if (null == ReputationGradeDataTable) return null;
+
         foreach (var kv in ReputationGradeDataTable)
         {
             var grade = kv.Value;
@@ -106,12 +114,6 @@ public class DataTable
 
         Debug.LogWarning($"평판 {reputation}에 해당하는 등급을 찾을 수 없습니다.");
         return null;
-    }
-
-    public PlayerStatData GetPlayerStatData(string id)
-    {
-        if (null == PlayerStatDataTable || string.IsNullOrEmpty(id)) return null;
-        return PlayerStatDataTable.TryGetValue(id, out var data) ? data : null;
     }
 
 

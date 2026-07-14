@@ -151,6 +151,12 @@ public partial class UIManager
             case UIType.SkillHudUIView:
                 return UIRootType.Main;
 
+            case UIType.QuestDetailUIView:
+                return UIRootType.Content;
+
+            case UIType.PetInventoryUIView:
+                return UIRootType.Content;
+
             default:
                 Debug.LogError($"{uiType}에 지정된 UIRootType이 없습니다.");
                 return UIRootType.Main;

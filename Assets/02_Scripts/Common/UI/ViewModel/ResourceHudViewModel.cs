@@ -5,10 +5,6 @@
     {
 
     }
-    public override void PropertyChangedOnInit()
-    {
-        base.PropertyChangedOnInit();
-    }
 
     public int Soul { get { return _model.Soul; } }
     public int Money { get { return _model.Money; } }

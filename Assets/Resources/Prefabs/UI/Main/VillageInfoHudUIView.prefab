@@ -284,6 +284,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2398989352284538858}
   - component: {fileID: 6460473150394339459}
+  - component: {fileID: 7525559171809675024}
   m_Layer: 5
   m_Name: VillageInfoHudUIView
   m_TagString: Untagged
@@ -328,6 +329,22 @@ MonoBehaviour:
   _reputationSlider: {fileID: 3315417491793785430}
   _regionLogoImage: {fileID: 2137110105630050854}
   _gradeIconImage: {fileID: 1384144912152837114}
+--- !u!114 &7525559171809675024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4611336427900262259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e80eae576c6e284eb878aed316e7b42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UISlideAnimation
+  _targetRect: {fileID: 2398989352284538858}
+  _direction: 0
+  _slideDistance: 300
+  _duration: 0.3
 --- !u!1 &5474700528377116380
 GameObject:
   m_ObjectHideFlags: 0
