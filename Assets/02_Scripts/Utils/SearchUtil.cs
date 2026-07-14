@@ -34,6 +34,7 @@ public static class SearchUtil
         return nearestTarget;
     }
 
+    // Utils 내에서 사용
     public static bool IsValidTarget(ITargetable target)
     {
         return target != null && target.IsAlive;

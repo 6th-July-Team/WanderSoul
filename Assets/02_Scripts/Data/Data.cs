@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -68,17 +69,6 @@ public class PreLoadAssetData : BaseData
 {
     public string Address;
     public string AssetType;
-}
-
-[Serializable]
-public class SkillDefinition : BaseData
-{
-    public string Name;
-    public string Description;
-    public string SkillType;
-    public float ManaCost;
-    public float Cooldown;
-    public string IconPath;
 }
 
 [Serializable]
@@ -210,4 +200,23 @@ public class PetStatData : BaseData
             _ => 0f
         };
     }
+}
+[Serializable]
+public class PlayerSkillData : BaseData
+{
+    public string Name;
+    public string Description;
+    public float Power;
+    public float Cooldown;
+    public int ManaCost;
+    public float Duration;
+    public float ProjectileSpeed;
+    public int Pierce;
+    public int MaxProjectileCount;
+    public string SkillType;
+    public string SkillElementType;
+    public string SkillOwnerType;
+    public string VFXPath;
+    public string SFXPath;
+    public string IconPath;
 }

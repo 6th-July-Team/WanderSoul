@@ -8,6 +8,10 @@ public class PlayerCombatController : MonoBehaviour
     private PlayerInputHandle _inputHandle;
     private PlayerAimHandler _aimHandler;
 
+    // Animator
+    //private Animator _animator;
+    //private bool _isAnimating = false;
+
     // Mana
     public ManaPool ManaPool { get; private set; }
 
@@ -24,6 +28,7 @@ public class PlayerCombatController : MonoBehaviour
     {
         _inputHandle = GetComponent<PlayerInputHandle>();
         _aimHandler = GetComponent<PlayerAimHandler>();
+        //_animator = GetComponent<Animator>();
 
         // TODO(김익환): 추후 Init 함수는 플레이어가 소환될 때 호출하기.
         Init().Forget();
@@ -77,23 +82,52 @@ public class PlayerCombatController : MonoBehaviour
         _skillBuild.SetSkill(slot, skill);
     }
 
-    public SOSkillDefinition GetSkillInfo(SkillSlot slot)
+    public PlayerSkillData GetSkillInfo(SkillSlot slot)
     {
         return _skillBuild.GetSkillInfo(slot);
     }
 
 
-    private void OnBasicAttack() => TryExecuteSkill(SkillSlot.Basic);
+    private void OnBasicAttack()
+    {
+        TryExecuteSkill(SkillSlot.Basic);
+        //if(TryExecuteSkill(SkillSlot.Basic))
+        //{
+        //    _animator.SetTrigger("isBasicAttak");
+        //}    
+    }
     private void OnSpecialAttack() => TryExecuteSkill(SkillSlot.Special);
     private void OnUltimateAttack() => TryExecuteSkill(SkillSlot.Ultimate);
 
-    private void TryExecuteSkill(SkillSlot skillSlot)
+    private bool TryExecuteSkill(SkillSlot skillSlot)
     {
-        _skillBuild.TryExecuteSkill(skillSlot, CreateSkillUseContext());
+        Debug.Log($"{GetType()}: 공격 시도.");
+
+        //if (_isAnimating)
+        //{
+        //    Debug.Log($"{GetType()}: 애니메이션 실행 중이라 차단.");
+        //    return false;
+        //}
+
+        if (_skillBuild.TryExecuteSkill(skillSlot, CreateSkillUseContext()))
+        {
+            //_isAnimating = true;
+            return true;
+        }
+
+        Debug.Log($"{GetType()}: SkillBuild 호출 완료.");
+
+        return false;
     }
 
     private PlayerSkillUseContext CreateSkillUseContext()
     {
         return new PlayerSkillUseContext(_aimHandler.transform, _aimHandler.AimDirection, _aimHandler.AimWorldPoint);
+    }
+
+    public void EndAnimationEvent()
+    {
+        //_isAnimating = false;
+        Debug.Log($"{GetType()}: 애니메이션 종료 이벤트 호출.");
     }
 }

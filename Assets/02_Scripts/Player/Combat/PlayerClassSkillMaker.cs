@@ -16,11 +16,14 @@ public class PlayerClassSkillMaker
         if (id == "테스트 직업 아이디")
         {
             build = new(
-                new PlayerSkill(GameManager.Instance.TestSkillDefinition_ScholarBasicSkill, new ScholarBasicExecution(GameManager.PetParty), _manaPool, statController)
+                new PlayerSkill("test", new ScholarBasicExecution(GameManager.PetParty), _manaPool, statController)
                 , null
                 , null);
         }
-
+        build = new(
+                new PlayerSkill("test", new ScholarBasicExecution(GameManager.PetParty), _manaPool, statController)
+                , null
+                , null);
         return build;
     }
 }

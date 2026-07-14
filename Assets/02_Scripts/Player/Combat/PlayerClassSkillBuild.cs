@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerClassSkillBuild
 {
@@ -21,12 +22,12 @@ public class PlayerClassSkillBuild
         }
     }
 
-    public void TryExecuteSkill(SkillSlot skillSlot, PlayerSkillUseContext context)
+    public bool TryExecuteSkill(SkillSlot skillSlot, PlayerSkillUseContext context)
     {
         if (!_skills.TryGetValue(skillSlot, out PlayerSkill skill))
-            return;
+            return false;
 
-        skill.TryExecuteSkill(context);
+        return skill.TryExecuteSkill(context);
     }
 
     public void SetSkill(SkillSlot slot, PlayerSkill skill)
@@ -40,9 +41,9 @@ public class PlayerClassSkillBuild
         _skills[slot] = skill;
     }
 
-    public SOSkillDefinition GetSkillInfo(SkillSlot slot)
+    public PlayerSkillData GetSkillInfo(SkillSlot slot)
     {
-        return _skills.TryGetValue(slot, out PlayerSkill skill) ? skill.Definition : null;
+        return _skills.TryGetValue(slot, out PlayerSkill skill) ? skill.SkillData : null;
     }
 
 }

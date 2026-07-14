@@ -19,11 +19,6 @@ public class ScholarBasicExecution : IPlayerSkillExecution
         };
     }
 
-    public bool CanExecute(PlayerSkillUseContext context)
-    {
-        return context.AimDirection.sqrMagnitude > 0.001f;
-    }
-
     public void Execute(PlayerSkillUseContext context, float damage)
     {
         PetElement element = _petPartyReader.GetPriorityPetElement();

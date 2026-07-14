@@ -162,7 +162,9 @@ public class MoveableEnemyView : BaseView<MoveableEnemyViewModel>, IDamageable, 
 
                 DamageInfo damageInfo = new DamageInfo(
                     damageAmount: _viewModel.Attack
-                    , hitDirection: hitDirection);
+                    , hitDirection: hitDirection
+                    , damageType: DamageType.None // 몬스터 데미지 타입 전달해주세요 - 김익환
+                    );
 
                 damageable.TakeDamage(damageInfo);
             }

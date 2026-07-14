@@ -18,6 +18,7 @@ public class DataTable
     public Dictionary<string, EnemySpawnData> EnemySpawnDataTable { get; private set; } = new();
     public Dictionary<string, EnemyData> EnemyDataTable { get; private set; } = new();
     public Dictionary<string, PetStatData> PetStatDataTable { get; private set; } = new();
+    public Dictionary<string, PlayerSkillData> PlayerSkillDataTable { get; private set; } = new();
 
     #endregion
 
@@ -39,6 +40,7 @@ public class DataTable
         //EnemySpawnDataTable = LoadData<EnemySpawnData>("EnemySpawnData");
         EnemyDataTable = LoadData<EnemyData>(nameof(EnemyData));
         PetStatDataTable = LoadData<PetStatData>(nameof(PetStatData));
+        PlayerSkillDataTable = LoadData<PlayerSkillData>(nameof(PlayerSkillData));
     }
 
     #region Getters
@@ -132,6 +134,11 @@ public class DataTable
         return PetStatDataTable.TryGetValue(id, out var data) ? data : null;
     }
     
+    public PlayerSkillData GetPlayerSkillData(string id)
+    {
+        if (null == PlayerSkillDataTable || string.IsNullOrEmpty(id)) return null;
+        return PlayerSkillDataTable.TryGetValue(id, out var data) ? data : null;
+    }
 
     #endregion
 

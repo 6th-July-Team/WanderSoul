@@ -19,16 +19,19 @@ public class PlayerInputHandle : MonoBehaviour
     // Input System
     private InputSystem_Default _inputSystem;
 
+    private Animator _animator;
+
     void Awake()
     {
         _inputSystem = new InputSystem_Default();
+        _animator = GetComponent<Animator>();
     }
 
     void OnEnable()
     {
         _inputSystem.Player.Enable();
 
-        //_inputSystem.Player.BasicAttack.performed += OnBasocAttack;
+        //_inputSystem.Player.BasicAttack.started += OnBasicAttack;
         _inputSystem.Player.SpecialAttak.started += OnSpecialAttack;
         _inputSystem.Player.UltimateAttack.started += OnUltimateAttack;
         _inputSystem.Player.Dash.started += OnDash;
@@ -45,7 +48,7 @@ public class PlayerInputHandle : MonoBehaviour
     {
         _inputSystem.Player.Disable();
 
-        //_inputSystem.Player.BasicAttack.performed -= OnBasocAttack;
+        //_inputSystem.Player.BasicAttack.started -= OnBasicAttack;
         _inputSystem.Player.SpecialAttak.started -= OnSpecialAttack;
         _inputSystem.Player.UltimateAttack.started -= OnUltimateAttack;
         _inputSystem.Player.Dash.started -= OnDash;
@@ -66,13 +69,21 @@ public class PlayerInputHandle : MonoBehaviour
         }
     }
 
-    public void OnBasocAttack(InputAction.CallbackContext context) => OnBasicAttackEvent?.Invoke();
+    public void OnBasicAttack(InputAction.CallbackContext context) => OnBasicAttackEvent?.Invoke();
 
-    public void OnMove(InputAction.CallbackContext context) => _moveInput = context.ReadValue<Vector2>();
+    public void OnMove(InputAction.CallbackContext context)
+    {
+        _moveInput = context.ReadValue<Vector2>();
+        _animator.SetBool("isWalk", true);
+    }
 
     public void OnPoint(InputAction.CallbackContext context) => PointInput = context.ReadValue<Vector2>();
 
-    private void StopMove(InputAction.CallbackContext context) => _moveInput = Vector2.zero;
+    private void StopMove(InputAction.CallbackContext context)
+    {
+        _moveInput = Vector2.zero;
+        _animator.SetBool("isWalk", false);
+    }
 
     public void OnDash(InputAction.CallbackContext context) => OnDashEvent?.Invoke();
     public void OnSpecialAttack(InputAction.CallbackContext context) => OnSpecialAttackEvent?.Invoke();
