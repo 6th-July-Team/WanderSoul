@@ -94,6 +94,36 @@ public class PreLoadAssetData : BaseData
 }
 
 [Serializable]
+public class PetData : BaseData
+{
+    public string Name;
+    public string ElementType;
+    public string Description;
+    public string PetGradeType;
+    public string NormalSkillId;
+    public string SpecialSkillId;
+    public string IconPath;
+}
+
+[Serializable]
+public class PetStatData : BaseData
+{
+    public float MaxHealth;
+    public float BasicPower;
+    public float Defense;
+    public float FireResistance;
+    public float ColdResistance;
+    public float ElectricResistance;
+    public float MagicResistance;
+    public float MoveSpeed;
+    public float HealthRegeneration;
+    public float CooldownReduction;
+    public float CritChance;
+    public float CritMultiplier;
+    public float LifeSteal;
+}
+
+[Serializable]
 public class SkillDefinition : BaseData
 {
     public string Name;
