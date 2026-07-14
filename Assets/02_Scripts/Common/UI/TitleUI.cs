@@ -45,12 +45,7 @@ public class TitleUI : BaseUI
         model.Soul = 12413451;
         model.Money = 8520;
 
-        var viewModel = new ResourceHudViewModel(model);
-        var view = GameManager.UI.OpenUI<ResourceHudUIView>(UIType.ResourceHudUIView);
-        if (view != null)
-        {
-            view.BindViewModel(viewModel);
-        }
+        GameManager.UI.OpenResourceHudUI(model);
     }
 
     private void OpenPartyHudTest()
@@ -60,12 +55,7 @@ public class TitleUI : BaseUI
         model.MaxHp = 1000;
         model.CurrentHp = 800;
 
-        var viewModel = new PartyHudViewModel(model);
-        var view = GameManager.UI.OpenUI<PartyHudUIView>(UIType.PartyHudUIView);
-        if (view != null)
-        {
-            view.BindViewModel(viewModel);
-        }
+        GameManager.UI.OpenPartyHudUI(model);
     }
 
     private void OpenVillageInfoHudTest()
@@ -74,20 +64,11 @@ public class TitleUI : BaseUI
         model.TownDataId = "town_lavendil";
         model.CurrentReputation = 50;
 
-        var viewModel = new VillageInfoViewModel(model);
-        var view = GameManager.UI.OpenUI<VillageInfoHudUIView>(UIType.VillageInfoHudUIView);
-        if (view != null)
-        {
-            view.BindViewModel(viewModel);
-        }
+        GameManager.UI.OpenVillageInfoHudUI(model);
     }
 
     private void OpenSkillHudTest()
     {
-        var view = GameManager.UI.OpenUI<SkillHudUIView>(UIType.SkillHudUIView);
-        if (view == null)
-        {
-            Debug.LogWarning("스킬 HUD를 열 수 없습니다");
-        }
+        GameManager.UI.OpenSkillHudUI();
     }
 }

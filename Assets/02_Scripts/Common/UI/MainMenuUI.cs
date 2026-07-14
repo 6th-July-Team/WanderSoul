@@ -14,34 +14,30 @@ public class MainMenuUI : BaseUI
         _farmButton.BindOnClickButtonEvent(OnClickFarm);
         _optionButton.BindOnClickButtonEvent(OnClickOption);
     }
-    // 임시: 나중에 PlayerModel 같은 곳으로 이동
+    // 임시: 나중에 Model 소유처 정해지면 이동
     private InventoryModel _inventoryModelTest = new InventoryModel();
+    private PetInventoryModel _petInventoryModelTest = new PetInventoryModel();
 
     private void OnClickInventory()
     {
-        Debug.Log("인벤토리 열기");
-        OpenInventoryTest();
-    }
-
-    private void OpenInventoryTest()
-    {
         if (_inventoryModelTest.ItemList.Count == 0)
         {
-            for (int i = 1; i <= 20; i++)
-            {
-                var item = new ItemSlotModel();
-                item.ItemUniqueId = i;
-                item.ItemDataId = $"item_{i}";
-                item.StackCount = i;
-                _inventoryModelTest.AddItem(item);
-            }
+            CreateTestItemList();
         }
 
-        var viewModel = new InventoryViewModel(_inventoryModelTest);
-        var view = GameManager.UI.OpenUI<InventoryUIView>(UIType.InventoryUIView);
-        if (view != null)
+        GameManager.UI.OpenInventoryUI(_inventoryModelTest);
+    }
+
+    private void CreateTestItemList()
+    {
+        for (int i = 1; i <= 20; i++)
         {
-            view.BindViewModel(viewModel);
+            var item = new ItemSlotModel();
+            item.ItemUniqueId = i;
+            item.ItemDataId = $"item_{i}";
+            item.StackCount = i;
+
+            _inventoryModelTest.AddItem(item);
         }
     }
 
@@ -52,7 +48,35 @@ public class MainMenuUI : BaseUI
 
     private void OnClickFarm()
     {
-        Debug.Log("농장 열기");
+        if (_petInventoryModelTest.PetList.Count == 0)
+        {
+            CreateTestPetList();
+        }
+
+        GameManager.UI.OpenPetInventoryUI(_petInventoryModelTest);
+    }
+
+    private void CreateTestPetList()
+    {
+        string[] testPetDataIdArray = new string[]
+        {
+        "pet_fire_001", "pet_water_002", "pet_earth_003", "pet_air_004",
+        "pet_fire_001", "pet_water_002", "pet_earth_003", "pet_air_004",
+        "pet_fire_001"
+        };
+
+        long uniqueId = 1;
+
+        foreach (string petDataId in testPetDataIdArray)
+        {
+            var pet = new PetSlotModel();
+            pet.PetUniqueId = uniqueId;
+            pet.PetDataId = petDataId;
+            pet.Level = 1;
+
+            _petInventoryModelTest.AddPet(pet);
+            uniqueId++;
+        }
     }
 
     private void OnClickOption()
