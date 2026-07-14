@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class PlayerStatController
 {
     private readonly Dictionary<PlayerStatType, float> _baseValues = new();
-    private readonly List<StatModifier> _modifiers = new();
+    private readonly List<PlayerStatModifier> _modifiers = new();
 
     public PlayerStatController(PlayerStatData data)
     {
@@ -24,7 +24,7 @@ public class PlayerStatController
         return _baseValues.TryGetValue(statType, out float value) ? value : 0f;
     }
 
-    public void AddModifier(StatModifier modifier)
+    public void AddModifier(PlayerStatModifier modifier)
     {
         _modifiers.Add(modifier);
     }
@@ -44,10 +44,10 @@ public class PlayerStatController
         float baseValue = GetBaseValue(statType);
 
         float flat = 0f;
-        float additivePercent = 0f;
-        float multiplicativeMultiplier = 1f;
+        float addPercent = 0f;
+        float multipleMultiplier = 1f;
 
-        foreach (StatModifier modifier in _modifiers)
+        foreach (PlayerStatModifier modifier in _modifiers)
         {
             if (modifier.StatType != statType)
                 continue;
@@ -58,20 +58,20 @@ public class PlayerStatController
                     flat += modifier.Value;
                     break;
 
-                case StatModifierOperation.AdditivePercent:
-                    additivePercent += modifier.Value;
+                case StatModifierOperation.AddPercent:
+                    addPercent += modifier.Value;
                     break;
 
-                case StatModifierOperation.MultiplicativePercent:
-                    multiplicativeMultiplier *= 1f + modifier.Value;
+                case StatModifierOperation.MultiplePercent:
+                    multipleMultiplier *= 1f + modifier.Value;
                     break;
             }
         }
 
         float result =
             (baseValue + flat) *
-            (1f + additivePercent) *
-            multiplicativeMultiplier;
+            (1f + addPercent) *
+            multipleMultiplier;
 
         return ApplyLimit(statType, result);
     }
@@ -81,6 +81,7 @@ public class PlayerStatController
         return statType switch
         {
             // TODO(김익환): 아래 임시 값, 제한 값 따로 존재한다면 데이터 드리븐이로 가져오기
+            // 임시 수치
             PlayerStatType.FireResistance => Math.Clamp(value, 0f, 0.8f),
             PlayerStatType.ColdResistance => Math.Clamp(value, 0f, 0.8f),
             PlayerStatType.ElectricResistance => Math.Clamp(value, 0f, 0.8f),

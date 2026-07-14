@@ -15,6 +15,9 @@ public class DataTable
     public Dictionary<string, ItemData> ItemDataTable { get; private set; } = new();
     public Dictionary<string, CharacterData> CharacterDataTable { get; private set; } = new();
     public Dictionary<string, PlayerStatData> PlayerStatDataTable { get; private set; } = new();
+    public Dictionary<string, EnemySpawnData> EnemySpawnDataTable { get; private set; } = new();
+    public Dictionary<string, EnemyData> EnemyDataTable { get; private set; } = new();
+    public Dictionary<string, PetStatData> PetStatDataTable { get; private set; } = new();
 
     #endregion
 
@@ -26,13 +29,16 @@ public class DataTable
 
     public void LoadAllData()
     {
-        TownDataTable = LoadData<TownData>("Town");
-        RegionDataTable = LoadData<RegionData>("Region");
-        ReputationGradeDataTable = LoadData<ReputationGradeData>("ReputationGrade");
-        ItemDataTable = LoadData<ItemData>("Item");
-        CharacterDataTable = LoadData<CharacterData>("Character");
-        PoolDataTable = LoadData<PoolData>("Pool");
+        //TownDataTable = LoadData<TownData>("Town");
+        //RegionDataTable = LoadData<RegionData>("Region");
+        //ReputationGradeDataTable = LoadData<ReputationGradeData>("ReputationGrade");
+        //ItemDataTable = LoadData<ItemData>("Item");
+        //CharacterDataTable = LoadData<CharacterData>("Character");
+        //PoolDataTable = LoadData<PoolData>("Pool");
         PlayerStatDataTable = LoadData<PlayerStatData>("PlayerStatData");
+        //EnemySpawnDataTable = LoadData<EnemySpawnData>("EnemySpawnData");
+        EnemyDataTable = LoadData<EnemyData>(nameof(EnemyData));
+        PetStatDataTable = LoadData<PetStatData>(nameof(PetStatData));
     }
 
     #region Getters
@@ -113,7 +119,19 @@ public class DataTable
         if (null == PlayerStatDataTable || string.IsNullOrEmpty(id)) return null;
         return PlayerStatDataTable.TryGetValue(id, out var data) ? data : null;
     }
+    
+    public EnemySpawnData GetEnemySpawnData(string id)
+    {
+        if (null == EnemySpawnDataTable || string.IsNullOrEmpty(id)) return null;
+        return EnemySpawnDataTable.TryGetValue(id, out var data) ? data : null;
+    }
 
+    public PetStatData GetPetStatData(string id)
+    {
+        if (null == PetStatDataTable || string.IsNullOrEmpty(id)) return null;
+        return PetStatDataTable.TryGetValue(id, out var data) ? data : null;
+    }
+    
 
     #endregion
 

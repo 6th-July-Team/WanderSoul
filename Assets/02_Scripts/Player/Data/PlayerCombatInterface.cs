@@ -1,6 +1,6 @@
 ﻿
-public interface ISkillExecution
+public interface IPlayerSkillExecution
 {
-    bool CanExecute(SkillUseContext context);
-    void Execute(SkillUseContext context, float damage);
+    bool CanExecute(PlayerSkillUseContext context);
+    void Execute(PlayerSkillUseContext context, float damage);
 }

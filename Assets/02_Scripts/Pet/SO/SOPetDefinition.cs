@@ -7,8 +7,6 @@ public class SOPetDefinition : ScriptableObject
     public string Name;
 
     public PetElement Element;
-    public PetRole Role;
 
     public SOPetBaseStat BaseStats;
-    public ResistanceInfo ResistanceInfo;
 }

@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SOPetSkillInfo
   Id: 10041004
   Name: Holy Arrow
-  Cooldown: 3
-  Range: 10
+  BaseDamage: 0
+  Cooldown: 2
+  CastRange: 1
   Power: 5
   Duration: 0
   Radius: 0
   SkillSlot: 0
-  TriggerType: 0
-  BehaviorType: 1
+  Effect: 
