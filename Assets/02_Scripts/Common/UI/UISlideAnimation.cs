@@ -15,18 +15,37 @@ public class UISlideAnimation : MonoBehaviour
     [SerializeField] private SlideDirection _direction;
     [SerializeField] private float _slideDistance = 300f;
     [SerializeField] private float _duration = 0.3f;
+    [SerializeField] private bool _registerAsHud = true;
 
     private Vector2 _originPos;
     private bool _isCached = false;
 
     private void OnEnable()
     {
+        if (_registerAsHud == false)
+        {
+            return;
+        }
+
         GameManager.UI.RegisterHudAnimation(this);
     }
 
     private void OnDisable()
     {
+        if (_registerAsHud == false)
+        {
+            return;
+        }
+
         GameManager.UI.UnregisterHudAnimation(this);
+    }
+
+    private void OnDestroy()
+    {
+        if (_targetRect != null)
+        {
+            _targetRect.DOKill();
+        }
     }
 
     private void CacheOriginPosition()
@@ -66,27 +85,39 @@ public class UISlideAnimation : MonoBehaviour
         return _originPos + offset;
     }
 
-    public void SlideOut()
+    public void SlideOut(TweenCallback onComplete = null)
     {
         CacheOriginPosition();
 
         _targetRect.DOKill();
-        _targetRect.DOAnchorPos(GetHiddenPosition(), _duration).SetEase(Ease.InCubic);
-    }
 
-    public void SlideIn()
-    {
-        CacheOriginPosition();
+        Tween tween = _targetRect.DOAnchorPos(GetHiddenPosition(), _duration).SetEase(Ease.InCubic);
 
-        _targetRect.DOKill();
-        _targetRect.DOAnchorPos(_originPos, _duration).SetEase(Ease.OutCubic);
-    }
-
-    private void OnDestroy()
-    {
-        if (_targetRect != null)
+        if (onComplete != null)
         {
-            _targetRect.DOKill();
+            tween.OnComplete(onComplete);
         }
+    }
+
+    public void SlideIn(TweenCallback onComplete = null)
+    {
+        CacheOriginPosition();
+
+        _targetRect.DOKill();
+
+        Tween tween = _targetRect.DOAnchorPos(_originPos, _duration).SetEase(Ease.OutCubic);
+
+        if (onComplete != null)
+        {
+            tween.OnComplete(onComplete);
+        }
+    }
+
+    public void SetHidden()
+    {
+        CacheOriginPosition();
+
+        _targetRect.DOKill();
+        _targetRect.anchoredPosition = GetHiddenPosition();
     }
 }
