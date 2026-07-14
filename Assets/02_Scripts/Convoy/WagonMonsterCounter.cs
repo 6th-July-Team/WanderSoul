@@ -10,8 +10,7 @@ public class WagonMonsterCounter : MonoBehaviour
         {
             _wagonViewModel.IncreaseEnemyCount();
 
-            // TODO: Enemy의 OnEnemyDieEvent 이벤트 추가시 주석 해제
-            // other.GetComponent<Enemy>().OnEnemyDieEvent =+ () => _wagonViewModel.IncreaseEnemyCount();
+            other.GetComponent<MoveableEnemyView>().OnEnemyDied += () => _wagonViewModel.IncreaseEnemyCount();
         }
     }
 

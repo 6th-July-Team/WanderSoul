@@ -33,13 +33,13 @@ public enum StatModifierOperation
 }
 
 
-public struct SkillUseContext
+public struct PlayerSkillUseContext
 {
     public Transform Owner { get; }
     public Vector3 AimDirection { get; }
     public Vector3 AimWorldPoint { get; }
 
-    public SkillUseContext(Transform owner, Vector3 aimDirection, Vector3 aimWorldPoint)
+    public PlayerSkillUseContext(Transform owner, Vector3 aimDirection, Vector3 aimWorldPoint)
     {
         Owner = owner;
         AimDirection = aimDirection;
@@ -47,13 +47,13 @@ public struct SkillUseContext
     }
 }
 
-public struct StatModifier
+public struct PlayerStatModifier
 {
     public PlayerStatType StatType { get; }
     public StatModifierOperation Operation { get; }
     public float Value { get; }
 
-    public StatModifier(PlayerStatType statType, StatModifierOperation operation, float value)
+    public PlayerStatModifier(PlayerStatType statType, StatModifierOperation operation, float value)
     {
         StatType = statType;
         Operation = operation;

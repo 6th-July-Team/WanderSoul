@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-public class ScholarBasicExecution : ISkillExecution
+public class ScholarBasicExecution : IPlayerSkillExecution
 {
     private readonly IPetPartyReader _petPartyReader;
     private readonly Dictionary<PetElement, IElementArrowVariant> _variants;
@@ -19,12 +19,12 @@ public class ScholarBasicExecution : ISkillExecution
         };
     }
 
-    public bool CanExecute(SkillUseContext context)
+    public bool CanExecute(PlayerSkillUseContext context)
     {
         return context.AimDirection.sqrMagnitude > 0.001f;
     }
 
-    public void Execute(SkillUseContext context, float damage)
+    public void Execute(PlayerSkillUseContext context, float damage)
     {
         PetElement element = _petPartyReader.GetPriorityPetElement();
         _variants[element].Fire(context, damage);

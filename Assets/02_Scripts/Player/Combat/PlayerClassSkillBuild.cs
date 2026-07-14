@@ -21,7 +21,7 @@ public class PlayerClassSkillBuild
         }
     }
 
-    public void TryExecuteSkill(SkillSlot skillSlot, SkillUseContext context)
+    public void TryExecuteSkill(SkillSlot skillSlot, PlayerSkillUseContext context)
     {
         if (!_skills.TryGetValue(skillSlot, out PlayerSkill skill))
             return;

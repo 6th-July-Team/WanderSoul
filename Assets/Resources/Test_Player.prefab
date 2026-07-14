@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5371564603604601002}
   - component: {fileID: 2986178197080590757}
   - component: {fileID: 2779030795665013480}
+  - component: {fileID: -1098529899085270827}
   m_Layer: 0
   m_Name: Test_Player
   m_TagString: Untagged
@@ -171,3 +172,15 @@ MonoBehaviour:
   _dashSpeed: 15
   _dashDuration: 0.2
   _dashCoolTime: 1
+--- !u!114 &-1098529899085270827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7031918877779492487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33262e0f7cf9da04e96aecf0bb2f5557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerEntity

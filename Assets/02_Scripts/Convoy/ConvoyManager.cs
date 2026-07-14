@@ -94,7 +94,7 @@ public class ConvoyManager
         // 플레이어
         // PetPartyController petParty = player.GetComponent<PetPartyController>();
         GameObject playerInstance = GameObject.Instantiate(Utils.ResourcesLoad<GameObject>("Test_Player"));
-        PlayerMovement playerMovement = playerInstance.GetComponent<PlayerMovement>();
+        PlayerEntity playerEntity = playerInstance.GetComponent<PlayerEntity>();
 
         // 펫
         List<PetController> petControllers = new();
@@ -103,7 +103,7 @@ public class ConvoyManager
             GameObject petInstance = GameObject.Instantiate(Utils.ResourcesLoad<GameObject>(petId));
 
             petInstance.GetComponent<PetController>().Init(petId
-            , playerMovement.GetComponent<IPositionProvider>(), wagonInstance.GetComponent<IPositionProvider>());
+            , playerEntity.GetComponent<IPositionProvider>(), wagonInstance.GetComponent<IPositionProvider>());
 
             petControllers.Add(petInstance.GetComponent<PetController>());
         }
@@ -111,7 +111,7 @@ public class ConvoyManager
         // 펫 파티
 
 
-        GameManager.PetParty.Init(playerMovement, _wagon, petControllers);
+        GameManager.PetParty.Init(petControllers);
     }
 
     private void StartBattle()

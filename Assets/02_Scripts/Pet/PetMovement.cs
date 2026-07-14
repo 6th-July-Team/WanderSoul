@@ -4,8 +4,10 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public class PetMovement : MonoBehaviour
 {
+    [Header("Anchor Movement")]
     [SerializeField] private float _stopDistanceFromAnchor = 1.5f;
-    [SerializeField] private float _attackStopDistance = 1.8f;
+
+    [Header("Destination Refresh")]
     [SerializeField] private float _destinationUpdateDistance = 0.5f;
     [SerializeField] private float _destinationRefreshInterval = 0.1f;
 
@@ -19,6 +21,7 @@ public class PetMovement : MonoBehaviour
     private bool _hasDestination;
     private float _refreshTimer;
 
+    private float _currentStopDistance;
 
     private void Awake()
     {
@@ -31,16 +34,11 @@ public class PetMovement : MonoBehaviour
         _agent.speed = 5f;
     }
 
-    public void ApplyCommand(PetCommandResult result)
-    {
-        _anchor = result.Anchor;
-        _target = result.Target;
-
-        RefreshDestination(true);
-    }
-
     private void Update()
     {
+        if (GameManager.Time.IsPaused)
+            return;
+
         _refreshTimer += Time.deltaTime;
 
         if (_refreshTimer < _destinationRefreshInterval)
@@ -51,31 +49,62 @@ public class PetMovement : MonoBehaviour
         RefreshDestination(false);
     }
 
+    public void ApplyCommand(PetCommandResult result)
+    {
+        bool targetChanged = !ReferenceEquals(_target, result.Target);
+
+        _anchor = result.Anchor;
+        _target = result.Target;
+
+        RefreshDestination(targetChanged);
+    }
+
+    public void SetCombatRange(float castRange)
+    {
+        if (Mathf.Approximately(_currentStopDistance, castRange))
+            return;
+
+        _currentStopDistance = castRange;
+
+        RefreshDestination(true);
+    }
+
+    public bool IsTargetInRange(ITargetable target, float castRange)
+    {
+        if (!IsValidTarget(_target))
+            return false;
+
+        float sqrDistance = (target.Position - transform.position).sqrMagnitude;
+
+        return sqrDistance <= castRange * castRange;
+    }
+
     public void RefreshDestination(bool force)
     {
-        if (_target != null && _target.IsAlive)
+        if (IsValidTarget(_target))
         {
-            MoveToTarget(_target, force);
+            MoveToTarget(force);
             return;
         }
+
+        _target = null;
 
         MoveToAnchor(force);
     }
 
-    private void MoveToTarget(ITargetable target, bool force)
+    private void MoveToTarget(bool force)
     {
-        Vector3 targetPosition = target.Position;
+        Vector3 targetPosition = _target.Position;
 
         float distanceSqr = (targetPosition - transform.position).sqrMagnitude;
-        float stopDistanceSqr = _attackStopDistance * _attackStopDistance;
 
-        if (distanceSqr <= stopDistanceSqr)
+        if (distanceSqr <= _currentStopDistance * _currentStopDistance)
         {
             Stop();
             return;
         }
 
-        SetDestination(targetPosition, force);
+        SetDestination(targetPosition, _currentStopDistance, force);
     }
 
     private void MoveToAnchor(bool force)
@@ -97,14 +126,18 @@ public class PetMovement : MonoBehaviour
             return;
         }
 
-        SetDestination(destination, force);
+        SetDestination(destination, _stopDistanceFromAnchor, force);
     }
 
-    private void SetDestination(Vector3 destination, bool force)
+    /// <summary>
+    /// </summary>
+    /// <param name="force">강제로 목적지 설정 옵션</param>
+    private void SetDestination(Vector3 destination, float stoppingDistance, bool force)
     {
         if (!force && !CheckUpdateDestination(destination))
             return;
 
+        _agent.stoppingDistance = stoppingDistance;
         _agent.isStopped = false;
         _agent.SetDestination(destination);
 
@@ -129,4 +162,6 @@ public class PetMovement : MonoBehaviour
 
         return distanceSqr >= thresholdSqr;
     }
+
+    private bool IsValidTarget(ITargetable target) => target != null && target.IsAlive;
 }

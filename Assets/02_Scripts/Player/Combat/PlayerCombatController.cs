@@ -92,8 +92,8 @@ public class PlayerCombatController : MonoBehaviour
         _skillBuild.TryExecuteSkill(skillSlot, CreateSkillUseContext());
     }
 
-    private SkillUseContext CreateSkillUseContext()
+    private PlayerSkillUseContext CreateSkillUseContext()
     {
-        return new SkillUseContext(_aimHandler.transform, _aimHandler.AimDirection, _aimHandler.AimWorldPoint);
+        return new PlayerSkillUseContext(_aimHandler.transform, _aimHandler.AimDirection, _aimHandler.AimWorldPoint);
     }
 }
