@@ -22,7 +22,11 @@ public class PlayerCombatController : MonoBehaviour
     private PlayerClassSkillBuild _skillBuild;
     private PlayerClassSkillMaker _skillMaker;
 
-    private bool isInitialized = false;
+    private bool _isInitialized = false;
+
+    // Skill Range Check
+    private bool _isCheckingSkillRange = false;
+    private SkillSlot _checkingSkillSlot;
 
     private void Awake()
     {
@@ -46,26 +50,41 @@ public class PlayerCombatController : MonoBehaviour
 
         _skillBuild = _skillMaker.CreateSkillBuild("테스트 직업 아이디", _statController);
 
-        isInitialized = true;
+        _isInitialized = true;
     }
 
     private void OnEnable()
     {
         _inputHandle.OnBasicAttackEvent += OnBasicAttack;
+
         _inputHandle.OnSpecialAttackEvent += OnSpecialAttack;
+        _inputHandle.OnSpecialAttackCheckEvent += OnSpecialAttackCheck;
+
         _inputHandle.OnUltimateSkillEvent += OnUltimateAttack;
+        _inputHandle.OnUltimateSkillCheckEvent += OnUltimateSkillCheck;
     }
 
     private void OnDisable()
     {
         _inputHandle.OnBasicAttackEvent -= OnBasicAttack;
+
         _inputHandle.OnSpecialAttackEvent -= OnSpecialAttack;
+        _inputHandle.OnSpecialAttackCheckEvent -= OnSpecialAttackCheck;
+
         _inputHandle.OnUltimateSkillEvent -= OnUltimateAttack;
+        _inputHandle.OnUltimateSkillCheckEvent -= OnUltimateSkillCheck;
+
+        if (_isInitialized && _isCheckingSkillRange)
+        {
+            _skillBuild.HideSkillRange(_checkingSkillSlot);
+        }
+
+        _isCheckingSkillRange = false;
     }
 
     private void Update()
     {
-        if (GameManager.Time.IsPaused || !isInitialized)
+        if (GameManager.Time.IsPaused || !_isInitialized)
             return;
 
         ManaPool.Update(Time.deltaTime);
@@ -75,6 +94,14 @@ public class PlayerCombatController : MonoBehaviour
         //      OnBasicAttack();
 
         _skillBuild.Update(GameManager.Time.GameDeltaTime);
+    }
+
+    private void LateUpdate()
+    {
+        if (_isCheckingSkillRange && _aimHandler.HasValidAim)
+        {
+            _skillBuild.CheckSkillRange(_checkingSkillSlot, CreateSkillUseContext());
+        }
     }
 
     public void SetSkill(SkillSlot slot, PlayerSkill skill)
@@ -87,7 +114,6 @@ public class PlayerCombatController : MonoBehaviour
         return _skillBuild.GetSkillInfo(slot);
     }
 
-
     private void OnBasicAttack()
     {
         TryExecuteSkill(SkillSlot.Basic);
@@ -96,13 +122,15 @@ public class PlayerCombatController : MonoBehaviour
         //    _animator.SetTrigger("isBasicAttak");
         //}    
     }
-    private void OnSpecialAttack() => TryExecuteSkill(SkillSlot.Special);
-    private void OnUltimateAttack() => TryExecuteSkill(SkillSlot.Ultimate);
+
+    private void OnSpecialAttack() => EndSkillRangeCheckAndExecute(SkillSlot.Special);
+    private void OnUltimateAttack() => EndSkillRangeCheckAndExecute(SkillSlot.Ultimate);
+
+    private void OnSpecialAttackCheck() => BeginSkillRangeCheck(SkillSlot.Special);
+    private void OnUltimateSkillCheck() => BeginSkillRangeCheck(SkillSlot.Ultimate);
 
     private bool TryExecuteSkill(SkillSlot skillSlot)
     {
-        Debug.Log($"{GetType()}: 공격 시도.");
-
         //if (_isAnimating)
         //{
         //    Debug.Log($"{GetType()}: 애니메이션 실행 중이라 차단.");
@@ -115,9 +143,28 @@ public class PlayerCombatController : MonoBehaviour
             return true;
         }
 
-        Debug.Log($"{GetType()}: SkillBuild 호출 완료.");
-
         return false;
+    }
+
+    private void BeginSkillRangeCheck(SkillSlot skillSlot)
+    {
+        if (!_isInitialized)
+            return;
+
+        _checkingSkillSlot = skillSlot;
+        _isCheckingSkillRange = true;
+    }
+
+    private void EndSkillRangeCheckAndExecute(SkillSlot skillSlot)
+    {
+        if (!_isInitialized)
+            return;
+
+        _isCheckingSkillRange = false;
+
+        TryExecuteSkill(skillSlot);
+
+        _skillBuild.HideSkillRange(skillSlot);
     }
 
     private PlayerSkillUseContext CreateSkillUseContext()

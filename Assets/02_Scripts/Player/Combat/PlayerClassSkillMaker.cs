@@ -17,12 +17,12 @@ public class PlayerClassSkillMaker
         {
             build = new(
                 new PlayerSkill("test", new ScholarBasicExecution(GameManager.PetParty), _manaPool, statController)
-                , null
+                , new PlayerSkill("test", new ScholarSpecialExecution(), _manaPool, statController)
                 , null);
         }
         build = new(
                 new PlayerSkill("test", new ScholarBasicExecution(GameManager.PetParty), _manaPool, statController)
-                , null
+                , new PlayerSkill("test", new ScholarSpecialExecution(), _manaPool, statController)
                 , null);
         return build;
     }

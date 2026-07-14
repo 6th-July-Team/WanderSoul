@@ -10,13 +10,16 @@ public class ShcolarFireProjectile : Projectile
     private bool isShowGizmo = false;
     private Collider[] _targets = new Collider[32];
 
+    // TEST
+    private float _range = 5f;
+
     protected override void HitEffect()
     {
         base.HitEffect();
 
         StartCoroutine(ShowGizmoRoutine());
 
-        SearchUtil.FindNearestTarget(transform.position, 5f, LayerMask.GetMask("Enemy"), _targets);
+        SearchUtil.FindNearestTarget(transform.position, _range, LayerMask.GetMask("Enemy"), _targets);
 
         DamageInfo damageInfo = new DamageInfo(_damage, _direction, _damageType, _additionalDamage);
 
@@ -36,7 +39,7 @@ public class ShcolarFireProjectile : Projectile
         {
             Gizmos.color = Color.red; // 기즈모 색상 지정
             // 구체 기즈모를 해당 오브젝트 위치에 그림
-            Gizmos.DrawSphere(transform.position, 1.0f);
+            Gizmos.DrawSphere(transform.position, _range);
         }
     }
 

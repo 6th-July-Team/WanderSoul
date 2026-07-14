@@ -22,6 +22,22 @@ public class PlayerClassSkillBuild
         }
     }
 
+    public void CheckSkillRange(SkillSlot skillSlot, PlayerSkillUseContext context)
+    {
+        if (!_skills.TryGetValue(skillSlot, out PlayerSkill skill))
+            return;
+
+        skill?.CheckSkillRange(context);
+    }
+
+    public void HideSkillRange(SkillSlot skillSlot)
+    {
+        if (!_skills.TryGetValue(skillSlot, out PlayerSkill skill))
+            return;
+
+        skill?.HideSkillRange();
+    }
+
     public bool TryExecuteSkill(SkillSlot skillSlot, PlayerSkillUseContext context)
     {
         if (!_skills.TryGetValue(skillSlot, out PlayerSkill skill))

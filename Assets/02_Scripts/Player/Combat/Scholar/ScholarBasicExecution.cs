@@ -24,4 +24,5 @@ public class ScholarBasicExecution : IPlayerSkillExecution
         PetElement element = _petPartyReader.GetPriorityPetElement();
         _variants[element].Fire(context, damage);
     }
+    public void CheckSkillRange(PlayerSkillUseContext context) { }
 }

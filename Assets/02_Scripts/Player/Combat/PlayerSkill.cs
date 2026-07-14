@@ -28,6 +28,22 @@ public class PlayerSkill
         _remainingCooldtime = Mathf.Max(0f, _remainingCooldtime - deltaTime);
     }
 
+    public void CheckSkillRange(PlayerSkillUseContext context)
+    {
+        if (_execution is ISkillRangeCheckable rangeCheck)
+        {
+            rangeCheck.CheckSkillRange(context);
+        }
+    }
+
+    public void HideSkillRange()
+    {
+        if (_execution is ISkillRangeCheckable rangeCheck)
+        {
+            rangeCheck.HideSkillRange();
+        }
+    }
+
     public bool TryExecuteSkill(PlayerSkillUseContext context)
     {
         if (!IsReady)
