@@ -108,24 +108,6 @@ public class PetData : BaseData
 }
 
 [Serializable]
-public class PetStatData : BaseData
-{
-    public float MaxHealth;
-    public float BasicPower;
-    public float Defense;
-    public float FireResistance;
-    public float ColdResistance;
-    public float ElectricResistance;
-    public float MagicResistance;
-    public float MoveSpeed;
-    public float HealthRegeneration;
-    public float CooldownReduction;
-    public float CritChance;
-    public float CritMultiplier;
-    public float LifeSteal;
-}
-
-[Serializable]
 public class SkillDefinition : BaseData
 {
     public string Name;

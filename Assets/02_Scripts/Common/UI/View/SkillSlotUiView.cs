@@ -41,7 +41,7 @@ public class SkillSlotUiView : MonoBehaviour
             return;
         }
 
-        float remainingCooldown = _skill.RemainingCooldown;
+        float remainingCooldown = _skill.RemainingCooldTime;
 
         if (Mathf.Approximately(_lastCooldown, remainingCooldown) == true)
         {
@@ -93,7 +93,7 @@ public class SkillSlotUiView : MonoBehaviour
             return;
         }
 
-        float remaining = _skill.RemainingCooldown;
+        float remaining = _skill.RemainingCooldTime;
         float total = _skill.Definition.Cooldown;
 
         if (total <= 0f)
