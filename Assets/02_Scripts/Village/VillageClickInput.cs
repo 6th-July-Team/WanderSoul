@@ -6,10 +6,12 @@ public class VillageClickInput : MonoBehaviour
 {
 
     [SerializeField] private GameObject _shopPanel;
+    [SerializeField] private GameObject _missionPanel;
 
     private void Awake()
     {
         _shopPanel.SetActive(false);
+        _missionPanel.SetActive(false);
     }
 
     private void Update()
@@ -39,11 +41,13 @@ public class VillageClickInput : MonoBehaviour
         if (facility.FacilityType == VillageFacilityType.Shop)
         {
             _shopPanel.SetActive(true);
+            _missionPanel.SetActive(false);
         }
 
         if (facility.FacilityType == VillageFacilityType.MissionGuild)
         {
-            Debug.Log("Mission Guild clicked");
+            _missionPanel.SetActive(true);
+            _shopPanel.SetActive(false);
         }
     }
 }
