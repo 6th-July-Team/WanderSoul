@@ -7,11 +7,13 @@ public class VillageClickInput : MonoBehaviour
 
     [SerializeField] private GameObject _shopPanel;
     [SerializeField] private GameObject _missionPanel;
+    [SerializeField] private GameObject _townHallPanel;
 
     private void Awake()
     {
         _shopPanel.SetActive(false);
         _missionPanel.SetActive(false);
+        _townHallPanel.SetActive(false);
     }
 
     private void Update()
@@ -42,12 +44,21 @@ public class VillageClickInput : MonoBehaviour
         {
             _shopPanel.SetActive(true);
             _missionPanel.SetActive(false);
+            _townHallPanel.SetActive(false);
         }
 
         if (facility.FacilityType == VillageFacilityType.MissionGuild)
         {
             _missionPanel.SetActive(true);
             _shopPanel.SetActive(false);
+            _townHallPanel.SetActive(false);
+        }
+
+        if (facility.FacilityType == VillageFacilityType.TownHall)
+        {
+            _townHallPanel.SetActive(true);
+            _shopPanel.SetActive(false);
+            _missionPanel.SetActive(false);
         }
     }
 }
