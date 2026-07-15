@@ -2,7 +2,7 @@
 
 [RequireComponent(typeof(PlayerInputHandle))]
 [RequireComponent(typeof(CharacterController))]
-public class PlayerMovement : MonoBehaviour // MoveMent에 필요없는 인터페이스임
+public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] private float _moveSpeed = 5f;

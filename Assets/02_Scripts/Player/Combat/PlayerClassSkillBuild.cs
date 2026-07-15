@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
 public class PlayerClassSkillBuild
 {
-    // Skill
     private Dictionary<SkillSlot, PlayerSkill> _skills = new();
 
     public PlayerClassSkillBuild(PlayerSkill basicSkill, PlayerSkill specialSkill, PlayerSkill ultimateSkill)

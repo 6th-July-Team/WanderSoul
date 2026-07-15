@@ -7,8 +7,10 @@ public class PlayerSkill
     public bool IsReady => _remainingCooldtime <= 0f;
 
     private PlayerStatController _statController;
+    private IPlayerSkillExecution _execution;
     private ManaPool _manaPool;
-    private readonly IPlayerSkillExecution _execution;
+
+
     private float _remainingCooldtime;
 
 
@@ -32,7 +34,7 @@ public class PlayerSkill
     {
         if (_execution is ISkillRangeCheckable rangeCheck)
         {
-            rangeCheck.CheckSkillRange(context);
+            rangeCheck.CheckSkillRange(context, SkillData);
         }
     }
 
@@ -55,7 +57,7 @@ public class PlayerSkill
         float skillDamage = SkillData.Power * _statController.GetValue(PlayerStatType.BasicAttackPower);
         _remainingCooldtime = SkillData.Cooldown - _statController.GetValue(PlayerStatType.CooldownReduction);
 
-        _execution.Execute(context, skillDamage);
+        _execution.Execute(context, SkillData, skillDamage);
 
         return true;
     }

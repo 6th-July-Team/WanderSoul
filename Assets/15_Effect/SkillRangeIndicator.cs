@@ -18,11 +18,7 @@ public class SkillRangeIndicator : MonoBehaviour
 
         float diameter = radius * 2f;
 
-        _decalProjector.size = new Vector3(
-            diameter,
-            diameter,
-            _projectionDepth
-        );
+        _decalProjector.size = new Vector3(diameter, diameter, _projectionDepth);
 
         _decalProjector.enabled = true;
     }

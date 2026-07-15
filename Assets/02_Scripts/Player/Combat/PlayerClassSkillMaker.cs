@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-
+using System;
+using System.Collections.Generic;
 public class PlayerClassSkillMaker
 {
     private ManaPool _manaPool;
@@ -16,14 +17,14 @@ public class PlayerClassSkillMaker
         if (id == "테스트 직업 아이디")
         {
             build = new(
-                new PlayerSkill("test", new ScholarBasicExecution(GameManager.PetParty), _manaPool, statController)
-                , new PlayerSkill("test", new ScholarSpecialExecution(), _manaPool, statController)
+                new PlayerSkill("test", new ScholarElementalArrow(GameManager.PetParty), _manaPool, statController)
+                , new PlayerSkill("test", new ScholarElementalExplosion(), _manaPool, statController)
                 , null);
         }
         build = new(
-                new PlayerSkill("test", new ScholarBasicExecution(GameManager.PetParty), _manaPool, statController)
-                , new PlayerSkill("test", new ScholarSpecialExecution(), _manaPool, statController)
-                , null);
+                new PlayerSkill("test", new ScholarElementalArrow(GameManager.PetParty), _manaPool, statController)
+                , new PlayerSkill("test", new ScholarElementalExplosion(), _manaPool, statController)
+                , new PlayerSkill("test", new ScholarSummonBarrier(), _manaPool, statController));
         return build;
     }
 }

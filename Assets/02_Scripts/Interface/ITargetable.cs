@@ -11,5 +11,4 @@ public enum EntityType
     Enemy,
     Pet,
     Wagon,
-    COUNT
 }

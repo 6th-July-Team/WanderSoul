@@ -2,6 +2,6 @@
 
 public interface ISkillRangeCheckable
 {
-    void CheckSkillRange(PlayerSkillUseContext context);
+    void CheckSkillRange(PlayerSkillUseContext context, PlayerSkillData SkillData);
     void HideSkillRange();
 }

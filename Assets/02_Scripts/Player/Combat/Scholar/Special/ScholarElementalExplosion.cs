@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
-public class ScholarSpecialExecution : IPlayerSkillExecution, ISkillRangeCheckable
+public class ScholarElementalExplosion : IPlayerSkillExecution, ISkillRangeCheckable
 {
     private SkillRangeIndicator _skillRangeIndicator;
     private Collider[] _targets = new Collider[32];
 
-    public void CheckSkillRange(PlayerSkillUseContext context)
+    public void CheckSkillRange(PlayerSkillUseContext context, PlayerSkillData SkillData)
     {
         InitIndicator();
 
@@ -20,17 +20,17 @@ public class ScholarSpecialExecution : IPlayerSkillExecution, ISkillRangeCheckab
         _skillRangeIndicator.Hide();
     }
 
-    public void Execute(PlayerSkillUseContext context, float damage)
+    public void Execute(PlayerSkillUseContext context, PlayerSkillData SkillData, float damage)
     {
         _skillRangeIndicator.Hide();
 
         PetElement element = GameManager.PetParty.GetPriorityPetElement();
 
-        // TODO: element에 따라 이펙트만 다르게 보여주기.
-        // 데이터 드리븐으로 스킬 범위 가져 오기
-        float attackRange = 7f;
+        float attackRange = SkillData.Radius;
 
-        SearchUtil.FindNearestTarget(context.AimWorldPoint, attackRange, LayerMask.GetMask("Enemy"), _targets);
+        Vector3 skillCenter = context.AimWorldPoint;
+        skillCenter.y += attackRange;
+        SearchUtil.FindNearestTarget(skillCenter, attackRange, LayerMask.GetMask("Enemy"), _targets);
 
         DamageInfo damageInfo = new DamageInfo(damage, context.AimDirection
             , Utils.GetTypeByPetElement(element));
@@ -49,13 +49,8 @@ public class ScholarSpecialExecution : IPlayerSkillExecution, ISkillRangeCheckab
         if (_skillRangeIndicator != null)
             return;
 
-        GameObject prefab =
-            Utils.ResourcesLoad<GameObject>("Decal");
-
-        GameObject decal = Object.Instantiate(prefab);
-
-        _skillRangeIndicator =
-            decal.GetComponent<SkillRangeIndicator>();
+        GameObject decal = Object.Instantiate(Utils.ResourcesLoad<GameObject>("Decal"));
+        _skillRangeIndicator = decal.GetComponent<SkillRangeIndicator>();
 
         _skillRangeIndicator.Hide();
     }

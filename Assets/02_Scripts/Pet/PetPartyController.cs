@@ -53,9 +53,19 @@ public class PetPartyController : IPetPartyReader
         return PetElement.None;
     }
 
-    // TODO(김익환): 편성된 펫 속성 비중 계산
-    //    public EResolvedElement GetCurrentElement()
-    //    {
-    //        return EResolvedElement.Magic;
-    //    }
+    public void AddModifierForAllPet(PetStatModifier modifier)
+    {
+        foreach(var pet in _pets)
+        {
+            pet.AddModifier(modifier);
+        }
+    }
+
+    public void RemoveModifierForAllPet(PetStatType petStatType)
+    {
+        foreach (var pet in _pets)
+        {
+            pet.RemoveModifiers(petStatType);
+        }
+    }
 }

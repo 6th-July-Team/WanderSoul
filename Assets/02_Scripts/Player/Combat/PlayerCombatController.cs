@@ -1,5 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(PlayerAimHandler))]
 public class PlayerCombatController : MonoBehaviour
@@ -33,18 +32,11 @@ public class PlayerCombatController : MonoBehaviour
         _inputHandle = GetComponent<PlayerInputHandle>();
         _aimHandler = GetComponent<PlayerAimHandler>();
         //_animator = GetComponent<Animator>();
-
-        // TODO(김익환): 추후 Init 함수는 플레이어가 소환될 때 호출하기.
-        Init().Forget();
     }
 
-    // TEST: Awkae에서 호출하다 보니 플로우 문제가 있음 이후 삭제 예정
-    public async UniTask Init()
+    public void Init(PlayerStatController statController)
     {
-        await UniTask.WaitForSeconds(0.1f);
-        PlayerStatData playerStatData = GameManager.DataTable.GetPlayerStatData("테스트 직업 아이디");
-        _statController = new(playerStatData);
-
+        _statController = statController;
         ManaPool = new(_statController);
         _skillMaker = new(ManaPool);
 
@@ -152,6 +144,7 @@ public class PlayerCombatController : MonoBehaviour
             return;
 
         _checkingSkillSlot = skillSlot;
+        Debug.Log($"{GetType()}: 스킬 범위 체크 시작. 스킬 슬롯: {skillSlot}");
         _isCheckingSkillRange = true;
     }
 

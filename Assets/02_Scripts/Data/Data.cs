@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.AppUI.UI;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -213,10 +214,16 @@ public class PlayerSkillData : BaseData
     public float ProjectileSpeed;
     public int Pierce;
     public int MaxProjectileCount;
+    public float Radius;
+    public float CastRange;
+    public float BarrierAbsorbAmount;
     public string SkillType;
-    public string SkillElementType;
+    public string stringSkillDamageType;
     public string SkillOwnerType;
     public string VFXPath;
     public string SFXPath;
     public string IconPath;
+
+    public DamageType GetDamageType()
+    => Enum.TryParse<DamageType>(stringSkillDamageType, out var result) ? result : DamageType.Physical;
 }
