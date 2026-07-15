@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class UIGameFlowTest : MonoBehaviour
 {
@@ -7,9 +9,27 @@ public class UIGameFlowTest : MonoBehaviour
         ShowTitle();
     }
 
+    private void Update()
+    {
+        if (Keyboard.current == null)
+        {
+            return;
+        }
+
+        if (Keyboard.current.lKey.wasPressedThisFrame)
+        {
+            OpenLevelUpTest();
+        }
+    }
+
     private void ShowTitle()
     {
-        GameManager.UI.OpenUI<TitleUI>(UIType.TitleUI);
+        var titleUI = GameManager.UI.OpenUI<TitleUI>(UIType.TitleUI);
+
+        if (titleUI != null)
+        {
+            titleUI.OnStartClicked += StartGame;
+        }
     }
 
     public void StartGame()
@@ -21,5 +41,49 @@ public class UIGameFlowTest : MonoBehaviour
     private void ShowGameHud()
     {
         GameManager.UI.OpenUI<MainMenuUI>(UIType.MainMenuUI);
+
+        OpenResourceHudTest();
+        OpenPartyHudTest();
+        OpenVillageInfoHudTest();
+        OpenSkillHudTest();
+    }
+
+    private void OpenResourceHudTest()
+    {
+        var model = new ResourceModel();
+        model.Soul = 12413451;
+        model.Money = 8520;
+
+        GameManager.UI.OpenResourceHudUI(model);
+    }
+
+    private void OpenPartyHudTest()
+    {
+        var model = new PartyMemberModel();
+        model.Name = "피슬";
+        model.MaxHp = 1000;
+        model.CurrentHp = 800;
+
+        GameManager.UI.OpenPartyHudUI(model);
+    }
+
+    private void OpenVillageInfoHudTest()
+    {
+        var model = new VillageModel();
+        model.TownDataId = "town_lavendil";
+        model.CurrentReputation = 50;
+
+        GameManager.UI.OpenVillageInfoHudUI(model);
+    }
+
+    private void OpenSkillHudTest()
+    {
+        GameManager.UI.OpenSkillHudUI();
+    }
+
+    private void OpenLevelUpTest()
+    {
+        var testIds = new List<string> { "옵션ID1", "옵션ID2", "옵션ID3" };
+        GameManager.UI.OpenLevelUpUI(testIds);
     }
 }
