@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public partial class UIManager
 {
@@ -158,6 +159,19 @@ public partial class UIManager
         }
 
         view.SetSkills(combatController);
+    }
+
+    public void OpenLevelUpUI(List<string> optionIdList)
+    {
+        var view = OpenUI<LevelUpUIView>(UIType.LevelUpUIView);
+
+        if (view == null)
+        {
+            Debug.LogWarning("LevelUpUIView를 열 수 없습니다.");
+            return;
+        }
+
+        view.SetOptions(optionIdList);
     }
 
 }
