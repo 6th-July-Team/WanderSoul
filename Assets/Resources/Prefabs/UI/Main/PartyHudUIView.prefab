@@ -600,6 +600,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5052445027331038040}
   - component: {fileID: 3926787927860607847}
+  - component: {fileID: 1564264493727603316}
   m_Layer: 5
   m_Name: PartyHudUIView
   m_TagString: Untagged
@@ -641,6 +642,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PartyHudUIView
   _nameText: {fileID: 2685550104967563332}
   _hpSlider: {fileID: 4039075419045897365}
+--- !u!114 &1564264493727603316
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4944704842243904878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e80eae576c6e284eb878aed316e7b42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UISlideAnimation
+  _targetRect: {fileID: 5052445027331038040}
+  _direction: 3
+  _slideDistance: 350
+  _duration: 0.3
 --- !u!1 &5689686554357749397
 GameObject:
   m_ObjectHideFlags: 0

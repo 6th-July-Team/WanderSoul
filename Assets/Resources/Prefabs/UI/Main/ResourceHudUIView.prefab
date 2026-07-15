@@ -239,6 +239,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6006974241339730755}
   - component: {fileID: 7903704460104480514}
+  - component: {fileID: 7186897928743566033}
   m_Layer: 5
   m_Name: ResourceHudUIView
   m_TagString: Untagged
@@ -280,6 +281,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ResourceHudUI
   _soulText: {fileID: 2825249220203478166}
   _moneyText: {fileID: 237757377453354513}
+--- !u!114 &7186897928743566033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6231721748736506877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e80eae576c6e284eb878aed316e7b42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UISlideAnimation
+  _targetRect: {fileID: 6006974241339730755}
+  _direction: 0
+  _slideDistance: 300
+  _duration: 0.3
 --- !u!1 &7782177010333083643
 GameObject:
   m_ObjectHideFlags: 0

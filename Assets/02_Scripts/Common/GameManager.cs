@@ -15,7 +15,6 @@ public class GameManager : SingletonBehaviour<GameManager>
     public static PetPartyController PetParty { get { return Instance._petPartyController; } }
 
 
-
     #region Manager Varialbes
 
     private ResourceManager _resourceManager = new();
