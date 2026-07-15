@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static PetStatData;
 
 public class DataTable
 {
@@ -21,6 +22,7 @@ public class DataTable
     public Dictionary<string, StageData> StageDataTable { get; private set; } = new();
     public Dictionary<string, EnemySpawnData> EnemySpawnDataTable { get; private set; } = new();
     public Dictionary<string, EnemyData> EnemyDataTable { get; private set; } = new();
+    public Dictionary<string, LevelUpOptionData> LevelUpOptionDataTable { get; private set; } = new();
 
     #endregion
 
@@ -45,6 +47,7 @@ public class DataTable
         //EnemySpawnDataTable = LoadData<EnemySpawnData>("EnemySpawnData");
         EnemyDataTable = LoadData<EnemyData>(nameof(EnemyData));
         PetStatDataTable = LoadData<PetStatData>(nameof(PetStatData));
+        LevelUpOptionDataTable = LoadData<LevelUpOptionData>("LevelUpOptionData");
     }
 
     #region Getters
@@ -125,7 +128,13 @@ public class DataTable
         if (null == PetStatDataTable || string.IsNullOrEmpty(id)) return null;
         return PetStatDataTable.TryGetValue(id, out var data) ? data : null;
     }
-    
+
+    public LevelUpOptionData GetLevelUpOptionData(string id)
+    {
+        if (null == LevelUpOptionDataTable || string.IsNullOrEmpty(id)) return null;
+        return LevelUpOptionDataTable.TryGetValue(id, out var data) ? data : null;
+    }
+
 
     #endregion
 
