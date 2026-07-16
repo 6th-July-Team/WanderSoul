@@ -2,19 +2,21 @@
 
 public class PlayerSkill
 {
-    public SOSkillDefinition Definition { get; private set; }
+    public PlayerSkillData SkillData { get; private set; }
     public float RemainingCooldTime => _remainingCooldtime;
     public bool IsReady => _remainingCooldtime <= 0f;
 
     private PlayerStatController _statController;
+    private IPlayerSkillExecution _execution;
     private ManaPool _manaPool;
-    private readonly IPlayerSkillExecution _execution;
+
+
     private float _remainingCooldtime;
 
 
-    public PlayerSkill(SOSkillDefinition definition, IPlayerSkillExecution execution, ManaPool manaPool, PlayerStatController statController)
+    public PlayerSkill(string playerSkillId, IPlayerSkillExecution execution, ManaPool manaPool, PlayerStatController statController)
     {
-        Definition = definition;
+        SkillData = GameManager.DataTable.GetPlayerSkillData(playerSkillId);
         _execution = execution;
         _manaPool = manaPool;
         _statController = statController;
@@ -28,18 +30,35 @@ public class PlayerSkill
         _remainingCooldtime = Mathf.Max(0f, _remainingCooldtime - deltaTime);
     }
 
-    public void TryExecuteSkill(PlayerSkillUseContext context)
+    public void CheckSkillRange(PlayerSkillUseContext context)
+    {
+        if (_execution is ISkillRangeCheckable rangeCheck)
+        {
+            rangeCheck.CheckSkillRange(context, SkillData);
+        }
+    }
+
+    public void HideSkillRange()
+    {
+        if (_execution is ISkillRangeCheckable rangeCheck)
+        {
+            rangeCheck.HideSkillRange();
+        }
+    }
+
+    public bool TryExecuteSkill(PlayerSkillUseContext context)
     {
         if (!IsReady)
-            return;
+            return false;
 
-        if (!_manaPool.TrySpendMana(Definition.ManaCost))
-            return;
+        if (!_manaPool.TrySpendMana(SkillData.ManaCost))
+            return false;
 
-        float skillDamage = Definition.BaseDamage * _statController.GetValue(PlayerStatType.BasicAttackPower);
+        float skillDamage = SkillData.Power * _statController.GetValue(PlayerStatType.BasicAttackPower);
+        _remainingCooldtime = SkillData.Cooldown - _statController.GetValue(PlayerStatType.CooldownReduction);
 
-        _execution.Execute(context, skillDamage);
+        _execution.Execute(context, SkillData, skillDamage);
 
-        _remainingCooldtime = Definition.Cooldown - _statController.GetValue(PlayerStatType.CooldownReduction);
+        return true;
     }
 }

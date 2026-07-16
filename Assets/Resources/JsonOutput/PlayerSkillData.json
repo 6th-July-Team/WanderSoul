@@ -1,0 +1,20 @@
+﻿[
+  {
+    "Id": "test",
+    "Name": null,
+    "Description": null,
+    "Power": null,
+    "Cooldown": 1,
+    "ManaCost": null,
+    "Duration": null,
+    "ProjectileSpeed": null,
+    "Pierce": null,
+    "MaxProjectileCount": null,
+    "stringSkillType": null,
+    "stringSkillElementType": null,
+    "stringSkillOwnerType": null,
+    "VFXPath": null,
+    "SFXPath": null,
+    "IconPath": null
+  }
+]

@@ -1,7 +1,11 @@
 ﻿using UnityEngine;
 
-public class TestWagon : MonoBehaviour, IDamageable
+public class TestWagon : MonoBehaviour, IDamageable, ITargetable
 {
+    public bool IsAlive => true;
+    public EntityType EntityType => EntityType.Wagon;
+    public Vector3 Position => this.transform.position;
+
     private int Hp;
 
     private void Awake()

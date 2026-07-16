@@ -13,14 +13,14 @@ public partial class BT_AttackAction : Action
 
     protected override Status OnStart()
     {
-        IEnemyView view = EnemySelf.Value.GetComponent<IEnemyView>();
+        EnemyView view = EnemySelf.Value.GetComponent<EnemyView>();
 
         if(view == null)
         {
             return Status.Failure;
         }
 
-        view.AttackTarget();
+        view.PlayAttackAction();
 
         return Status.Success;
     }

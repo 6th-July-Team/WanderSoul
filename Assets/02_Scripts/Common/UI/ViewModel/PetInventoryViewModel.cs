@@ -77,7 +77,7 @@ public class PetInventoryViewModel : BaseViewModel
             return false;
         }
 
-        return petData.ElementType == _currentFilterElement;
+        return petData.GetElementType().ToString() == _currentFilterElement;
     }
 
     public void ChangeFilterElement(string elementType)

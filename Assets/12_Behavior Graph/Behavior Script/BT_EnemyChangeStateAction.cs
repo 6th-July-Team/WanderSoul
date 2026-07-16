@@ -9,11 +9,11 @@ using Unity.Properties;
 public partial class BT_EnemyChangeStateAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> EnemySelf;
-    [SerializeReference] public BlackboardVariable<BT_MoveableEnemyState> NewState;
+    [SerializeReference] public BlackboardVariable<BT_EnemyState> NewState;
 
     protected override Status OnStart()
     {
-        MoveableEnemyView view = EnemySelf.Value.GetComponent<MoveableEnemyView>();
+        EnemyView view = EnemySelf.Value.GetComponent<EnemyView>();
 
         if(view != null)
         {
