@@ -37,7 +37,6 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     #region Test Variables
     [SerializeField] private bool _skipStartupUIForTest = false;
-    public SOSkillDefinition TestSkillDefinition_ScholarBasicSkill;
     public SOPetSkillInfo TestSOPetSkillInfo;
     public Transform PlayerTransfrom { get; private set; }
 

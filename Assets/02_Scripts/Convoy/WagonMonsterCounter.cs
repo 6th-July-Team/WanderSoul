@@ -10,7 +10,7 @@ public class WagonMonsterCounter : MonoBehaviour
         {
             _wagonViewModel.IncreaseEnemyCount();
 
-            other.GetComponent<MoveableEnemyView>().OnEnemyDied += () => _wagonViewModel.IncreaseEnemyCount();
+            other.GetComponent<EnemyView>().OnEnemyDied += () => _wagonViewModel.IncreaseEnemyCount();
         }
     }
 

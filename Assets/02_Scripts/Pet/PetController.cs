@@ -134,6 +134,16 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable
         _petMovement.ApplyCommand(_commandResult);
     }
 
+    public void AddModifier(PetStatModifier modifier)
+    {
+        _petStatController.AddModifier(modifier);
+    }
+
+    public void RemoveModifiers(PetStatType statType)
+    {
+        _petStatController.RemoveModifiers(statType);
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;

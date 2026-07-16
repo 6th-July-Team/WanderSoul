@@ -83,4 +83,17 @@ public static class Utils
         if (null != parent) newGameObject.transform.SetParent(parent);
         return newGameObject;
     }
+
+    public static DamageType GetTypeByPetElement(PetElement element)
+    {
+        return element switch
+        {
+            PetElement.Earth => DamageType.Physical,
+            PetElement.Fire => DamageType.Fire,
+            PetElement.Water => DamageType.Cold,
+            PetElement.Air => DamageType.Electric,
+            PetElement.None => DamageType.Magic,
+            _ => DamageType.None,
+        };
+    }
 }

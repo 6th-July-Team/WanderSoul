@@ -68,10 +68,7 @@ public class PetStatController
             }
         }
 
-        float result =
-            (baseValue + flat) *
-            (1f + addPercent) *
-            multipleMultiplier;
+        float result = (baseValue + flat) * (1f + addPercent) * multipleMultiplier;
 
         return ApplyLimit(statType, result);
     }

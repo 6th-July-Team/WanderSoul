@@ -94,7 +94,7 @@ public class SkillSlotUiView : MonoBehaviour
         }
 
         float remaining = _skill.RemainingCooldTime;
-        float total = _skill.Definition.Cooldown;
+        float total = _skill.SkillData.Cooldown;
 
         if (total <= 0f)
         {
@@ -123,7 +123,7 @@ public class SkillSlotUiView : MonoBehaviour
             return;
         }
 
-        bool hasEnoughMana = (_manaPool.CurrentMana >= _skill.Definition.ManaCost);
+        bool hasEnoughMana = (_manaPool.CurrentMana >= _skill.SkillData.ManaCost);
         bool isUsable = (_skill.IsReady == true && hasEnoughMana == true);
 
         if (isUsable == true)
