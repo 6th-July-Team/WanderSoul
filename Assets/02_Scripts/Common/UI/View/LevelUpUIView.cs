@@ -1,16 +1,22 @@
-﻿using System.Collections.Generic;
+﻿using DG.Tweening;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelUpUIView : BaseUI
 {
     [SerializeField] private GameObject _optionSlotPrefab;
     [SerializeField] private Transform _slotRoot;
+    [SerializeField] private CanvasGroup _dimCanvasGroup;
 
     List<LevelUpOptionSlotUIView> _slotList = new();
+
+    private bool _isSelecting = false;
 
     public void SetOptions(List<string> optionIdList)
     {
         ClearSlots();
+        _isSelecting = false;
+
         if (optionIdList == null)
         {
             return;
@@ -19,6 +25,22 @@ public class LevelUpUIView : BaseUI
         foreach (var option in optionIdList)
         {
             CreateSlot(option);
+        }
+
+        PlayAppearSequence();
+    }
+
+    private void PlayAppearSequence()
+    {
+        if (_dimCanvasGroup != null)
+        {
+            _dimCanvasGroup.alpha = 0f;
+            _dimCanvasGroup.DOFade(1f, 0.3f);
+        }
+
+        for (int i = 0; i < _slotList.Count; i++)
+        {
+            _slotList[i].PlayAppearAnimation(i * 0.12f);
         }
     }
 
@@ -62,6 +84,29 @@ public class LevelUpUIView : BaseUI
 
         //TODO(이태영): 선택된 옵션 효과 적용 요청
 
+        if (_isSelecting == true)
+        {
+            return;
+        }
+        _isSelecting = true;
+
+        foreach (var slot in _slotList)
+        {
+
+            if (slot.OptionId == optionId)
+            {
+                slot.PlaySelectedAnimation(OnSelectedAnimationComplete);
+            }
+
+            else
+            {
+                slot.PlayUnselectedAnimation();
+            }
+        }
+    }
+
+    private void OnSelectedAnimationComplete()
+    {
         GameManager.UI.CloseUI(UIType.LevelUpUIView);
     }
 }

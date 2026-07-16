@@ -196,7 +196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -681,7 +681,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0.6199078, g: 1, b: 0.41037738, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -844,6 +844,7 @@ GameObject:
   m_Component:
   - component: {fileID: 580900804468165712}
   - component: {fileID: 8192892107940662494}
+  - component: {fileID: 4822065289416082101}
   m_Layer: 5
   m_Name: LevelUpOptionSlot
   m_TagString: Untagged
@@ -868,8 +869,8 @@ RectTransform:
   - {fileID: 1379881234417605211}
   - {fileID: 4798918468461550101}
   - {fileID: 1219170935292573167}
-  - {fileID: 2207361806554251555}
   - {fileID: 8315788382102820092}
+  - {fileID: 2207361806554251555}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -899,3 +900,19 @@ MonoBehaviour:
   _rareColor: {r: 0.19339621, g: 0.5711725, b: 1, a: 0}
   _epicColor: {r: 0.8908589, g: 0.13679248, b: 1, a: 0}
   _legendaryColor: {r: 1, g: 0.7565955, b: 0.1273585, a: 0}
+  _canvasGroup: {fileID: 4822065289416082101}
+  _rootRect: {fileID: 580900804468165712}
+  _hoverScale: 1.05
+  _hoverDuration: 0.15
+--- !u!225 &4822065289416082101
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8587384558047133471}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
