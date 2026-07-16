@@ -11,4 +11,5 @@ public enum EntityType
     Enemy,
     Pet,
     Wagon,
+    Barrier,
 }

@@ -9,3 +9,12 @@ public enum DamageType
     Electric,
     Magic,
 }
+
+public enum Grade
+{
+    None,
+    Nomal,
+    Epic,
+    Unique,
+    Legendary,
+}

@@ -26,7 +26,7 @@ public static class EnemyDamageExtension
 
             Vector3 hitDirection = (damageableTarget.Position - attackerPosition).normalized;
 
-            DamageInfo damageInfo = new(viewModel.Attack, hitDirection);
+            DamageInfo damageInfo = new(viewModel.Attack, hitDirection, viewModel.DamageType);
 
             viewModel.ApplyDamage(damageableTarget, damageInfo);
         }
@@ -34,7 +34,7 @@ public static class EnemyDamageExtension
 
     public static void ProjectileTypeAttack(this EnemyViewModel viewModel, IDamageable damageableTarget, Vector3 hitDirection)
     {
-        DamageInfo damageInfo = new(viewModel.Attack, hitDirection);
+        DamageInfo damageInfo = new(viewModel.Attack, hitDirection, viewModel.DamageType);
 
         viewModel.ApplyDamage(damageableTarget, damageInfo);
     }

@@ -264,3 +264,22 @@ public class PlayerSkillData : BaseData
     public DamageType GetDamageType()
     => Enum.TryParse<DamageType>(stringSkillDamageType, out var result) ? result : DamageType.Physical;
 }
+
+[Serializable]
+public class PetData : BaseData
+{
+    public string Name;
+    public string stringElementType;
+    public string Description;
+    public string stringPetGradeType;
+    public string NormalSkillId;
+    public string SpecialSkillId;
+    public string IconPath;
+
+    public PetElement GetElementType()
+   => Enum.TryParse<PetElement>(stringElementType, out var result) ? result : PetElement.None;
+
+    public Grade GetGrade()
+   => Enum.TryParse<Grade>(stringPetGradeType, out var result) ? result : Grade.None;
+
+}

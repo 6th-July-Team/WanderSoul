@@ -5,6 +5,12 @@ public class ScholarBarrier : MonoBehaviour, IBarrierable, IDamageable
     private float _absorbAmount;
     private float _duration;
 
+    public bool IsAlive => _absorbAmount > 0 && _duration > 0;
+
+    public EntityType EntityType => EntityType.Player;
+
+    public Vector3 Position => transform.position;
+
     public void Init(PlayerSkillData skillData)
     {
         _absorbAmount = skillData.BarrierAbsorbAmount;
