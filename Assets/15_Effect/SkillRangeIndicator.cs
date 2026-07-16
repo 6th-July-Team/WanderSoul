@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.UIElements;
 
 public class SkillRangeIndicator : MonoBehaviour
 {
@@ -20,6 +21,19 @@ public class SkillRangeIndicator : MonoBehaviour
 
         _decalProjector.size = new Vector3(diameter, diameter, _projectionDepth);
 
+        _decalProjector.enabled = true;
+    }
+
+    public void Show(Vector3 center, Vector3 direct, float height, float width)
+    {
+        Quaternion rotation = Quaternion.LookRotation(direct, Vector3.up);
+
+        Vector3 pos = center + direct * (height * 0.5f);
+
+        transform.position = pos;
+        transform.rotation = rotation;
+
+        _decalProjector.size = new Vector3(width, height, _projectionDepth);
         _decalProjector.enabled = true;
     }
 

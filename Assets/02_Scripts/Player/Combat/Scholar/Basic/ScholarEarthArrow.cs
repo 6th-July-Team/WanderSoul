@@ -17,6 +17,7 @@ public class ScholarEarthArrow : IElementArrowVariant
             Damage = damage,
             Direction = context.AimDirection,
             DamageType = DamageType.Physical,
+            TargetType = EntityType.Enemy,
             AdditionalDamage = damage * 2
         });
     }

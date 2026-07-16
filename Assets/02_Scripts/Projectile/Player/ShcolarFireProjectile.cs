@@ -19,7 +19,7 @@ public class ShcolarFireProjectile : Projectile
 
         StartCoroutine(ShowGizmoRoutine());
 
-        SearchUtil.FindNearestTarget(transform.position, _range, LayerMask.GetMask("Enemy"), _targets);
+        SearchUtil.FindNearestSphere(transform.position, _range, LayerMask.GetMask("Enemy"), _targets);
 
         DamageInfo damageInfo = new DamageInfo(_damage, _direction, _damageType, _additionalDamage);
 

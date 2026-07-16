@@ -17,6 +17,7 @@ public class ScholarFireArrow : IElementArrowVariant
             Damage = damage,
             Direction = context.AimDirection,
             DamageType = DamageType.Fire,
+            TargetType = EntityType.Enemy,
             AdditionalDamage = damage * 2
         });
     }

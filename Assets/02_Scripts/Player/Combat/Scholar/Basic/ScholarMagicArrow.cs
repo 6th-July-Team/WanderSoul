@@ -21,8 +21,8 @@ public class ScholarMagicArrow : IElementArrowVariant
                 Speed = 15f,
                 Damage = damage * 2,
                 Direction = context.AimDirection,
-                DamageType = DamageType.Magic
-
+                DamageType = DamageType.Magic,
+                TargetType = EntityType.Enemy
             });
         }
         else
@@ -36,7 +36,9 @@ public class ScholarMagicArrow : IElementArrowVariant
                 Speed = 5f,
                 Damage = damage,
                 Direction = context.AimDirection,
-                DamageType = DamageType.Magic
+                DamageType = DamageType.Magic,
+                TargetType = EntityType.Enemy
+
             });
         }
 

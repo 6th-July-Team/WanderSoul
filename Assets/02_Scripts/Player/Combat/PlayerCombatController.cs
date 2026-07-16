@@ -4,12 +4,9 @@
 public class PlayerCombatController : MonoBehaviour
 {
     // Components
-    private PlayerInputHandle _inputHandle;
     private PlayerAimHandler _aimHandler;
-
-    // Animator
-    //private Animator _animator;
-    //private bool _isAnimating = false;
+    private PlayerInputHandle _inputHandle;
+    private PlayerAnimationController _animationController;
 
     // Mana
     public ManaPool ManaPool { get; private set; }
@@ -29,9 +26,9 @@ public class PlayerCombatController : MonoBehaviour
 
     private void Awake()
     {
-        _inputHandle = GetComponent<PlayerInputHandle>();
         _aimHandler = GetComponent<PlayerAimHandler>();
-        //_animator = GetComponent<Animator>();
+        _inputHandle = GetComponent<PlayerInputHandle>();
+        _animationController = GetComponent<PlayerAnimationController>();
     }
 
     public void Init(PlayerStatController statController)
@@ -108,11 +105,11 @@ public class PlayerCombatController : MonoBehaviour
 
     private void OnBasicAttack()
     {
-        TryExecuteSkill(SkillSlot.Basic);
-        //if(TryExecuteSkill(SkillSlot.Basic))
-        //{
-        //    _animator.SetTrigger("isBasicAttak");
-        //}    
+        bool isExecute = TryExecuteSkill(SkillSlot.Basic);
+        if (isExecute)
+        {
+            _animationController.PlayBasicAttack();
+        }
     }
 
     private void OnSpecialAttack() => EndSkillRangeCheckAndExecute(SkillSlot.Special);

@@ -17,14 +17,14 @@ public class PlayerClassSkillMaker
         if (id == "테스트 직업 아이디")
         {
             build = new(
-                new PlayerSkill("test", new ScholarElementalArrow(GameManager.PetParty), _manaPool, statController)
-                , new PlayerSkill("test", new ScholarElementalExplosion(), _manaPool, statController)
-                , null);
+                new PlayerSkill("test", new MercenarySlash(), _manaPool, statController)
+                , new PlayerSkill("test", new MercenaryWhip(), _manaPool, statController)
+                , new PlayerSkill("test", new MercenaryDanceStorm(), _manaPool, statController));
         }
         build = new(
-                new PlayerSkill("test", new ScholarElementalArrow(GameManager.PetParty), _manaPool, statController)
-                , new PlayerSkill("test", new ScholarElementalExplosion(), _manaPool, statController)
-                , new PlayerSkill("test", new ScholarSummonBarrier(), _manaPool, statController));
+                new PlayerSkill("test", new MercenarySlash(), _manaPool, statController)
+                , new PlayerSkill("test", new MercenaryWhip(), _manaPool, statController)
+                , new PlayerSkill("test", new MercenaryDanceStorm(), _manaPool, statController));
         return build;
     }
 }

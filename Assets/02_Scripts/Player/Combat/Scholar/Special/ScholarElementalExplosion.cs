@@ -30,7 +30,7 @@ public class ScholarElementalExplosion : IPlayerSkillExecution, ISkillRangeCheck
 
         Vector3 skillCenter = context.AimWorldPoint;
         skillCenter.y += attackRange;
-        SearchUtil.FindNearestTarget(skillCenter, attackRange, LayerMask.GetMask("Enemy"), _targets);
+        SearchUtil.FindNearestSphere(skillCenter, attackRange, LayerMask.GetMask("Enemy"), _targets);
 
         DamageInfo damageInfo = new DamageInfo(damage, context.AimDirection
             , Utils.GetTypeByPetElement(element));

@@ -17,7 +17,9 @@ public class ScholarWaterArrow : IElementArrowVariant
             Damage = damage,
             Direction = context.AimDirection,
             AdditionalDamage = damage * 2,
-            DamageType = DamageType.Cold
+            DamageType = DamageType.Cold,
+            TargetType = EntityType.Enemy
+
         });
     }
 }

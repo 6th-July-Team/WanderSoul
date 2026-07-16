@@ -147,7 +147,7 @@ public class PoolManager
         }
         else
         {
-            Debug.Log($"Pool Address({address})에 에셋이 ResourceManager에서 로드되어 있습니다.");
+            Debug.Log($"Pool Address({address})에 에셋이 ResourceManager에서 로드되었습니다.");
         }
 
         return gameObject;

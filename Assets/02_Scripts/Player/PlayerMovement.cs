@@ -2,6 +2,7 @@
 
 [RequireComponent(typeof(PlayerInputHandle))]
 [RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(PlayerAnimationController))]
 public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
@@ -28,11 +29,13 @@ public class PlayerMovement : MonoBehaviour
     // Components
     private PlayerInputHandle _inputHandle;
     private CharacterController _characterController;
+    private PlayerAnimationController _animationController;
 
     private void Awake()
     {
         _inputHandle = GetComponent<PlayerInputHandle>();
         _characterController = GetComponent<CharacterController>();
+        _animationController = GetComponent<PlayerAnimationController>();
 
         //_dashMaxCount = DataTable.GetPlayerData.DashMaxCount
         _dashCount = _dashMaxCount;
@@ -59,6 +62,7 @@ public class PlayerMovement : MonoBehaviour
         UpdateDash();
         UpdateChargeDash();
         Move();
+        UpdateMoveAnimation();
     }
 
     private void Move()
@@ -199,5 +203,11 @@ public class PlayerMovement : MonoBehaviour
             _isDashCharging = false;
             _dashChargeTimer = 0f;
         }
+    }
+
+    private void UpdateMoveAnimation()
+    {
+        bool isMove = _inputHandle.MoveInputV3.sqrMagnitude > 0.01f;
+        _animationController.SetMove(isMove);
     }
 }

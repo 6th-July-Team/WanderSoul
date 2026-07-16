@@ -40,7 +40,7 @@ public class PetCommandController
         IPositionProvider anchor = GetAnchor();
         float searchRadius = GetSearchRadius("TEMP 이후 펫 ID 할당하기");
 
-        ITargetable target = SearchUtil.FindNearestTarget(anchor.Position, searchRadius, _enemyLayerMask, _searchBuffer);
+        ITargetable target = SearchUtil.FindNearestSphere(anchor.Position, searchRadius, _enemyLayerMask, _searchBuffer);
 
         return new PetCommandResult(CurrentCommand, anchor, target);
     }

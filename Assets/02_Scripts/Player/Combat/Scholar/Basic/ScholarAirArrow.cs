@@ -17,6 +17,7 @@ public class ScholarAirArrow : IElementArrowVariant
             Damage = damage,
             Direction = context.AimDirection,
             DamageType = DamageType.Electric,
+            TargetType = EntityType.Enemy,
             AdditionalDamage = damage * 2
         });
     }

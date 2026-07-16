@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using Unity.AppUI.UI;
 using UnityEngine;
 
 public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable
@@ -14,12 +15,17 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable
 
     private bool _isInBarrier;
 
+    // 기즈모를 위해 임시로 들고옴, 추후 삭제
+    private PlayerAimHandler _aimHandler;
+
 
     private void Awake()
     {
+        _aimHandler = GetComponent<PlayerAimHandler>();
+
         _combatController = GetComponent<PlayerCombatController>();
 
-        PlayerStatData playerStatData = GameManager.DataTable.GetPlayerStatData("테스트 직업 아이디");
+        PlayerStatData playerStatData = new();//GameManager.DataTable.GetPlayerStatData("테스트 직업 아이디");
         _statController = new(playerStatData);
 
         Init().Forget();
@@ -61,4 +67,14 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable
             _isInBarrier = false;
         }
     }
-}
+
+    [SerializeField] Vector3 _gizmoOffset = new Vector3(0, 1.5f, 1.5f);
+    [SerializeField] Vector3 _Radius = new Vector3(1.5f, 1.5f, 1.5f);
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+
+        
+    }
+} 
