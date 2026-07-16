@@ -59,12 +59,17 @@ public class UIGameFlowTest : MonoBehaviour
 
     private void OpenPartyHudTest()
     {
-        var model = new PartyMemberModel();
-        model.Name = "피슬";
-        model.MaxHp = 1000;
-        model.CurrentHp = 800;
+        var view = GameManager.UI.OpenPartyHudUI();
+        if (view == null)
+        {
+            return;
+        }
 
-        GameManager.UI.OpenPartyHudUI(model);
+        view.SetWagon("마차", 1f);
+        view.AddPet("펫1", 0.8f);
+        view.AddPet("펫2", 0.5f);
+        view.AddPet("펫3", 0.3f);
+
     }
 
     private void OpenVillageInfoHudTest()
