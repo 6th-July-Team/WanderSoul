@@ -167,9 +167,11 @@ public class EnemyData : BaseData, ISerializationCallbackReceiver
 {
     public string TargetPolicy; // PriortyBased == 기본 타입 // WagonOnly == 마차만 공격 // PlayerOnly == 플레이어만 공격
     public string EnemyAttackType; // 공격 타입 // Melee == 근접 // Projectile == 투사체발사(원거리) // AreaDelayed == 고정 포대형(예고 후 장판 공격) // Steal == 공격 없이 훔치기 기능만
+    public string DamageType;
 
     [NonSerialized] public TargetPolicy Policy;
     [NonSerialized] public EnemyAttackType AttackType;
+    [NonSerialized] public DamageType Type;
 
     public void OnAfterDeserialize()
     {
@@ -182,21 +184,29 @@ public class EnemyData : BaseData, ISerializationCallbackReceiver
         {
             DataLog.EnumParseFailed<EnemyAttackType>(nameof(EnemyData), Id, EnemyAttackType);
         }
+
+        if (Enum.TryParse(DamageType, true, out Type) == false)
+        {
+            DataLog.EnumParseFailed<EnemyAttackType>(nameof(EnemyData), Id, DamageType);
+        }
     }
 
     public void OnBeforeSerialize() { }
+
+    public string PrefabAddress;
 
     public string Name;
     public string Description;
 
     public int MaxHp;
 
-    public float DetectRange; // 몬스터를 기준으로 탐색하는 범위
-    public float LeashRange; // 마차를 기준으로 탐색하는 범위
+    public float DetectRange;
+    public float LeashRange;
 
     public int Attack;
     public float AttackSpeed;
     public float AttackRange;
+
 
     public float SoulDropChance;
     public int SoulDropAmount;
@@ -204,10 +214,12 @@ public class EnemyData : BaseData, ISerializationCallbackReceiver
     public float ExpDropChance;
     public int ExpDropAmount;
 
-    public float PreferredDistance; // [저격형 전용, 다른 타입의 경우 0으로 할 것] 저격형 몬스터가 도망치는 최소 범위
+    public bool CanMove;
+    public float MoveSpeed;
 
-    public bool CanMove; // 고정형인지 아닌지
-    public float MoveSpeed; // 이동속도
+    public float ProjectileSpeed;
+    public float ProjectileLifeTime;
+    public string ProjectilePrefabAddress;
 }
 
 [Serializable]

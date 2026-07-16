@@ -1,0 +1,10 @@
+﻿[
+  {
+    "Id": "Test",
+    "InitSize": 100
+  },
+  {
+    "Id": "Test_01",
+    "InitSize": 60
+  }
+]
