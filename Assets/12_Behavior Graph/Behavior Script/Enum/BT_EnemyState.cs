@@ -1,18 +1,12 @@
 ﻿using Unity.Behavior;
 
-[BlackboardEnum]
-public enum BT_MoveableEnemyState
-{
-    Approach,
-	Chase,
-	Attack,
-	Dead
-}
 
 [BlackboardEnum]
-public enum BT_ProjectileEnemyState
+public enum BT_EnemyState
 {
-    Chase,
+    Approach,   // 이동형 전용
+    Chase,      // 이동형 전용
     Attack,
-    Dead
+    Dead,
+    Idle        // 고정형 전용
 }

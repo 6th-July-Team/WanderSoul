@@ -10,8 +10,7 @@ public class EnemyTargetSelector
 
     private readonly float _leashRange;
 
-    public GameObject CurrentTarget => _currentTarget;
-    private GameObject _currentTarget;
+    public GameObject CurrentTarget { get; private set; }
 
     private readonly Dictionary<GameObject, float> _excludedTargets = new();
 
@@ -25,8 +24,8 @@ public class EnemyTargetSelector
 
     public GameObject SelectTarget(IReadOnlyList<GameObject> candidates)
     {
-        _currentTarget = FindTarget(candidates);
-        return _currentTarget;
+        CurrentTarget = FindTarget(candidates);
+        return CurrentTarget;
     }
 
     private GameObject FindTarget(IReadOnlyList<GameObject> candidates)
@@ -61,6 +60,11 @@ public class EnemyTargetSelector
             return pet;
         }
 
+        if(_wagon == null)
+        {
+            return null;
+        }
+
         return _wagon;
     }
 
@@ -76,7 +80,7 @@ public class EnemyTargetSelector
             return false;
         }
 
-        bool isPlayerTargetable = (_currentTarget == _player || candidates.Contains(_player));
+        bool isPlayerTargetable = (CurrentTarget == _player || candidates.Contains(_player));
 
         return isPlayerTargetable;
     }
@@ -84,11 +88,11 @@ public class EnemyTargetSelector
     private GameObject FindTargetablePet(IReadOnlyList<GameObject> candidates)
     {
 
-        if (IsPet(_currentTarget) && IsInsideLeash(_currentTarget))
+        if (IsPet(CurrentTarget) && IsInsideLeash(CurrentTarget))
         {
-            if(IsExcluded(_currentTarget) == false)
+            if(IsExcluded(CurrentTarget) == false)
             {
-                return _currentTarget;
+                return CurrentTarget;
             }
         }
 
@@ -109,6 +113,11 @@ public class EnemyTargetSelector
     private bool IsInsideLeash(GameObject target)
     {
         if (IsAlive(target) == false)
+        {
+            return false;
+        }
+
+        if(_wagon == null)
         {
             return false;
         }
@@ -137,9 +146,9 @@ public class EnemyTargetSelector
 
     public GameObject ExcludeCurrentAndReselect(IReadOnlyList<GameObject> candidates, float ExcludeDuration)
     {
-        if(_currentTarget != null)
+        if(CurrentTarget != null)
         {
-            _excludedTargets[_currentTarget] = Time.time + ExcludeDuration;
+            _excludedTargets[CurrentTarget] = Time.time + ExcludeDuration;
         }
 
         return SelectTarget(candidates);

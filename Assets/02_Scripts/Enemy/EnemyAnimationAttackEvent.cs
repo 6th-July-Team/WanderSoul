@@ -2,9 +2,15 @@
 
 public class EnemyAnimationAttackEvent : MonoBehaviour
 {
-    [SerializeField] private MoveableEnemyView View_Self;
-    public void OnAttackHit()
+    [SerializeField] private EnemyView View_Self;
+
+    public void ExecuteAttack()
     {
-        View_Self.OnAttackHit();
+        View_Self.ExecuteAttack();
+    }
+
+    public void ExecuteDead()
+    {
+        View_Self.ExecuteDead();
     }
 }
