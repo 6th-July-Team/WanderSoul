@@ -24,7 +24,7 @@ public class PlayerClassSkillMaker
         build = new(
                 new PlayerSkill("test", new MercenarySlash(), _manaPool, statController)
                 , new PlayerSkill("test", new MercenaryWhip(), _manaPool, statController)
-                , new PlayerSkill("test", new MercenaryDanceStorm(), _manaPool, statController));
+                , new PlayerSkill("test", new MercenaryFinalBlow(), _manaPool, statController));
         return build;
     }
 }
