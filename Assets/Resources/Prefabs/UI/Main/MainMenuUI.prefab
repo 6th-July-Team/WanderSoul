@@ -525,6 +525,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3009853890044346276}
   - component: {fileID: 6544653670367957332}
+  - component: {fileID: 2377272783939178955}
   m_Layer: 5
   m_Name: MainMenuUI
   m_TagString: Untagged
@@ -568,6 +569,22 @@ MonoBehaviour:
   _characterButton: {fileID: 6524483050487088381}
   _farmButton: {fileID: 606193503217589786}
   _optionButton: {fileID: 1121533720102884176}
+--- !u!114 &2377272783939178955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3683257575864623409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e80eae576c6e284eb878aed316e7b42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UISlideAnimation
+  _targetRect: {fileID: 3009853890044346276}
+  _direction: 0
+  _slideDistance: 300
+  _duration: 0.3
 --- !u!1 &4416349686418528126
 GameObject:
   m_ObjectHideFlags: 0

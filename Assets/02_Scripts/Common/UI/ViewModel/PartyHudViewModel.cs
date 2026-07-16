@@ -11,6 +11,9 @@ public class PartyHudViewModel : BaseViewModel<PartyMemberModel>
     public string Name { get { return _model.Name; } }
     public float HpFillAmount { get { return _model.HpFillAmount; } }
 
+
+
+    //테스트용 : 전투 시스템 나오면 삭제
     public void TakeDamage(int damage)
     {
         _model.CurrentHp -= damage;

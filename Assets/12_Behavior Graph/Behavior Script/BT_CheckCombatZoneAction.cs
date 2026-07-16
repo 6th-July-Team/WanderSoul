@@ -24,14 +24,14 @@ public partial class BT_CheckCombatZoneAction : Action
 
         if (distanceSqr <= rangeSqr)
         {
-            MoveableEnemyView view = EnemySelf.Value.GetComponent<MoveableEnemyView>();
+            EnemyView view = EnemySelf.Value.GetComponent<EnemyView>();
             
             if(view == null)
             {
                 return Status.Failure;
             }
 
-            view.RequestStateChange(BT_MoveableEnemyState.Chase);
+            view.RequestStateChange(BT_EnemyState.Chase);
         }
 
         return Status.Success;
