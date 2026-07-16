@@ -13,7 +13,7 @@ public partial class BT_TryExitAttackAction : Action
 
     protected override Status OnStart()
     {
-        MoveableEnemyView view = EnemySelf.Value.GetComponent<MoveableEnemyView>();
+        EnemyView view = EnemySelf.Value.GetComponent<EnemyView>();
 
         if(view == null)
         {

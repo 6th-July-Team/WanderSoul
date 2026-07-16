@@ -28,7 +28,7 @@ public partial class BT_NavigatesToTargetAction : Action
     private NavMeshAgent _navMeshAgent_enemySelf; // 적 자기 자신의 NavMeshAgent
     private Animator _animator_enemySelf; // 적 자기자신의 Animator
     
-    private MoveableEnemyView _view;
+    private EnemyView _view;
 
     private Vector3 _lastRepathPosition; // 마지막으로 계산한 타겟의 위치
 
@@ -46,7 +46,7 @@ public partial class BT_NavigatesToTargetAction : Action
             return Status.Failure;
         }
 
-        _view = EnemySelf.Value.GetComponent<MoveableEnemyView>();
+        _view = EnemySelf.Value.GetComponent<EnemyView>();
 
         _navMeshAgent_enemySelf = EnemySelf.Value.GetComponentInChildren<NavMeshAgent>();
         _animator_enemySelf = EnemySelf.Value.GetComponentInChildren<Animator>();

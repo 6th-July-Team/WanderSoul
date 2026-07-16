@@ -6,8 +6,8 @@ public class EnemyAttackHitbox : MonoBehaviour
 {
     private BoxCollider _collider;
 
-    private readonly List<GameObject> _targetList = new();
-    public IReadOnlyList<GameObject> TargetList => _targetList;
+    private readonly List<IDamageable> _targetList = new();
+    public IReadOnlyList<IDamageable> TargetList => _targetList;
 
     private void Awake()
     {
@@ -28,19 +28,25 @@ public class EnemyAttackHitbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(_targetList.Contains(other.gameObject))
+        IDamageable damageableTarget = other.GetComponentInParent<IDamageable>();
+
+        if (damageableTarget == null || damageableTarget.EntityType == EntityType.Enemy || _targetList.Contains(damageableTarget))
         {
             return;
         }
 
-        if(other.CompareTag("Player") || other.CompareTag("Pet") || other.CompareTag("Wagon"))
-        {
-            _targetList.Add(other.gameObject);
-        }
+        _targetList.Add(damageableTarget);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        _targetList.Remove(other.gameObject);
+        IDamageable damageableTarget = other.GetComponentInParent<IDamageable>();
+
+        if (damageableTarget == null)
+        {
+            return;
+        }
+
+        _targetList.Remove(damageableTarget);
     }
 }

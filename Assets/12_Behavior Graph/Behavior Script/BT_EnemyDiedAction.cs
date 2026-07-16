@@ -12,14 +12,14 @@ public partial class BT_EnemyDiedAction : Action
 
     protected override Status OnStart()
     {
-        MoveableEnemyView view = EnemySelf.Value.GetComponent<MoveableEnemyView>();
+        EnemyView view = EnemySelf.Value.GetComponent<EnemyView>();
 
         if(view == null)
         {
             return Status.Failure;
         }
 
-        view.Died();
+        view.PlayDeadAction();
 
         return Status.Success;
     }

@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using Unity.VisualScripting;
+using UnityEngine;
 
 public class TestGameObjectManager : MonoBehaviour
 {
@@ -7,45 +9,91 @@ public class TestGameObjectManager : MonoBehaviour
     [SerializeField] private Transform SpawnPointThree;
     [SerializeField] private Transform SpawnPointFour;
 
-    [SerializeField] private GameObject Prefab_Enemy;
     [SerializeField] private GameObject Player;
-    [SerializeField] private GameObject Caravan;
+    [SerializeField] private GameObject Wagon;
     [SerializeField] private GameObject Pet;
-    [SerializeField] private UI UI;
+
+    private GameObject _prefab_meleeEnemy;
+    private GameObject _prefab_projectileEnemy;
 
     private void Start()
     {
-        for (int i = 0; i < 100; i++)
-        {
-            InstantiateEnemy(i);
-        }
-
-        CreateButtonActionClass();
+        StartSetting().Forget();
     }
 
-    private void InstantiateEnemy(int i)
+    private async UniTaskVoid StartSetting()
     {
-        GameObject enemy = Instantiate(Prefab_Enemy, ChoiceTransform(i));
+        await LoadAsset();
+        InstantiateEnemy();
+    }
 
-        MoveableEnemyView view = enemy.GetComponent<MoveableEnemyView>();
+    private async UniTask LoadAsset()
+    {
+        GameManager.DataTable.EnemyDataTable.TryGetValue("Test", out EnemyData enemyData);
+        GameManager.DataTable.EnemyDataTable.TryGetValue("Test_01", out EnemyData enemyDataTwo);
+
+        var (prefab_meleeEnemy, prefab_projectileEnemy) = await UniTask.WhenAll
+            (
+            GameManager.Resource.LoadAsset<GameObject>(enemyData.PrefabAddress),
+            GameManager.Resource.LoadAsset<GameObject>(enemyDataTwo.PrefabAddress)
+            );
+
+        _prefab_meleeEnemy = prefab_meleeEnemy;
+        _prefab_projectileEnemy = prefab_projectileEnemy;
+    }
+
+    private void InstantiateEnemy()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            InstantiateMeleeEnemy(i);
+        }
+
+        for (int i = 0; i < 4; i++)
+        {
+            InstantiateProjectileEnemy(i);
+        }
+    }
+
+    private void InstantiateMeleeEnemy(int i)
+    {
+        GameObject enemy = Instantiate(_prefab_meleeEnemy, ChoiceTransform(i));
+
+
+        EnemyView view = enemy.GetComponent<EnemyView>();
 
         GameManager.DataTable.EnemyDataTable.TryGetValue("Test", out EnemyData enemyData);
 
         if (enemyData == null)
         {
-            Debug.LogError("Test.Json이 없습니다");
+            Debug.LogError("Test이 없습니다");
         }
 
-        MoveableEnemyModel model = new MoveableEnemyModel(enemyData);
-        MoveableEnemyViewModel viewModel = new MoveableEnemyViewModel(model);
+        EnemyModel model = new EnemyModel(enemyData);
+        EnemyViewModel viewModel = new EnemyViewModel(model);
 
         view.BindViewModel(viewModel);
-        view.Init(Caravan, Player);
+        view.Init(Wagon, Player);
     }
 
-    private void CreateButtonActionClass()
+    private void InstantiateProjectileEnemy(int i)
     {
-        ButtonAction buttonAction = new(UI, Player, Caravan, Pet);
+        GameObject enemy = Instantiate(_prefab_projectileEnemy, ChoiceTransform(i));
+
+        EnemyView view = enemy.GetComponent<EnemyView>();
+
+        GameManager.DataTable.EnemyDataTable.TryGetValue("Test_01", out EnemyData enemyData);
+
+        if (enemyData == null)
+        {
+            Debug.LogError("Test_01이 없습니다");
+        }
+
+        EnemyModel model = new EnemyModel(enemyData);
+        EnemyViewModel viewModel = new EnemyViewModel(model);
+
+        view.BindViewModel(viewModel);
+        view.Init(Wagon, Player);
     }
 
     private Transform ChoiceTransform(int i)
@@ -73,5 +121,16 @@ public class TestGameObjectManager : MonoBehaviour
                     return null;
                 }
         }
+    }
+
+    private Vector3 PrevPosition;
+    private Vector3 CurrentPosition;
+
+    private void AA()
+    {
+        Vector3 targetPosition = new Vector3(this.transform.position.x, this.transform.position.y, (this.transform.position.z + 10));
+
+
+
     }
 }
