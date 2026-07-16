@@ -19,6 +19,8 @@
     QuestDetailUIView,
     PetInventoryUIView,
     PlayerHudUIView,
+    ConvoyHudUIView,
+    LevelUpUIView,
 }
 
 public enum UIRootType : byte

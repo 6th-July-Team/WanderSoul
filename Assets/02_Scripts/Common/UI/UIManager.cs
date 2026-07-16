@@ -157,6 +157,12 @@ public partial class UIManager
             case UIType.PetInventoryUIView:
                 return UIRootType.Content;
 
+            case UIType.ConvoyHudUIView:
+                return UIRootType.Main;
+
+            case UIType.LevelUpUIView:
+                return UIRootType.Content;
+
             default:
                 Debug.LogError($"{uiType}에 지정된 UIRootType이 없습니다.");
                 return UIRootType.Main;

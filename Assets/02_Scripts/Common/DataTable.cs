@@ -22,6 +22,7 @@ public class DataTable
     public Dictionary<string, EnemyData> EnemyDataTable { get; private set; } = new();
     public Dictionary<string, PlayerSkillData> PlayerSkillDataTable { get; private set; } = new();
     public Dictionary<string, PetData> PetDataTable { get; private set; } = new();
+    public Dictionary<string, LevelUpOptionData> LevelUpOptionDataTable { get; private set; } = new();
 
     #endregion
 
@@ -47,6 +48,7 @@ public class DataTable
         PetStatDataTable = LoadData<PetStatData>(nameof(PetStatData));
         PlayerSkillDataTable = LoadData<PlayerSkillData>(nameof(PlayerSkillData));
         //PetDataTable = LoadData<PetData>(nameof(PetData));
+        //LevelUpOptionDataTable = LoadData<LevelUpOptionData>("LevelUpOptionData");
     }
 
     #region Getters
@@ -133,6 +135,13 @@ public class DataTable
         if (null == PetDataTable || string.IsNullOrEmpty(id)) return null;
         return PetDataTable.TryGetValue(id, out var data) ? data : null;
     }
+
+    public LevelUpOptionData GetLevelUpOptionData(string id)
+    {
+        if (null == LevelUpOptionDataTable || string.IsNullOrEmpty(id)) return null;
+        return LevelUpOptionDataTable.TryGetValue(id, out var data) ? data : null;
+    }
+
 
     #endregion
 

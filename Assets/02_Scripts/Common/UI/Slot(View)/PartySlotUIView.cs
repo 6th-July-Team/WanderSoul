@@ -52,6 +52,8 @@ public class PartySlotUIView : MonoBehaviour
             return;
         }
 
+        _iconImage.enabled = true;
+        _iconImage.color = Color.green;
         RefreshIcon(petData.IconPath);
     }
 

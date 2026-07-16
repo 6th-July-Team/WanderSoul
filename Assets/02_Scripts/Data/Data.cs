@@ -283,3 +283,23 @@ public class PetData : BaseData
    => Enum.TryParse<Grade>(stringPetGradeType, out var result) ? result : Grade.None;
 
 }
+
+[Serializable]
+public class LevelUpOptionData : BaseData
+{
+    public string Name;
+    public string Description;
+    public string OptionCategory;
+    public string Grade;
+    public int MinLevel;
+    public int MaxLevel;
+    public string RequiredClassId;
+    public string TargetStatType;
+    public string TargetSkillSlot;
+    public string EffectType;
+    public string Operation;
+    public float Value;
+    public int MaxStack;
+    public int Weight;
+    public string IconPath;
+}
