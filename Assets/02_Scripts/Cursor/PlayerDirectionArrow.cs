@@ -14,6 +14,8 @@ public class PlayerDirectionArrow : MonoBehaviour
     {
         if (_mainCamera == null)
             _mainCamera = Camera.main;
+
+        _aimHandler = GetComponentInParent<PlayerAimHandler>();
     }
 
     private void LateUpdate()

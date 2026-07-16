@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.AppUI.UI;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -93,29 +95,6 @@ public class PreLoadAssetData : BaseData
 {
     public string Address;
     public string AssetType;
-}
-
-[Serializable]
-public class PetData : BaseData
-{
-    public string Name;
-    public string ElementType;
-    public string Description;
-    public string PetGradeType;
-    public string NormalSkillId;
-    public string SpecialSkillId;
-    public string IconPath;
-}
-
-[Serializable]
-public class SkillDefinition : BaseData
-{
-    public string Name;
-    public string Description;
-    public string SkillType;
-    public float ManaCost;
-    public float Cooldown;
-    public string IconPath;
 }
 
 [Serializable]
@@ -259,4 +238,48 @@ public class PetStatData : BaseData
             _ => 0f
         };
     }
+}
+[Serializable]
+public class PlayerSkillData : BaseData
+{
+    public string Name;
+    public string Description;
+    public float Power;
+    public float Cooldown;
+    public int ManaCost;
+    public float Duration;
+    public float ProjectileSpeed;
+    public int Pierce;
+    public int MaxProjectileCount;
+    public float Radius;
+    public float CastRange;
+    public float BarrierAbsorbAmount;
+    public string SkillType;
+    public string stringSkillDamageType;
+    public string SkillOwnerType;
+    public string VFXPath;
+    public string SFXPath;
+    public string IconPath;
+
+    public DamageType GetDamageType()
+    => Enum.TryParse<DamageType>(stringSkillDamageType, out var result) ? result : DamageType.Physical;
+}
+
+[Serializable]
+public class PetData : BaseData
+{
+    public string Name;
+    public string stringElementType;
+    public string Description;
+    public string stringPetGradeType;
+    public string NormalSkillId;
+    public string SpecialSkillId;
+    public string IconPath;
+
+    public PetElement GetElementType()
+   => Enum.TryParse<PetElement>(stringElementType, out var result) ? result : PetElement.None;
+
+    public Grade GetGrade()
+   => Enum.TryParse<Grade>(stringPetGradeType, out var result) ? result : Grade.None;
+
 }

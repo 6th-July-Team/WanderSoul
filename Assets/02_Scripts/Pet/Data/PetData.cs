@@ -1,6 +1,4 @@
-﻿using System;
-using UnityEngine;
-
+﻿
 public enum PetElement
 {
     None,
@@ -24,18 +22,6 @@ public enum PetCommand
     Aggressive,
     GuardWagon,
     COUNT
-}
-
-
-public enum PetDamageType
-{
-    None,
-    Physical,
-    Fire,
-    Cold,
-    Electric,
-    Magic,
-    TrueDamage
 }
 
 public struct PetSkillUseContext
