@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class Shoppanel : MonoBehaviour
+public class ShopPanel : MonoBehaviour
 {
     [SerializeField] private Button _generalShopButton;
     [SerializeField] private Button _equipmentShopButton;
@@ -11,10 +11,10 @@ public class Shoppanel : MonoBehaviour
 
     private void OnEnable()
     {
-        showGeneralShop();
+        ShowGeneralShop();
     }
 
-    public void showGeneralShop()
+    public void ShowGeneralShop()
     {
         _itemGrid.SetActive(true);
         _equipmentItemGrid.SetActive(false);
@@ -23,7 +23,7 @@ public class Shoppanel : MonoBehaviour
         _equipmentShopButton.image.color = Color.gray;
     }
 
-    public void showEquipmentShop()
+    public void ShowEquipmentShop()
     {
         _itemGrid.SetActive(false);
         _equipmentItemGrid.SetActive(true);

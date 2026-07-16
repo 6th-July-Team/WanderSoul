@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-public class TowmHallPanel : MonoBehaviour
+public class TownHallPanel : MonoBehaviour
 {
     [SerializeField] private TMP_Text _villageLevelText;
     [SerializeField] private TMP_Text _upgradeCostText;
