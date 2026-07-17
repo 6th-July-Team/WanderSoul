@@ -25,6 +25,11 @@ public class UIGameFlowTest : MonoBehaviour
         {
             OpenLoadingTest();
         }
+
+        if (Keyboard.current.pKey.wasPressedThisFrame)
+        {
+            GameManager.UI.OpenSimplePopup("테스트 알림입니다");
+        }
     }
 
     private void ShowTitle()

@@ -191,5 +191,16 @@ public partial class UIManager
         view.SetupRandom();
         return view;
     }
+
+    public void OpenSimplePopup(string message)
+    {
+        var view = OpenUI<SimplePopupUIView>(UIType.SimplePopupUIView);
+        if (view == null)
+        {
+            return;
+        }
+
+        view.SetPopup(message);
+    }
 }
 

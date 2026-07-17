@@ -166,6 +166,9 @@ public partial class UIManager
             case UIType.LoadingUIView:
                 return UIRootType.Front;
 
+            case UIType.SimplePopupUIView:
+                return UIRootType.Popup;
+
             default:
                 Debug.LogError($"{uiType}에 지정된 UIRootType이 없습니다.");
                 return UIRootType.Main;
