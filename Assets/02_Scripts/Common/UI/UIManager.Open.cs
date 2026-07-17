@@ -166,5 +166,30 @@ public partial class UIManager
         view.SetOptions(optionIdList);
     }
 
+    public ConvoyHudUIView OpenConvoyHudUI(string stageId, Wagon wagon)
+    {
+        var view = OpenUI<ConvoyHudUIView>(UIType.ConvoyHudUIView);
+        if (view == null)
+        {
+            Debug.LogWarning("ConvoyHudUIView를 열 수 없습니다.");
+            return null;
+        }
+
+        view.SetConvoy(stageId, wagon);
+        return view;
+    }
+
+    public LoadingUIView OpenLoadingUI()
+    {
+        var view = OpenUI<LoadingUIView>(UIType.LoadingUIView);
+        if (view == null)
+        {
+            Debug.LogWarning("LoadingUIView를 열 수 없습니다.");
+            return null;
+        }
+
+        view.SetupRandom();
+        return view;
+    }
 }
 

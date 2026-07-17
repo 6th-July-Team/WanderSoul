@@ -163,6 +163,9 @@ public partial class UIManager
             case UIType.LevelUpUIView:
                 return UIRootType.Content;
 
+            case UIType.LoadingUIView:
+                return UIRootType.Front;
+
             default:
                 Debug.LogError($"{uiType}에 지정된 UIRootType이 없습니다.");
                 return UIRootType.Main;

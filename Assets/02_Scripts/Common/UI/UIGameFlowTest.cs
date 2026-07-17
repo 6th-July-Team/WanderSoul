@@ -20,6 +20,11 @@ public class UIGameFlowTest : MonoBehaviour
         {
             OpenLevelUpTest();
         }
+
+        if (Keyboard.current.kKey.wasPressedThisFrame)
+        {
+            OpenLoadingTest();
+        }
     }
 
     private void ShowTitle()
@@ -90,5 +95,26 @@ public class UIGameFlowTest : MonoBehaviour
     {
         var testIds = new List<string> { "옵션ID1", "옵션ID2", "옵션ID3" };
         GameManager.UI.OpenLevelUpUI(testIds);
+    }
+
+    private async void OpenLoadingTest()
+    {
+        var loading = GameManager.UI.OpenLoadingUI();
+        if (loading == null)
+        {
+            return;
+        }
+
+        float elapsed = 0f;
+        float duration = 3f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            loading.SetProgress(elapsed / duration);
+            await Cysharp.Threading.Tasks.UniTask.Yield();
+        }
+
+        loading.SetProgress(1f);
+        GameManager.UI.CloseUI(UIType.LoadingUIView);
     }
 }

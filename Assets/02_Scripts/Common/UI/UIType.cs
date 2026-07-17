@@ -21,6 +21,7 @@
     PlayerHudUIView,
     ConvoyHudUIView,
     LevelUpUIView,
+    LoadingUIView,
 }
 
 public enum UIRootType : byte
