@@ -37,6 +37,10 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
     [SerializeField] private Transform ShootPoint_Self;
     private GameObject _prefab_projectile;
 
+    // AreaDelayed 전용
+    private GameObject _prefab_areaDelay;
+    private LayerMask _groundLayerMask;
+
     #region Init
     public void Init(GameObject wagon, GameObject player)
     {
@@ -51,7 +55,13 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
 
         if (_viewModel.EnemyAttackType == EnemyAttackType.Projectile)
         {
-            SetProjectilePrefab().Forget();
+            SetProjectileObjectPrefab().Forget();
+        }
+
+        if (_viewModel.EnemyAttackType == EnemyAttackType.AreaDelayed)
+        {
+            SetAreaDelayObjectPrefab().Forget();
+            SetGroundLayerMask();
         }
     }
 
@@ -74,6 +84,11 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
                     NavMeshAgent_Self.avoidancePriority = Random.Range(50, 100);
                 }
                 break;
+            case EnemyAttackType.AreaDelayed:
+                {
+                    NavMeshAgent_Self.avoidancePriority = 0;
+                }
+                break;
             default:
                 {
 
@@ -93,7 +108,7 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
         EnemySensor_Self.SetRange(_viewModel.DetectRange);
     }
 
-    private async UniTaskVoid SetProjectilePrefab()
+    private async UniTaskVoid SetProjectileObjectPrefab()
     {
         _prefab_projectile = await GameManager.Resource.LoadAsset<GameObject>(_viewModel.ProjectilePrefabAddress);
 
@@ -102,6 +117,22 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
             Debug.LogError("EnemyView : Prefab_Projectile이 로드되지 않았습니다!!");
         }
     }
+
+    private async UniTaskVoid SetAreaDelayObjectPrefab()
+    {
+        _prefab_areaDelay = await GameManager.Resource.LoadAsset<GameObject>(_viewModel.AreaPrefabAddress);
+
+        if (_prefab_areaDelay == null)
+        {
+            Debug.LogError("EnemyView : Prefab_AreaDelay이 로드되지 않았습니다!!");
+        }
+    }
+
+    private void SetGroundLayerMask()
+    {
+        _groundLayerMask = LayerMask.GetMask("Ground");
+    }
+
     #endregion
 
     #region OnPropertyChanged
@@ -134,7 +165,7 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
                 break;
             case nameof(_viewModel.AttackSpeed):
                 {
-                    // [TODO : 이기웅] 공격속도가 바뀔 경우
+                    BehaviorGraphAgent_Self.SetVariableValue("AttackDelay", _viewModel.AttackSpeed);
                 }
                 break;
             case nameof(_viewModel.MoveSpeed):
@@ -190,6 +221,9 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
 
     public void PlayAttackAction()
     {
+        Debug.LogWarning("공격!");
+
+        Animator_Self.ResetTrigger(ATTACK_HASH);
         Animator_Self.SetTrigger(ATTACK_HASH);
     }
 
@@ -218,6 +252,11 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
                     ExecuteProjectileTypeAttack();
                 }
                 break;
+            case EnemyAttackType.AreaDelayed:
+                {
+                    ExecuteAreaDelayedTypeAttack();
+                }
+                break;
         }
     }
 
@@ -240,18 +279,54 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
             return;
         }
 
-        EnemyProjectileObject projectileObject = CreateAProjectile();
-        projectileObject.OnDamageableTargetHited += _viewModel.ProjectileTypeAttack;
+        EnemyProjectileObject projectileScript = CreateAProjectile();
+        projectileScript.OnDamageableTargetHited += _viewModel.ProjectileTypeAttack;
 
-        projectileObject.Launch(CurrentTarget, _viewModel.ProjectileSpeed, _viewModel.ProjectileLifeTime);
+        projectileScript.Launch(CurrentTarget, _viewModel.ProjectileSpeed, _viewModel.ProjectileLifeTime);
     }
 
     private EnemyProjectileObject CreateAProjectile()
     {
-        GameObject projectileObjectGameObject = Instantiate(_prefab_projectile, ShootPoint_Self.position, Quaternion.identity);
-        EnemyProjectileObject projectileObject = projectileObjectGameObject.GetComponent<EnemyProjectileObject>();
+        GameObject projectileObject = Instantiate(_prefab_projectile, ShootPoint_Self.position, Quaternion.identity);
+        EnemyProjectileObject projectileScript = projectileObject.GetComponent<EnemyProjectileObject>();
 
-        return projectileObject;
+        return projectileScript;
+    }
+
+    private void ExecuteAreaDelayedTypeAttack()
+    {
+        if (_prefab_areaDelay == null || CurrentTarget == null)
+        {
+            return;
+        }
+
+        Vector3 targetGroundPosition = GetGroundPosition(CurrentTarget.transform.position);
+
+        EnemyAreaDelayObject areaDelayScript = CreateAreaDelay(targetGroundPosition);
+        areaDelayScript.OnDamageableTargetHited += _viewModel.AreaDelayedTypeAttack;
+
+        areaDelayScript.Deploy(_viewModel.AreaRadius, _viewModel.AreaDelayTime);
+    }
+
+    private Vector3 GetGroundPosition(Vector3 targetPosition)
+    {
+        Ray ray = new Ray(targetPosition + new Vector3(0, 3, 0), Vector3.down);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 50f, _groundLayerMask) == false)
+        {
+            Logger.LogWarning("Ray를 맞추는 데 실패했습니다!! 기본 targetPosition을 return합니다!");
+            return targetPosition;
+        }
+
+        return hit.point;
+    }
+
+    private EnemyAreaDelayObject CreateAreaDelay(Vector3 targetPosition)
+    {
+        GameObject areaDelayObject = Instantiate(_prefab_areaDelay, targetPosition, Quaternion.identity);
+        EnemyAreaDelayObject areaDelayScript = areaDelayObject.GetComponent<EnemyAreaDelayObject>();
+
+        return areaDelayScript;
     }
 
     #endregion
@@ -264,7 +339,10 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
         }
 
         OnEnemyDied?.Invoke();
-        GameManager.Pool.DespawnToPool(this.gameObject);
+
+        Destroy(this.gameObject, 2.0f);
+
+        // GameManager.Pool.DespawnToPool(this.gameObject); << 나중에 PoolManager 쓰면 사용할 것
     }
 
     public void TakeDamage(DamageInfo damageInfo)
@@ -304,16 +382,17 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
         _viewModel.TryEnterAttackState(distanceToTarget); // [TODO?] 지금은 Bool값을 안 사용하고 버리고 있지만 나중에 언젠간 쓸 예정
     }
 
-    public void TryExitAttackState(GameObject target)
+    public bool TryExitAttackState(GameObject target)
     {
         if (target == null)
         {
-            return;
+            return true;
         }
 
         float distanceToTarget = GetDistanceToTarget(target);
 
-        _viewModel.TryExitAttackState(distanceToTarget); // [TODO?] 지금은 Bool값을 안 사용하고 버리고 있지만 나중에 언젠간 쓸 예정#2
+        bool isExitAttackState = _viewModel.TryExitAttackState(distanceToTarget);
+        return isExitAttackState;
     }
 
     private float GetDistanceToTarget(GameObject target)
@@ -354,7 +433,7 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
         return true;
     }
 
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
     [ContextMenu("TakeDamage")]
     private void TakeDamage()
     {
@@ -364,5 +443,5 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
 
         TakeDamage(testDamageInfo);
     }
-    #endif
+#endif
 }

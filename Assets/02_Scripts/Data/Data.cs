@@ -217,9 +217,15 @@ public class EnemyData : BaseData, ISerializationCallbackReceiver
     public bool CanMove;
     public float MoveSpeed;
 
+    //투사체발사(원거리) 전용
     public float ProjectileSpeed;
     public float ProjectileLifeTime;
     public string ProjectilePrefabAddress;
+
+    // 고정 포대형(예고 후 장판 공격) 전용
+    public float AreaRadius;
+    public float AreaDelayTime;
+    public string AreaPrefabAddress;
 }
 
 [Serializable]

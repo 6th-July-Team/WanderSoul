@@ -64,6 +64,13 @@ public class EnemyModel : BaseModel
             _projectileLifeTime = enemyData.ProjectileLifeTime;
             _projectilePrefabAddress = enemyData.ProjectilePrefabAddress;
         }
+
+        if(_attackType == EnemyAttackType.AreaDelayed)
+        {
+            _areaRadius = enemyData.AreaRadius;
+            _areaDelayTime = enemyData.AreaDelayTime;
+            _areaPrefabAddress = enemyData.AreaPrefabAddress;
+        }
     }
 
     private TargetPolicy _policy;
@@ -160,6 +167,24 @@ public class EnemyModel : BaseModel
     public string ProjectilePrefabAddress
     {
         get => _projectilePrefabAddress;
+    }
+
+    private float _areaRadius;
+    public float AreaRadius
+    {
+        get => _areaRadius;
+    }
+
+    private float _areaDelayTime;
+    public float AreaDelayTime
+    {
+        get => _areaDelayTime;
+    }
+
+    private string _areaPrefabAddress;
+    public string AreaPrefabAddress
+    {
+        get => _areaPrefabAddress;
     }
 
     private int _maxHp;

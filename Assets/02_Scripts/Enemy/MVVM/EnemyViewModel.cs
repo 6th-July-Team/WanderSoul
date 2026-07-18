@@ -29,9 +29,15 @@ public class EnemyViewModel : BaseViewModel<EnemyModel>
     public float MoveSpeed => _model.MoveSpeed;
     public BT_EnemyState EnemyState => _model.EnemyState;
 
+    //투사체 발사(원거리) 전용
     public float ProjectileSpeed => _model.ProjectileSpeed;
     public float ProjectileLifeTime => _model.ProjectileLifeTime;
     public string ProjectilePrefabAddress => _model.ProjectilePrefabAddress;
+
+    //고정 포대형(예고 후 장판 공격) 전용
+    public float AreaRadius => _model.AreaRadius;
+    public float AreaDelayTime => _model.AreaDelayTime;
+    public string AreaPrefabAddress => _model.AreaPrefabAddress;
 
     public EnemyViewModel(EnemyModel model) : base(model) { }
 
@@ -129,6 +135,4 @@ public class EnemyViewModel : BaseViewModel<EnemyModel>
 
         _model.EnemyState = newEnemyState;
     }
-
-
 }

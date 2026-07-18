@@ -32,16 +32,16 @@ public class DataTable
 
     public void LoadAllData()
     {
-        TownDataTable = LoadData<TownData>("TownData");
-        RegionDataTable = LoadData<RegionData>("RegionData");
-        ReputationGradeDataTable = LoadData<ReputationGradeData>("ReputationGradeData");
-        ItemDataTable = LoadData<ItemData>("ItemData");
-        CharacterDataTable = LoadData<CharacterData>("CharacterData");
-        PoolDataTable = LoadData<PoolData>("Pool");
-        PlayerStatDataTable = LoadData<PlayerStatData>("PlayerStatData");
-        PetDataTable = LoadData<PetData>("PetData");
-        QuestDataTable = LoadData<QuestData>("QuestData");
-        StageDataTable = LoadData<StageData>("StageData");
+        //TownDataTable = LoadData<TownData>("TownData");
+        //RegionDataTable = LoadData<RegionData>("RegionData");
+        //ReputationGradeDataTable = LoadData<ReputationGradeData>("ReputationGradeData");
+        //ItemDataTable = LoadData<ItemData>("ItemData");
+        //CharacterDataTable = LoadData<CharacterData>("CharacterData");
+        //PoolDataTable = LoadData<PoolData>(nameof(PoolData));
+        //PlayerStatDataTable = LoadData<PlayerStatData>("PlayerStatData");
+        //PetDataTable = LoadData<PetData>("PetData");
+        //QuestDataTable = LoadData<QuestData>("QuestData");
+        //StageDataTable = LoadData<StageData>("StageData");
         //EnemySpawnDataTable = LoadData<EnemySpawnData>("EnemySpawnData");
         EnemyDataTable = LoadData<EnemyData>(nameof(EnemyData));
         PetStatDataTable = LoadData<PetStatData>(nameof(PetStatData));
