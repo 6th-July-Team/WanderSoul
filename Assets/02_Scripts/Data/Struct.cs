@@ -13,7 +13,7 @@ public enum DamageType
 public enum Grade
 {
     None,
-    Nomal,
+    Common,
     Epic,
     Unique,
     Legendary,

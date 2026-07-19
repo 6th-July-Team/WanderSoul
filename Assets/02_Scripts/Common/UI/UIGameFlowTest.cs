@@ -98,7 +98,7 @@ public class UIGameFlowTest : MonoBehaviour
 
     private void OpenLevelUpTest()
     {
-        var testIds = new List<string> { "옵션ID1", "옵션ID2", "옵션ID3" };
+        var testIds = new List<string> { "opt_power_001", "opt_speed_001", "opt_crit_001" };
         GameManager.UI.OpenLevelUpUI(testIds);
     }
 

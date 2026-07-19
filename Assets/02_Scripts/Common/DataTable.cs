@@ -34,21 +34,21 @@ public class DataTable
 
     public void LoadAllData()
     {
-        //TownDataTable = LoadData<TownData>("Town");
-        //RegionDataTable = LoadData<RegionData>("Region");
+        TownDataTable = LoadData<TownData>(nameof(TownData));
+        RegionDataTable = LoadData<RegionData>(nameof(RegionData));
         //ReputationGradeDataTable = LoadData<ReputationGradeData>("ReputationGrade");
-        //ItemDataTable = LoadData<ItemData>("Item");
-        //CharacterDataTable = LoadData<CharacterData>("Character");
+        //ItemDataTable = LoadData<ItemData>("ItemData");
+        //CharacterDataTable = LoadData<CharacterData>("CharacterData");
         PoolDataTable = LoadData<PoolData>(nameof(PoolData));
         PlayerStatDataTable = LoadData<PlayerStatData>("PlayerStatData");;
-        //QuestDataTable = LoadData<QuestData>("QuestData");
-        //StageDataTable = LoadData<StageData>("StageData");
+        QuestDataTable = LoadData<QuestData>(nameof(QuestData));
+        StageDataTable = LoadData<StageData>(nameof(StageData));
         //EnemySpawnDataTable = LoadData<EnemySpawnData>("EnemySpawnData");
         EnemyDataTable = LoadData<EnemyData>(nameof(EnemyData));
         PetStatDataTable = LoadData<PetStatData>(nameof(PetStatData));
         PlayerSkillDataTable = LoadData<PlayerSkillData>(nameof(PlayerSkillData));
-        //PetDataTable = LoadData<PetData>(nameof(PetData));
-        //LevelUpOptionDataTable = LoadData<LevelUpOptionData>("LevelUpOptionData");
+        PetDataTable = LoadData<PetData>(nameof(PetData));
+        LevelUpOptionDataTable = LoadData<LevelUpOptionData>(nameof(LevelUpOptionData));
     }
 
     #region Getters
