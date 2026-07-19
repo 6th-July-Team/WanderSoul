@@ -313,7 +313,7 @@ public class LevelUpOptionData : BaseData
     public int Weight;
     public string IconPath;
 }
-}
+
 
 [Serializable]
 public class PetActiveSkillData : BaseData
