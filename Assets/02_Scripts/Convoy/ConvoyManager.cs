@@ -3,10 +3,16 @@ using UnityEngine;
 
 public class ConvoyManager
 {
+    private PetSkillMaker _petSkillMaker;
     private string _selectedQuestId;
     private List<string> _selectedPetIds = new();
 
     private Wagon _wagon;
+
+    public ConvoyManager(PetSkillMaker petSkillMaker)
+    {
+        _petSkillMaker = petSkillMaker;
+    }
 
     // 의뢰 시작 -> 펫 선택 -> 로딩 UI를 보여주며 아래 init 함수 호출.
     public void InitConvoy(string questId, List<string> selectedPetIds)
@@ -93,17 +99,17 @@ public class ConvoyManager
 
         // 플레이어
         // PetPartyController petParty = player.GetComponent<PetPartyController>();
-        GameObject playerInstance = GameObject.Instantiate(Utils.ResourcesLoad<GameObject>("Test_Player"));
+        GameObject playerInstance = GameObject.Instantiate(Utils.ResourcesLoad<GameObject>("Test_Mercenary"));
         PlayerEntity playerEntity = playerInstance.GetComponent<PlayerEntity>();
 
         // 펫
         List<PetController> petControllers = new();
         foreach (var petId in _selectedPetIds)
         {
-            GameObject petInstance = GameObject.Instantiate(Utils.ResourcesLoad<GameObject>(petId));
+            GameObject petInstance = GameObject.Instantiate(Utils.ResourcesLoad<GameObject>("Test_Pet"));
 
-            petInstance.GetComponent<PetController>().Init(petId
-            , playerEntity.GetComponent<IPositionProvider>(), wagonInstance.GetComponent<IPositionProvider>());
+            // TODO(김익환): 펫 생성 코드 수정
+            petInstance.GetComponent<PetController>().Init(petId, playerEntity, _wagon, _petSkillMaker, playerEntity, playerEntity);
 
             petControllers.Add(petInstance.GetComponent<PetController>());
         }

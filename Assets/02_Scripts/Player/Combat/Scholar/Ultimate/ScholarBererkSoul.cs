@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class ScholarBererkSoul : IPlayerSkillExecution
 {
-    private List<PetStatType> _statsToApply;
+    private List<StatType> _statsToApply;
 
     public void Execute(PlayerSkillUseContext context, PlayerSkillData SkillData, float damage)
     {
@@ -14,12 +14,12 @@ public class ScholarBererkSoul : IPlayerSkillExecution
         // TODO(김익환): 어떤 스텟, 어떤 방식으로 적용할지 데이터 들고 오기
         if(null == _statsToApply)
         {
-            _statsToApply = new List<PetStatType>() { /* TODO(김익환): 스텟 작성하기*/ };
+            _statsToApply = new List<StatType>() { /* TODO(김익환): 스텟 작성하기*/ };
         }
 
         foreach(var statType in _statsToApply)
         {
-            var modifire = new PetStatModifier(statType, StatModifierOperation.AddPercent, 0.5f);
+            var modifire = new StatModifier(statType, StatModifierOperation.AddPercent, 0.5f);
 
             GameManager.PetParty.AddModifierForAllPet(modifire);
         }

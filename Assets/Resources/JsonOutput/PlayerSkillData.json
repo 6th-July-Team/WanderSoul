@@ -1,10 +1,10 @@
-﻿[
+[
   {
     "Id": "test",
     "Name": null,
     "Description": null,
     "Power": null,
-    "Cooldown": 1,
+    "Cooldown": null,
     "ManaCost": null,
     "Duration": null,
     "ProjectileSpeed": null,

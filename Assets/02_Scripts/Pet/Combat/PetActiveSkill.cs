@@ -1,23 +1,24 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class PetActiveSkill
 {
-    public SOPetSkillInfo Definition { get; private set; }
+    public PetActiveSkillData SkillData { get; private set; }
 
-    public float CastRange => Definition.CastRange;
+    public TargetType TargetType => SkillData.GetTargetType();
+    public float CastRange => SkillData.CastRange;
     public float RemainingCooldTime => _remainingCooldtime;
     public bool IsReady => _remainingCooldtime <= 0f;
+
 
     private PetStatController _statController;
     private readonly IPetActiveSkillExecution _execution;
     private float _remainingCooldtime;
 
 
-    public PetActiveSkill(SOPetSkillInfo definition, IPetActiveSkillExecution execution, PetStatController statController)
+    public PetActiveSkill(PetActiveSkillData skillData, IPetActiveSkillExecution execution, PetStatController statController)
     {
-        Definition = definition;
+        SkillData = skillData;
         _execution = execution;
         _statController = statController;
     }
@@ -35,16 +36,23 @@ public class PetActiveSkill
         if (!IsReady)
             return false;
 
-        float skillDamage = Definition.BaseDamage * _statController.GetValue(PetStatType.BasicPower);
-        _remainingCooldtime = Definition.Cooldown - _statController.GetValue(PetStatType.CooldownReduction);
+        _remainingCooldtime = SkillData.Cooldown - _statController.GetValue(StatType.CooldownReduction);
 
-        _execution.Execute(context, skillDamage, onEndSkill);
+        _execution.Execute(context, onEndSkill);
 
         return true;
     }
 
-    public bool CanTarget(ITargetable target)
+    public bool CanUse(ITargetable target)
     {
-        return target != null && target.IsAlive;
+        return TargetType switch
+        {
+            TargetType.Enemy => target != null && target.IsAlive && target.EntityType == EntityType.Enemy,
+
+            TargetType.Player => true,
+            TargetType.Pet => true,
+
+            _ => false
+        };
     }
 }
