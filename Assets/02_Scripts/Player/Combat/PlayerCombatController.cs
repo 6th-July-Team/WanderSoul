@@ -11,7 +11,6 @@ public class PlayerCombatController : MonoBehaviour
     // Mana
     public ManaPool ManaPool { get; private set; }
 
-    // Data
     private PlayerStatController _statController;
 
     // skill
@@ -31,11 +30,13 @@ public class PlayerCombatController : MonoBehaviour
         _animationController = GetComponent<PlayerAnimationController>();
     }
 
-    public void Init(PlayerStatController statController)
+    public void Init(PlayerStatController statController, PlayerSkillModifier skillModifier)
     {
         _statController = statController;
+
         ManaPool = new(_statController);
-        _skillMaker = new(ManaPool);
+
+        _skillMaker = new(ManaPool, skillModifier);
 
         _skillBuild = _skillMaker.CreateSkillBuild("테스트 직업 아이디", _statController);
 

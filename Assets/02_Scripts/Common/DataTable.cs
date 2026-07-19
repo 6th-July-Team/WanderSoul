@@ -24,6 +24,10 @@ public class DataTable
     public Dictionary<string, PetData> PetDataTable { get; private set; } = new();
     public Dictionary<string, LevelUpOptionData> LevelUpOptionDataTable { get; private set; } = new();
 
+    public Dictionary<string, PetActiveSkillData> PetActiveSkillDataTable { get; private set; } = new();
+    public Dictionary<string, StatusEffectData> StatusEffectDataTable { get; private set; } = new();
+    public Dictionary<string, SkillModifierData> SkillModifierDataTable { get; private set; } = new();
+    public Dictionary<string, PetPassiveSkillData> PetPassiveSkillDataTable { get; private set; } = new();
     #endregion
 
     [Serializable]
@@ -39,7 +43,7 @@ public class DataTable
         //ReputationGradeDataTable = LoadData<ReputationGradeData>("ReputationGrade");
         //ItemDataTable = LoadData<ItemData>("Item");
         //CharacterDataTable = LoadData<CharacterData>("Character");
-        PoolDataTable = LoadData<PoolData>(nameof(PoolData));
+        //PoolDataTable = LoadData<PoolData>(nameof(PoolData));
         PlayerStatDataTable = LoadData<PlayerStatData>("PlayerStatData");;
         //QuestDataTable = LoadData<QuestData>("QuestData");
         //StageDataTable = LoadData<StageData>("StageData");
@@ -49,6 +53,11 @@ public class DataTable
         PlayerSkillDataTable = LoadData<PlayerSkillData>(nameof(PlayerSkillData));
         //PetDataTable = LoadData<PetData>(nameof(PetData));
         //LevelUpOptionDataTable = LoadData<LevelUpOptionData>("LevelUpOptionData");
+        PetDataTable = LoadData<PetData>(nameof(PetData));
+        PetActiveSkillDataTable = LoadData<PetActiveSkillData>(nameof(PetActiveSkillData));
+        StatusEffectDataTable = LoadData<StatusEffectData>(nameof(StatusEffectData));
+        //SkillModifierDataTable = LoadData<SkillModifierData>(nameof(SkillModifierData));
+        //PetPassiveSkillDataTable = LoadData<PetPassiveSkillData>(nameof(PetPassiveSkillData));
     }
 
     #region Getters
@@ -134,6 +143,30 @@ public class DataTable
     {
         if (null == PetDataTable || string.IsNullOrEmpty(id)) return null;
         return PetDataTable.TryGetValue(id, out var data) ? data : null;
+    }
+
+    public PetActiveSkillData GetPetActiveSkillData(string id)
+    {
+        if (null == PetActiveSkillDataTable || string.IsNullOrEmpty(id)) return null;
+        return PetActiveSkillDataTable.TryGetValue(id, out var data) ? data : null;
+    }
+
+    public StatusEffectData GetStatusEffectData(string id)
+    {
+        if (null == StatusEffectDataTable || string.IsNullOrEmpty(id)) return null;
+        return StatusEffectDataTable.TryGetValue(id, out var data) ? data : null;
+    }
+
+    public SkillModifierData GetSkillModifierData(string id)
+    {
+        if (null == SkillModifierDataTable || string.IsNullOrEmpty(id)) return null;
+        return SkillModifierDataTable.TryGetValue(id, out var data) ? data : null;
+    }
+
+    public PetPassiveSkillData GetPetPassiveSkillData(string id)
+    {
+        if (null == PetPassiveSkillDataTable || string.IsNullOrEmpty(id)) return null;
+        return PetPassiveSkillDataTable.TryGetValue(id, out var data) ? data : null;
     }
 
     public LevelUpOptionData GetLevelUpOptionData(string id)

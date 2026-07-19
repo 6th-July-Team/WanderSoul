@@ -1,45 +1,50 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class PlayerStatController
 {
-    private readonly Dictionary<PlayerStatType, float> _baseValues = new();
-    private readonly List<PlayerStatModifier> _modifiers = new();
+    private readonly Dictionary<StatType, float> _baseValues = new();
+    private readonly Dictionary<int, StatModifier> _modifiers = new();
+
+    private int _nextModifierId = 0;
 
     public PlayerStatController(PlayerStatData data)
     {
-        for (int i = 0; i < (int)PlayerStatType.COUNT; i++)
+        for (int i = 0; i < (int)StatType.COUNT; i++)
         {
-            _baseValues[(PlayerStatType)i] = data.GetBaseValue((PlayerStatType)i);
+            _baseValues[(StatType)i] = data.GetBaseValue((StatType)i);
+            Debug.Log($"{GetType()}: {((StatType)i).ToString()}의 base 값 = {_baseValues[(StatType)i]}");
         }
     }
 
-    public void SetBaseValue(PlayerStatType statType, float value)
+    public void SetBaseValue(StatType statType, float value)
     {
         _baseValues[statType] = value;
     }
 
-    public float GetBaseValue(PlayerStatType statType)
+    public float GetBaseValue(StatType statType)
     {
         return _baseValues.TryGetValue(statType, out float value) ? value : 0f;
     }
 
-    public void AddModifier(PlayerStatModifier modifier)
+    public ModifierHandle AddModifier(StatModifier modifier)
     {
-        _modifiers.Add(modifier);
+        int id = ++_nextModifierId;
+        _modifiers.Add(id, modifier);
+
+        Debug.Log($"{GetType()}: {modifier.StatType}에 {modifier.Operation} {modifier.Value} 추가"
+                    + $"\n계산된 값 = {GetValue(modifier.StatType)}");
+
+        return new ModifierHandle(id);
     }
 
-    public void RemoveModifiers(PlayerStatType statType)
+    public void RemoveModifier(ModifierHandle handle)
     {
-        _modifiers.RemoveAll(modifier => modifier.StatType == statType);
+        _modifiers.Remove(handle.Id);
     }
 
-    public void ClearModifiers()
-    {
-        _modifiers.Clear();
-    }
-
-    public float GetValue(PlayerStatType statType)
+    public float GetValue(StatType statType)
     {
         float baseValue = GetBaseValue(statType);
 
@@ -47,7 +52,7 @@ public class PlayerStatController
         float addPercent = 0f;
         float multipleMultiplier = 1f;
 
-        foreach (PlayerStatModifier modifier in _modifiers)
+        foreach (StatModifier modifier in _modifiers.Values)
         {
             if (modifier.StatType != statType)
                 continue;
@@ -76,18 +81,23 @@ public class PlayerStatController
         return ApplyLimit(statType, result);
     }
 
-    private float ApplyLimit(PlayerStatType statType, float value)
+    public void ClearAll()
+    {
+        _modifiers.Clear();
+    }
+
+    private float ApplyLimit(StatType statType, float value)
     {
         return statType switch
         {
             // TODO(김익환): 아래 임시 값, 제한 값 따로 존재한다면 데이터 드리븐이로 가져오기
             // 임시 수치
-            PlayerStatType.FireResistance => Math.Clamp(value, 0f, 0.8f),
-            PlayerStatType.ColdResistance => Math.Clamp(value, 0f, 0.8f),
-            PlayerStatType.ElectricResistance => Math.Clamp(value, 0f, 0.8f),
-            PlayerStatType.ElementalResistance => Math.Clamp(value, 0f, 0.8f),
-            PlayerStatType.CooldownReduction => Math.Clamp(value, 0f, 0.6f),
-            PlayerStatType.MoveSpeed => Math.Max(0f, value),
+            StatType.FireResistance => Math.Clamp(value, 0f, 0.8f),
+            StatType.ColdResistance => Math.Clamp(value, 0f, 0.8f),
+            StatType.ElectricResistance => Math.Clamp(value, 0f, 0.8f),
+            StatType.ElementalResistance => Math.Clamp(value, 0f, 0.8f),
+            StatType.CooldownReduction => Math.Clamp(value, 0f, 0.6f),
+            StatType.MoveSpeed => Math.Max(0f, value),
             _ => value
         };
     }

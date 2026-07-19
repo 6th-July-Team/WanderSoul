@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Unity.AppUI.UI;
-using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
@@ -101,34 +99,45 @@ public class PreLoadAssetData : BaseData
 public class PlayerStatData : BaseData
 {
     public float MaxHealth;
-    public float BasicAttackPower;
+    public float AdditionalDamage;
     public float Defense;
     public float FireResistance;
     public float ColdResistance;
     public float ElectricResistance;
-    public float ElementalResistance;
+    public float MagicResistance;
     public float MoveSpeed;
     public float HealthRegeneration;
     public float ManaRegeneration;
     public float CooldownReduction;
     public float MaxMana;
+    public float LifeSteal;
+    public float CritChance;
+    public float CritMultiplier;
+    public float MagnetRadius;
+    public int MaxReviveCount;
+    public int MaxDashCount;
 
-    public float GetBaseValue(PlayerStatType statType)
+    public float GetBaseValue(StatType statType)
     {
         return statType switch
         {
-            PlayerStatType.MaxHealth => MaxHealth,
-            PlayerStatType.BasicAttackPower => BasicAttackPower,
-            PlayerStatType.Defense => Defense,
-            PlayerStatType.FireResistance => FireResistance,
-            PlayerStatType.ColdResistance => ColdResistance,
-            PlayerStatType.ElectricResistance => ElectricResistance,
-            PlayerStatType.ElementalResistance => ElementalResistance,
-            PlayerStatType.MoveSpeed => MoveSpeed,
-            PlayerStatType.HealthRegeneration => HealthRegeneration,
-            PlayerStatType.ManaRegeneration => ManaRegeneration,
-            PlayerStatType.CooldownReduction => CooldownReduction,
-            PlayerStatType.MaxMana => MaxMana,
+            StatType.MaxHealth => MaxHealth,
+            StatType.AdditionalDamage => AdditionalDamage,
+            StatType.Defense => Defense,
+            StatType.FireResistance => FireResistance,
+            StatType.ColdResistance => ColdResistance,
+            StatType.ElectricResistance => ElectricResistance,
+            StatType.MagicResistance => MagicResistance,
+            StatType.MoveSpeed => MoveSpeed,
+            StatType.HealthRegeneration => HealthRegeneration,
+            StatType.ManaRegeneration => ManaRegeneration,
+            StatType.CooldownReduction => CooldownReduction,
+            StatType.MaxMana => MaxMana,
+            StatType.LifeSteal => LifeSteal,
+            StatType.CritChance => CritChance,
+            StatType.CritMultiplier => CritMultiplier,
+            StatType.MaxReviveCount => MaxReviveCount,
+            StatType.MaxDashCount => MaxDashCount,
             _ => 0f
         };
     }
@@ -218,23 +227,23 @@ public class PetStatData : BaseData
     public float CritMultiplier;
     public float LifeSteal;
 
-    public float GetBaseValue(PetStatType statType)
+    public float GetBaseValue(StatType statType)
     {
         return statType switch
         {
-            PetStatType.MaxHealth => MaxHealth,
-            PetStatType.BasicPower => BasicPower,
-            PetStatType.Defense => Defense,
-            PetStatType.FireResistance => FireResistance,
-            PetStatType.ColdResistance => ColdResistance,
-            PetStatType.ElectricResistance => ElectricResistance,
-            PetStatType.MagicResistance => MagicResistance,
-            PetStatType.MoveSpeed => MoveSpeed,
-            PetStatType.HealthRegeneration => HealthRegeneration,
-            PetStatType.CooldownReduction => CooldownReduction,
-            PetStatType.CritChance => CritChance,
-            PetStatType.CritMultiplier => CritMultiplier,
-            PetStatType.LifeSteal => LifeSteal,
+            StatType.MaxHealth => MaxHealth,
+            StatType.BasicPower => BasicPower,
+            StatType.Defense => Defense,
+            StatType.FireResistance => FireResistance,
+            StatType.ColdResistance => ColdResistance,
+            StatType.ElectricResistance => ElectricResistance,
+            StatType.MagicResistance => MagicResistance,
+            StatType.MoveSpeed => MoveSpeed,
+            StatType.HealthRegeneration => HealthRegeneration,
+            StatType.CooldownReduction => CooldownReduction,
+            StatType.CritChance => CritChance,
+            StatType.CritMultiplier => CritMultiplier,
+            StatType.LifeSteal => LifeSteal,
             _ => 0f
         };
     }
@@ -262,25 +271,26 @@ public class PlayerSkillData : BaseData
     public string IconPath;
 
     public DamageType GetDamageType()
-    => Enum.TryParse<DamageType>(stringSkillDamageType, out var result) ? result : DamageType.Physical;
+        => Enum.TryParse<DamageType>(stringSkillDamageType, out var result) ? result : DamageType.Physical;
 }
 
 [Serializable]
 public class PetData : BaseData
 {
     public string Name;
-    public string stringElementType;
     public string Description;
-    public string stringPetGradeType;
-    public string NormalSkillId;
-    public string SpecialSkillId;
+    public List<string> ActiveSkillIds;
+    public List<string> PassiveSkillIds;
     public string IconPath;
 
+    public string stringPetGradeType;
+    public string stringElementType;
+
     public PetElement GetElementType()
-   => Enum.TryParse<PetElement>(stringElementType, out var result) ? result : PetElement.None;
+        => Enum.TryParse<PetElement>(stringElementType, out var result) ? result : PetElement.None;
 
     public Grade GetGrade()
-   => Enum.TryParse<Grade>(stringPetGradeType, out var result) ? result : Grade.None;
+        => Enum.TryParse<Grade>(stringPetGradeType, out var result) ? result : Grade.None;
 
 }
 
@@ -302,4 +312,93 @@ public class LevelUpOptionData : BaseData
     public int MaxStack;
     public int Weight;
     public string IconPath;
+}
+
+
+[Serializable]
+public class PetActiveSkillData : BaseData
+{
+    public string Name;
+    public string Description;
+    public string stringTargetType;
+    public float Cooldown;
+    public float Power;
+    public float CooldownReduction;
+    public float Duration;
+    public float ProjectileSpeed;
+    public int Pierce;                  // 투사체 관통력
+    public int MaxProjectileCount;
+    public string stringSkillType;      // 기본 공격? 특수 공격? 등
+    public string ExecutionId;     // 급접이냐, 원거리냐 등
+    public string stringSkillDamageType;
+    public string VFXPath;
+    public string SFXPath;
+    public string IconPath;
+    public string StatusEffectId;
+    public float CastRange;
+
+    public TargetType GetTargetType()
+        => Enum.TryParse<TargetType>(stringTargetType, out var result) ? result : default;
+
+    public SkillType GetSkillType()
+        => Enum.TryParse<SkillType>(stringSkillType, out var result) ? result : SkillType.None;
+
+    public DamageType GetDamageType()
+        => Enum.TryParse<DamageType>(stringSkillDamageType, out var result) ? result : DamageType.None;
+}
+
+[Serializable]
+public class PetPassiveSkillData : BaseData
+{
+    public string ExecutionId;
+    public string StatusEffectId;
+    public string stringTargetType;
+
+    public TargetType GetTargetType()
+        => Enum.TryParse<TargetType>(stringTargetType, out var result) ? result : default;
+}
+
+[Serializable]
+public class StatusEffectData : BaseData
+{
+    public string ExecutionId;
+    public string StackPolicy;
+    public float Duration;
+    public float TickInterval;
+    public int MaxStack;
+    public float Value;
+
+    public string stringStatType;
+    public string stringOperation;
+
+    public string SkillModifierId;
+
+    public StatusEffectStackPolicy GetStackPolicy()
+        => Enum.TryParse<StatusEffectStackPolicy>(StackPolicy, out var result) ? result : StatusEffectStackPolicy.Ignore;
+    public StatType GetStat()
+        => Enum.TryParse<StatType>(stringStatType, out var result) ? result : default;
+    public StatModifierOperation GetOperation()
+       => Enum.TryParse<StatModifierOperation>(stringOperation, out var result) ? result : default;
+}
+
+public class SkillModifierData : BaseData
+{
+    public string stringScope;
+    public string SkillId;
+    public string stringSkillSlot;
+    public string stringValueType;
+    public string stringOperation;
+    public float Value;
+
+    public SkillModifierScope GetScope()
+        => Enum.TryParse<SkillModifierScope>(stringScope, out var result) ? result : default;
+
+    public SkillSlot GetSkillSlot()
+        => Enum.TryParse<SkillSlot>(stringSkillSlot, out var result) ? result : default;
+
+    public SkillValueType GetValueType()
+        => Enum.TryParse<SkillValueType>(stringValueType, out var result) ? result : default;
+
+    public StatModifierOperation GetOperation()
+        => Enum.TryParse<StatModifierOperation>(stringOperation, out var result) ? result : default;
 }

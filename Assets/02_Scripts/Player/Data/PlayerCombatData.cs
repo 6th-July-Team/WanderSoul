@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public enum SkillSlot
 {
@@ -8,30 +7,12 @@ public enum SkillSlot
     Ultimate
 }
 
-public enum PlayerStatType
-{
-    MaxHealth,
-    BasicAttackPower,
-    Defense,
-    FireResistance,
-    ColdResistance,
-    ElectricResistance,
-    ElementalResistance,
-    MoveSpeed,
-    HealthRegeneration,
-    ManaRegeneration,
-    CooldownReduction,
-    MaxMana,
-    COUNT
-}
-
 public enum StatModifierOperation
 {
     Flat,
     AddPercent,
     MultiplePercent
 }
-
 
 public struct PlayerSkillUseContext
 {
@@ -44,19 +25,5 @@ public struct PlayerSkillUseContext
         Owner = owner;
         AimDirection = aimDirection;
         AimWorldPoint = aimWorldPoint;
-    }
-}
-
-public struct PlayerStatModifier
-{
-    public PlayerStatType StatType { get; }
-    public StatModifierOperation Operation { get; }
-    public float Value { get; }
-
-    public PlayerStatModifier(PlayerStatType statType, StatModifierOperation operation, float value)
-    {
-        StatType = statType;
-        Operation = operation;
-        Value = value;
     }
 }
