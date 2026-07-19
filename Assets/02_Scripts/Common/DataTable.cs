@@ -22,6 +22,8 @@ public class DataTable
     public Dictionary<string, EnemyData> EnemyDataTable { get; private set; } = new();
     public Dictionary<string, PlayerSkillData> PlayerSkillDataTable { get; private set; } = new();
     public Dictionary<string, PetData> PetDataTable { get; private set; } = new();
+    public Dictionary<string, LevelUpOptionData> LevelUpOptionDataTable { get; private set; } = new();
+
     public Dictionary<string, PetActiveSkillData> PetActiveSkillDataTable { get; private set; } = new();
     public Dictionary<string, StatusEffectData> StatusEffectDataTable { get; private set; } = new();
     public Dictionary<string, SkillModifierData> SkillModifierDataTable { get; private set; } = new();
@@ -49,6 +51,8 @@ public class DataTable
         EnemyDataTable = LoadData<EnemyData>(nameof(EnemyData));
         PetStatDataTable = LoadData<PetStatData>(nameof(PetStatData));
         PlayerSkillDataTable = LoadData<PlayerSkillData>(nameof(PlayerSkillData));
+        //PetDataTable = LoadData<PetData>(nameof(PetData));
+        //LevelUpOptionDataTable = LoadData<LevelUpOptionData>("LevelUpOptionData");
         PetDataTable = LoadData<PetData>(nameof(PetData));
         PetActiveSkillDataTable = LoadData<PetActiveSkillData>(nameof(PetActiveSkillData));
         StatusEffectDataTable = LoadData<StatusEffectData>(nameof(StatusEffectData));
@@ -164,6 +168,13 @@ public class DataTable
         if (null == PetPassiveSkillDataTable || string.IsNullOrEmpty(id)) return null;
         return PetPassiveSkillDataTable.TryGetValue(id, out var data) ? data : null;
     }
+
+    public LevelUpOptionData GetLevelUpOptionData(string id)
+    {
+        if (null == LevelUpOptionDataTable || string.IsNullOrEmpty(id)) return null;
+        return LevelUpOptionDataTable.TryGetValue(id, out var data) ? data : null;
+    }
+
 
     #endregion
 

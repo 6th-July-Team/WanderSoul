@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public partial class UIManager
 {
@@ -101,23 +102,15 @@ public partial class UIManager
         view.BindViewModel(viewModel);
     }
 
-    public void OpenPartyHudUI(PartyMemberModel partyMemberModel)
+    public PartyHudUIView OpenPartyHudUI()
     {
-        if (partyMemberModel == null)
-        {
-            Debug.LogWarning("PartyMemberModel이 null입니다.");
-            return;
-        }
-
         var view = OpenUI<PartyHudUIView>(UIType.PartyHudUIView);
         if (view == null)
         {
             Debug.LogWarning("PartyHudUIView를 열 수 없습니다.");
-            return;
+            return null;
         }
-
-        var viewModel = new PartyHudViewModel(partyMemberModel);
-        view.BindViewModel(viewModel);
+        return view;
     }
 
     public void OpenVillageInfoHudUI(VillageModel villageModel)
@@ -158,6 +151,19 @@ public partial class UIManager
         }
 
         view.SetSkills(combatController);
+    }
+
+    public void OpenLevelUpUI(List<string> optionIdList)
+    {
+        var view = OpenUI<LevelUpUIView>(UIType.LevelUpUIView);
+
+        if (view == null)
+        {
+            Debug.LogWarning("LevelUpUIView를 열 수 없습니다.");
+            return;
+        }
+
+        view.SetOptions(optionIdList);
     }
 
 }
