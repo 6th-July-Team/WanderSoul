@@ -15,13 +15,22 @@ public class DataTable
     public Dictionary<string, ItemData> ItemDataTable { get; private set; } = new();
     public Dictionary<string, CharacterData> CharacterDataTable { get; private set; } = new();
     public Dictionary<string, PlayerStatData> PlayerStatDataTable { get; private set; } = new();
-    public Dictionary<string, PetData> PetDataTable { get; private set; } = new();
     public Dictionary<string, PetStatData> PetStatDataTable { get; private set; } = new();
     public Dictionary<string, QuestData> QuestDataTable { get; private set; } = new();
     public Dictionary<string, StageData> StageDataTable { get; private set; } = new();
-    public Dictionary<string, EnemySpawnData> EnemySpawnDataTable { get; private set; } = new();
+    public Dictionary<string, AutoSpawnData> AutoSpawnDataTable { get; private set; } = new();
     public Dictionary<string, EnemyData> EnemyDataTable { get; private set; } = new();
+    public Dictionary<string, PlayerSkillData> PlayerSkillDataTable { get; private set; } = new();
+    public Dictionary<string, PetData> PetDataTable { get; private set; } = new();
+    public Dictionary<string, LevelUpOptionData> LevelUpOptionDataTable { get; private set; } = new();
 
+    public Dictionary<string, PetActiveSkillData> PetActiveSkillDataTable { get; private set; } = new();
+    public Dictionary<string, StatusEffectData> StatusEffectDataTable { get; private set; } = new();
+    public Dictionary<string, SkillModifierData> SkillModifierDataTable { get; private set; } = new();
+    public Dictionary<string, PetPassiveSkillData> PetPassiveSkillDataTable { get; private set; } = new();
+
+    public Dictionary<string, WagonData> WagonDataTable { get; private set; } = new();
+    public Dictionary<string, WagonSlowRuleData> WagonSlowRuleDataTable { get; private set; } = new();
     #endregion
 
     [Serializable]
@@ -32,19 +41,29 @@ public class DataTable
 
     public void LoadAllData()
     {
-        //TownDataTable = LoadData<TownData>("TownData");
-        //RegionDataTable = LoadData<RegionData>("RegionData");
-        //ReputationGradeDataTable = LoadData<ReputationGradeData>("ReputationGradeData");
-        //ItemDataTable = LoadData<ItemData>("ItemData");
-        //CharacterDataTable = LoadData<CharacterData>("CharacterData");
-        PoolDataTable = LoadData<PoolData>(nameof(PoolData));
-        //PlayerStatDataTable = LoadData<PlayerStatData>("PlayerStatData");
-        //PetDataTable = LoadData<PetData>("PetData");
+        //TownDataTable = LoadData<TownData>("Town");
+        //RegionDataTable = LoadData<RegionData>("Region");
+        //ReputationGradeDataTable = LoadData<ReputationGradeData>("ReputationGrade");
+        //ItemDataTable = LoadData<ItemData>("Item");
+        //CharacterDataTable = LoadData<CharacterData>("Character");
+        //PoolDataTable = LoadData<PoolData>(nameof(PoolData));
+        PlayerStatDataTable = LoadData<PlayerStatData>("PlayerStatData");;
         //QuestDataTable = LoadData<QuestData>("QuestData");
         //StageDataTable = LoadData<StageData>("StageData");
         //EnemySpawnDataTable = LoadData<EnemySpawnData>("EnemySpawnData");
         EnemyDataTable = LoadData<EnemyData>(nameof(EnemyData));
         PetStatDataTable = LoadData<PetStatData>(nameof(PetStatData));
+        PlayerSkillDataTable = LoadData<PlayerSkillData>(nameof(PlayerSkillData));
+        //PetDataTable = LoadData<PetData>(nameof(PetData));
+        //LevelUpOptionDataTable = LoadData<LevelUpOptionData>("LevelUpOptionData");
+        PetDataTable = LoadData<PetData>(nameof(PetData));
+        PetActiveSkillDataTable = LoadData<PetActiveSkillData>(nameof(PetActiveSkillData));
+        StatusEffectDataTable = LoadData<StatusEffectData>(nameof(StatusEffectData));
+        //SkillModifierDataTable = LoadData<SkillModifierData>(nameof(SkillModifierData));
+        //PetPassiveSkillDataTable = LoadData<PetPassiveSkillData>(nameof(PetPassiveSkillData));
+        WagonDataTable = LoadData<WagonData>(nameof(WagonData));
+        WagonSlowRuleDataTable = LoadData<WagonSlowRuleData>(nameof(WagonSlowRuleData));
+
     }
 
     #region Getters
@@ -85,12 +104,6 @@ public class DataTable
         return StageDataTable.TryGetValue(stageId, out var data) ? data : null;
     }
 
-    public PetData GetPetData(string id)
-    {
-        if (null == PetDataTable || string.IsNullOrEmpty(id)) return null;
-        return PetDataTable.TryGetValue(id, out var data) ? data : null;
-    }
-
     public ReputationGradeData GetReputationGradeByValue(int reputation)
     {
         if (null == ReputationGradeDataTable) return null;
@@ -114,10 +127,10 @@ public class DataTable
         return PlayerStatDataTable.TryGetValue(id, out var data) ? data : null;
     }
     
-    public EnemySpawnData GetEnemySpawnData(string id)
+    public AutoSpawnData GetAutoSpawnData(string id)
     {
-        if (null == EnemySpawnDataTable || string.IsNullOrEmpty(id)) return null;
-        return EnemySpawnDataTable.TryGetValue(id, out var data) ? data : null;
+        if (null == AutoSpawnDataTable || string.IsNullOrEmpty(id)) return null;
+        return AutoSpawnDataTable.TryGetValue(id, out var data) ? data : null;
     }
 
     public PetStatData GetPetStatData(string id)
@@ -126,6 +139,59 @@ public class DataTable
         return PetStatDataTable.TryGetValue(id, out var data) ? data : null;
     }
     
+    public PlayerSkillData GetPlayerSkillData(string id)
+    {
+        if (null == PlayerSkillDataTable || string.IsNullOrEmpty(id)) return null;
+        return PlayerSkillDataTable.TryGetValue(id, out var data) ? data : null;
+    }
+
+    public PetData GetPetData(string id)
+    {
+        if (null == PetDataTable || string.IsNullOrEmpty(id)) return null;
+        return PetDataTable.TryGetValue(id, out var data) ? data : null;
+    }
+
+    public PetActiveSkillData GetPetActiveSkillData(string id)
+    {
+        if (null == PetActiveSkillDataTable || string.IsNullOrEmpty(id)) return null;
+        return PetActiveSkillDataTable.TryGetValue(id, out var data) ? data : null;
+    }
+
+    public StatusEffectData GetStatusEffectData(string id)
+    {
+        if (null == StatusEffectDataTable || string.IsNullOrEmpty(id)) return null;
+        return StatusEffectDataTable.TryGetValue(id, out var data) ? data : null;
+    }
+
+    public SkillModifierData GetSkillModifierData(string id)
+    {
+        if (null == SkillModifierDataTable || string.IsNullOrEmpty(id)) return null;
+        return SkillModifierDataTable.TryGetValue(id, out var data) ? data : null;
+    }
+
+    public PetPassiveSkillData GetPetPassiveSkillData(string id)
+    {
+        if (null == PetPassiveSkillDataTable || string.IsNullOrEmpty(id)) return null;
+        return PetPassiveSkillDataTable.TryGetValue(id, out var data) ? data : null;
+    }
+
+    public LevelUpOptionData GetLevelUpOptionData(string id)
+    {
+        if (null == LevelUpOptionDataTable || string.IsNullOrEmpty(id)) return null;
+        return LevelUpOptionDataTable.TryGetValue(id, out var data) ? data : null;
+    }
+
+    public WagonData GetWagonData(string id)
+    {
+        if (null == WagonDataTable || string.IsNullOrEmpty(id)) return null;
+        return WagonDataTable.TryGetValue(id, out var data) ? data : null;
+    }
+
+    public WagonSlowRuleData GetWagonSlowRuleData(string id)
+    {
+        if (null == WagonSlowRuleDataTable || string.IsNullOrEmpty(id)) return null;
+        return WagonSlowRuleDataTable.TryGetValue(id, out var data) ? data : null;
+    }
 
     #endregion
 

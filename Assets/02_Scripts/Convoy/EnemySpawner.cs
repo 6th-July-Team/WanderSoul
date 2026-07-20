@@ -11,20 +11,20 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        _convoyProgressTimer += GameManager.Time.GameDeltaTime;
+        //_convoyProgressTimer += GameManager.Time.GameDeltaTime;
 
-        string spawnDataId = ((int)_convoyProgressTimer + SPAWN_DATA_ID_OFFSET).ToString();
+        //string spawnDataId = ((int)_convoyProgressTimer + SPAWN_DATA_ID_OFFSET).ToString();
 
-        if (_elapsedTime >= GameManager.DataTable.GetEnemySpawnData(spawnDataId).SpawnInterval)
-        {
-            _elapsedTime = 0f;
-            List<string> enemyIds = GameManager.DataTable.GetEnemySpawnData(spawnDataId).EnemyIds;
-            SpawnEnemy(enemyIds);
-        }
-        else
-        {
-            _elapsedTime += GameManager.Time.GameDeltaTime;
-        }
+        //if (_elapsedTime >= GameManager.DataTable.GetAutoSpawnData(spawnDataId).SpawnInterval)
+        //{
+        //    _elapsedTime = 0f;
+        //    List<string> enemyIds = GameManager.DataTable.GetAutoSpawnData(spawnDataId).EnemyIds;
+        //    SpawnEnemy(enemyIds);
+        //}
+        //else
+        //{
+        //    _elapsedTime += GameManager.Time.GameDeltaTime;
+        //}
     }
 
     private void SpawnEnemy(List<string> enemyIds)

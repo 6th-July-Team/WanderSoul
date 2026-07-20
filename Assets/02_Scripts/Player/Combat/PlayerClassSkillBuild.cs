@@ -2,7 +2,6 @@
 
 public class PlayerClassSkillBuild
 {
-    // Skill
     private Dictionary<SkillSlot, PlayerSkill> _skills = new();
 
     public PlayerClassSkillBuild(PlayerSkill basicSkill, PlayerSkill specialSkill, PlayerSkill ultimateSkill)
@@ -21,12 +20,28 @@ public class PlayerClassSkillBuild
         }
     }
 
-    public void TryExecuteSkill(SkillSlot skillSlot, PlayerSkillUseContext context)
+    public void CheckSkillRange(SkillSlot skillSlot, PlayerSkillUseContext context)
     {
         if (!_skills.TryGetValue(skillSlot, out PlayerSkill skill))
             return;
 
-        skill.TryExecuteSkill(context);
+        skill?.CheckSkillRange(context);
+    }
+
+    public void HideSkillRange(SkillSlot skillSlot)
+    {
+        if (!_skills.TryGetValue(skillSlot, out PlayerSkill skill))
+            return;
+
+        skill?.HideSkillRange();
+    }
+
+    public bool TryExecuteSkill(SkillSlot skillSlot, PlayerSkillUseContext context)
+    {
+        if (!_skills.TryGetValue(skillSlot, out PlayerSkill skill))
+            return false;
+
+        return skill.TryExecuteSkill(context);
     }
 
     public void SetSkill(SkillSlot slot, PlayerSkill skill)
@@ -40,9 +55,9 @@ public class PlayerClassSkillBuild
         _skills[slot] = skill;
     }
 
-    public SOSkillDefinition GetSkillInfo(SkillSlot slot)
+    public PlayerSkillData GetSkillInfo(SkillSlot slot)
     {
-        return _skills.TryGetValue(slot, out PlayerSkill skill) ? skill.Definition : null;
+        return _skills.TryGetValue(slot, out PlayerSkill skill) ? skill.SkillData : null;
     }
 
 }

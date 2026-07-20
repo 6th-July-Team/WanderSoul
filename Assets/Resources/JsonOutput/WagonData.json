@@ -1,0 +1,10 @@
+[
+  {
+    "Id": "wagon_001",
+    "Name": "짐마차",
+    "BaseHp": 500,
+    "BaseCapacity": 100,
+    "BaseMoveSpeed": 3,
+    "SlowDataId": "wagon_slow_001"
+  }
+]

@@ -17,7 +17,7 @@ public class ResourceManager
 
     public async UniTask Init(System.Action<float> onProgress = null)
     {
-        _progressCount = 0; ;
+        _progressCount = 0;
         onProgress?.Invoke(0f);
 
         var dataTable = GameManager.DataTable.PreLoadAssetDataTable;

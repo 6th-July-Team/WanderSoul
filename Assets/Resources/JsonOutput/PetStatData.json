@@ -62,5 +62,21 @@
     "CritChance": 10,
     "CritMultiplier": 1.5,
     "LifeSteal": 0
+  },
+  {
+    "Id": "바람의 축복 펫",
+    "MaxHealth": null,
+    "BasicPower": null,
+    "Defense": null,
+    "FireResistance": null,
+    "ColdResistance": null,
+    "ElectricResistance": null,
+    "MagicResistance": null,
+    "MoveSpeed": null,
+    "HealthRegeneration": null,
+    "CooldownReduction": null,
+    "CritChance": null,
+    "CritMultiplier": null,
+    "LifeSteal": null
   }
 ]

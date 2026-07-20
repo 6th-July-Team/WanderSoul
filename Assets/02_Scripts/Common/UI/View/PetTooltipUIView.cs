@@ -57,8 +57,8 @@ public class PetTooltipUIView : MonoBehaviour
         }
 
         _nameText.text = petData.Name;
-        _elementText.text = petData.ElementType;
-        _gradeText.text = petData.PetGradeType;
+        _elementText.text = petData.GetElementType().ToString();
+        _gradeText.text = petData.GetGrade().ToString();
         _descriptionText.text = petData.Description;
 
         RefreshIcon(petData.IconPath);

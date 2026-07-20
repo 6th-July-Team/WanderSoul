@@ -1,66 +1,80 @@
-﻿using Cysharp.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(PlayerAimHandler))]
 public class PlayerCombatController : MonoBehaviour
 {
     // Components
-    private PlayerInputHandle _inputHandle;
     private PlayerAimHandler _aimHandler;
+    private PlayerInputHandle _inputHandle;
+    private PlayerAnimationController _animationController;
 
     // Mana
     public ManaPool ManaPool { get; private set; }
 
-    // Data
     private PlayerStatController _statController;
 
     // skill
     private PlayerClassSkillBuild _skillBuild;
     private PlayerClassSkillMaker _skillMaker;
 
-    private bool isInitialized = false;
+    private bool _isInitialized = false;
+
+    // Skill Range Check
+    private bool _isCheckingSkillRange = false;
+    private SkillSlot _checkingSkillSlot;
 
     private void Awake()
     {
-        _inputHandle = GetComponent<PlayerInputHandle>();
         _aimHandler = GetComponent<PlayerAimHandler>();
-
-        // TODO(김익환): 추후 Init 함수는 플레이어가 소환될 때 호출하기.
-        Init().Forget();
+        _inputHandle = GetComponent<PlayerInputHandle>();
+        _animationController = GetComponent<PlayerAnimationController>();
     }
 
-    // TEST: Awkae에서 호출하다 보니 플로우 문제가 있음 이후 삭제 예정
-    public async UniTask Init()
+    public void Init(PlayerStatController statController, PlayerSkillModifier skillModifier)
     {
-        await UniTask.WaitForSeconds(0.1f);
-        PlayerStatData playerStatData = GameManager.DataTable.GetPlayerStatData("테스트 직업 아이디");
-        _statController = new(playerStatData);
+        _statController = statController;
 
         ManaPool = new(_statController);
-        _skillMaker = new(ManaPool);
+
+        _skillMaker = new(ManaPool, skillModifier);
 
         _skillBuild = _skillMaker.CreateSkillBuild("테스트 직업 아이디", _statController);
 
-        isInitialized = true;
+        _isInitialized = true;
     }
 
     private void OnEnable()
     {
         _inputHandle.OnBasicAttackEvent += OnBasicAttack;
+
         _inputHandle.OnSpecialAttackEvent += OnSpecialAttack;
+        _inputHandle.OnSpecialAttackCheckEvent += OnSpecialAttackCheck;
+
         _inputHandle.OnUltimateSkillEvent += OnUltimateAttack;
+        _inputHandle.OnUltimateSkillCheckEvent += OnUltimateSkillCheck;
     }
 
     private void OnDisable()
     {
         _inputHandle.OnBasicAttackEvent -= OnBasicAttack;
+
         _inputHandle.OnSpecialAttackEvent -= OnSpecialAttack;
+        _inputHandle.OnSpecialAttackCheckEvent -= OnSpecialAttackCheck;
+
         _inputHandle.OnUltimateSkillEvent -= OnUltimateAttack;
+        _inputHandle.OnUltimateSkillCheckEvent -= OnUltimateSkillCheck;
+
+        if (_isInitialized && _isCheckingSkillRange)
+        {
+            _skillBuild.HideSkillRange(_checkingSkillSlot);
+        }
+
+        _isCheckingSkillRange = false;
     }
 
     private void Update()
     {
-        if (GameManager.Time.IsPaused || !isInitialized)
+        if (GameManager.Time.IsPaused || !_isInitialized)
             return;
 
         ManaPool.Update(Time.deltaTime);
@@ -72,28 +86,86 @@ public class PlayerCombatController : MonoBehaviour
         _skillBuild.Update(GameManager.Time.GameDeltaTime);
     }
 
+    private void LateUpdate()
+    {
+        if (_isCheckingSkillRange && _aimHandler.HasValidAim)
+        {
+            _skillBuild.CheckSkillRange(_checkingSkillSlot, CreateSkillUseContext());
+        }
+    }
+
     public void SetSkill(SkillSlot slot, PlayerSkill skill)
     {
         _skillBuild.SetSkill(slot, skill);
     }
 
-    public SOSkillDefinition GetSkillInfo(SkillSlot slot)
+    public PlayerSkillData GetSkillInfo(SkillSlot slot)
     {
         return _skillBuild.GetSkillInfo(slot);
     }
 
-
-    private void OnBasicAttack() => TryExecuteSkill(SkillSlot.Basic);
-    private void OnSpecialAttack() => TryExecuteSkill(SkillSlot.Special);
-    private void OnUltimateAttack() => TryExecuteSkill(SkillSlot.Ultimate);
-
-    private void TryExecuteSkill(SkillSlot skillSlot)
+    private void OnBasicAttack()
     {
-        _skillBuild.TryExecuteSkill(skillSlot, CreateSkillUseContext());
+        bool isExecute = TryExecuteSkill(SkillSlot.Basic);
+        if (isExecute)
+        {
+            _animationController.PlayBasicAttack();
+        }
+    }
+
+    private void OnSpecialAttack() => EndSkillRangeCheckAndExecute(SkillSlot.Special);
+    private void OnUltimateAttack() => EndSkillRangeCheckAndExecute(SkillSlot.Ultimate);
+
+    private void OnSpecialAttackCheck() => BeginSkillRangeCheck(SkillSlot.Special);
+    private void OnUltimateSkillCheck() => BeginSkillRangeCheck(SkillSlot.Ultimate);
+
+    private bool TryExecuteSkill(SkillSlot skillSlot)
+    {
+        //if (_isAnimating)
+        //{
+        //    Debug.Log($"{GetType()}: 애니메이션 실행 중이라 차단.");
+        //    return false;
+        //}
+
+        if (_skillBuild.TryExecuteSkill(skillSlot, CreateSkillUseContext()))
+        {
+            //_isAnimating = true;
+            return true;
+        }
+
+        return false;
+    }
+
+    private void BeginSkillRangeCheck(SkillSlot skillSlot)
+    {
+        if (!_isInitialized)
+            return;
+
+        _checkingSkillSlot = skillSlot;
+        Debug.Log($"{GetType()}: 스킬 범위 체크 시작. 스킬 슬롯: {skillSlot}");
+        _isCheckingSkillRange = true;
+    }
+
+    private void EndSkillRangeCheckAndExecute(SkillSlot skillSlot)
+    {
+        if (!_isInitialized)
+            return;
+
+        _isCheckingSkillRange = false;
+
+        TryExecuteSkill(skillSlot);
+
+        _skillBuild.HideSkillRange(skillSlot);
     }
 
     private PlayerSkillUseContext CreateSkillUseContext()
     {
         return new PlayerSkillUseContext(_aimHandler.transform, _aimHandler.AimDirection, _aimHandler.AimWorldPoint);
+    }
+
+    public void EndAnimationEvent()
+    {
+        //_isAnimating = false;
+        Debug.Log($"{GetType()}: 애니메이션 종료 이벤트 호출.");
     }
 }

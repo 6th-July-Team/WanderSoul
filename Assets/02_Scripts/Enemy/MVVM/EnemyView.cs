@@ -552,7 +552,7 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
     {
         Vector3 hitDirection = new Vector3(0, 0, this.transform.position.z + 1).normalized;
 
-        DamageInfo testDamageInfo = new DamageInfo(10, hitDirection);
+        DamageInfo testDamageInfo = new DamageInfo(10, hitDirection, DamageType.None);
 
         TakeDamage(testDamageInfo);
     }

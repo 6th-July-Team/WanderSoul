@@ -3,7 +3,12 @@ using UnityEngine;
 
 public class PetProjectileSkill : IPetActiveSkillExecution
 {
-    public void Execute(PetSkillUseContext context, float damage, Action OnEndSkill)
+    public PetProjectileSkill()
+    {
+
+    }
+
+    public void Execute(PetSkillUseContext context, Action OnEndSkill)
     {
         // 투사체는 오브젝트 풀링으로 발사하기
         Debug.Log("펫 엑티브 공격");

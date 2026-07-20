@@ -1,26 +1,64 @@
-﻿using TMPro;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class PartyHudUIView : BaseUI<PartyHudUIView, PartyHudViewModel>
+public class PartyHudUIView : BaseUI
 {
-    [SerializeField] private TMP_Text _nameText;
-    [SerializeField] private Slider _hpSlider;
+    [SerializeField] private PartyMemberSlotUIView _memberSlotPrefab;
+    [SerializeField] private Transform _slotRoot;
 
-    protected override void OnPropertyChanged(string propertyName)
+    private PartyMemberSlotUIView _wagonSlot;
+    private List<PartyMemberSlotUIView> _petSlotList = new();
+
+    public void SetWagon(string name, float hpFillAmount)
     {
-        if (propertyName == nameof(PartyMemberModel.CurrentHp) || propertyName == nameof(PartyMemberModel.MaxHp))
+        if (_wagonSlot == null)
         {
-            RefreshHp();
+            _wagonSlot = CreateSlot();
         }
 
-        else if (propertyName == nameof(PartyMemberModel.Name))
+        _wagonSlot.SetWagon(name, hpFillAmount);
+    }
+
+    public void AddPet(string name, float hpFillAmount)
+    {
+        var slot = CreateSlot();
+        slot.SetPet(name, hpFillAmount);
+        _petSlotList.Add(slot);
+    }
+
+    public void RefreshWagonHp(float hpFillAmount)
+    {
+        if (_wagonSlot != null)
         {
-            _nameText.text = _viewModel.Name;
+            _wagonSlot.RefreshHp(hpFillAmount);
         }
     }
-    private void RefreshHp()
+
+    public void RefreshPetHp(int index, float hpFillAmount)
     {
-        _hpSlider.value = _viewModel.HpFillAmount;
+        if (index < 0 || index >= _petSlotList.Count)
+        {
+            return;
+        }
+
+        _petSlotList[index].RefreshHp(hpFillAmount);
+    }
+
+    public void ClearPets()
+    {
+        foreach (var slot in _petSlotList)
+        {
+            if (slot != null)
+            {
+                Destroy(slot.gameObject);
+            }
+        }
+
+        _petSlotList.Clear();
+    }
+
+    private PartyMemberSlotUIView CreateSlot()
+    {
+        return Instantiate(_memberSlotPrefab, _slotRoot);
     }
 }

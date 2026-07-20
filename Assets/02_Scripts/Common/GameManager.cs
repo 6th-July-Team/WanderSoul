@@ -23,23 +23,29 @@ public class GameManager : SingletonBehaviour<GameManager>
     private DataTable _dataTable = new();
     private SaveManager _userDataManager = new();
     private TimeManager _timeManager = new();
-    private ConvoyManager _convoyManager = new();
     private UIManager _uiManager = new();
     private PetPartyController _petPartyController = new();
+
+
+    private ConvoyManager _convoyManager;
+    
 
     #endregion
 
     #region Variables
 
+    public string SelectedPlayerId { get; private set; }
+
+    [SerializeField] private bool _skipStartupUIForTest = false;
     private Transform _poolRoot = null;
+
+    private PetSkillMaker _petSkillMaker;
+    private StatusEffectMaker _statusEffectMaker;
 
     #endregion
 
     #region Test Variables
-    [SerializeField] private bool _skipStartupUIForTest = false;
-    public SOSkillDefinition TestSkillDefinition_ScholarBasicSkill;
-    public SOPetSkillInfo TestSOPetSkillInfo;
-    public Transform PlayerTransfrom { get; private set; }
+
 
     #endregion
 
@@ -64,9 +70,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         if (_skipStartupUIForTest)
         {
-            await _resourceManager.Init();
             InitNonAsync();
-
             // 여기에 로딩은 없어도 초기화 해야할 것 넣기
 
 
@@ -74,7 +78,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         }
 
         // 여기에서 로딩 UI 오픈
-
+        await _resourceManager.Init();
         InitNonAsync();
     }
 
@@ -82,6 +86,10 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         _soundManager.Init(this.gameObject);
         PoolInit();
+
+        InitStatusEffect();
+        InitPetSystem();
+        _convoyManager = new ConvoyManager(_petSkillMaker);
     }
 
     private void PoolInit()
@@ -93,6 +101,25 @@ public class GameManager : SingletonBehaviour<GameManager>
 
         _poolManager.Init(_poolRoot);
     }
+
+    private void InitStatusEffect()
+    {
+        StatusEffectRegistry statusEffectRegistry = new();
+        StatusEffectResiter.ResisterAll(statusEffectRegistry);
+        _statusEffectMaker = new StatusEffectMaker(statusEffectRegistry);
+    }
+
+    private void InitPetSystem()
+    {
+        var activeRegistry = new PetActiveSkillExecutionRegistry();
+        var passiveRegistry = new PetPassiveSkillExecutionRegistry();
+
+        PetSkillRegistor.RegisterAllActiveSkills(activeRegistry);
+        PetSkillRegistor.RegisterAllPassiveSkills(passiveRegistry);
+
+        _petSkillMaker = new PetSkillMaker(activeRegistry, passiveRegistry, _statusEffectMaker);
+    }
+
 
     private void SetLoadData()
     {
@@ -116,19 +143,18 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         // 해당 시점 이전에 의뢰 선택 및 펫 선택이 완료되어야 합니다.
         // 선택된 의뢰 ID 및 선택된 펫 ID 리스트가 아래 필요합니다.
-        List<string> testSelectedPetIds = new List<string> { "pet_fire_001", "pet_water_002", "pet_earth_003" };
-        _convoyManager.InitConvoy("TEST", testSelectedPetIds);
+        List<string> testSelectedPetIds = new List<string> { "바람의 축복 펫" };
+        _convoyManager.InitConvoy("TEST_QuestId", testSelectedPetIds);
 
         ExitVillage();
     }
 
     public void EndConvoy()
-    { 
+    {
         // TODO 간단 로딩 실행
         string resultVillageId = _convoyManager.Release();
         EnterVillage(resultVillageId);
     }
-
 
     #region TEST Functions
 

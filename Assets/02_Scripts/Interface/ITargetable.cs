@@ -11,5 +11,16 @@ public enum EntityType
     Enemy,
     Pet,
     Wagon,
-    COUNT
+    Barrier,
+}
+
+public enum TargetType
+{
+    Player,
+    Pet,
+    Wagon,
+    PlayerAndPet,
+    Ally,           // 유저 기준 아군
+    Enemy,
+    All,
 }
