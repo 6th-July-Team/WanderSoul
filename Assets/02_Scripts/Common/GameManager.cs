@@ -74,8 +74,6 @@ public class GameManager : SingletonBehaviour<GameManager>
         {
             InitNonAsync();
             // 여기에 로딩은 없어도 초기화 해야할 것 넣기
-            ShowTitle();
-
             return;
         }
 
@@ -93,6 +91,8 @@ public class GameManager : SingletonBehaviour<GameManager>
         _loadingUI = null;
 
         InitNonAsync();
+
+        ShowTitle();
     }
 
     private void ShowTitle()
