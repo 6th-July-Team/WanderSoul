@@ -93,8 +93,6 @@ public class StageData : BaseData
     public string WagonId;
     public string TerrainType;
     public string Description;
-    public string StartTownId;
-    public string ArrivalTownId;
 }
 
 [Serializable]
@@ -325,15 +323,15 @@ public class LevelUpOptionData : BaseData
 {
     public string Name;
     public string Description;
-    public string OptionCategory;
-    public string Grade;
+    public string stringOptionCategory;
+    public string stringGrade;
     public int MinLevel;
     public int MaxLevel;
     public string RequiredClassId;
-    public string TargetStatType;
-    public string TargetSkillSlot;
-    public string EffectType;
-    public string Operation;
+    public string stringTargetStatType;
+    public string stringTargetSkillSlot;
+    public string stringEffectType;
+    public string stringOperation;
     public float Value;
     public int MaxStack;
     public int Weight;

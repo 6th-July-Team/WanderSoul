@@ -13,6 +13,7 @@ public class LevelUpOptionSlotUIView : MonoBehaviour, IPointerEnterHandler, IPoi
     [SerializeField] private TMP_Text _nameText;
     [SerializeField] private TMP_Text _gradeText;
     [SerializeField] private TMP_Text _descriptionText;
+    [SerializeField] private TMP_Text _statValueText;
     [SerializeField] private UIButton _selectButton;
 
     [Header("Grade Colors")]
@@ -66,13 +67,35 @@ public class LevelUpOptionSlotUIView : MonoBehaviour, IPointerEnterHandler, IPoi
         }
 
         _nameText.text = optionData.Name;
-        _gradeText.text = optionData.Grade;
+        _gradeText.text = optionData.stringGrade;
         _descriptionText.text = optionData.Description;
+        _statValueText.text = GetStatValueText(optionData);
 
-        RefreshBackgroundColor(optionData.Grade);
+        RefreshBackgroundColor(optionData.stringGrade);
         RefreshIcon(optionData.IconPath);
     }
 
+    private string GetStatValueText(LevelUpOptionData optionData)
+    {
+        string sign = string.Empty;
+        string suffix = string.Empty;
+
+        if (optionData.stringOperation == "Flat")
+        {
+            sign = "+";
+        }
+        else if (optionData.stringOperation == "AddPercent")
+        {
+            sign = "+";
+            suffix = "%";
+        }
+        else if (optionData.stringOperation == "MultiplePercent")
+        {
+            sign = "x";
+        }
+
+        return $"{optionData.stringTargetStatType} {sign}{optionData.Value}{suffix}";
+    }
     private void RefreshBackgroundColor(string grade)
     {
         _backgroundImage.color = GetGradeColor(grade);

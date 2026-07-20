@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-public class ConvoyHudUIView : BaseUI
+public class ConvoyHudUIView : BaseUI<ConvoyHudUIView, WagonViewModel>
 {
     [SerializeField] private Slider _progressSlider;
     [SerializeField] private RectTransform _wagonIcon;
@@ -12,31 +12,28 @@ public class ConvoyHudUIView : BaseUI
     [SerializeField] private TMP_Text _arrivalTownText;
     [SerializeField] private RectTransform _sliderFillArea;
 
-    private Wagon _wagon;
-
-    public void SetConvoy(string stageId, Wagon wagon)
+    public void SetConvoy(string questId)
     {
-        _wagon = wagon;
-        RefreshTownNames(stageId);
+        RefreshTownNames(questId);
     }
 
-    private void RefreshTownNames(string stageId)
+    private void RefreshTownNames(string questId)
     {
-        var stageData = GameManager.DataTable.GetStageData(stageId);
+        var questData = GameManager.DataTable.GetQuestData(questId);
 
-        if (stageData == null)
+        if (questData == null)
         {
             return;
         }
 
-        var startTown = GameManager.DataTable.GetTownData(stageData.StartTownId);
+        var startTown = GameManager.DataTable.GetTownData(questData.StartTownId);
 
         if (startTown != null)
         {
             _startTownText.text = startTown.Name;
         }
 
-        var arrivalTown = GameManager.DataTable.GetTownData(stageData.ArrivalTownId);
+        var arrivalTown = GameManager.DataTable.GetTownData(questData.ArrivalTownId);
 
         if (arrivalTown != null)
         {
@@ -44,20 +41,22 @@ public class ConvoyHudUIView : BaseUI
         }
     }
 
-    private void Update()
+    protected override void OnPropertyChanged(string propertyName)
     {
-        if ( _wagon == null)
+        if (propertyName == nameof(WagonModel.Progress))
         {
-            return;
+            RefreshProgress();
         }
-        RefreshProgress();
     }
 
     private void RefreshProgress()
     {
-        float progress = 0.4f;   
-        // TODO(이태영): Wagon.Progress 추가되면 _wagon.Progress로 교체
-        //float progress = _wagon.Progress;
+        if (_viewModel == null)
+        {
+            return;
+        }
+
+        float progress = _viewModel.GetProgress;
 
         _progressSlider.value = progress;
         _progressText.text = $"{Mathf.RoundToInt(progress * 100f)}%";

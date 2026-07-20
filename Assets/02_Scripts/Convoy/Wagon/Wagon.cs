@@ -15,6 +15,7 @@ public class Wagon : MonoBehaviour, ITargetable, IDamageable
 
     private WagonModel _model;
     private WagonViewModel _wagonViewModel;
+    public WagonViewModel ViewModel { get { return _wagonViewModel; } }
 
     private WagonSlowRuleData _wagonSlowRuleData;
 
