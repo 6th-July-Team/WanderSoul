@@ -297,6 +297,7 @@ MonoBehaviour:
   _direction: 0
   _slideDistance: 300
   _duration: 0.3
+  _registerAsHud: 1
 --- !u!1 &7782177010333083643
 GameObject:
   m_ObjectHideFlags: 0

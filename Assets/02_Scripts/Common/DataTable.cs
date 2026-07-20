@@ -46,7 +46,7 @@ public class DataTable
         //ReputationGradeDataTable = LoadData<ReputationGradeData>("ReputationGrade");
         //ItemDataTable = LoadData<ItemData>("Item");
         //CharacterDataTable = LoadData<CharacterData>("Character");
-        PoolDataTable = LoadData<PoolData>(nameof(PoolData));
+        //PoolDataTable = LoadData<PoolData>(nameof(PoolData));
         PlayerStatDataTable = LoadData<PlayerStatData>("PlayerStatData");;
         QuestDataTable = LoadData<QuestData>(nameof(QuestData));
         StageDataTable = LoadData<StageData>(nameof(StageData));
