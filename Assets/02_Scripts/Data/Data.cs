@@ -144,10 +144,15 @@ public class PlayerStatData : BaseData
 }
 
 [Serializable]
-public class EnemySpawnData : BaseData
+public class AutoSpawnData : BaseData
 {
-    public float SpawnInterval;
+    public string Name;
+    public string Description;
+    public float StartTime;
     public List<string> EnemyIds;
+    public int MinPressureEnemyCount;     
+    public float SpawnInterval;
+    public int SpawnBatchCount;
 }
 
 [Serializable]
@@ -401,4 +406,22 @@ public class SkillModifierData : BaseData
 
     public StatModifierOperation GetOperation()
         => Enum.TryParse<StatModifierOperation>(stringOperation, out var result) ? result : default;
+}
+
+[Serializable]
+public class WagonData : BaseData
+{
+    public string Name;
+    public int BaseHp;
+    public int BaseCapacity;
+    public float BaseMoveSpeed;
+    public string SlowDataId;
+}
+
+[Serializable]
+public class WagonSlowRuleData : BaseData
+{
+    public List<int> MinEnemyCount;
+    public List<int> MaxEnemyCount;
+    public List<float> MoveSpeedRate;
 }

@@ -34,10 +34,12 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     #region Variables
 
+    public string SelectedPlayerId { get; private set; }
+
     [SerializeField] private bool _skipStartupUIForTest = false;
     private Transform _poolRoot = null;
 
-    private PetSkillMaker _skillMaker;
+    private PetSkillMaker _petSkillMaker;
     private StatusEffectMaker _statusEffectMaker;
 
     #endregion
@@ -89,7 +91,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
         InitStatusEffect();
         InitPetSystem();
-        _convoyManager = new ConvoyManager(_skillMaker);
+        _convoyManager = new ConvoyManager(_petSkillMaker);
     }
 
     private void PoolInit()
@@ -117,7 +119,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         PetSkillRegistor.RegisterAllActiveSkills(activeRegistry);
         PetSkillRegistor.RegisterAllPassiveSkills(passiveRegistry);
 
-        _skillMaker = new PetSkillMaker(activeRegistry, passiveRegistry, _statusEffectMaker);
+        _petSkillMaker = new PetSkillMaker(activeRegistry, passiveRegistry, _statusEffectMaker);
     }
 
 

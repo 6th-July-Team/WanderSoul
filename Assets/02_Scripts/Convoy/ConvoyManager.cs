@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Splines;
 
 public class ConvoyManager
 {
@@ -27,11 +28,13 @@ public class ConvoyManager
 
     public void FaildConvoy()
     {
-
+        // TODO(UI): 실패 결과 UI 표시
     }
 
     public void SuccessConvoy()
     {
+        // TODO(UI): 성공 결과 UI 표시
+        Debug.Log("호위 성공");
     }
 
     public string Release()
@@ -48,9 +51,9 @@ public class ConvoyManager
 
     private void StartConvoyAsync()
     {
-        // LoadingUI.Show();
+        // TODO(UI): 로딩 UI 또는 Fade In/Out 처리
 
-        LoadResources();
+        LoadMap();
 
         //Wagon cart = SpawnCart();
         //Player player = SpawnPlayer();
@@ -60,22 +63,27 @@ public class ConvoyManager
         // CameraManager.SetBattleView(player.transform);
         // LoadingUI.Hide();
 
-        StartBattle();
+        //StartBattle();
     }
 
-    private void LoadResources()
+    private void LoadMap()
     {
-        // 의뢰 데이터, 맵, 플레이어, 마차, 펫 프리팹 로드
+        var tradeRouteHandler = Object.Instantiate(Utils.ResourcesLoad<TradeRouteHandler>("Map_01-TEST"));
+        SpawnWagon(tradeRouteHandler.SplineContainer);
     }
 
-    //private Wagon SpawnWagon()
-    //{
-    //    // 의뢰 데이터 기준으로 마차 생성
-    //}
+    private Wagon SpawnWagon(SplineContainer splineContainer)
+    {
+        var wagon = Object.Instantiate(Utils.ResourcesLoad<Wagon>("Wagon_ProtoType"));
+        wagon.SetSpline(splineContainer);
 
-    //private Player SpawnPlayer()
+        return wagon;
+    }
+
+    //private PlayerEntity SpawnPlayer()
     //{
-    //    // 선택된 플레이어 캐릭터 생성
+
+
     //}
 
     //private PetController SpawnPet()

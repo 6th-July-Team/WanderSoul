@@ -11,6 +11,9 @@ public class WagonViewModel : BaseViewModel<WagonModel>
     public float GetMoveSpeed => _model.MoveSpeed;
     public int GetEnemyCount => _model.EnemyCount;
     public float GetWarningTime => _model.WarningTime;
+    public string GetWagonName => _model.Name;
+    public int GetWagonCapacity => _model.Capacity;
+    public float GetProgress => _model.Progress;
 
     public void ReduceDurability(float amount)
     {
@@ -35,5 +38,20 @@ public class WagonViewModel : BaseViewModel<WagonModel>
     public void SetWarningTime(float time)
     {
         _model.WarningTime = time;
+    }
+
+    public void SetWagonName(string name)
+    {
+        _model.Name = name;
+    }
+
+    public void SetWagonCapacity(int capacity)
+    {
+        _model.Capacity = capacity;
+    }
+
+    public void SetProgress(float progress)
+    {
+        _model.Progress = progress;
     }
 }
