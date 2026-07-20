@@ -86,6 +86,8 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     private void InitNonAsync()
     {
+        _networkManager.InitNetworkService();
+
         _soundManager.Init(this.gameObject);
         PoolInit();
 

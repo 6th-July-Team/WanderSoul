@@ -56,9 +56,7 @@ public class ConvoyManager
 
         LoadMap();
         SpawnPlayer();
-        SpawnPet();
-
-        //InitPetParty(player, cart);
+        //SpawnPet();
 
         // CameraManager.SetBattleView(player.transform);
         // LoadingUI.Hide();
@@ -69,18 +67,22 @@ public class ConvoyManager
     private void LoadMap()
     {
         var tradeRouteHandler = Object.Instantiate(Utils.ResourcesLoad<TradeRouteHandler>("Map_01-TEST"));
-        SpawnWagon(tradeRouteHandler.SplineContainer);
+        SpawnWagon(tradeRouteHandler.SplineContainer, "wagon_001");
     }
 
-    private void SpawnWagon(SplineContainer splineContainer)
+    private void SpawnWagon(SplineContainer splineContainer, string wagonId)
     {
+        GameManager.Network.RequestCreateWagon(wagonId);
+        var wagonViewModel = GameManager.Network.WagonService.GetWagonViewModel(wagonId);
+
         _wagon = Object.Instantiate(Utils.ResourcesLoad<Wagon>("Wagon_ProtoType"));
+        _wagon.Init(wagonId, wagonViewModel);
         _wagon.SetSpline(splineContainer);
     }
 
     private void SpawnPlayer()
     {
-        GameManager.Network.RequestCreateLocalPlayer();
+        GameManager.Network.RequestCreatePlayer();
         var playerViewModel = GameManager.Network.PlayerService.GetPlayerViewModel();
         var playerStatController = GameManager.Network.PlayerService.StatController;
 

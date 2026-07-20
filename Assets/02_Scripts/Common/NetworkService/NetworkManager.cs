@@ -11,7 +11,7 @@ public class NetworkManager
         WagonService = new();
     }
 
-    public void RequestCreateLocalPlayer()
+    public void RequestCreatePlayer()
     {
         // 맵 진입 시 플레이어를 요청
         var playerVm = PlayerService.GetPlayerViewModel();
@@ -21,6 +21,18 @@ public class NetworkManager
     }
 
     public void OnRecvCreateLocalPlayer(PlayerViewModel playerVm)
+    {
+        
+    }
+
+    public void RequestCreateWagon(string wagonId)
+    {
+        var wagonVm = WagonService.GetWagonViewModel(wagonId);
+
+        OnRecvCreateLocalWagon(wagonVm);
+    }
+
+    public void OnRecvCreateLocalWagon(WagonViewModel wagonVm)
     {
         
     }
