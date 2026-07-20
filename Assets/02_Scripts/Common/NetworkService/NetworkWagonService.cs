@@ -1,9 +1,8 @@
-﻿using UnityEngine;
+﻿
 
 public class NetworkWagonService
 {
     private WagonViewModel _wagonViewModel;
-
 
     public WagonViewModel GetWagonViewModel(string wagonId)
     {
@@ -28,5 +27,10 @@ public class NetworkWagonService
         _wagonViewModel = new WagonViewModel(wagonModel);
 
         return _wagonViewModel;
+    }
+
+    public void Dispose()
+    {
+        _wagonViewModel.Dispose();
     }
 }

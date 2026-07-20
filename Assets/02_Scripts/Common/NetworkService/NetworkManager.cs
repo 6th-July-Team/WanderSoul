@@ -7,8 +7,14 @@ public class NetworkManager
 
     public void InitNetworkService()
     {
-        PlayerService = new();
+        PlayerService = new(); 
         WagonService = new();
+    }
+
+    public void InGameServiceRelease()
+    {
+        PlayerService.Dispose();
+        WagonService.Dispose();
     }
 
     public void RequestCreatePlayer()

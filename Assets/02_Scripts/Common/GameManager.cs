@@ -206,6 +206,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         // TODO 간단 로딩 실행
         string resultVillageId = _convoyManager.Release();
         EnterVillage(resultVillageId);
+        _networkManager.InGameServiceRelease();
     }
 
     #region TEST Functions
