@@ -425,7 +425,7 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
     {
         Vector2 scatterOffset = Random.insideUnitCircle * 0.5f;
 
-        return transform.position + new Vector3(scatterOffset.x, 0.5f, scatterOffset.y);
+        return transform.position + new Vector3(scatterOffset.x, 0.1f, scatterOffset.y);
     }
 
     private async UniTaskVoid DespawnAfterDelay()
@@ -552,7 +552,7 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
     {
         Vector3 hitDirection = new Vector3(0, 0, this.transform.position.z + 1).normalized;
 
-        DamageInfo testDamageInfo = new DamageInfo(10, hitDirection, DamageType.None);
+        DamageInfo testDamageInfo = new DamageInfo(_viewModel.MaxHp * 0.5f, hitDirection, DamageType.None);
 
         TakeDamage(testDamageInfo);
     }
