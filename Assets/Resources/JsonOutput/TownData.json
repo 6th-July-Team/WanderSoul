@@ -1,0 +1,16 @@
+﻿[
+  {
+    "Id": "town_lavendil",
+    "Name": "라벤딜",
+    "RegionId": "region_selvanera",
+    "Description": "셀바네라의 작은 마을",
+    "StartReputation": 0
+  },
+  {
+    "Id": "town_eldon",
+    "Name": "엘돈",
+    "RegionId": "region_selvanera",
+    "Description": "교역이 활발한 마을",
+    "StartReputation": 0
+  }
+]

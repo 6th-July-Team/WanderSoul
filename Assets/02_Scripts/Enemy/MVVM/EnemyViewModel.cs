@@ -20,18 +20,24 @@ public class EnemyViewModel : BaseViewModel<EnemyModel>
     public float AttackSpeed => _model.AttackSpeed;
 
     public float SoulDropChance => _model.SoulDropChance;
-    public float SoulDropAmount => _model.SoulDropAmount;
+    public int SoulDropAmount => _model.SoulDropAmount;
 
     public float ExpDropChance => _model.ExpDropChance;
-    public float ExpDropAmount => _model.ExpDropAmount;
+    public int ExpDropAmount => _model.ExpDropAmount;
 
     public bool CanMove => _model.CanMove;
     public float MoveSpeed => _model.MoveSpeed;
     public BT_EnemyState EnemyState => _model.EnemyState;
 
+    //투사체 발사(원거리) 전용
     public float ProjectileSpeed => _model.ProjectileSpeed;
     public float ProjectileLifeTime => _model.ProjectileLifeTime;
     public string ProjectilePrefabAddress => _model.ProjectilePrefabAddress;
+
+    //고정 포대형(예고 후 장판 공격) 전용
+    public float AreaRadius => _model.AreaRadius;
+    public float AreaDelayTime => _model.AreaDelayTime;
+    public string AreaPrefabAddress => _model.AreaPrefabAddress;
 
     public EnemyViewModel(EnemyModel model) : base(model) { }
 
@@ -60,11 +66,29 @@ public class EnemyViewModel : BaseViewModel<EnemyModel>
         return true;
     }
 
+    public void ChangeState(BT_EnemyState newEnemyState)
+    {
+        if(_model.EnemyState == BT_EnemyState.Dead)
+        {
+            return;
+        }
+
+        bool isCannotMoveEnemyState = (newEnemyState == BT_EnemyState.Approach || newEnemyState == BT_EnemyState.Chase);
+
+        if (_model.CanMove == false && isCannotMoveEnemyState)
+        {
+            return;
+        }
+
+        _model.EnemyState = newEnemyState;
+    }
+
+
     public bool TryEnterAttackState(float distanceToTarget)
     {
         bool canEnterAttack = (_model.EnemyState == BT_EnemyState.Chase || _model.EnemyState == BT_EnemyState.Idle);
 
-        if(canEnterAttack == false)
+        if (canEnterAttack == false)
         {
             return false;
         }
@@ -73,7 +97,7 @@ public class EnemyViewModel : BaseViewModel<EnemyModel>
 
         float attackRange = _model.AttackRange * enterAttackRange;
 
-        if(distanceToTarget > attackRange)
+        if (distanceToTarget > attackRange)
         {
             return false;
         }
@@ -84,14 +108,14 @@ public class EnemyViewModel : BaseViewModel<EnemyModel>
 
     public bool TryExitAttackState(float distanceToTarget)
     {
-        if(_model.EnemyState != BT_EnemyState.Attack)
+        if (_model.EnemyState != BT_EnemyState.Attack)
         {
             return false;
         }
 
         float exitAttackRange = _model.AttackRange;
 
-        if(distanceToTarget <= exitAttackRange)
+        if (distanceToTarget <= exitAttackRange)
         {
             return false;
         }
@@ -113,22 +137,58 @@ public class EnemyViewModel : BaseViewModel<EnemyModel>
         return true;
     }
 
-    public void ChangeState(BT_EnemyState newEnemyState)
+    public bool TryRollDrop(DropObjectType type)
     {
-        if(_model.EnemyState == BT_EnemyState.Dead)
+        float dropChance;
+
+        switch(type)
         {
-            return;
+            case DropObjectType.Exp:
+                {
+                    dropChance = _model.ExpDropChance;
+                }
+                break;
+            case DropObjectType.Soul:
+                {
+                    dropChance = _model.SoulDropChance;
+                }
+                break;
+            default:
+                {
+                    return false;
+                }
         }
 
-        bool isCannotMoveEnemyState = (newEnemyState == BT_EnemyState.Approach || newEnemyState == BT_EnemyState.Chase);
-
-        if (_model.CanMove == false && isCannotMoveEnemyState)
+        if (Random.Range(0f, 100f) <= dropChance)
         {
-            return;
+            return true;
         }
 
-        _model.EnemyState = newEnemyState;
+        return false;
     }
 
+    public int GetDropAmount(DropObjectType type)
+    {
+        int amount;
 
+        switch (type)
+        {
+            case DropObjectType.Exp:
+                {
+                    amount = _model.ExpDropAmount;
+                }
+                break;
+            case DropObjectType.Soul:
+                {
+                    amount = _model.SoulDropAmount;
+                }
+                break;
+            default:
+                {
+                    return default;
+                }
+        }
+
+        return amount;
+    }
 }

@@ -14,6 +14,7 @@ public class Wagon : MonoBehaviour, ITargetable, IDamageable
     private SplineAnimate _splineAnimate;
 
     private WagonViewModel _wagonViewModel;
+    public WagonViewModel ViewModel { get { return _wagonViewModel; } }
 
     private WagonSlowRuleData _wagonSlowRuleData;
 

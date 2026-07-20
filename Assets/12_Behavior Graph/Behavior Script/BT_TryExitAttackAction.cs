@@ -20,9 +20,16 @@ public partial class BT_TryExitAttackAction : Action
             return Status.Failure;
         }
 
-        view.TryExitAttackState(Target?.Value);
+        bool isExitAttackState = view.TryExitAttackState(Target?.Value);
 
-        return Status.Success;
+        if (isExitAttackState)
+        {
+            return Status.Success;
+        }
+        else
+        {
+            return Status.Failure;
+        }
     }
 }
 

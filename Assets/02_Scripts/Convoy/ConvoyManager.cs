@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Cysharp.Threading.Tasks;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Splines;
+using Cysharp.Threading.Tasks;
 
 public class ConvoyManager
 {
@@ -24,7 +26,7 @@ public class ConvoyManager
         _selectedPetIds.Clear();
         _selectedPetIds.AddRange(selectedPetIds);
 
-        StartConvoyAsync();
+        StartConvoyAsync().Forget();
     }
 
     public void FaildConvoy()
@@ -50,9 +52,12 @@ public class ConvoyManager
         return "테스트 ID";
     }
 
-    private void StartConvoyAsync()
+    private async UniTaskVoid StartConvoyAsync()
     {
         // TODO(UI): 로딩 UI 또는 Fade In/Out 처리
+        var loading = GameManager.UI.OpenLoadingUI();
+
+        await UniTask.Delay(System.TimeSpan.FromSeconds(1f));
 
         LoadMap();
         SpawnPlayer();
@@ -62,6 +67,8 @@ public class ConvoyManager
         // LoadingUI.Hide();
 
         StartBattle();
+
+        GameManager.UI.CloseUI(UIType.LoadingUIView);
     }
 
     private void LoadMap()
@@ -112,5 +119,33 @@ public class ConvoyManager
         // 호위? HUD 표시
         // 게임 상태 변경
         // 아직 펫이 소환이 안 된 시점
+
+        OpenConvoyHuds();
+    }
+
+    private void OpenConvoyHuds()
+    {
+
+        if (_wagon != null)
+        {
+            GameManager.UI.OpenConvoyHudUI(_wagon.ViewModel, _selectedQuestId);
+        }
+
+        var partyHud = GameManager.UI.OpenPartyHudUI();
+
+        if (partyHud != null)
+        {
+            partyHud.SetWagon("마차", 1f);
+            partyHud.AddPet("펫1", 1f);
+        }
+
+        var resourceModel = new ResourceModel();
+
+        resourceModel.Soul = 5;
+        resourceModel.Money = 999999;
+        GameManager.UI.OpenResourceHudUI(resourceModel);
+
+        // TODO(이태영): 스킬 HUD - PlayerCombatController 접근 방법 확인 필요
+        // TODO(이태영): 플레이어 HP/MP HUD - ManaPool, HP 소스 확인 필요
     }
 }

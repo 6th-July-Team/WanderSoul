@@ -115,4 +115,29 @@ public class PetInventoryViewModel : BaseViewModel
     {
         return _partyModel.PartyCount > 0;
     }
+
+    public List<string> GetPartyPetDataIdList()
+    {
+        var result = new List<string>();
+
+        for (int i = 0; i < _partyModel.MaxPartyCount; i++)
+        {
+            long petUniqueId = _partyModel.GetPartyPetIdBySlotIndex(i);
+
+            if (petUniqueId == 0)
+            {
+                continue;
+            }
+
+            var pet = _petInventoryModel.GetPet(petUniqueId);
+            if (pet == null)
+            {
+                continue;
+            }
+
+            result.Add(pet.PetDataId);
+        }
+
+        return result;
+    }
 }

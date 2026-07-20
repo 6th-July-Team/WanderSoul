@@ -236,7 +236,10 @@ public class PetInventoryUIView : BaseUI<PetInventoryUIView, PetInventoryViewMod
             return;
         }
 
-        // TODO(이태영): 스테이지 진입
+        var petDataIds = _viewModel.GetPartyPetDataIdList();
+
+        GameManager.UI.CloseUI(UIType.PetInventoryUIView);
+        GameManager.Instance.StartConvoy(petDataIds);
     }
 
     #endregion

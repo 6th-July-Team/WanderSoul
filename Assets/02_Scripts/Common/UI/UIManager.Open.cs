@@ -166,5 +166,42 @@ public partial class UIManager
         view.SetOptions(optionIdList);
     }
 
+    public void OpenConvoyHudUI(WagonViewModel wagonViewModel, string questId)
+    {
+        var view = OpenUI<ConvoyHudUIView>(UIType.ConvoyHudUIView);
+
+        if (view == null)
+        {
+            Debug.LogWarning("ConvoyHudUIView를 열 수 없습니다.");
+            return;
+        }
+
+        view.SetConvoy(questId);
+        view.BindViewModel(wagonViewModel);
+    }
+
+    public LoadingUIView OpenLoadingUI()
+    {
+        var view = OpenUI<LoadingUIView>(UIType.LoadingUIView);
+        if (view == null)
+        {
+            Debug.LogWarning("LoadingUIView를 열 수 없습니다.");
+            return null;
+        }
+
+        view.SetupRandom();
+        return view;
+    }
+
+    public void OpenSimplePopup(string message)
+    {
+        var view = OpenUI<SimplePopupUIView>(UIType.SimplePopupUIView);
+        if (view == null)
+        {
+            return;
+        }
+
+        view.SetPopup(message);
+    }
 }
 

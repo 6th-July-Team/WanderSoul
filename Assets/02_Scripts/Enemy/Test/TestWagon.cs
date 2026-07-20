@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class TestWagon : MonoBehaviour, IDamageable, ITargetable
+public class TestWagon : MonoBehaviour, IWagon
 {
     public bool IsAlive => true;
     public EntityType EntityType => EntityType.Wagon;
