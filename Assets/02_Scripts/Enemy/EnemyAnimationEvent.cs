@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class EnemyAnimationAttackEvent : MonoBehaviour
+public class EnemyAnimationEvent : MonoBehaviour
 {
     [SerializeField] private EnemyView View_Self;
 

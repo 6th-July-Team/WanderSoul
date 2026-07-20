@@ -4,7 +4,7 @@ using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
+public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
 {
     public Vector3 Position => this.transform.position;
     public bool IsAlive => _viewModel.EnemyState != BT_EnemyState.Dead;
@@ -23,19 +23,34 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
 
     private const float TARGET_EXCLUDE_DURATION = 15f;
 
-    public GameObject CurrentTarget => _targetSelector.CurrentTarget;
+    private static readonly (DropObjectDigit digit, int value)[] DIGIT_TABLE =
+    {
+        (DropObjectDigit.Hundred, 100),
+        (DropObjectDigit.Ten, 10),
+        (DropObjectDigit.One, 1),
+    };
+
+    public ITargetable CurrentTarget => _targetSelector.CurrentTarget;
 
     private GameObject _wagon;
     private GameObject _player;
+    private ITargetable _wagonTargetable;
+    private ITargetable _playerTargetable;
 
     public event System.Action OnEnemyDied;
 
-    // Melee 전용
+    [SerializeField] private float DeadDelay;
+
+    [Header("Melee 전용")]
     [SerializeField] private EnemyAttackHitbox AttackHitbox_Self;
 
-    // Projectile 전용
+    [Header("Projectile 전용")]
     [SerializeField] private Transform ShootPoint_Self;
     private GameObject _prefab_projectile;
+
+    // AreaDelayed 전용
+    private GameObject _prefab_areaDelay;
+    private LayerMask _groundLayerMask;
 
     #region Init
     public void Init(GameObject wagon, GameObject player)
@@ -43,15 +58,38 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
         _wagon = wagon;
         _player = player;
 
+        SetWagonAndPlayerTargetable();
 
+        SetBehaviorGraphAgent();
+        SetAvoidancePriority();
         CreateTargetSelector();
         SetEnemySensor();
-        SetAvoidancePriority();
-        SetBehaviorGraphAgent();
 
         if (_viewModel.EnemyAttackType == EnemyAttackType.Projectile)
         {
-            SetProjectilePrefab().Forget();
+            SetProjectileObjectPrefab().Forget();
+        }
+
+        if (_viewModel.EnemyAttackType == EnemyAttackType.AreaDelayed)
+        {
+            SetAreaDelayObjectPrefab().Forget();
+            SetGroundLayerMask();
+        }
+    }
+
+    private void SetWagonAndPlayerTargetable()
+    {
+        _wagon.TryGetComponent(out _wagonTargetable);
+        _player.TryGetComponent(out _playerTargetable);
+
+        if (_wagonTargetable == null)
+        {
+            Debug.LogError("EnemyView : Wagon에 ITargetable 컴포넌트가 없습니다!!");
+        }
+
+        if (_playerTargetable == null)
+        {
+            Debug.LogError("EnemyView : Player에 ITargetable 컴포넌트가 없습니다!!");
         }
     }
 
@@ -74,6 +112,11 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
                     NavMeshAgent_Self.avoidancePriority = Random.Range(50, 100);
                 }
                 break;
+            case EnemyAttackType.AreaDelayed:
+                {
+                    NavMeshAgent_Self.avoidancePriority = 0;
+                }
+                break;
             default:
                 {
 
@@ -84,7 +127,7 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
 
     private void CreateTargetSelector()
     {
-        _targetSelector = new EnemyTargetSelector(_viewModel.TargetPolicy, _wagon, _player, _viewModel.LeashRange);
+        _targetSelector = new EnemyTargetSelector(_viewModel.TargetPolicy, _wagonTargetable, _playerTargetable, _viewModel.LeashRange);
         RefreshTarget();
     }
 
@@ -93,7 +136,7 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
         EnemySensor_Self.SetRange(_viewModel.DetectRange);
     }
 
-    private async UniTaskVoid SetProjectilePrefab()
+    private async UniTaskVoid SetProjectileObjectPrefab()
     {
         _prefab_projectile = await GameManager.Resource.LoadAsset<GameObject>(_viewModel.ProjectilePrefabAddress);
 
@@ -102,6 +145,22 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
             Debug.LogError("EnemyView : Prefab_Projectile이 로드되지 않았습니다!!");
         }
     }
+
+    private async UniTaskVoid SetAreaDelayObjectPrefab()
+    {
+        _prefab_areaDelay = await GameManager.Resource.LoadAsset<GameObject>(_viewModel.AreaPrefabAddress);
+
+        if (_prefab_areaDelay == null)
+        {
+            Debug.LogError("EnemyView : Prefab_AreaDelay이 로드되지 않았습니다!!");
+        }
+    }
+
+    private void SetGroundLayerMask()
+    {
+        _groundLayerMask = LayerMask.GetMask("Ground");
+    }
+
     #endregion
 
     #region OnPropertyChanged
@@ -134,7 +193,7 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
                 break;
             case nameof(_viewModel.AttackSpeed):
                 {
-                    // [TODO : 이기웅] 공격속도가 바뀔 경우
+                    BehaviorGraphAgent_Self.SetVariableValue("AttackDelay", _viewModel.AttackSpeed);
                 }
                 break;
             case nameof(_viewModel.MoveSpeed):
@@ -181,15 +240,32 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
             return;
         }
 
-        GameObject target = _targetSelector.SelectTarget(EnemySensor_Self.Candidates);
-        bool isTargetDetected = (target != null && target != _wagon);
+        ITargetable target = _targetSelector.SelectTarget(EnemySensor_Self.Candidates);
+        GameObject targetObject = GetTargetGameObject(target);
 
-        BehaviorGraphAgent_Self.SetVariableValue("Target", target);
+        bool isTargetDetected = (targetObject != null && targetObject != _wagon);
+
+        BehaviorGraphAgent_Self.SetVariableValue("Target", targetObject);
         BehaviorGraphAgent_Self.SetVariableValue("IsTargetDetected", isTargetDetected);
     }
 
+    private GameObject GetTargetGameObject(ITargetable target)
+    {
+        Component targetComponent = target as Component;
+
+        if (targetComponent == null)
+        {
+            return null;
+        }
+
+        return targetComponent.gameObject;
+    }
+
+    #region Animation
+
     public void PlayAttackAction()
     {
+        Animator_Self.ResetTrigger(ATTACK_HASH);
         Animator_Self.SetTrigger(ATTACK_HASH);
     }
 
@@ -198,7 +274,8 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
         Animator_Self.SetBool(IS_DEAD_HASH, true);
     }
 
-    #region ExcuteAttack
+    #endregion
+
     public void ExecuteAttack()
     {
         if (_viewModel.EnemyState != BT_EnemyState.Attack)
@@ -218,9 +295,15 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
                     ExecuteProjectileTypeAttack();
                 }
                 break;
+            case EnemyAttackType.AreaDelayed:
+                {
+                    ExecuteAreaDelayedTypeAttack();
+                }
+                break;
         }
     }
 
+    #region ExecuteAttack
     private void ExecuteMeleeTypeAttack()
     {
         if (AttackHitbox_Self == null)
@@ -235,23 +318,61 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
 
     private void ExecuteProjectileTypeAttack()
     {
-        if (_prefab_projectile == null || CurrentTarget == null)
+        GameObject targetObject = GetTargetGameObject(CurrentTarget);
+
+        if (_prefab_projectile == null || targetObject == null)
         {
             return;
         }
 
-        EnemyProjectileObject projectileObject = CreateAProjectile();
-        projectileObject.OnDamageableTargetHited += _viewModel.ProjectileTypeAttack;
+        EnemyProjectileObject projectileScript = CreateAProjectile();
+        projectileScript.OnDamageableTargetHited += _viewModel.ProjectileTypeAttack;
 
-        projectileObject.Launch(CurrentTarget, _viewModel.ProjectileSpeed, _viewModel.ProjectileLifeTime);
+        projectileScript.Launch(targetObject, _viewModel.ProjectileSpeed, _viewModel.ProjectileLifeTime);
     }
 
     private EnemyProjectileObject CreateAProjectile()
     {
-        GameObject projectileObjectGameObject = Instantiate(_prefab_projectile, ShootPoint_Self.position, Quaternion.identity);
-        EnemyProjectileObject projectileObject = projectileObjectGameObject.GetComponent<EnemyProjectileObject>();
+        GameObject projectileObject = Instantiate(_prefab_projectile, ShootPoint_Self.position, Quaternion.identity);
+        EnemyProjectileObject projectileScript = projectileObject.GetComponent<EnemyProjectileObject>();
 
-        return projectileObject;
+        return projectileScript;
+    }
+
+    private void ExecuteAreaDelayedTypeAttack()
+    {
+        if (_prefab_areaDelay == null || CurrentTarget == null)
+        {
+            return;
+        }
+
+        Vector3 targetGroundPosition = GetGroundPosition(CurrentTarget.Position);
+
+        EnemyAreaDelayObject areaDelayScript = CreateAreaDelay(targetGroundPosition);
+        areaDelayScript.OnDamageableTargetHited += _viewModel.AreaDelayedTypeAttack;
+
+        areaDelayScript.Deploy(_viewModel.AreaRadius, _viewModel.AreaDelayTime);
+    }
+
+    private Vector3 GetGroundPosition(Vector3 targetPosition)
+    {
+        Ray ray = new Ray(targetPosition + new Vector3(0, 3, 0), Vector3.down);
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 50f, _groundLayerMask) == false)
+        {
+            Logger.LogWarning("Ray를 맞추는 데 실패했습니다!! 기본 targetPosition을 return합니다!");
+            return targetPosition;
+        }
+
+        return hit.point;
+    }
+
+    private EnemyAreaDelayObject CreateAreaDelay(Vector3 targetPosition)
+    {
+        GameObject areaDelayObject = Instantiate(_prefab_areaDelay, targetPosition, Quaternion.identity);
+        EnemyAreaDelayObject areaDelayScript = areaDelayObject.GetComponent<EnemyAreaDelayObject>();
+
+        return areaDelayScript;
     }
 
     #endregion
@@ -264,8 +385,56 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
         }
 
         OnEnemyDied?.Invoke();
+
+        SpawnDropObjects(DropObjectType.Soul);
+        SpawnDropObjects(DropObjectType.Exp);
+        DespawnAfterDelay().Forget();
+    }
+
+    #region ExecuteDead
+    private void SpawnDropObjects(DropObjectType type)
+    {
+        if (_viewModel.TryRollDrop(type) == false)
+        {
+            return;
+        }
+
+        int amount = _viewModel.GetDropAmount(type);
+
+        foreach ((DropObjectDigit digit, int value) in DIGIT_TABLE)
+        {
+            int count = amount / value;
+            amount %= value;
+
+            for (int i = 0; i < count; i++)
+            {
+                SpawnOneDropObject(type, digit);
+            }
+        }
+    }
+
+    private void SpawnOneDropObject(DropObjectType type, DropObjectDigit digit)
+    {
+        string poolId = $"EnemyDropObject/{type}/{digit}";
+
+        EnemyDropObject dropObject = GameManager.Pool.SpawnFromPool<EnemyDropObject>(poolId, GetDropScatterPosition());
+        dropObject.Init(type, digit);
+    }
+
+    private Vector3 GetDropScatterPosition()
+    {
+        Vector2 scatterOffset = Random.insideUnitCircle * 0.5f;
+
+        return transform.position + new Vector3(scatterOffset.x, 0.1f, scatterOffset.y);
+    }
+
+    private async UniTaskVoid DespawnAfterDelay()
+    {
+        await UniTask.Delay(System.TimeSpan.FromSeconds(DeadDelay));
         GameManager.Pool.DespawnToPool(this.gameObject);
     }
+
+    #endregion
 
     public void TakeDamage(DamageInfo damageInfo)
     {
@@ -304,16 +473,17 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
         _viewModel.TryEnterAttackState(distanceToTarget); // [TODO?] 지금은 Bool값을 안 사용하고 버리고 있지만 나중에 언젠간 쓸 예정
     }
 
-    public void TryExitAttackState(GameObject target)
+    public bool TryExitAttackState(GameObject target)
     {
         if (target == null)
         {
-            return;
+            return true;
         }
 
         float distanceToTarget = GetDistanceToTarget(target);
 
-        _viewModel.TryExitAttackState(distanceToTarget); // [TODO?] 지금은 Bool값을 안 사용하고 버리고 있지만 나중에 언젠간 쓸 예정#2
+        bool isExitAttackState = _viewModel.TryExitAttackState(distanceToTarget);
+        return isExitAttackState;
     }
 
     private float GetDistanceToTarget(GameObject target)
@@ -341,28 +511,50 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
             return false;
         }
 
-        GameObject previousTarget = _targetSelector.CurrentTarget;
-        GameObject newTarget = _targetSelector.ExcludeCurrentAndReselect(EnemySensor_Self.Candidates, TARGET_EXCLUDE_DURATION);
+        ITargetable previousTarget = _targetSelector.CurrentTarget;
+        ITargetable newTarget = _targetSelector.ExcludeCurrentAndReselect(EnemySensor_Self.Candidates, TARGET_EXCLUDE_DURATION);
 
         if (newTarget == null || newTarget == previousTarget)
         {
             return false;
         }
 
-        BehaviorGraphAgent_Self.SetVariableValue("Target", newTarget);
-        BehaviorGraphAgent_Self.SetVariableValue("IsTargetDetected", newTarget != _wagon);
+        GameObject newTargetObject = GetTargetGameObject(newTarget);
+
+        BehaviorGraphAgent_Self.SetVariableValue("Target", newTargetObject);
+        BehaviorGraphAgent_Self.SetVariableValue("IsTargetDetected", newTargetObject != _wagon);
         return true;
     }
 
-    #if UNITY_EDITOR
+    public void ApplyTaunt(IPet taunter, float duration)
+    {
+        if (_viewModel.EnemyState == BT_EnemyState.Dead)
+        {
+            return;
+        }
+
+        _targetSelector.SetForcedTarget(taunter, duration);
+        RefreshTarget();
+
+        ReleaseTauntAfterDelay(duration).Forget();
+    }
+
+    private async UniTaskVoid ReleaseTauntAfterDelay(float duration)
+    {
+        await UniTask.Delay(System.TimeSpan.FromSeconds(duration),
+            cancellationToken: this.GetCancellationTokenOnDestroy());
+        RefreshTarget();
+    }
+
+#if UNITY_EDITOR
     [ContextMenu("TakeDamage")]
     private void TakeDamage()
     {
         Vector3 hitDirection = new Vector3(0, 0, this.transform.position.z + 1).normalized;
 
-        DamageInfo testDamageInfo = new DamageInfo(10, hitDirection, DamageType.None);
+        DamageInfo testDamageInfo = new DamageInfo(_viewModel.MaxHp * 0.5f, hitDirection, DamageType.None);
 
         TakeDamage(testDamageInfo);
     }
-    #endif
+#endif
 }
