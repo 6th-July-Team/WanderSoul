@@ -8,6 +8,9 @@ public class WagonModel : BaseModel
         OnPropertyChanged(nameof(MoveSpeed));
         OnPropertyChanged(nameof(EnemyCount));
         OnPropertyChanged(nameof(WarningTime));
+        OnPropertyChanged(nameof(Name));
+        OnPropertyChanged(nameof(Capacity));
+        OnPropertyChanged(nameof(Progress));
     }
 
     private float _durability;
@@ -67,6 +70,51 @@ public class WagonModel : BaseModel
             }
             _warningTime = value;
             OnPropertyChanged(nameof(WarningTime));
+        }
+    }
+
+    private string _name;
+    public string Name
+    {
+        get { return _name; }
+        set
+        {
+            if (_name == value)
+            {
+                return;
+            }
+            _name = value;
+            OnPropertyChanged(nameof(Name));
+        }
+    }
+
+    private int _capacity;
+    public int Capacity
+    {
+        get { return _capacity; }
+        set
+        {
+            if (_capacity == value)
+            {
+                return;
+            }
+            _capacity = value;
+            OnPropertyChanged(nameof(Capacity));
+        }
+    }
+
+    private float _progress;
+    public float Progress
+    {
+        get { return _progress; }
+        set
+        {
+            if (_progress == value)
+            {
+                return;
+            }
+            _progress = value;
+            OnPropertyChanged(nameof(Progress));
         }
     }
 }
