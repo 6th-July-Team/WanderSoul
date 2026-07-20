@@ -9,6 +9,7 @@ public class ConvoyManager
     private List<string> _selectedPetIds = new();
 
     private Wagon _wagon;
+    private PlayerEntity _playerEntity;
 
     public ConvoyManager(PetSkillMaker petSkillMaker)
     {
@@ -54,16 +55,15 @@ public class ConvoyManager
         // TODO(UI): 로딩 UI 또는 Fade In/Out 처리
 
         LoadMap();
-
-        //Wagon cart = SpawnCart();
-        //Player player = SpawnPlayer();
+        SpawnPlayer();
+        SpawnPet();
 
         //InitPetParty(player, cart);
 
         // CameraManager.SetBattleView(player.transform);
         // LoadingUI.Hide();
 
-        //StartBattle();
+        StartBattle();
     }
 
     private void LoadMap()
@@ -72,68 +72,43 @@ public class ConvoyManager
         SpawnWagon(tradeRouteHandler.SplineContainer);
     }
 
-    private Wagon SpawnWagon(SplineContainer splineContainer)
+    private void SpawnWagon(SplineContainer splineContainer)
     {
-        var wagon = Object.Instantiate(Utils.ResourcesLoad<Wagon>("Wagon_ProtoType"));
-        wagon.SetSpline(splineContainer);
-
-        return wagon;
+        _wagon = Object.Instantiate(Utils.ResourcesLoad<Wagon>("Wagon_ProtoType"));
+        _wagon.SetSpline(splineContainer);
     }
 
-    //private PlayerEntity SpawnPlayer()
-    //{
-
-
-    //}
-
-    //private PetController SpawnPet()
-    //{
-    //    PetData petData = GameManager.DataTable.GetPetData(petId);
-    //    PetController petPrefab = GameManager.Resource.Load<PetController>(petData.PrefabAddress);
-
-    //    Vector3 spawnPosition = GetPetSpawnPosition(i);
-
-    //    PetController pet = Instantiate(petPrefab, spawnPosition, Quaternion.identity);
-
-    //    pet.Init(petId, _owner, _wagon);
-    //}
-
-    private void InitPetParty(/*Player player, Wagon wagon*/)
+    private void SpawnPlayer()
     {
-        // 아래 TEST용
-        // 마차
-        GameObject wagonInstance = GameObject.Instantiate(Utils.ResourcesLoad<GameObject>("Test_Wagon"));
-        _wagon = wagonInstance.GetComponent<Wagon>();
+        GameManager.Network.RequestCreateLocalPlayer();
+        var playerViewModel = GameManager.Network.PlayerService.GetPlayerViewModel();
+        var playerStatController = GameManager.Network.PlayerService.StatController;
 
-        // 플레이어
-        // PetPartyController petParty = player.GetComponent<PetPartyController>();
-        GameObject playerInstance = GameObject.Instantiate(Utils.ResourcesLoad<GameObject>("Test_Mercenary"));
-        PlayerEntity playerEntity = playerInstance.GetComponent<PlayerEntity>();
+        _playerEntity = GameObject.Instantiate(Utils.ResourcesLoad<PlayerEntity>("Test_Mercenary"));
+        _playerEntity.Init(playerViewModel, playerStatController);
+    }
 
-        // 펫
+    private void SpawnPet()
+    {
         List<PetController> petControllers = new();
         foreach (var petId in _selectedPetIds)
         {
             GameObject petInstance = GameObject.Instantiate(Utils.ResourcesLoad<GameObject>("Test_Pet"));
 
             // TODO(김익환): 펫 생성 코드 수정
-            petInstance.GetComponent<PetController>().Init(petId, playerEntity, _wagon, _petSkillMaker, playerEntity, playerEntity);
+            petInstance.GetComponent<PetController>().Init(petId, _playerEntity, _wagon, _petSkillMaker, _playerEntity, _playerEntity);
 
             petControllers.Add(petInstance.GetComponent<PetController>());
         }
 
-        // 펫 파티
-
-
         GameManager.PetParty.Init(petControllers);
     }
+
 
     private void StartBattle()
     {
         // 호위? HUD 표시
         // 게임 상태 변경
         // 아직 펫이 소환이 안 된 시점
-
-        InitPetParty();
     }
 }

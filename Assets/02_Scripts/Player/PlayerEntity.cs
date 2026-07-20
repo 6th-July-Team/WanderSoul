@@ -1,5 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffectReceiver, IHealable
 {
@@ -19,10 +18,14 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
     public bool IsHealthFull => _testIsHealthFull;
 
 
+    private PlayerViewModel _playerViewModel;
+
+
     private PlayerCombatController _combatController;
     private PlayerStatController _statController;
     private PlayerSkillModifier _skillModifier;
 
+    private bool _isInitialized = false;
     private bool _isInBarrier;
 
 
@@ -30,32 +33,30 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
     {
         _combatController = GetComponent<PlayerCombatController>();
 
-        PlayerStatData playerStatData = new();//GameManager.DataTable.GetPlayerStatData("테스트 직업 아이디");
-        _statController = new(playerStatData);
-
         _skillModifier = new();
+        StatusEffects = new StatusEffectController();
+    }
+
+    public void Init(PlayerViewModel playerViewModel, PlayerStatController playerStatController)
+    {
+        _playerViewModel = playerViewModel;
+        _statController = playerStatController;
+
+        _combatController.Init(_statController, _skillModifier, playerViewModel);
 
         var adapter = new PlayerStatusEffectAdapter(_statController, _skillModifier);
         StatModifierReceiver = adapter;
         SkillModifierReceiver = adapter;
 
-        StatusEffects = new StatusEffectController();
-
-        Init().Forget();
-    }
-
-    // TODO(김익환): 플레이어 생성 후 호출하기. 지금은 간단하게 UniTask로 호출
-    public async UniTask Init()
-    {
-        await UniTask.WaitForSeconds(0.1f);
-        _combatController.Init(_statController, _skillModifier);
+        _isInitialized = true;
     }
 
     private void Update()
     {
-        if (GameManager.Time.IsPaused)
+        if (GameManager.Time.IsPaused || !_isInitialized)
             return;
 
+        _playerViewModel.Update(GameManager.Time.GameDeltaTime);
         StatusEffects.Update(GameManager.Time.GameDeltaTime);
     }
 
