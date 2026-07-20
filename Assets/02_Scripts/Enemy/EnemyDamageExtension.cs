@@ -39,6 +39,13 @@ public static class EnemyDamageExtension
         viewModel.ApplyDamage(damageableTarget, damageInfo);
     }
 
+    public static void AreaDelayedTypeAttack(this EnemyViewModel viewModel, IDamageable damageableTarget, Vector3 hitDirection)
+    {
+        DamageInfo damageInfo = new(viewModel.Attack, hitDirection, viewModel.DamageType);
+
+        viewModel.ApplyDamage(damageableTarget, damageInfo);
+    }
+
     public static void StealTypeAttack(this EnemyViewModel viewModel)
     {
 

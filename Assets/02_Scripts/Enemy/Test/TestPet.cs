@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
-public class TestWagon : MonoBehaviour, IWagon
+public class TestPet : MonoBehaviour, IPet
 {
     public bool IsAlive => true;
-    public EntityType EntityType => EntityType.Wagon;
+    public EntityType EntityType => EntityType.Pet;
     public Vector3 Position => this.transform.position;
 
     private int Hp;
@@ -19,7 +19,7 @@ public class TestWagon : MonoBehaviour, IWagon
 
         Debug.Log($"남은 체력 : {Hp}");
 
-        if(Hp <= 0)
+        if (Hp <= 0)
         {
             Destroy(this.gameObject);
         }
