@@ -166,17 +166,18 @@ public partial class UIManager
         view.SetOptions(optionIdList);
     }
 
-    public ConvoyHudUIView OpenConvoyHudUI(string stageId, Wagon wagon)
+    public void OpenConvoyHudUI(WagonViewModel wagonViewModel, string questId)
     {
         var view = OpenUI<ConvoyHudUIView>(UIType.ConvoyHudUIView);
+
         if (view == null)
         {
             Debug.LogWarning("ConvoyHudUIView를 열 수 없습니다.");
-            return null;
+            return;
         }
 
-        view.SetConvoy(stageId, wagon);
-        return view;
+        view.SetConvoy(questId);
+        view.BindViewModel(wagonViewModel);
     }
 
     public LoadingUIView OpenLoadingUI()
