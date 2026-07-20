@@ -2,12 +2,12 @@
 
 public class PlayerClassSkillMaker
 {
-    private ManaPool _manaPool;
+    private PlayerViewModel _playerViewModel;
     private PlayerSkillModifier _playerSkillModifier;
 
-    public PlayerClassSkillMaker(ManaPool manaPool, PlayerSkillModifier playerSkillModifier)
+    public PlayerClassSkillMaker(PlayerViewModel playerViewModel, PlayerSkillModifier playerSkillModifier)
     {
-        _manaPool = manaPool;
+        _playerViewModel = playerViewModel;
         _playerSkillModifier = playerSkillModifier;
     }
 
@@ -23,9 +23,9 @@ public class PlayerClassSkillMaker
         }
 
         build = new(
-               new PlayerSkill("test", new MercenarySlash(), _manaPool, statController, _playerSkillModifier)
-               , new PlayerSkill("test", new MercenaryWhip(), _manaPool, statController, _playerSkillModifier)
-               , new PlayerSkill("test", new MercenaryDanceStorm(), _manaPool, statController, _playerSkillModifier)
+               new PlayerSkill("test", new MercenarySlash(), _playerViewModel, statController, _playerSkillModifier)
+               , new PlayerSkill("test", new MercenaryWhip(), _playerViewModel, statController, _playerSkillModifier)
+               , new PlayerSkill("test", new MercenaryDanceStorm(), _playerViewModel, statController, _playerSkillModifier)
                );
 
 

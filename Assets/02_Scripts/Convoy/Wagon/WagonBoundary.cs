@@ -6,7 +6,9 @@ public class WagonBoundary : MonoBehaviour
 
     private float _warningDuration = 10f;
     private float _warningTimer = 0f;
+
     private bool _isWarningActive = false;
+    private bool _isInitalized = false;
 
     private void Awake()
     {
@@ -14,8 +16,17 @@ public class WagonBoundary : MonoBehaviour
         //_warningDuration = GameManager.DataTable.GetData();
     }
 
+    public void Init(WagonViewModel viewMdodel)
+    {
+        _viewModel = viewMdodel;
+        _isInitalized = true;
+    }
+
     private void Update()
     {
+        if (!_isInitalized)
+            return;
+
         if( _isWarningActive)
         {
             _warningTimer += GameManager.Time.GameDeltaTime;

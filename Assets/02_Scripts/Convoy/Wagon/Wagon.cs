@@ -13,7 +13,6 @@ public class Wagon : MonoBehaviour, ITargetable, IDamageable
 
     private SplineAnimate _splineAnimate;
 
-    private WagonModel _model;
     private WagonViewModel _wagonViewModel;
     public WagonViewModel ViewModel { get { return _wagonViewModel; } }
 
@@ -30,15 +29,6 @@ public class Wagon : MonoBehaviour, ITargetable, IDamageable
 
     private void OnEnable()
     {
-        // TODO(김익환): 어디서 선택된 마차 ID를 들고 오지?
-        SetWagonData("wagon_001");
-
-        // TODO(김익환): ViewModel 어디에서 만들어서 1개를 사용해야 하지 않나?
-        _wagonViewModel = new WagonViewModel(_model);
-
-        _wagonViewModel.OnPropertyChanged_View += OnPropertyChanged;
-        _wagonViewModel.PropertyChangedOnInit();
-
         _splineAnimate.Completed += OnSplineCompleted;
     }
 
@@ -54,6 +44,25 @@ public class Wagon : MonoBehaviour, ITargetable, IDamageable
     private void Update()
     {
         _wagonViewModel.SetProgress(Mathf.Floor(_splineAnimate.NormalizedTime * 100) / 100);
+    }
+
+    public void Init(string wagonId, WagonViewModel wagonViewModel)
+    {
+        _wagonViewModel = wagonViewModel;
+
+        WagonData wagonData = GameManager.DataTable.GetWagonData(wagonId);
+        _wagonSlowRuleData = GameManager.DataTable.GetWagonSlowRuleData(wagonData.SlowDataId);
+
+        _wagonViewModel.OnPropertyChanged_View += OnPropertyChanged;
+        _wagonViewModel.PropertyChangedOnInit();
+
+        InitChildComponent();
+    }
+
+    private void InitChildComponent()
+    {
+        GetComponentInChildren<WagonBoundary>().Init(_wagonViewModel);
+        GetComponentInChildren<WagonMonsterCounter>().Init(_wagonViewModel);
     }
 
     public void SetSpline(SplineContainer splineContainer)
@@ -135,19 +144,6 @@ public class Wagon : MonoBehaviour, ITargetable, IDamageable
                 }
                 break;
         }
-    }
-
-    private void SetWagonData(string id)
-    {
-        WagonData wagonData = GameManager.DataTable.GetWagonData(id);
-        _wagonSlowRuleData = GameManager.DataTable.GetWagonSlowRuleData(wagonData.SlowDataId);
-
-        // TODO(김익환): Model 어디에서 만들어서 1개를 사용해야 하지 않나?
-        _model = new WagonModel();
-        _model.Durability = wagonData.BaseHp;
-        _model.MoveSpeed = _baseMoveSpeed = wagonData.BaseMoveSpeed;
-        _model.Name = wagonData.Name;
-        _model.Capacity = wagonData.BaseCapacity;
     }
 
     private bool CheckChangeSpeed(int currentMonsterCnt)

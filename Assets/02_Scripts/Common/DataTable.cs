@@ -63,7 +63,7 @@ public class DataTable
         //PetPassiveSkillDataTable = LoadData<PetPassiveSkillData>(nameof(PetPassiveSkillData));
         WagonDataTable = LoadData<WagonData>(nameof(WagonData));
         WagonSlowRuleDataTable = LoadData<WagonSlowRuleData>(nameof(WagonSlowRuleData));
-
+        //AutoSpawnDataTable = LoadData<AutoSpawnData>(nameof(AutoSpawnData));
     }
 
     #region Getters
