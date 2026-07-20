@@ -38,7 +38,8 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
     }
 
     public void Init(string petId, IPositionProvider playerAnchor, IPositionProvider wagonAnchor
-        , PetSkillMaker petSkillMaker, IStatusEffectReceiver playerEffectReceiver, IHealable playerHealable)
+        , PetSkillMaker petSkillMaker, IStatusEffectReceiver playerEffectReceiver, IHealable playerHealable
+        , int avoidancePriority)
     {
         PetStatData petStatData = GameManager.DataTable.GetPetStatData(petId);
 
@@ -49,7 +50,7 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
         // TODO(김익환): SO 제거
         _petCommandController = new(playerAnchor, wagonAnchor, this, __SOPetSearch, 32);
 
-        _petMovement.Init(petId);
+        _petMovement.Init(petId, avoidancePriority);
 
         _petStausController = new();
         _petStausController.Init(__SOPetDefinition.BaseStats.MaxHp); // TODO(김익환): SO 제거

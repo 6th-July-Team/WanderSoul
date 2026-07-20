@@ -4,19 +4,19 @@ public class NetworkWagonService
 {
     private WagonViewModel _wagonViewModel;
 
-    public WagonViewModel GetWagonViewModel(string wagonId)
+    public WagonViewModel GetWagonViewModel()
     {
         if (_wagonViewModel == null)
         {
-            CreateWagonViewModel(wagonId);
+            CreateWagonViewModel();
         }
 
         return _wagonViewModel;
     }
 
-    private WagonViewModel CreateWagonViewModel(string wagonId)
+    private WagonViewModel CreateWagonViewModel()
     {
-        WagonData wagonData = GameManager.DataTable.GetWagonData(wagonId);
+        WagonData wagonData = GameManager.DataTable.GetWagonData("wagon_001");
 
         var wagonModel = new WagonModel();
         wagonModel.Durability = wagonData.BaseHp;

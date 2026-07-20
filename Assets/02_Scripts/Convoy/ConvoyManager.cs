@@ -1,8 +1,8 @@
 ﻿using Cysharp.Threading.Tasks;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Splines;
-using Cysharp.Threading.Tasks;
 
 public class ConvoyManager
 {
@@ -60,8 +60,7 @@ public class ConvoyManager
         await UniTask.Delay(System.TimeSpan.FromSeconds(1f));
 
         LoadMap();
-        SpawnPlayer();
-        //SpawnPet();
+        SpawnPet();
 
         // CameraManager.SetBattleView(player.transform);
         // LoadingUI.Hide();
@@ -73,17 +72,20 @@ public class ConvoyManager
 
     private void LoadMap()
     {
-        var tradeRouteHandler = Object.Instantiate(Utils.ResourcesLoad<TradeRouteHandler>("Map_01-TEST"));
-        SpawnWagon(tradeRouteHandler.SplineContainer, "wagon_001");
+        var tradeRouteHandler = GameObject.Instantiate(Utils.ResourcesLoad<TradeRouteHandler>("Map_01-TEST"));
+
+        SpawnPlayer();
+
+        SpawnWagon(tradeRouteHandler.SplineContainer);
     }
 
-    private void SpawnWagon(SplineContainer splineContainer, string wagonId)
+    private void SpawnWagon(SplineContainer splineContainer)
     {
-        GameManager.Network.RequestCreateWagon(wagonId);
-        var wagonViewModel = GameManager.Network.WagonService.GetWagonViewModel(wagonId);
+        GameManager.Network.RequestCreateWagon();
+        var wagonViewModel = GameManager.Network.WagonService.GetWagonViewModel();
 
-        _wagon = Object.Instantiate(Utils.ResourcesLoad<Wagon>("Wagon_ProtoType"));
-        _wagon.Init(wagonId, wagonViewModel);
+        _wagon = GameObject.Instantiate(Utils.ResourcesLoad<Wagon>("Wagon_ProtoType"));
+        _wagon.Init(wagonViewModel, _playerEntity);
         _wagon.SetSpline(splineContainer);
     }
 
@@ -100,12 +102,16 @@ public class ConvoyManager
     private void SpawnPet()
     {
         List<PetController> petControllers = new();
-        foreach (var petId in _selectedPetIds)
+
+        for(int index = 0; index < _selectedPetIds.Count; index++)
         {
             GameObject petInstance = GameObject.Instantiate(Utils.ResourcesLoad<GameObject>("Test_Pet"));
 
-            // TODO(김익환): 펫 생성 코드 수정
-            petInstance.GetComponent<PetController>().Init(petId, _playerEntity, _wagon, _petSkillMaker, _playerEntity, _playerEntity);
+            petInstance.GetComponent<PetController>().Init(_selectedPetIds[index]
+                            , _playerEntity, _wagon
+                            , _petSkillMaker
+                            , _playerEntity, _playerEntity
+                            , 30 + index * 10);
 
             petControllers.Add(petInstance.GetComponent<PetController>());
         }

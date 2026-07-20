@@ -46,7 +46,7 @@ public class DataTable
         //ReputationGradeDataTable = LoadData<ReputationGradeData>("ReputationGrade");
         //ItemDataTable = LoadData<ItemData>("Item");
         //CharacterDataTable = LoadData<CharacterData>("Character");
-        //PoolDataTable = LoadData<PoolData>(nameof(PoolData));
+        PoolDataTable = LoadData<PoolData>(nameof(PoolData));
         PlayerStatDataTable = LoadData<PlayerStatData>("PlayerStatData");;
         QuestDataTable = LoadData<QuestData>(nameof(QuestData));
         StageDataTable = LoadData<StageData>(nameof(StageData));
@@ -63,7 +63,8 @@ public class DataTable
         //PetPassiveSkillDataTable = LoadData<PetPassiveSkillData>(nameof(PetPassiveSkillData));
         WagonDataTable = LoadData<WagonData>(nameof(WagonData));
         WagonSlowRuleDataTable = LoadData<WagonSlowRuleData>(nameof(WagonSlowRuleData));
-        //AutoSpawnDataTable = LoadData<AutoSpawnData>(nameof(AutoSpawnData));
+        AutoSpawnDataTable = LoadData<AutoSpawnData>(nameof(AutoSpawnData));
+        PreLoadAssetDataTable = LoadData<PreLoadAssetData>(nameof(PreLoadAssetData));
     }
 
     #region Getters
@@ -191,6 +192,12 @@ public class DataTable
     {
         if (null == WagonSlowRuleDataTable || string.IsNullOrEmpty(id)) return null;
         return WagonSlowRuleDataTable.TryGetValue(id, out var data) ? data : null;
+    }
+
+    public PreLoadAssetData GetPreLoadAssetData(string id)
+    {
+        if (null == PreLoadAssetDataTable || string.IsNullOrEmpty(id)) return null;
+        return PreLoadAssetDataTable.TryGetValue(id, out var data) ? data : null;
     }
 
     #endregion

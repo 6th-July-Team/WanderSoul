@@ -31,9 +31,9 @@ public class NetworkManager
         
     }
 
-    public void RequestCreateWagon(string wagonId)
+    public void RequestCreateWagon()
     {
-        var wagonVm = WagonService.GetWagonViewModel(wagonId);
+        var wagonVm = WagonService.GetWagonViewModel();
 
         OnRecvCreateLocalWagon(wagonVm);
     }

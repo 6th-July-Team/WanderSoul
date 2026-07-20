@@ -5,26 +5,64 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private BoxCollider[] spawnAreas;
 
-    private const string SPAWN_DATA_ID_OFFSET = "";
-    private float _convoyProgressTimer = 0f;
+    private AutoSpawnData[] _spawnData;
+    private WagonViewModel _wagonViewModel;
+
     private float _elapsedTime = 0f;
+
+    private int _currentWave = 0;
+
+    private bool _isInitialized = false;
+
+    private PlayerEntity _player;
+    private Wagon _wagon;
+
+    public void Init(PlayerEntity player, Wagon wagon)
+    {
+        // TODO(김익환): 의뢰 아이디 어디서 가져오지?
+        // TODO(김익환): 의뢰 데이터에 접근하는 것을 -> 의뢰를 몰라도 데이터를 알 수 있도록 변경하자.
+        List<string> spawnIds = GameManager.DataTable.GetQuestData("quest_001").AutoSpawnIds;
+        _spawnData = new AutoSpawnData[spawnIds.Count];
+
+        for (int i = 0; i < spawnIds.Count; i++)
+        {
+            _spawnData[i] = GameManager.DataTable.GetAutoSpawnData(spawnIds[i]);
+        }
+
+        _wagonViewModel = GameManager.Network.WagonService.GetWagonViewModel();
+
+        _player = player;
+        _wagon = wagon;
+
+        _isInitialized = true;
+    }
 
     private void Update()
     {
-        //_convoyProgressTimer += GameManager.Time.GameDeltaTime;
+        if (!_isInitialized || _spawnData[_currentWave].StartTime < _wagonViewModel.GetProgress)
+            return;
 
-        //string spawnDataId = ((int)_convoyProgressTimer + SPAWN_DATA_ID_OFFSET).ToString();
+        UpdateWave();
 
-        //if (_elapsedTime >= GameManager.DataTable.GetAutoSpawnData(spawnDataId).SpawnInterval)
-        //{
-        //    _elapsedTime = 0f;
-        //    List<string> enemyIds = GameManager.DataTable.GetAutoSpawnData(spawnDataId).EnemyIds;
-        //    SpawnEnemy(enemyIds);
-        //}
-        //else
-        //{
-        //    _elapsedTime += GameManager.Time.GameDeltaTime;
-        //}
+        if (_elapsedTime >= _spawnData[_currentWave].SpawnInterval)
+        {
+            _elapsedTime = 0f;
+            List<string> enemyIds = _spawnData[_currentWave].EnemyIds;
+            SpawnEnemy(enemyIds);
+        }
+        else
+        {
+            _elapsedTime += GameManager.Time.GameDeltaTime;
+        }
+    }
+
+    private void UpdateWave()
+    {
+        if (_currentWave >= _spawnData.Length - 1)
+            return;
+
+        if (_spawnData[_currentWave].EndTime >= _wagonViewModel.GetProgress)
+            _currentWave++;
     }
 
     private void SpawnEnemy(List<string> enemyIds)
@@ -39,9 +77,11 @@ public class EnemySpawner : MonoBehaviour
                 Random.Range(spawnArea.bounds.min.z, spawnArea.bounds.max.z)
             );
 
-            // TODO(김익환): 몬스터 초기화 함수 생성시 아래 로직 주석 해제
-            //Enemy instanceEnemy =  GameManager.Pool.SpawnFromPool<Enemy>(enemyId, spawnPosition);
-            //instanceEnemy.Init(enemyId);
+            //var instanceEnemy = GameManager.Pool.SpawnFromPool(enemyId, spawnPosition);
+            //if (instanceEnemy.TryGetComponent(out IEnemy enemy))
+            //{
+            //    enemy.Init(_player.gameObject, _wagon.gameObject);
+            //}
         }
     }
 }
