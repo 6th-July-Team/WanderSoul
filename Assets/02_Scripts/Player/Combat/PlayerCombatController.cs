@@ -8,9 +8,6 @@ public class PlayerCombatController : MonoBehaviour
     private PlayerInputHandle _inputHandle;
     private PlayerAnimationController _animationController;
 
-    // Mana
-    public ManaPool ManaPool { get; private set; }
-
     private PlayerStatController _statController;
 
     // skill
@@ -30,13 +27,11 @@ public class PlayerCombatController : MonoBehaviour
         _animationController = GetComponent<PlayerAnimationController>();
     }
 
-    public void Init(PlayerStatController statController, PlayerSkillModifier skillModifier)
+    public void Init(PlayerStatController statController, PlayerSkillModifier skillModifier, PlayerViewModel viewModel)
     {
         _statController = statController;
 
-        ManaPool = new(_statController);
-
-        _skillMaker = new(ManaPool, skillModifier);
+        _skillMaker = new(viewModel, skillModifier);
 
         _skillBuild = _skillMaker.CreateSkillBuild("테스트 직업 아이디", _statController);
 
@@ -76,8 +71,6 @@ public class PlayerCombatController : MonoBehaviour
     {
         if (GameManager.Time.IsPaused || !_isInitialized)
             return;
-
-        ManaPool.Update(Time.deltaTime);
 
         // TODO(김익환): 자동 공격 옵션이 켜져 있으면 일반 공격은 자동공격 하기.
         // if(자동공격 옵션 bool 변수)

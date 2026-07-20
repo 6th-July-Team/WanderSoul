@@ -10,18 +10,18 @@ public class PlayerSkill
     private PlayerSkillModifier _skillModifier;
 
     private IPlayerSkillExecution _execution;
-    private ManaPool _manaPool;
+    private PlayerViewModel _playerViewModel;
 
     private SkillSlot _slot;
     private float _remainingCooldtime;
 
 
-    public PlayerSkill(string playerSkillId, IPlayerSkillExecution execution, ManaPool manaPool
+    public PlayerSkill(string playerSkillId, IPlayerSkillExecution execution, PlayerViewModel playerViewModel
         , PlayerStatController statController, PlayerSkillModifier skillModifier)
     {
         SkillData = GameManager.DataTable.GetPlayerSkillData(playerSkillId);
 
-        _manaPool = manaPool;
+        _playerViewModel = playerViewModel;
         _execution = execution;
         _skillModifier = skillModifier;
         _statController = statController;
@@ -58,7 +58,7 @@ public class PlayerSkill
         if (!IsReady)
             return false;
 
-        if (!_manaPool.TrySpendMana(SkillData.ManaCost))
+        if (!_playerViewModel.TrySpendMP(SkillData.ManaCost))
             return false;
 
         float skillDamage = GetSkillDamage() * _statController.GetValue(StatType.AdditionalDamage);

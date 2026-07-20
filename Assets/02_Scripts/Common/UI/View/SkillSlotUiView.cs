@@ -11,28 +11,29 @@ public class SkillSlotUiView : MonoBehaviour
     [SerializeField] private GameObject _emptySlotObject;
 
     private PlayerSkill _skill;
-    private ManaPool _manaPool;
+    //private ManaPool _manaPool; // TODO(김익환, 이태영) : ManaPool 삭제에 따른 주석 처리
 
     private float _lastCooldown = -1f;
 
     private const float DISABLED_ALPHA = 0.5f;
 
-    public void SetSkill(PlayerSkill skill, ManaPool manaPool)
-    {
-        _skill = skill;
-        _manaPool = manaPool;
-        _lastCooldown = -1f;
+    // TODO(김익환, 이태영) : ManaPool 삭제에 따른 주석 처리
+    //public void SetSkill(PlayerSkill skill, ManaPool manaPool)
+    //{
+    //    _skill = skill;
+    //    _manaPool = manaPool;
+    //    _lastCooldown = -1f;
 
-        RefreshEmptyState();
+    //    RefreshEmptyState();
 
-        if (_skill == null)
-        {
-            return;
-        }
+    //    if (_skill == null)
+    //    {
+    //        return;
+    //    }
 
-        RefreshIcon();
-        RefreshCooldown();
-    }
+    //    RefreshIcon();
+    //    RefreshCooldown();
+    //}
 
     private void Update()
     {
@@ -118,22 +119,23 @@ public class SkillSlotUiView : MonoBehaviour
 
     private void RefreshUsable()
     {
-        if (_skill == null || _manaPool == null)
-        {
-            return;
-        }
+        // TODO(김익환, 이태영) : ManaPool 삭제에 따른 주석 처리
+        //if (_skill == null || _manaPool == null)
+        //{
+        //    return;
+        //}
 
-        bool hasEnoughMana = (_manaPool.CurrentMana >= _skill.SkillData.ManaCost);
-        bool isUsable = (_skill.IsReady == true && hasEnoughMana == true);
+        //bool hasEnoughMana = (_manaPool.CurrentMana >= _skill.SkillData.ManaCost);
+        //bool isUsable = (_skill.IsReady == true && hasEnoughMana == true);
 
-        if (isUsable == true)
-        {
-            _canvasGroup.alpha = 1f;
-        }
-        else
-        {
-            _canvasGroup.alpha = DISABLED_ALPHA;
-        }
+        //if (isUsable == true)
+        //{
+        //    _canvasGroup.alpha = 1f;
+        //}
+        //else
+        //{
+        //    _canvasGroup.alpha = DISABLED_ALPHA;
+        //}
     }
 
 }

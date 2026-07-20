@@ -14,7 +14,8 @@ public class SkillHudUIView : BaseUI
             return;
         }
 
-        var manaPool = combatComtroller.ManaPool;
+        // TODO(김익환, 이태영) : ManaPool 삭제에 따른 주석 처리
+        // var manaPool = combatComtroller.ManaPool;
 
         // TODO: GetSkill() 메서드 추가되면 주석 풀기
         // _basicSlot.SetSkill(combatController.GetSkill(SkillSlot.Basic), manaPool);

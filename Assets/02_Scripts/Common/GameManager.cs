@@ -13,6 +13,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     public static ConvoyManager Convoy { get { return Instance._convoyManager; } }
     public static UIManager UI { get { return Instance._uiManager; } }
     public static PetPartyController PetParty { get { return Instance._petPartyController; } }
+    public static NetworkManager Network { get { return Instance._networkManager; } }
 
 
     #region Manager Varialbes
@@ -25,6 +26,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     private TimeManager _timeManager = new();
     private UIManager _uiManager = new();
     private PetPartyController _petPartyController = new();
+    private NetworkManager _networkManager = new();
 
 
     private ConvoyManager _convoyManager;
@@ -121,6 +123,8 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     private void InitNonAsync()
     {
+        _networkManager.InitNetworkService();
+
         _soundManager.Init(this.gameObject);
         PoolInit();
 
