@@ -2,5 +2,16 @@
 
 public interface IPetActiveSkillExecution
 {
-    void Execute(PetSkillUseContext context, float damage, System.Action OnEndSkill);
+    void Execute(PetSkillUseContext context, System.Action OnEndSkill);
+}
+
+public interface IPetPassiveSkillExecution
+{
+    void Activate();
+    void Deactivate();
+}
+
+public interface IUpdatablePetPassive
+{
+    void Update(float deltaTime);
 }

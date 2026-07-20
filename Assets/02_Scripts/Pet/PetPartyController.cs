@@ -53,7 +53,7 @@ public class PetPartyController : IPetPartyReader
         return PetElement.None;
     }
 
-    public void AddModifierForAllPet(PetStatModifier modifier)
+    public void AddModifierForAllPet(StatModifier modifier)
     {
         foreach(var pet in _pets)
         {
@@ -61,7 +61,7 @@ public class PetPartyController : IPetPartyReader
         }
     }
 
-    public void RemoveModifierForAllPet(PetStatType petStatType)
+    public void RemoveModifierForAllPet(StatType petStatType)
     {
         foreach (var pet in _pets)
         {

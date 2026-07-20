@@ -5,7 +5,7 @@ public class ManaPool
 {
     public PlayerStatController _statController;
     public float CurrentMana { get; private set; }
-    public float MaxMana => _statController.GetValue(PlayerStatType.MaxMana);
+    public float MaxMana => _statController.GetValue(StatType.MaxMana);
     public bool IsManaFull => CurrentMana >= MaxMana;
 
     public ManaPool(PlayerStatController statController)
@@ -26,7 +26,7 @@ public class ManaPool
 
     public void Update(float deltaTime)
     {
-        float regeneration = _statController.GetValue(PlayerStatType.ManaRegeneration);
+        float regeneration = _statController.GetValue(StatType.ManaRegeneration);
 
         Restore(regeneration * deltaTime);
     }

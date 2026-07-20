@@ -1,13 +1,13 @@
-﻿[
+[
   {
     "Id": "pet_fire_001",
     "Name": "플레임폰",
     "stringElementType": "Fire",
     "Description": "불속성 기본 펫",
     "stringPetGradeType": "Common",
-    "ActiveSkillIds": [],
-    "PassiveSkillIds": [],
-    "IconPath": ""
+    "ActiveSkillIds": null,
+    "PassiveSkillIds": null,
+    "IconPath": null
   },
   {
     "Id": "pet_water_002",
@@ -15,9 +15,9 @@
     "stringElementType": "Water",
     "Description": "물속성 기본 펫",
     "stringPetGradeType": "Common",
-    "ActiveSkillIds": [],
-    "PassiveSkillIds": [],
-    "IconPath": ""
+    "ActiveSkillIds": null,
+    "PassiveSkillIds": null,
+    "IconPath": null
   },
   {
     "Id": "pet_earth_003",
@@ -25,9 +25,9 @@
     "stringElementType": "Earth",
     "Description": "땅속성 기본 펫",
     "stringPetGradeType": "Common",
-    "ActiveSkillIds": [],
-    "PassiveSkillIds": [],
-    "IconPath": ""
+    "ActiveSkillIds": null,
+    "PassiveSkillIds": null,
+    "IconPath": null
   },
   {
     "Id": "pet_air_004",
@@ -35,8 +35,20 @@
     "stringElementType": "Air",
     "Description": "바람속성 기본 펫",
     "stringPetGradeType": "Common",
-    "ActiveSkillIds": [],
-    "PassiveSkillIds": [],
-    "IconPath": ""
+    "ActiveSkillIds": null,
+    "PassiveSkillIds": null,
+    "IconPath": null
+  },
+  {
+    "Id": "바람의 축복 펫",
+    "Name": " 태스트",
+    "stringElementType": "Air",
+    "Description": " 태스트",
+    "stringPetGradeType": "Common",
+    "ActiveSkillIds": [
+      "바람의 축복"
+    ],
+    "PassiveSkillIds": null,
+    "IconPath": null
   }
 ]
