@@ -4,7 +4,7 @@ using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
+public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
 {
     public Vector3 Position => this.transform.position;
     public bool IsAlive => _viewModel.EnemyState != BT_EnemyState.Dead;
@@ -23,17 +23,28 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
 
     private const float TARGET_EXCLUDE_DURATION = 15f;
 
-    public GameObject CurrentTarget => _targetSelector.CurrentTarget;
+    private static readonly (DropObjectDigit digit, int value)[] DIGIT_TABLE =
+    {
+        (DropObjectDigit.Hundred, 100),
+        (DropObjectDigit.Ten, 10),
+        (DropObjectDigit.One, 1),
+    };
+
+    public ITargetable CurrentTarget => _targetSelector.CurrentTarget;
 
     private GameObject _wagon;
     private GameObject _player;
+    private ITargetable _wagonTargetable;
+    private ITargetable _playerTargetable;
 
     public event System.Action OnEnemyDied;
 
-    // Melee 전용
+    [SerializeField] private float DeadDelay;
+
+    [Header("Melee 전용")]
     [SerializeField] private EnemyAttackHitbox AttackHitbox_Self;
 
-    // Projectile 전용
+    [Header("Projectile 전용")]
     [SerializeField] private Transform ShootPoint_Self;
     private GameObject _prefab_projectile;
 
@@ -47,11 +58,12 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
         _wagon = wagon;
         _player = player;
 
+        SetWagonAndPlayerTargetable();
 
+        SetBehaviorGraphAgent();
+        SetAvoidancePriority();
         CreateTargetSelector();
         SetEnemySensor();
-        SetAvoidancePriority();
-        SetBehaviorGraphAgent();
 
         if (_viewModel.EnemyAttackType == EnemyAttackType.Projectile)
         {
@@ -62,6 +74,22 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
         {
             SetAreaDelayObjectPrefab().Forget();
             SetGroundLayerMask();
+        }
+    }
+
+    private void SetWagonAndPlayerTargetable()
+    {
+        _wagon.TryGetComponent(out _wagonTargetable);
+        _player.TryGetComponent(out _playerTargetable);
+
+        if (_wagonTargetable == null)
+        {
+            Debug.LogError("EnemyView : Wagon에 ITargetable 컴포넌트가 없습니다!!");
+        }
+
+        if (_playerTargetable == null)
+        {
+            Debug.LogError("EnemyView : Player에 ITargetable 컴포넌트가 없습니다!!");
         }
     }
 
@@ -99,7 +127,7 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
 
     private void CreateTargetSelector()
     {
-        _targetSelector = new EnemyTargetSelector(_viewModel.TargetPolicy, _wagon, _player, _viewModel.LeashRange);
+        _targetSelector = new EnemyTargetSelector(_viewModel.TargetPolicy, _wagonTargetable, _playerTargetable, _viewModel.LeashRange);
         RefreshTarget();
     }
 
@@ -212,17 +240,31 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
             return;
         }
 
-        GameObject target = _targetSelector.SelectTarget(EnemySensor_Self.Candidates);
-        bool isTargetDetected = (target != null && target != _wagon);
+        ITargetable target = _targetSelector.SelectTarget(EnemySensor_Self.Candidates);
+        GameObject targetObject = GetTargetGameObject(target);
 
-        BehaviorGraphAgent_Self.SetVariableValue("Target", target);
+        bool isTargetDetected = (targetObject != null && targetObject != _wagon);
+
+        BehaviorGraphAgent_Self.SetVariableValue("Target", targetObject);
         BehaviorGraphAgent_Self.SetVariableValue("IsTargetDetected", isTargetDetected);
     }
 
+    private GameObject GetTargetGameObject(ITargetable target)
+    {
+        Component targetComponent = target as Component;
+
+        if (targetComponent == null)
+        {
+            return null;
+        }
+
+        return targetComponent.gameObject;
+    }
+
+    #region Animation
+
     public void PlayAttackAction()
     {
-        Debug.LogWarning("공격!");
-
         Animator_Self.ResetTrigger(ATTACK_HASH);
         Animator_Self.SetTrigger(ATTACK_HASH);
     }
@@ -232,7 +274,8 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
         Animator_Self.SetBool(IS_DEAD_HASH, true);
     }
 
-    #region ExcuteAttack
+    #endregion
+
     public void ExecuteAttack()
     {
         if (_viewModel.EnemyState != BT_EnemyState.Attack)
@@ -260,6 +303,7 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
         }
     }
 
+    #region ExecuteAttack
     private void ExecuteMeleeTypeAttack()
     {
         if (AttackHitbox_Self == null)
@@ -274,7 +318,9 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
 
     private void ExecuteProjectileTypeAttack()
     {
-        if (_prefab_projectile == null || CurrentTarget == null)
+        GameObject targetObject = GetTargetGameObject(CurrentTarget);
+
+        if (_prefab_projectile == null || targetObject == null)
         {
             return;
         }
@@ -282,7 +328,7 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
         EnemyProjectileObject projectileScript = CreateAProjectile();
         projectileScript.OnDamageableTargetHited += _viewModel.ProjectileTypeAttack;
 
-        projectileScript.Launch(CurrentTarget, _viewModel.ProjectileSpeed, _viewModel.ProjectileLifeTime);
+        projectileScript.Launch(targetObject, _viewModel.ProjectileSpeed, _viewModel.ProjectileLifeTime);
     }
 
     private EnemyProjectileObject CreateAProjectile()
@@ -300,7 +346,7 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
             return;
         }
 
-        Vector3 targetGroundPosition = GetGroundPosition(CurrentTarget.transform.position);
+        Vector3 targetGroundPosition = GetGroundPosition(CurrentTarget.Position);
 
         EnemyAreaDelayObject areaDelayScript = CreateAreaDelay(targetGroundPosition);
         areaDelayScript.OnDamageableTargetHited += _viewModel.AreaDelayedTypeAttack;
@@ -340,10 +386,55 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
 
         OnEnemyDied?.Invoke();
 
-        Destroy(this.gameObject, 2.0f);
-
-        // GameManager.Pool.DespawnToPool(this.gameObject); << 나중에 PoolManager 쓰면 사용할 것
+        SpawnDropObjects(DropObjectType.Soul);
+        SpawnDropObjects(DropObjectType.Exp);
+        DespawnAfterDelay().Forget();
     }
+
+    #region ExecuteDead
+    private void SpawnDropObjects(DropObjectType type)
+    {
+        if (_viewModel.TryRollDrop(type) == false)
+        {
+            return;
+        }
+
+        int amount = _viewModel.GetDropAmount(type);
+
+        foreach ((DropObjectDigit digit, int value) in DIGIT_TABLE)
+        {
+            int count = amount / value;
+            amount %= value;
+
+            for (int i = 0; i < count; i++)
+            {
+                SpawnOneDropObject(type, digit);
+            }
+        }
+    }
+
+    private void SpawnOneDropObject(DropObjectType type, DropObjectDigit digit)
+    {
+        string poolId = $"EnemyDropObject/{type}/{digit}";
+
+        EnemyDropObject dropObject = GameManager.Pool.SpawnFromPool<EnemyDropObject>(poolId, GetDropScatterPosition());
+        dropObject.Init(type, digit);
+    }
+
+    private Vector3 GetDropScatterPosition()
+    {
+        Vector2 scatterOffset = Random.insideUnitCircle * 0.5f;
+
+        return transform.position + new Vector3(scatterOffset.x, 0.5f, scatterOffset.y);
+    }
+
+    private async UniTaskVoid DespawnAfterDelay()
+    {
+        await UniTask.Delay(System.TimeSpan.FromSeconds(DeadDelay));
+        GameManager.Pool.DespawnToPool(this.gameObject);
+    }
+
+    #endregion
 
     public void TakeDamage(DamageInfo damageInfo)
     {
@@ -420,17 +511,39 @@ public class EnemyView : BaseView<EnemyViewModel>, IDamageable, ISensorListener
             return false;
         }
 
-        GameObject previousTarget = _targetSelector.CurrentTarget;
-        GameObject newTarget = _targetSelector.ExcludeCurrentAndReselect(EnemySensor_Self.Candidates, TARGET_EXCLUDE_DURATION);
+        ITargetable previousTarget = _targetSelector.CurrentTarget;
+        ITargetable newTarget = _targetSelector.ExcludeCurrentAndReselect(EnemySensor_Self.Candidates, TARGET_EXCLUDE_DURATION);
 
         if (newTarget == null || newTarget == previousTarget)
         {
             return false;
         }
 
-        BehaviorGraphAgent_Self.SetVariableValue("Target", newTarget);
-        BehaviorGraphAgent_Self.SetVariableValue("IsTargetDetected", newTarget != _wagon);
+        GameObject newTargetObject = GetTargetGameObject(newTarget);
+
+        BehaviorGraphAgent_Self.SetVariableValue("Target", newTargetObject);
+        BehaviorGraphAgent_Self.SetVariableValue("IsTargetDetected", newTargetObject != _wagon);
         return true;
+    }
+
+    public void ApplyTaunt(IPet taunter, float duration)
+    {
+        if (_viewModel.EnemyState == BT_EnemyState.Dead)
+        {
+            return;
+        }
+
+        _targetSelector.SetForcedTarget(taunter, duration);
+        RefreshTarget();
+
+        ReleaseTauntAfterDelay(duration).Forget();
+    }
+
+    private async UniTaskVoid ReleaseTauntAfterDelay(float duration)
+    {
+        await UniTask.Delay(System.TimeSpan.FromSeconds(duration),
+            cancellationToken: this.GetCancellationTokenOnDestroy());
+        RefreshTarget();
     }
 
 #if UNITY_EDITOR

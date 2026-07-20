@@ -1,5 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TestGameObjectManager : MonoBehaviour
 {
@@ -11,115 +10,46 @@ public class TestGameObjectManager : MonoBehaviour
     [SerializeField] private GameObject Player;
     [SerializeField] private GameObject Wagon;
     [SerializeField] private GameObject Pet;
-    
+
     [SerializeField] private int MeleeEnemySummonCount;
     [SerializeField] private int ProjectileEnemySummonCount;
     [SerializeField] private int AreaDelayedEnemySummonCount;
 
-    private GameObject _prefab_meleeEnemy;
-    private GameObject _prefab_projectileEnemy;
-    private GameObject _prefab_areaDelayedEnemy;
+    private const string MELEE_ENEMY_ID = "Test";
+    private const string PROJECTILE_ENEMY_ID = "Test_01";
+    private const string AREA_DELAYED_ENEMY_ID = "Test_02";
 
     private void Start()
     {
-        StartSetting().Forget();
+        SpawnAllEnemies();
     }
 
-    private async UniTaskVoid StartSetting()
+    private void SpawnAllEnemies()
     {
-        await LoadAsset();
-        InstantiateEnemy();
+        SpawnEnemies(MELEE_ENEMY_ID, MeleeEnemySummonCount);
+        SpawnEnemies(PROJECTILE_ENEMY_ID, ProjectileEnemySummonCount);
+        SpawnEnemies(AREA_DELAYED_ENEMY_ID, AreaDelayedEnemySummonCount);
     }
 
-    private async UniTask LoadAsset()
+    private void SpawnEnemies(string enemyId, int count)
     {
-        GameManager.DataTable.EnemyDataTable.TryGetValue("Test", out EnemyData enemyData);
-        GameManager.DataTable.EnemyDataTable.TryGetValue("Test_01", out EnemyData enemyDataTwo);
-        GameManager.DataTable.EnemyDataTable.TryGetValue("Test_02", out EnemyData enemyDataThree);
-
-        var (prefab_meleeEnemy, prefab_projectileEnemy, prefab_areaDelayedEnemy) = await UniTask.WhenAll
-            (
-            GameManager.Resource.LoadAsset<GameObject>(enemyData.PrefabAddress),
-            GameManager.Resource.LoadAsset<GameObject>(enemyDataTwo.PrefabAddress),
-            GameManager.Resource.LoadAsset<GameObject>(enemyDataThree.PrefabAddress)
-            );
-
-        _prefab_meleeEnemy = prefab_meleeEnemy;
-        _prefab_projectileEnemy = prefab_projectileEnemy;
-        _prefab_areaDelayedEnemy = prefab_areaDelayedEnemy;
-    }
-
-    private void InstantiateEnemy()
-    {
-        for (int i = 0; i < MeleeEnemySummonCount; i++)
+        for (int i = 0; i < count; i++)
         {
-            InstantiateMeleeEnemy(i);
-        }
-
-        for (int i = 0; i < ProjectileEnemySummonCount; i++)
-        {
-            InstantiateProjectileEnemy(i);
-        }
-
-        for (int i = 0 ; i < AreaDelayedEnemySummonCount; i++)
-        {
-            InstantiateAreaDelayedEnemy(i);
+            SpawnOneEnemy(enemyId, i);
         }
     }
 
-    private void InstantiateMeleeEnemy(int i)
+    private void SpawnOneEnemy(string enemyId, int spawnIndex)
     {
-        GameObject enemy = Instantiate(_prefab_meleeEnemy, ChoiceTransform(i));
-
-
-        EnemyView view = enemy.GetComponent<EnemyView>();
-
-        GameManager.DataTable.EnemyDataTable.TryGetValue("Test", out EnemyData enemyData);
-
-        if (enemyData == null)
+        if (GameManager.DataTable.EnemyDataTable.TryGetValue(enemyId, out EnemyData enemyData) == false)
         {
-            Debug.LogError("Test이 없습니다");
+            Debug.LogError($"TestGameObjectManager : EnemyData({enemyId})가 없습니다!!");
+            return;
         }
 
-        EnemyModel model = new EnemyModel(enemyData);
-        EnemyViewModel viewModel = new EnemyViewModel(model);
+        Vector3 spawnPosition = ChoiceTransform(spawnIndex).position;
 
-        view.BindViewModel(viewModel);
-        view.Init(Wagon, Player);
-    }
-
-    private void InstantiateProjectileEnemy(int i)
-    {
-        GameObject enemy = Instantiate(_prefab_projectileEnemy, ChoiceTransform(i));
-
-        EnemyView view = enemy.GetComponent<EnemyView>();
-
-        GameManager.DataTable.EnemyDataTable.TryGetValue("Test_01", out EnemyData enemyData);
-
-        if (enemyData == null)
-        {
-            Debug.LogError("Test_01이 없습니다");
-        }
-
-        EnemyModel model = new EnemyModel(enemyData);
-        EnemyViewModel viewModel = new EnemyViewModel(model);
-
-        view.BindViewModel(viewModel);
-        view.Init(Wagon, Player);
-    }
-
-    private void InstantiateAreaDelayedEnemy(int i)
-    {
-        GameObject enemy = Instantiate(_prefab_areaDelayedEnemy, ChoiceTransform(i));
-
-        EnemyView view = enemy.GetComponent<EnemyView>();
-
-        GameManager.DataTable.EnemyDataTable.TryGetValue("Test_02", out EnemyData enemyData);
-
-        if (enemyData == null)
-        {
-            Debug.LogError("Test_02이 없습니다");
-        }
+        EnemyView view = GameManager.Pool.SpawnFromPool<EnemyView>(enemyData.PrefabAddress, spawnPosition);
 
         EnemyModel model = new EnemyModel(enemyData);
         EnemyViewModel viewModel = new EnemyViewModel(model);

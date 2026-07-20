@@ -1,20 +1,22 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class EnemyTargetSelector
 {
     private readonly TargetPolicy _policy;
-    private readonly GameObject _wagon;
-    private readonly GameObject _player;
+    private readonly ITargetable _wagon;
+    private readonly ITargetable _player;
 
     private readonly float _leashRange;
 
-    public GameObject CurrentTarget { get; private set; }
+    public ITargetable CurrentTarget { get; private set; }
 
-    private readonly Dictionary<GameObject, float> _excludedTargets = new();
+    private readonly Dictionary<ITargetable, float> _excludedTargets = new();
 
-    public EnemyTargetSelector(TargetPolicy policy, GameObject wagon, GameObject player, float leashRange)
+    private IPet _forcedTarget;
+    private float _forcedTargetEndTime;
+
+    public EnemyTargetSelector(TargetPolicy policy, ITargetable wagon, ITargetable player, float leashRange)
     {
         _policy = policy;
         _wagon = wagon;
@@ -22,17 +24,22 @@ public class EnemyTargetSelector
         _leashRange = leashRange;
     }
 
-    public GameObject SelectTarget(IReadOnlyList<GameObject> candidates)
+    public ITargetable SelectTarget(IReadOnlyList<ITargetable> candidates)
     {
         CurrentTarget = FindTarget(candidates);
         return CurrentTarget;
     }
 
-    private GameObject FindTarget(IReadOnlyList<GameObject> candidates)
+    private ITargetable FindTarget(IReadOnlyList<ITargetable> candidates)
     {
+        if (IsForcedTargetValid())
+        {
+            return _forcedTarget;
+        }
+
         if (_policy == TargetPolicy.PlayerOnly)
         {
-            if(IsAlive(_player))
+            if (IsAlive(_player))
             {
                 return _player;
             }
@@ -42,10 +49,12 @@ public class EnemyTargetSelector
 
         if (_policy == TargetPolicy.WagonOnly)
         {
-            if (_wagon != null)
+            if (IsAlive(_wagon))
             {
                 return _wagon;
             }
+
+            return null;
         }
 
         if (IsPlayerTargetable(candidates))
@@ -53,14 +62,14 @@ public class EnemyTargetSelector
             return _player;
         }
 
-        GameObject pet = FindTargetablePet(candidates);
+        ITargetable pet = FindTargetablePet(candidates);
 
         if (pet != null)
         {
             return pet;
         }
 
-        if(_wagon == null)
+        if (IsAlive(_wagon) == false)
         {
             return null;
         }
@@ -68,9 +77,9 @@ public class EnemyTargetSelector
         return _wagon;
     }
 
-    private bool IsPlayerTargetable(IReadOnlyList<GameObject> candidates)
+    private bool IsPlayerTargetable(IReadOnlyList<ITargetable> candidates)
     {
-        if(IsExcluded(_player))
+        if (IsExcluded(_player))
         {
             return false;
         }
@@ -80,23 +89,22 @@ public class EnemyTargetSelector
             return false;
         }
 
-        bool isPlayerTargetable = (CurrentTarget == _player || candidates.Contains(_player));
+        bool isPlayerTargetable = (CurrentTarget == _player || Contains(candidates, _player));
 
         return isPlayerTargetable;
     }
 
-    private GameObject FindTargetablePet(IReadOnlyList<GameObject> candidates)
+    private ITargetable FindTargetablePet(IReadOnlyList<ITargetable> candidates)
     {
-
         if (IsPet(CurrentTarget) && IsInsideLeash(CurrentTarget))
         {
-            if(IsExcluded(CurrentTarget) == false)
+            if (IsExcluded(CurrentTarget) == false)
             {
                 return CurrentTarget;
             }
         }
 
-        foreach (GameObject candidate in candidates)
+        foreach (ITargetable candidate in candidates)
         {
             if (IsPet(candidate) && IsInsideLeash(candidate))
             {
@@ -110,51 +118,75 @@ public class EnemyTargetSelector
         return null;
     }
 
-    private bool IsInsideLeash(GameObject target)
+    private bool IsInsideLeash(ITargetable target)
     {
         if (IsAlive(target) == false)
         {
             return false;
         }
 
-        if(_wagon == null)
+        if (IsAlive(_wagon) == false)
         {
             return false;
         }
 
-        float distanceFromwagon = Vector3.Distance(target.transform.position, _wagon.transform.position);
+        float distanceFromWagon = Vector3.Distance(target.Position, _wagon.Position);
 
-        bool isInsideLeash = (distanceFromwagon <= _leashRange);
+        bool isInsideLeash = (distanceFromWagon <= _leashRange);
 
         return isInsideLeash;
-
     }
 
-    private bool IsAlive(GameObject target)
+    // 인터페이스 참조는 Unity의 "파괴된 오브젝트 == null" 처리를 타지 않으므로
+    // Component로 캐스팅한 뒤 파괴/비활성 여부를 검사해야 함
+    private bool IsAlive(ITargetable target)
     {
-        bool isAlive = (target != null && target.activeInHierarchy);
+        if (target == null)
+        {
+            return false;
+        }
 
-        return isAlive;
+        Component targetComponent = target as Component;
+
+        if (targetComponent == null || targetComponent.gameObject.activeInHierarchy == false)
+        {
+            return false;
+        }
+
+        return target.IsAlive;
     }
 
-    private bool IsPet(GameObject target)
+    private bool IsPet(ITargetable target)
     {
-        bool isPet = (target != null && target != _player && target.CompareTag("Pet"));
+        bool isPet = (target != null && target.EntityType == EntityType.Pet);
 
         return isPet;
     }
 
-    public GameObject ExcludeCurrentAndReselect(IReadOnlyList<GameObject> candidates, float ExcludeDuration)
+    private bool Contains(IReadOnlyList<ITargetable> candidates, ITargetable target)
     {
-        if(CurrentTarget != null)
+        for (int i = 0; i < candidates.Count; i++)
         {
-            _excludedTargets[CurrentTarget] = Time.time + ExcludeDuration;
+            if (candidates[i] == target)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public ITargetable ExcludeCurrentAndReselect(IReadOnlyList<ITargetable> candidates, float excludeDuration)
+    {
+        if (CurrentTarget != null)
+        {
+            _excludedTargets[CurrentTarget] = Time.time + excludeDuration;
         }
 
         return SelectTarget(candidates);
     }
 
-    private bool IsExcluded(GameObject target)
+    private bool IsExcluded(ITargetable target)
     {
         if (target == null)
         {
@@ -173,5 +205,28 @@ public class EnemyTargetSelector
 
         _excludedTargets.Remove(target);
         return false;
+    }
+
+    public void SetForcedTarget(IPet target, float duration)
+    {
+        _forcedTarget = target;
+        _forcedTargetEndTime = Time.time + duration;
+    }
+
+    public void ClearForcedTarget()
+    {
+        _forcedTarget = null;
+    }
+
+    private bool IsForcedTargetValid()
+    {
+        if (_forcedTarget == null || Time.time >= _forcedTargetEndTime)
+        {
+            return false;
+        }
+
+        bool forcedTargetIsAlive = IsAlive(_forcedTarget);
+
+        return forcedTargetIsAlive;
     }
 }

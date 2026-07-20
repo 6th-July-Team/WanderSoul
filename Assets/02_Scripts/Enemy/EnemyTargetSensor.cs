@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 
 [RequireComponent(typeof(SphereCollider))]
@@ -7,8 +7,8 @@ public class EnemyTargetSensor : MonoBehaviour
     private ISensorListener _listener;
     private SphereCollider _collider;
 
-    private readonly List<GameObject> _candidates = new();
-    public IReadOnlyList<GameObject> Candidates => _candidates;
+    private readonly List<ITargetable> _candidates = new();
+    public IReadOnlyList<ITargetable> Candidates => _candidates;
 
     public void SetRange(float range)
     {
@@ -40,36 +40,50 @@ public class EnemyTargetSensor : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (IsTargetCandidate(other) == false)
+        ITargetable targetable = other.GetComponentInParent<ITargetable>();
+
+        if (IsTargetCandidate(targetable) == false)
         {
             return;
         }
 
-        if (_candidates.Contains(other.gameObject))
+        if (_candidates.Contains(targetable))
         {
             return;
         }
 
-        _candidates.Add(other.gameObject);
+        _candidates.Add(targetable);
         _listener?.OnSensorChanged();
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if(_candidates.Remove(other.gameObject))
+        ITargetable targetable = other.GetComponentInParent<ITargetable>();
+
+        if (targetable == null)
+        {
+            return;
+        }
+
+        if (_candidates.Remove(targetable))
         {
             _listener?.OnSensorChanged();
         }
     }
 
-    private bool IsTargetCandidate(Collider other)
+    private bool IsTargetCandidate(ITargetable targetable)
     {
-        if (other.CompareTag("Player"))
+        if (targetable == null)
+        {
+            return false;
+        }
+
+        if (targetable.EntityType == EntityType.Player)
         {
             return true;
         }
 
-        if (other.CompareTag("Pet"))
+        if (targetable.EntityType == EntityType.Pet)
         {
             return true;
         }

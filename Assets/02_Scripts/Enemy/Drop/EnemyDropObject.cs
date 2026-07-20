@@ -6,13 +6,21 @@ public enum DropObjectType
     Soul
 }
 
+public enum DropObjectDigit
+{
+    One,
+    Ten,
+    Hundred,
+}
+
 [RequireComponent(typeof(Rigidbody))]
 public class EnemyDropObject : MonoBehaviour
 {
     [SerializeField] private float _followSpeed = 10f;
 
-    public DropObjectType ObjectType { get; private set; }
-    public int Amount {  get; private set; }
+    public DropObjectType Type { get; private set; }
+    public DropObjectDigit Digit { get; private set; }
+    public int Value {  get; private set; }
 
     private Rigidbody _rigidbody;
 
@@ -29,12 +37,37 @@ public class EnemyDropObject : MonoBehaviour
         _rigidbody.isKinematic = true;
     }
 
-    public void Init(DropObjectType type, int amount)
+    public void Init(DropObjectType type, DropObjectDigit digit)
     {
-        ObjectType = type;
-        Amount = amount;
+        Type = type;
+        Digit = digit;
+        Value = GetDigitValue();
         _targetPlayer = null;
         enabled = false;
+    }
+
+    private int GetDigitValue()
+    {
+        switch (Digit)
+        {
+            case DropObjectDigit.One:
+                {
+                    return 1;
+                }
+            case DropObjectDigit.Ten:
+                {
+                    return 10;
+                }
+            case DropObjectDigit.Hundred:
+                {
+                    return 100;
+                }
+            default:
+                {
+                    Debug.LogError("[ EnemyDropObject - GetDigitValue ] : 알 수 없는 값이 들어왔습니다!!");
+                    return 0;
+                }
+        }
     }
 
     public void StartFollowPlayer(IPlayer player)

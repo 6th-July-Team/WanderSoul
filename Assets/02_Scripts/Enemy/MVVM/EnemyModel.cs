@@ -133,8 +133,8 @@ public class EnemyModel : BaseModel
         get => _soulDropChance;
     }
 
-    private float _soulDropAmount;
-    public float SoulDropAmount
+    private int _soulDropAmount;
+    public int SoulDropAmount
     {
         get => _soulDropAmount;
     }
@@ -145,8 +145,8 @@ public class EnemyModel : BaseModel
         get => _expDropChance;
     }
 
-    private float _expDropAmount;
-    public float ExpDropAmount
+    private int _expDropAmount;
+    public int ExpDropAmount
     {
         get => _expDropAmount;
     }

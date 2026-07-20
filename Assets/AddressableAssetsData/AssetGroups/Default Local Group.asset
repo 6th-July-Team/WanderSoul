@@ -21,17 +21,27 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 33b6e62b2617a534c94c4dd78ed21b07
-    m_Address: Test
+    m_Address: Enemy/Prefab/Melee/Test
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 57cfa6a90f1a9bd469048e899b9f396f
+    m_Address: EnemyDropObject/Exp/One
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 93b43cb05b9e6eb4cb38d1491de2489c
-    m_Address: Test_02
+    m_Address: Enemy/Prefab/AreaDelayed/Test_02
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a68f25067db76e144a6538dba43e7c5d
+    m_Address: EnemyDropObject/Soul/One
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a80e31d1d6c9b284d81bad99825d7dc3
-    m_Address: Test_01
+    m_Address: Enemy/Prefab/Projectile/Test_01
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

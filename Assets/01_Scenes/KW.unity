@@ -630,8 +630,8 @@ MonoBehaviour:
   Player: {fileID: 1740318924}
   Wagon: {fileID: 240073335}
   Pet: {fileID: 510603613}
-  MeleeEnemySummonCount: 0
-  ProjectileEnemySummonCount: 0
+  MeleeEnemySummonCount: 1
+  ProjectileEnemySummonCount: 1
   AreaDelayedEnemySummonCount: 1
 --- !u!4 &327632112
 Transform:
@@ -893,6 +893,7 @@ GameObject:
   - component: {fileID: 510603616}
   - component: {fileID: 510603615}
   - component: {fileID: 510603614}
+  - component: {fileID: 510603618}
   m_Layer: 11
   m_Name: PetTagObject
   m_TagString: Pet
@@ -993,6 +994,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2047379118}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &510603618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 510603613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ec165fb061f164489c5cb8cc19665d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TestPet
 --- !u!1 &575096821
 GameObject:
   m_ObjectHideFlags: 0
@@ -1345,7 +1358,7 @@ Transform:
   m_GameObject: {fileID: 1439617459}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.005, y: 0.006, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1427,6 +1440,7 @@ GameObject:
   - component: {fileID: 1740318927}
   - component: {fileID: 1740318926}
   - component: {fileID: 1740318925}
+  - component: {fileID: 1740318929}
   m_Layer: 7
   m_Name: PlayerTagObject
   m_TagString: Player
@@ -1527,6 +1541,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2047379118}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1740318929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1740318924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 065925d30a24521408c30640771b44bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TestPlayer
 --- !u!1 &1776749492
 GameObject:
   m_ObjectHideFlags: 0
