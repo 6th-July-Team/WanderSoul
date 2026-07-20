@@ -70,9 +70,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         if (_skipStartupUIForTest)
         {
-            await _resourceManager.Init();
             InitNonAsync();
-
             // 여기에 로딩은 없어도 초기화 해야할 것 넣기
 
 
@@ -80,7 +78,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         }
 
         // 여기에서 로딩 UI 오픈
-
+        await _resourceManager.Init();
         InitNonAsync();
     }
 
