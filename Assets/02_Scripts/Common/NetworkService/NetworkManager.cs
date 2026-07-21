@@ -5,6 +5,7 @@ public class NetworkManager
     public NetworkPlayerService PlayerService { get; private set; } = new();
     public NetworkWagonService WagonService { get; private set; } = new();
     public NetworkEnemyService EnemyService { get; private set; } = new();
+    public NetworkPetService PetService { get; private set; } = new();
 
     public void InGameServiceRelease()
     {
@@ -26,5 +27,10 @@ public class NetworkManager
     public EnemyViewModel CreateEnemyViewModel(string enemyId)
     {
         return EnemyService.CreateEnemyViewModel(enemyId);
+    }
+
+    public PetViewModel CreatePetViewModel(string petId)
+    {
+        return PetService.CreatePetViewModel(petId);
     }
 }

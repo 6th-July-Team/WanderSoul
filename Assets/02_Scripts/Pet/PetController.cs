@@ -7,11 +7,12 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
     public IStatModifierReceiver StatModifierReceiver { get; private set; }
     public ISkillModifierReceiver SkillModifierReceiver { get; private set; }
 
-    public float AttackPower => _petStausController.AttackPower;
+
     public Vector3 Position => transform.position;
     public EntityType EntityType => EntityType.Pet;
-    public bool IsAlive => _petStausController.IsAlive;
+    public bool IsAlive => _petViewModel.GetHp > 0;
     public PetElement Element => __SOPetDefinition.Element;
+
 
     [Header("Command Setting")]
     [SerializeField] private float _commandRefreshInterval = 0.2f;
@@ -24,8 +25,9 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
     private PetMovement _petMovement;
     private PetStatController _petStatController;
     private PetCombatController _combatController;
-    private PetStausController _petStausController;
     private PetCommandController _petCommandController;
+
+    private PetViewModel _petViewModel;
 
     private bool isInitialized = false;
 
@@ -39,7 +41,7 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
     public void Init(string petId, IPositionProvider playerAnchor, IPositionProvider wagonAnchor
         , PetSkillMaker petSkillMaker, IStatusEffectReceiver playerEffectReceiver, IHealable playerHealable
-        , int avoidancePriority)
+        , int avoidancePriority, PetViewModel viewModel)
     {
         PetStatData petStatData = GameManager.DataTable.GetPetStatData(petId);
 
@@ -54,9 +56,7 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
         _petMovement.Init(petId, avoidancePriority);
 
-        _petStausController = new();
-        _petStausController.Init(__SOPetDefinition.BaseStats.MaxHp); // TODO(김익환): SO 제거
-
+        _petViewModel = viewModel;
 
         StatusEffects = new StatusEffectController();
         StatModifierReceiver = new PetStatusEffectAdapter(_petStatController);
@@ -125,7 +125,7 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
     public void TakeDamage(DamageInfo damageInfo)
     {
         // TODO(김익환): 저항 적용하기
-        _petStausController.TakeDamage(damageInfo);
+        _petViewModel.SetHp(_petViewModel.GetHp - damageInfo.DamageAmount);
     }
 
     public void SetCommandMode(PetCommand commandMode)

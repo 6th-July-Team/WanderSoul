@@ -107,11 +107,14 @@ public class ConvoyManager
         {
             GameObject petInstance = GameObject.Instantiate(Utils.ResourcesLoad<GameObject>("Test_Pet"));
 
+            var viewModel = GameManager.Network.CreatePetViewModel(_selectedPetIds[index]);
+
             petInstance.GetComponent<PetController>().Init(_selectedPetIds[index]
                             , _playerEntity, _wagon
                             , _petSkillMaker
                             , _playerEntity, _playerEntity
-                            , 30 + index * 10);
+                            , 30 + index * 10
+                            , viewModel);
 
             petControllers.Add(petInstance.GetComponent<PetController>());
         }
