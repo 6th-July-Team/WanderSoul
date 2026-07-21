@@ -25,6 +25,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 38de11763b405314fbc2b2726c7afb3a
+    m_Address: M_FlamePawn
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 466af926ad0e3d946b87c737ddec82f3
     m_Address: player_scholar
     m_ReadOnly: 0
@@ -35,8 +40,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 702e89ebd8f153446b97cc79a65a7188
+    m_Address: M_WaterPawn
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 93b43cb05b9e6eb4cb38d1491de2489c
     m_Address: Enemy/Prefab/AreaDelayed/Test_02
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a172ae76efbc4464e96e7c53431b7a3e
+    m_Address: M_EarthPawn
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -47,6 +62,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a80e31d1d6c9b284d81bad99825d7dc3
     m_Address: Test_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b9eb66c122f35254d8f1e24cf23994ec
+    m_Address: M_WindPawn
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
