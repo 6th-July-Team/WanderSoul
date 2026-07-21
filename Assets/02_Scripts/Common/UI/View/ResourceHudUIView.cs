@@ -3,13 +3,28 @@ using UnityEngine;
 
 public class ResourceHudUIView : BaseUI<ResourceHudUIView, ResourceHudViewModel>
 {
+
+    [SerializeField] private TMP_Text _soulText;
+    [SerializeField] private TMP_Text _moneyText;
+
     [Header("Layout")]
     [SerializeField] private RectTransform _rootRect;
     [SerializeField] private Vector2 _villageAnchoredPosition;
     [SerializeField] private Vector2 _convoyAnchoredPosition;
 
-    [SerializeField] private TMP_Text _soulText;
-    [SerializeField] private TMP_Text _moneyText;
+    [Header("Animation")]
+    [SerializeField] private UISlideAnimation _slideAnimation;
+
+    protected override void OnOpened()
+    {
+        if (_slideAnimation == null)
+        {
+            return;
+        }
+
+        _slideAnimation.SetHidden();
+        _slideAnimation.SlideIn();
+    }
 
     public void SetVillageLayout()
     {

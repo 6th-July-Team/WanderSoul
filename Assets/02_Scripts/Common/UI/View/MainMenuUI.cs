@@ -7,6 +7,9 @@ public class MainMenuUI : BaseUI
     [SerializeField] private UIButton _farmButton;
     [SerializeField] private UIButton _optionButton;
 
+    [Header("Animation")]
+    [SerializeField] private UISlideAnimation _slideAnimation;
+
     protected override void OnInit()
     {
         _inventoryButton.BindOnClickButtonEvent(OnClickInventory);
@@ -14,6 +17,18 @@ public class MainMenuUI : BaseUI
         _farmButton.BindOnClickButtonEvent(OnClickFarm);
         _optionButton.BindOnClickButtonEvent(OnClickOption);
     }
+
+    protected override void OnOpened()
+    {
+        if (_slideAnimation == null)
+        {
+            return;
+        }
+
+        _slideAnimation.SetHidden();
+        _slideAnimation.SlideIn();
+    }
+
     // 임시: 나중에 Model 소유처 정해지면 이동
     private InventoryModel _inventoryModelTest = new InventoryModel();
     private PetInventoryModel _petInventoryModelTest = new PetInventoryModel();

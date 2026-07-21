@@ -279,11 +279,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218fbc785fd2af44d932ec3fb2cc8880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResourceHudUI
+  _soulText: {fileID: 2825249220203478166}
+  _moneyText: {fileID: 237757377453354513}
   _rootRect: {fileID: 9164815948283558105}
   _villageAnchoredPosition: {x: 0, y: 0}
   _convoyAnchoredPosition: {x: 735, y: 0}
-  _soulText: {fileID: 2825249220203478166}
-  _moneyText: {fileID: 237757377453354513}
+  _slideAnimation: {fileID: 7186897928743566033}
 --- !u!114 &7186897928743566033
 MonoBehaviour:
   m_ObjectHideFlags: 0

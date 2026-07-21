@@ -1316,6 +1316,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2798751368301110168}
   - component: {fileID: 9070872931918449268}
+  - component: {fileID: 4204788992297126245}
   m_Layer: 5
   m_Name: PetInventoryUIView
   m_TagString: Untagged
@@ -1372,6 +1373,25 @@ MonoBehaviour:
   _partyCountText: {fileID: 3989827641630647011}
   _startMissionButton: {fileID: 1944569485240160905}
   _petTooltip: {fileID: 3756063238317071470}
+  _panelAnimation: {fileID: 4204788992297126245}
+--- !u!114 &4204788992297126245
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2951134090419571305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a91f88b81baec74b80382dc709b93f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIPanelSlideAnimation
+  _dimCanvasGroup: {fileID: 4091309660936424312}
+  _topRect: {fileID: 6121363440982329713}
+  _leftRect: {fileID: 4961233536309003105}
+  _rightRect: {fileID: 1568229751502354869}
+  _duration: 0.25
+  _slideDistance: 300
 --- !u!1 &3028951023016182267
 GameObject:
   m_ObjectHideFlags: 0

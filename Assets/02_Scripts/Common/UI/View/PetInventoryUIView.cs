@@ -26,7 +26,13 @@ public class PetInventoryUIView : BaseUI<PetInventoryUIView, PetInventoryViewMod
     [Header("Tooltip")]
     [SerializeField] private PetTooltipUIView _petTooltip;
 
+    [Header("Animation")]
+    [SerializeField] private UIPanelSlideAnimation _panelAnimation;
+
     private List<PetSlotUIView> _slotList = new List<PetSlotUIView>();
+
+    private bool _isNoPetConfirmed = false;
+    private bool _isClosing = false;
 
     #endregion
 
@@ -37,6 +43,13 @@ public class PetInventoryUIView : BaseUI<PetInventoryUIView, PetInventoryViewMod
 
         BindCategoryButtons();
         BindPartySlots();
+    }
+    protected override void OnOpened()
+    {
+        _isNoPetConfirmed = false;
+        _isClosing = false;
+        GameManager.UI.SlideOutHud();
+        _panelAnimation.PlayOpen();
     }
 
     private void BindCategoryButtons()
@@ -230,14 +243,18 @@ public class PetInventoryUIView : BaseUI<PetInventoryUIView, PetInventoryViewMod
 
     private void OnClickStartMission()
     {
-        if (_viewModel.CanStartMission() == false)
+        bool hasNoPet = (_viewModel.CanStartMission() == false);
+
+        if (hasNoPet == true && _isNoPetConfirmed == false)
         {
-            Debug.LogWarning("파티에 펫이 한 마리도 없습니다.");
+            GameManager.UI.OpenSimplePopup("펫이 없습니다! 한 번 더 누르면 시작합니다.");
+            _isNoPetConfirmed = true;
             return;
         }
 
         var petDataIds = _viewModel.GetPartyPetDataIdList();
 
+        GameManager.UI.SlideInHud();
         GameManager.UI.CloseUI(UIType.PetInventoryUIView);
         GameManager.Instance.StartConvoy(petDataIds);
     }
@@ -245,6 +262,17 @@ public class PetInventoryUIView : BaseUI<PetInventoryUIView, PetInventoryViewMod
     #endregion
 
     private void OnClickClose()
+    {
+        if (_isClosing == true)
+        {
+            return;
+        }
+
+        _isClosing = true;
+        GameManager.UI.SlideInHud();
+        _panelAnimation.PlayClose(OnCloseAnimationComplete);
+    }
+    private void OnCloseAnimationComplete()
     {
         GameManager.UI.CloseUI(UIType.PetInventoryUIView);
     }

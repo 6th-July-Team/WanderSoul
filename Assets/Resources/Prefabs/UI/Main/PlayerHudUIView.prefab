@@ -157,6 +157,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7014487525157029684}
   - component: {fileID: 6387850131230520090}
+  - component: {fileID: 5657114373959171592}
   m_Layer: 5
   m_Name: PlayerHudUIView
   m_TagString: Untagged
@@ -202,8 +203,26 @@ MonoBehaviour:
   _hpText: {fileID: 5150452521053816115}
   _manaFillImage: {fileID: 6280056130721284397}
   _manaText: {fileID: 782095163507905114}
-  _expSlider: {fileID: 0}
+  _expSlider: {fileID: 706141314831645946}
   _expText: {fileID: 0}
+  _slideAnimation: {fileID: 5657114373959171592}
+--- !u!114 &5657114373959171592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1264183394901301618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e80eae576c6e284eb878aed316e7b42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UISlideAnimation
+  _targetRect: {fileID: 7014487525157029684}
+  _direction: 1
+  _slideDistance: 300
+  _duration: 0.3
+  _registerAsHud: 1
 --- !u!1 &1710950240319718611
 GameObject:
   m_ObjectHideFlags: 0

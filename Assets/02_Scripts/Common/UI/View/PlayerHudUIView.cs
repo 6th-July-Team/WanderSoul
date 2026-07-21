@@ -17,6 +17,10 @@ public class PlayerHudUIView : BaseUI<PlayerHudUIView, PlayerViewModel>
     [SerializeField] private Slider _expSlider;
     [SerializeField] private TMP_Text _expText;
 
+
+    [Header("Animation")]
+    [SerializeField] private UISlideAnimation _slideAnimation;
+
     protected override void OnPropertyChanged(string propertyName)
     {
         if (propertyName == nameof(PlayerModel.HP))
@@ -28,6 +32,13 @@ public class PlayerHudUIView : BaseUI<PlayerHudUIView, PlayerViewModel>
             RefreshMana();
         }
     }
+
+    protected override void OnOpened()
+    {
+        _slideAnimation.SetHidden();
+        _slideAnimation.SlideIn();
+    }
+
     private void RefreshHp()
     {
         if (_viewModel == null)

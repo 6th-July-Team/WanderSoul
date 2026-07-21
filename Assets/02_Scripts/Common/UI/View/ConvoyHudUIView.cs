@@ -12,6 +12,14 @@ public class ConvoyHudUIView : BaseUI<ConvoyHudUIView, WagonViewModel>
     [SerializeField] private TMP_Text _arrivalTownText;
     [SerializeField] private RectTransform _sliderFillArea;
 
+    [SerializeField] private UISlideAnimation _slideAnimation;
+
+    protected override void OnOpened()
+    {
+        _slideAnimation.SetHidden();
+        _slideAnimation.SlideIn();
+    }
+
     public void SetConvoy(string questId)
     {
         RefreshTownNames(questId);

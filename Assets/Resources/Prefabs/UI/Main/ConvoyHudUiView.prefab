@@ -85,6 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3794591263695483868}
   - component: {fileID: 2200948494781606879}
+  - component: {fileID: 8560498188604605387}
   m_Layer: 5
   m_Name: ConvoyHudUiView
   m_TagString: Untagged
@@ -131,6 +132,24 @@ MonoBehaviour:
   _startTownText: {fileID: 4007882685290591476}
   _arrivalTownText: {fileID: 3211983340355881496}
   _sliderFillArea: {fileID: 5444559890474137480}
+  _slideAnimation: {fileID: 8560498188604605387}
+--- !u!114 &8560498188604605387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529657676553140360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e80eae576c6e284eb878aed316e7b42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UISlideAnimation
+  _targetRect: {fileID: 3794591263695483868}
+  _direction: 0
+  _slideDistance: 300
+  _duration: 0.3
+  _registerAsHud: 1
 --- !u!1 &638987678925459938
 GameObject:
   m_ObjectHideFlags: 0
