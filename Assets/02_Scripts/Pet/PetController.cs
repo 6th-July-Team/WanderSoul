@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using System;
+using UnityEngine;
 
 
-public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEffectReceiver, IPet
+public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEffectReceiver, IPet, IDisposable
 {
     public StatusEffectController StatusEffects { get; private set; }
     public IStatModifierReceiver StatModifierReceiver { get; private set; }
@@ -58,6 +60,8 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
         _petMovement.Init(petId, avoidancePriority);
 
         _petViewModel = viewModel;
+
+        _petViewModel.OnPropertyChanged_View += OnPropertyChanged;
 
         StatusEffects = new StatusEffectController();
         StatModifierReceiver = new PetStatusEffectAdapter(_petStatController);
@@ -161,7 +165,7 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
     private void ExecuteEnemySkill(PetActiveSkill skill, ITargetable target)
     {
-        if(null == target || !target.IsAlive)
+        if (null == target || !target.IsAlive)
             return;
 
         float castRange = skill.CastRange;
@@ -178,6 +182,33 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
         _combatController.TryExecute(skill, context);
     }
 
+    private void OnPropertyChanged(string propertyName)
+    {
+        switch (propertyName)
+        {
+            case nameof(PetViewModel.GetHp):
+                {
+                    if (_petViewModel.GetHp <= 0f)
+                    {
+                        // TODO(김익환): 사망 처리
+                        // TODO(김익환): 사망 이펙트
+                        // TODO(김익환): 사망 사운드
+                        Debug.Log("사망");
+                        DieAndRevive().Forget();
+                        this.gameObject.SetActive(false);
+
+                    }
+                }
+                break;
+        }
+    }
+
+    private async UniTaskVoid DieAndRevive()
+    {
+        await UniTask.Delay(TimeSpan.FromSeconds(1f));
+        this.gameObject.SetActive(true);
+    }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
@@ -188,5 +219,10 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, __SOPetSearch.RangeWhenAggressive);
+    }
+
+    public void Dispose()
+    {
+        _petViewModel.OnPropertyChanged_View -= OnPropertyChanged;
     }
 }

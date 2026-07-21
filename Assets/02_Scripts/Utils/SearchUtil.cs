@@ -41,7 +41,8 @@ public static class SearchUtil
         return count;
     }
 
-    public static int FindTargetBox(Vector3 center, Vector3 halfExtents, LayerMask targetLayerMask, Collider[] buffer, Vector3 attackDirection)
+    public static int FindTargetBox(Vector3 center, Vector3 halfExtents, LayerMask targetLayerMask
+        , Collider[] buffer, Vector3 attackDirection)
     {
         Quaternion rotation = Quaternion.LookRotation(attackDirection, Vector3.up);
 
