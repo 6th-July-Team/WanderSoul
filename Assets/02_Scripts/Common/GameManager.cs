@@ -74,6 +74,8 @@ public class GameManager : SingletonBehaviour<GameManager>
         {
             InitNonAsync();
             // 여기에 로딩은 없어도 초기화 해야할 것 넣기
+            var testPetIds = new List<string> { "pet_fire_001", "pet_water_002", "pet_earth_003" };
+            StartConvoy(testPetIds);
             return;
         }
 
@@ -177,7 +179,13 @@ public class GameManager : SingletonBehaviour<GameManager>
         var resourceModel = new ResourceModel();
         resourceModel.Soul = 12413451;
         resourceModel.Money = 8520;
-        _uiManager.OpenResourceHudUI(resourceModel);
+
+        var resourceHud = _uiManager.OpenResourceHudUI(resourceModel);
+
+        if (resourceHud != null)
+        {
+            resourceHud.SetVillageLayout();
+        }
 
         var villageModel = new VillageModel();
         villageModel.TownDataId = villageId;
