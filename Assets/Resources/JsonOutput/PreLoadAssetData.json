@@ -1,0 +1,22 @@
+[
+  {
+    "Id": "Enemy_Test",
+    "Address": "Test",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "Enemy_Test_01",
+    "Address": "Test_01",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "Exp/One",
+    "Address": "EnemyDropObject/Exp/One",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "Soul/One",
+    "Address": "EnemyDropObject/Soul/One",
+    "AssetType": "GameObject"
+  }
+]

@@ -5,7 +5,7 @@ using UnityEngine.AI;
 public class PetMovement : MonoBehaviour
 {
     [Header("Anchor Movement")]
-    [SerializeField] private float _stopDistanceFromAnchor = 1.5f;
+    [SerializeField] private float _stopDistanceFromAnchor = 3f;
 
     [Header("Destination Refresh")]
     [SerializeField] private float _destinationUpdateDistance = 0.5f;
@@ -28,10 +28,11 @@ public class PetMovement : MonoBehaviour
         _agent = GetComponent<NavMeshAgent>();
     }
 
-    public void Init(string petId)
+    public void Init(string petId, int avoidancePriority)
     {
         // TODO(김익환): petId로 PetData들 설정하기.
         _agent.speed = 5f;
+        _agent.avoidancePriority = avoidancePriority;
     }
 
     private void Update()

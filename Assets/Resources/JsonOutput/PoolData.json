@@ -1,15 +1,11 @@
 ﻿[
   {
-    "Id": "Enemy/Prefab/Melee/Test",
+    "Id": "Test",
     "InitSize": 200
   },
   {
-    "Id": "Enemy/Prefab/Projectile/Test_01",
+    "Id": "Test_01",
     "InitSize": 200
-  },
-  {
-    "Id": "Enemy/Prefab/AreaDelayed/Test_02",
-    "InitSize": 100
   },
   {
     "Id": "EnemyDropObject/Exp/One",

@@ -46,23 +46,24 @@ public class Wagon : MonoBehaviour, ITargetable, IDamageable
         _wagonViewModel.SetProgress(Mathf.Floor(_splineAnimate.NormalizedTime * 100) / 100);
     }
 
-    public void Init(string wagonId, WagonViewModel wagonViewModel)
+    public void Init(WagonViewModel wagonViewModel, PlayerEntity player)
     {
         _wagonViewModel = wagonViewModel;
 
-        WagonData wagonData = GameManager.DataTable.GetWagonData(wagonId);
+        WagonData wagonData = GameManager.DataTable.GetWagonData("wagon_001");
         _wagonSlowRuleData = GameManager.DataTable.GetWagonSlowRuleData(wagonData.SlowDataId);
 
         _wagonViewModel.OnPropertyChanged_View += OnPropertyChanged;
         _wagonViewModel.PropertyChangedOnInit();
 
-        InitChildComponent();
+        InitChildComponent(player);
     }
 
-    private void InitChildComponent()
+    private void InitChildComponent(PlayerEntity player)
     {
         GetComponentInChildren<WagonBoundary>().Init(_wagonViewModel);
         GetComponentInChildren<WagonMonsterCounter>().Init(_wagonViewModel);
+        GetComponentInChildren<EnemySpawner>().Init(player, this);
     }
 
     public void SetSpline(SplineContainer splineContainer)

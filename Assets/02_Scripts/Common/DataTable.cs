@@ -63,7 +63,8 @@ public class DataTable
         //PetPassiveSkillDataTable = LoadData<PetPassiveSkillData>(nameof(PetPassiveSkillData));
         WagonDataTable = LoadData<WagonData>(nameof(WagonData));
         WagonSlowRuleDataTable = LoadData<WagonSlowRuleData>(nameof(WagonSlowRuleData));
-        //AutoSpawnDataTable = LoadData<AutoSpawnData>(nameof(AutoSpawnData));
+        AutoSpawnDataTable = LoadData<AutoSpawnData>(nameof(AutoSpawnData));
+        PreLoadAssetDataTable = LoadData<PreLoadAssetData>(nameof(PreLoadAssetData));
     }
 
     #region Getters
@@ -191,6 +192,12 @@ public class DataTable
     {
         if (null == WagonSlowRuleDataTable || string.IsNullOrEmpty(id)) return null;
         return WagonSlowRuleDataTable.TryGetValue(id, out var data) ? data : null;
+    }
+
+    public PreLoadAssetData GetPreLoadAssetData(string id)
+    {
+        if (null == PreLoadAssetDataTable || string.IsNullOrEmpty(id)) return null;
+        return PreLoadAssetDataTable.TryGetValue(id, out var data) ? data : null;
     }
 
     #endregion

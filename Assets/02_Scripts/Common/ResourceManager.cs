@@ -7,7 +7,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class ResourceManager
 {
-    private Dictionary<string, AsyncOperationHandle> _handles = new Dictionary<string, AsyncOperationHandle>();
+    private Dictionary<string, AsyncOperationHandle> _handles = new();
 
 
     private const int MAX_LOAD_COUNT = 4;

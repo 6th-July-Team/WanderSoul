@@ -83,6 +83,7 @@ public class QuestData : BaseData, ISerializationCallbackReceiver
     public int ReputationReward;
     public string StartTownId;
     public string ArrivalTownId;
+    public List<string> AutoSpawnIds;
 }
 
 [Serializable]
@@ -162,6 +163,7 @@ public class AutoSpawnData : BaseData
     public string Name;
     public string Description;
     public float StartTime;
+    public float EndTime;
     public List<string> EnemyIds;
     public int MinPressureEnemyCount;     
     public float SpawnInterval;
