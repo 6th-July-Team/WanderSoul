@@ -169,6 +169,12 @@ public partial class UIManager
             case UIType.SimplePopupUIView:
                 return UIRootType.Popup;
 
+            case UIType.ConvoySuccessUIView:
+                return UIRootType.Popup;
+
+            case UIType.ConvoyFailUIView:
+                return UIRootType.Popup;
+
             default:
                 Debug.LogError($"{uiType}에 지정된 UIRootType이 없습니다.");
                 return UIRootType.Main;

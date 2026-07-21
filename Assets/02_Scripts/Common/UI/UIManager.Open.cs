@@ -216,5 +216,41 @@ public partial class UIManager
 
         view.BindViewModel(playerViewModel);
     }
+
+    public void OpenConvoySuccessUI(ConvoyResultModel result)
+    {
+        if (result == null)
+        {
+            Debug.LogWarning("ConvoyResult가 null입니다.");
+            return;
+        }
+
+        var view = OpenUI<ConvoySuccessUIView>(UIType.ConvoySuccessUIView);
+        if (view == null)
+        {
+            Debug.LogWarning("ConvoySuccessUIView를 열 수 없습니다.");
+            return;
+        }
+
+        view.SetResult(result);
+    }
+
+    public void OpenConvoyFailUI(ConvoyResultModel result)
+    {
+        if (result == null)
+        {
+            Debug.LogWarning("ConvoyResult가 null입니다.");
+            return;
+        }
+
+        var view = OpenUI<ConvoyFailUIView>(UIType.ConvoyFailUIView);
+        if (view == null)
+        {
+            Debug.LogWarning("ConvoyFailUIView를 열 수 없습니다.");
+            return;
+        }
+
+        view.SetResult(result);
+    }
 }
 

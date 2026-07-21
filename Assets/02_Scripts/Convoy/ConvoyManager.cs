@@ -29,15 +29,60 @@ public class ConvoyManager
         StartConvoyAsync().Forget();
     }
 
-    public void FaildConvoy()
+    public void FaildConvoy(ConvoyFailReason failReason = ConvoyFailReason.WagonDestroyed)
     {
-        // TODO(UI): 실패 결과 UI 표시
+        CloseConvoyHuds();
+        var result = MakeConvoyResult(false, failReason);
+        GameManager.UI.OpenConvoyFailUI(result);
     }
 
     public void SuccessConvoy()
     {
-        // TODO(UI): 성공 결과 UI 표시
-        Debug.Log("호위 성공");
+        CloseConvoyHuds();
+        var result = MakeConvoyResult(true, ConvoyFailReason.None);
+        GameManager.UI.OpenConvoySuccessUI(result);
+    }
+
+    // TODO(이태영): 집계 데이터 연동 필요 - 몬스터 처치 수, 소요 시간, 보상 계산은 현재 테스트
+    private ConvoyResultModel MakeConvoyResult(bool isSuccess, ConvoyFailReason failReason)
+    {
+        var result = new ConvoyResultModel();
+
+        result.IsSuccess = isSuccess;
+        result.FailReason = failReason;
+
+        // TODO(이태영): 실제 집계 값으로 교체
+        result.ClearTime = 185f;
+        result.IsNewRecord = false;
+        result.KilledMonsterCount = 42;
+        result.GainedSoul = 120;
+
+        if (isSuccess == true)
+        {
+            result.GoldReward = 850;
+            result.ReputationReward = 10;
+        }
+        else
+        {
+            result.ReputationPenalty = 5;
+            result.RepairCost = 300;
+            result.IsRepairCostPaid = true;
+            result.ExtraReputationPenalty = 3;
+        }
+
+        // TODO(이태영): Release()에서 반환하는 마을 ID와 연동 필요
+        result.ReturnTownId = "town_lavendil";
+
+        return result;
+    }
+
+    private void CloseConvoyHuds()
+    {
+        GameManager.UI.CloseUI(UIType.ConvoyHudUIView);
+        GameManager.UI.CloseUI(UIType.PartyHudUIView);
+        GameManager.UI.CloseUI(UIType.PlayerHudUIView);
+        GameManager.UI.CloseUI(UIType.ResourceHudUIView);
+        GameManager.UI.CloseUI(UIType.SkillHudUIView);
     }
 
     public string Release()
