@@ -27,6 +27,7 @@ public class EnemyViewModel : BaseViewModel<EnemyModel>
 
     public bool CanMove => _model.CanMove;
     public float MoveSpeed => _model.MoveSpeed;
+    public float PreferredDistance => _model.PreferredDistance;
     public BT_EnemyState EnemyState => _model.EnemyState;
 
     //투사체 발사(원거리) 전용
@@ -38,6 +39,7 @@ public class EnemyViewModel : BaseViewModel<EnemyModel>
     public float AreaRadius => _model.AreaRadius;
     public float AreaDelayTime => _model.AreaDelayTime;
     public string AreaPrefabAddress => _model.AreaPrefabAddress;
+
 
     public EnemyViewModel(EnemyModel model) : base(model) { }
 
@@ -83,7 +85,6 @@ public class EnemyViewModel : BaseViewModel<EnemyModel>
         _model.EnemyState = newEnemyState;
     }
 
-
     public bool TryEnterAttackState(float distanceToTarget)
     {
         bool canEnterAttack = (_model.EnemyState == BT_EnemyState.Chase || _model.EnemyState == BT_EnemyState.Idle);
@@ -93,11 +94,11 @@ public class EnemyViewModel : BaseViewModel<EnemyModel>
             return false;
         }
 
-        float enterAttackRange = 0.8f;
+        float enterAttackRangePercent = 0.9f;
 
-        float attackRange = _model.AttackRange * enterAttackRange;
+        float enterAttackRange = _model.AttackRange * enterAttackRangePercent;
 
-        if (distanceToTarget > attackRange)
+        if (distanceToTarget > enterAttackRange)
         {
             return false;
         }
@@ -167,6 +168,20 @@ public class EnemyViewModel : BaseViewModel<EnemyModel>
         return false;
     }
 
+    public bool ShouldRetreat(float distanceToTarget)
+    {
+        if (_model.PreferredDistance <= 0f)
+        {
+            return false;
+        }
+
+        float retreatEnterDistance = _model.PreferredDistance * 0.8f;
+
+        bool shouldRetreat = distanceToTarget < retreatEnterDistance;
+
+        return shouldRetreat;
+    }
+
     public int GetDropAmount(DropObjectType type)
     {
         int amount;
@@ -185,7 +200,7 @@ public class EnemyViewModel : BaseViewModel<EnemyModel>
                 break;
             default:
                 {
-                    return default;
+                    return 0;
                 }
         }
 

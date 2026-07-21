@@ -232,6 +232,9 @@ public class EnemyData : BaseData, ISerializationCallbackReceiver
     public float AreaRadius;
     public float AreaDelayTime;
     public string AreaPrefabAddress;
+
+    // 저격형 적 전용
+    public float PreferredDistance;
 }
 
 [Serializable]
