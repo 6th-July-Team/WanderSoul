@@ -4,17 +4,6 @@ public static class PetSkillRegistor
 {
     public static void RegisterAllActiveSkills(PetActiveSkillExecutionRegistry registry)
     {
-        registry.Register("Projectile"
-            , (createInfo) => new PetProjectileSkill
-            (
-                // PetProjectileSkill에 필요한 정보
-            ));
-
-        registry.Register("Area"
-            , (createInfo) => new PetAreaEffectSkill
-            (
-                // Area 공격 유형에 대한 필요한 정보
-            ));
 
         registry.Register("WindBlessing"
             , (createInfo) => new PetWindBlessingSkill
@@ -24,11 +13,19 @@ public static class PetSkillRegistor
                 createInfo.PlayerReceiver,
                 createInfo.PlayerHealable
             ));
+
+        registry.Register("Aggro"
+            , (createInfo) => new PetAggroSkill
+            (
+                createInfo.StatusEffectMaker,
+                createInfo.PlayerReceiver,
+                createInfo.PetReceiver
+            ));
     }
 
     public static void RegisterAllPassiveSkills(PetPassiveSkillExecutionRegistry registry)
     {
-        registry.Register("PetProjectile"
+        registry.Register("BuffPassive"
             , (createInfo) => new PetBuffPassive
             (
                 createInfo.EffectData,

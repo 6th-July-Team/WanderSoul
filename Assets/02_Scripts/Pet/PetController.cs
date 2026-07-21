@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEffectReceiver
+public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEffectReceiver, IPet
 {
     public StatusEffectController StatusEffects { get; private set; }
     public IStatModifierReceiver StatModifierReceiver { get; private set; }
@@ -44,7 +44,9 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
         _petStatController = new(petStatData);
 
-        _combatController = petSkillMaker.CreateCombatController(petId, _petStatController, playerEffectReceiver, playerHealable, StatModifierReceiver);
+        _combatController = petSkillMaker.CreateCombatController(petId, _petStatController
+            , playerEffectReceiver, playerHealable, StatModifierReceiver
+            , this);
 
         // TODO(김익환): SO 제거
         _petCommandController = new(playerAnchor, wagonAnchor, this, __SOPetSearch, 32);
@@ -150,7 +152,7 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
     private void ExecuteNoEnemySkill(PetActiveSkill skill)
     {
-        PetSkillUseContext context = new(transform.position, skill.SkillData);
+        PetSkillUseContext context = new(this, transform.position, skill.SkillData);
 
         _combatController.TryExecute(skill, context);
     }
@@ -169,7 +171,7 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
         _petMovement.Stop();
 
-        PetSkillUseContext context = new PetSkillUseContext(transform.position, skill.SkillData);
+        PetSkillUseContext context = new PetSkillUseContext(this, transform.position, skill.SkillData);
 
         _combatController.TryExecute(skill, context);
     }

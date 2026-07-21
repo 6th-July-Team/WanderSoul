@@ -347,6 +347,7 @@ public class PetActiveSkillData : BaseData
     public string IconPath;
     public string StatusEffectId;
     public float CastRange;
+    public float Radius;
 
     public TargetType GetTargetType()
         => Enum.TryParse<TargetType>(stringTargetType, out var result) ? result : default;
