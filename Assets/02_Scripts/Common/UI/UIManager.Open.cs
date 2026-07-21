@@ -252,5 +252,33 @@ public partial class UIManager
 
         view.SetResult(result);
     }
+
+    public void OpenWagonAreaWarningUI(WagonViewModel wagonViewModel)
+    {
+        if (wagonViewModel == null)
+        {
+            Debug.LogWarning("WagonViewModel이 null입니다.");
+            return;
+        }
+
+        var view = OpenUI<WagonAreaWarningUIView>(UIType.WagonAreaWarningUIView);
+
+        if (view == null)
+        {
+            Debug.LogWarning("WagonAreaWarningUIView를 열 수 없습니다.");
+            return;
+        }
+
+        view.BindViewModel(wagonViewModel);
+    }
+    public void CloseAllConvoyHuds() 
+    {
+        CloseUI(UIType.ConvoyHudUIView);
+        CloseUI(UIType.PartyHudUIView);
+        CloseUI(UIType.PlayerHudUIView);
+        CloseUI(UIType.ResourceHudUIView);
+        CloseUI(UIType.SkillHudUIView);
+        CloseUI(UIType.WagonAreaWarningUIView);
+    }
 }
 

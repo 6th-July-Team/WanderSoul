@@ -31,14 +31,14 @@ public class ConvoyManager
 
     public void FaildConvoy(ConvoyFailReason failReason = ConvoyFailReason.WagonDestroyed)
     {
-        CloseConvoyHuds();
+        GameManager.UI.CloseAllConvoyHuds();
         var result = MakeConvoyResult(false, failReason);
         GameManager.UI.OpenConvoyFailUI(result);
     }
 
     public void SuccessConvoy()
     {
-        CloseConvoyHuds();
+        GameManager.UI.CloseAllConvoyHuds();
         var result = MakeConvoyResult(true, ConvoyFailReason.None);
         GameManager.UI.OpenConvoySuccessUI(result);
     }
@@ -74,15 +74,6 @@ public class ConvoyManager
         result.ReturnTownId = "town_lavendil";
 
         return result;
-    }
-
-    private void CloseConvoyHuds()
-    {
-        GameManager.UI.CloseUI(UIType.ConvoyHudUIView);
-        GameManager.UI.CloseUI(UIType.PartyHudUIView);
-        GameManager.UI.CloseUI(UIType.PlayerHudUIView);
-        GameManager.UI.CloseUI(UIType.ResourceHudUIView);
-        GameManager.UI.CloseUI(UIType.SkillHudUIView);
     }
 
     public string Release()
@@ -179,6 +170,7 @@ public class ConvoyManager
         if (wagonVm != null)
         {
             GameManager.UI.OpenConvoyHudUI(wagonVm, _selectedQuestId);
+            GameManager.UI.OpenWagonAreaWarningUI(wagonVm);
         }
 
         var partyHud = GameManager.UI.OpenPartyHudUI();

@@ -25,6 +25,7 @@
     SimplePopupUIView,
     ConvoySuccessUIView,
     ConvoyFailUIView,
+    WagonAreaWarningUIView,
 }
 
 public enum UIRootType : byte
