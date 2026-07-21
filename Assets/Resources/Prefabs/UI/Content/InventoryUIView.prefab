@@ -1094,6 +1094,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2798751368301110168}
   - component: {fileID: 2848662197250573242}
+  - component: {fileID: 5096579247979397150}
   m_Layer: 5
   m_Name: InventoryUIView
   m_TagString: Untagged
@@ -1137,15 +1138,30 @@ MonoBehaviour:
   _slotPrefab: {fileID: 6297753761873645873, guid: 9a70c5f27cafed848b8630d40f19ce54, type: 3}
   _slotRoot: {fileID: 5970771998004313961}
   _closeButton: {fileID: 3319201310078151077}
-  _dimCanvasGroup: {fileID: 4091309660936424312}
-  _topRect: {fileID: 6121363440982329713}
-  _leftRect: {fileID: 4961233536309003105}
-  _rightRect: {fileID: 1568229751502354869}
+  _panelAnimation: {fileID: 5096579247979397150}
   _detailPanel: {fileID: 582927525259388804}
   _detailNameText: {fileID: 4479565463938875123}
   _detailTypeText: {fileID: 2352395215076549972}
   _detailDescriptionText: {fileID: 5171202739470427092}
   _detailIconImage: {fileID: 8042796146925057591}
+--- !u!114 &5096579247979397150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2951134090419571305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a91f88b81baec74b80382dc709b93f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIPanelSlideAnimation
+  _dimCanvasGroup: {fileID: 4091309660936424312}
+  _topRect: {fileID: 6121363440982329713}
+  _leftRect: {fileID: 4961233536309003105}
+  _rightRect: {fileID: 1568229751502354869}
+  _duration: 0.25
+  _slideDistance: 300
 --- !u!1 &3317604095809899604
 GameObject:
   m_ObjectHideFlags: 0
