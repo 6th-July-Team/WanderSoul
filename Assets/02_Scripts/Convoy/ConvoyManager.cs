@@ -95,7 +95,7 @@ public class ConvoyManager
         var playerViewModel = GameManager.Network.RequestCreatePlayer();
         var playerStatController = GameManager.Network.PlayerService.StatController;
 
-        _playerEntity = GameObject.Instantiate(Utils.ResourcesLoad<PlayerEntity>("Test_Mercenary"));
+        _playerEntity = GameObject.Instantiate(Utils.ResourcesLoad<PlayerEntity>("Test_Scholar"));
         _playerEntity.Init(playerViewModel, playerStatController);
     }
 

@@ -98,11 +98,11 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
     private void UpdateCombat()
     {
-        if (_combatController.IsBusy)
-        {
-            _petMovement.Stop();
-            return;
-        }
+        //if (_combatController.IsBusy)
+        //{
+        //    _petMovement.Stop();
+        //    return;
+        //}
 
         ITargetable target = _commandResult.Target;
 

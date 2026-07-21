@@ -22,7 +22,15 @@ public static class PetSkillRegistor
                 createInfo.PetReceiver
             ));
 
-        
+        registry.Register("Projectile", (createInfo) => new PetProjectileSkill());
+
+        //registry.Register("Melee"
+        //    , (createInfo) => new PetAggroSkill
+        //    (
+        //        createInfo.StatusEffectMaker,
+        //        createInfo.PlayerReceiver,
+        //        createInfo.PetReceiver
+        //    ));
     }
 
     public static void RegisterAllPassiveSkills(PetPassiveSkillExecutionRegistry registry)

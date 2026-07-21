@@ -2,7 +2,7 @@
 
 public class ScholarFireArrow : IElementArrowVariant
 {
-    public void Fire(PlayerSkillUseContext context, float damage)
+    public void Fire(PlayerSkillUseContext context, float damage, PlayerSkillData SkillData)
     {
         // 화염 화살을 발사해서 화염 피해를 입힌다.
         // 대상에 닿으면 폭발하여 넓은 범위의 적에게 피해를 준다.
@@ -16,8 +16,8 @@ public class ScholarFireArrow : IElementArrowVariant
             Speed = 5f,
             Damage = damage,
             Direction = context.AimDirection,
-            DamageType = DamageType.Fire,
-            TargetType = EntityType.Enemy,
+            DamageType = SkillData.GetDamageType(),
+            TargetType = SkillData.GetTargetType(),
             AdditionalDamage = damage * 2
         });
     }
