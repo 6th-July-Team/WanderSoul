@@ -21,7 +21,7 @@ public class PetAreaBuffPassive : IPetPassiveSkillExecution
     public void Activate()
     {
         var a = Object.Instantiate(Utils.ResourcesLoad<PetAreaBuffInstance>("AreaBuff"), _petEntity.Transform);
-        a.Init(_effectData, _playerAdapter);
+        a.Init(_effectData, _playerAdapter, _passiveSkillData);
     }
 
     public void Deactivate()

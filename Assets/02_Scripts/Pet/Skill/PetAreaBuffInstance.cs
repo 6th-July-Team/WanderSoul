@@ -8,9 +8,18 @@ public class PetAreaBuffInstance : MonoBehaviour
 
     private ModifierHandle _handle;
 
-    public void Init(StatusEffectData effectData, IStatModifierReceiver playerAdapter)
+    private SphereCollider _collider;
+
+    private void Awake()
+    {
+        _collider = GetComponent<SphereCollider>();
+        _collider.isTrigger = true;
+    }
+
+    public void Init(StatusEffectData effectData, IStatModifierReceiver playerAdapter, PetPassiveSkillData petPassiveSkillData)
     {
         _effectData = effectData;
+        _collider.radius = petPassiveSkillData.Radius;
     }
 
     private void OnTriggerEnter(Collider other)

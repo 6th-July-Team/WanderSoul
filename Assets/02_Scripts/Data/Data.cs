@@ -364,9 +364,13 @@ public class PetActiveSkillData : BaseData
 [Serializable]
 public class PetPassiveSkillData : BaseData
 {
-    public string ExecutionId;
-    public string StatusEffectId;
+    public string Name;
+    public string Description;
     public string stringTargetType;
+    public string StatusEffectId;
+    public float ApllyChance;
+    public string ExecutionId;
+    public float Radius;
 
     public TargetType GetTargetType()
         => Enum.TryParse<TargetType>(stringTargetType, out var result) ? result : default;
