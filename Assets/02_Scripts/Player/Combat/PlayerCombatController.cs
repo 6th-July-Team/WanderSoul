@@ -12,7 +12,6 @@ public class PlayerCombatController : MonoBehaviour
 
     // skill
     private PlayerClassSkillBuild _skillBuild;
-    private PlayerClassSkillMaker _skillMaker;
 
     private bool _isInitialized = false;
 
@@ -27,13 +26,13 @@ public class PlayerCombatController : MonoBehaviour
         _animationController = GetComponent<PlayerAnimationController>();
     }
 
-    public void Init(PlayerStatController statController, PlayerSkillModifier skillModifier, PlayerViewModel viewModel)
+    public void Init(PlayerStatController statController, PlayerClassSkillBuild skillBuild
+        , PlayerSkillModifier skillModifier)
     {
         _statController = statController;
 
-        _skillMaker = new(viewModel, skillModifier);
-
-        _skillBuild = _skillMaker.CreateSkillBuild("테스트 직업 아이디", _statController);
+        _skillBuild = skillBuild;
+        _skillBuild.Init(skillModifier);
 
         _isInitialized = true;
     }

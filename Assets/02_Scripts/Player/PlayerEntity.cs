@@ -37,12 +37,14 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
         StatusEffects = new StatusEffectController();
     }
 
-    public void Init(PlayerViewModel playerViewModel, PlayerStatController playerStatController)
+    public void Init(string playerId, PlayerViewModel playerViewModel, PlayerStatController playerStatController, PlayerSkillMaker playerSkillMaker)
     {
         _playerViewModel = playerViewModel;
         _statController = playerStatController;
 
-        _combatController.Init(_statController, _skillModifier, playerViewModel);
+        var build = playerSkillMaker.CreateSkillBuild(playerId, playerStatController);
+
+        _combatController.Init(_statController, build, _skillModifier);
 
         var adapter = new PlayerStatusEffectAdapter(_statController, _skillModifier);
         StatModifierReceiver = adapter;
