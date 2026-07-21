@@ -7,6 +7,7 @@ public class PetViewModel : BaseViewModel<PetModel>
     }
 
     public float GetHp => _model.HP;
+    public float GetMaxHp => _model.MaxHp;
 
     public void SetHp(float hp)
     {

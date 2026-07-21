@@ -206,6 +206,7 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
     private async UniTaskVoid DieAndRevive()
     {
         await UniTask.Delay(TimeSpan.FromSeconds(1f));
+        _petViewModel.SetHp(_petViewModel.GetMaxHp);
         this.gameObject.SetActive(true);
     }
 

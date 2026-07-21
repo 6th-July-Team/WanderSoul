@@ -10,6 +10,7 @@ public class NetworkPetService
 
         PetModel model = new();
         model.HP = petBaseData.MaxHealth;
+        model.MaxHp = petBaseData.MaxHealth;
 
         PetViewModel viewModel = new(model);
 
