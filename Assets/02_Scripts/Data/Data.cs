@@ -58,11 +58,24 @@ public class ItemData : BaseData
 }
 
 [Serializable]
-public class QuestData : BaseData
+public class QuestData : BaseData, ISerializationCallbackReceiver
 {
+    [SerializeField] private string QuestType;
+
+    [NonSerialized] public QuestType Type;
+
+    public void OnAfterDeserialize()
+    {
+        if (Enum.TryParse(QuestType, true, out Type) == false)
+        {
+            DataLog.EnumParseFailed<QuestType>(nameof(QuestData), Id, QuestType);
+        }
+    }
+
+    public void OnBeforeSerialize() { }
+
     public string Name;
     public string Description;
-    public string stringQuestType;
     public int Difficulty;
     public int RequiredReputation;
     public string StageId;
@@ -221,6 +234,9 @@ public class EnemyData : BaseData, ISerializationCallbackReceiver
     public float AreaRadius;
     public float AreaDelayTime;
     public string AreaPrefabAddress;
+
+    // 저격형 적 전용
+    public float PreferredDistance;
 }
 
 [Serializable]

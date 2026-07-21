@@ -71,6 +71,8 @@ public class EnemyModel : BaseModel
             _areaDelayTime = enemyData.AreaDelayTime;
             _areaPrefabAddress = enemyData.AreaPrefabAddress;
         }
+
+        _preferredDistance = enemyData.PreferredDistance;
     }
 
     private TargetPolicy _policy;
@@ -185,6 +187,12 @@ public class EnemyModel : BaseModel
     public string AreaPrefabAddress
     {
         get => _areaPrefabAddress;
+    }
+
+    private float _preferredDistance;
+    public float PreferredDistance
+    {
+        get => _preferredDistance;
     }
 
     private int _maxHp;
