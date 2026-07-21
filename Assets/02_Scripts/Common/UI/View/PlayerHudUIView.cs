@@ -27,10 +27,17 @@ public class PlayerHudUIView : BaseUI<PlayerHudUIView, PlayerViewModel>
         {
             RefreshHp();
         }
+
         else if (propertyName == nameof(PlayerModel.MP))
         {
             RefreshMana();
         }
+
+        // TODO(이태영): PlayerModel에 Exp/Level 추가되면 주석 해제
+        // else if (propertyName == nameof(PlayerModel.Exp) || propertyName == nameof(PlayerModel.Level))
+        // {
+        //     RefreshExp();
+        // }
     }
 
     protected override void OnOpened()
@@ -71,5 +78,28 @@ public class PlayerHudUIView : BaseUI<PlayerHudUIView, PlayerViewModel>
 
         _manaFillImage.fillAmount = _viewModel.GetMp / maxMp;
         _manaText.text = $"{(int)_viewModel.GetMp:N0} / {(int)maxMp:N0}";
+    }
+
+    private void RefreshExp()
+    {
+        if (_viewModel == null)
+        {
+            return;
+        }
+
+        // TODO(이태영): PlayerViewModel에 GetExp/GetMaxExp/GetLevel 추가되면 연결
+        // float maxExp = _viewModel.GetMaxExp;
+        // if (maxExp <= 0f)
+        // {
+        //     _expSlider.value = 0f;
+        //     return;
+        // }
+        //
+        // _expSlider.value = _viewModel.GetExp / maxExp;
+        //
+        // if (_expText != null)
+        // {
+        //     _expText.text = $"Lv.{_viewModel.GetLevel}";
+        // }
     }
 }
