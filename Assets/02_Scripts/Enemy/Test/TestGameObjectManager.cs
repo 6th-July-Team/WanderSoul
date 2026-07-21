@@ -14,14 +14,20 @@ public class TestGameObjectManager : MonoBehaviour
     [SerializeField] private int MeleeEnemySummonCount;
     [SerializeField] private int ProjectileEnemySummonCount;
     [SerializeField] private int AreaDelayedEnemySummonCount;
+    [SerializeField] private int MeleeWagonOnlyEnemySummonCount;
+    [SerializeField] private int ProjectilePlayerOnlyEnemySummonCount;
+    [SerializeField] private int ProjectilePlayerOnlyTwoEnemySummonCount;
 
     private const string MELEE_ENEMY_ID = "Test";
     private const string PROJECTILE_ENEMY_ID = "Test_01";
     private const string AREA_DELAYED_ENEMY_ID = "Test_02";
 
+    private const string MELEE_WAGONONLY_ENEMY_ID = "Test_03";
+    private const string PROJECTILE_PLAYERONLY_ENEMY_ID = "Test_04";
+    private const string PROJECTILE_PLAYERONLY_ENEMY_TWO_ID = "Test_06";
+
     private void Start()
     {
-        SpawnAllEnemies();
     }
 
     private void SpawnAllEnemies()
@@ -29,6 +35,9 @@ public class TestGameObjectManager : MonoBehaviour
         SpawnEnemies(MELEE_ENEMY_ID, MeleeEnemySummonCount);
         SpawnEnemies(PROJECTILE_ENEMY_ID, ProjectileEnemySummonCount);
         SpawnEnemies(AREA_DELAYED_ENEMY_ID, AreaDelayedEnemySummonCount);
+        SpawnEnemies(MELEE_WAGONONLY_ENEMY_ID, MeleeWagonOnlyEnemySummonCount);
+        SpawnEnemies(PROJECTILE_PLAYERONLY_ENEMY_ID, ProjectilePlayerOnlyEnemySummonCount);
+        SpawnEnemies(PROJECTILE_PLAYERONLY_ENEMY_TWO_ID, ProjectilePlayerOnlyTwoEnemySummonCount);
     }
 
     private void SpawnEnemies(string enemyId, int count)

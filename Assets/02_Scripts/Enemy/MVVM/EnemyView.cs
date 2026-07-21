@@ -22,6 +22,7 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
     private static readonly int GET_DAMAGE_HASH = Animator.StringToHash("GetDamage");
     private static readonly int IS_DEAD_HASH = Animator.StringToHash("IsDead");
 
+    private const float RETREAT_ENTER_RATIO = 0.8f;
     private const float TARGET_EXCLUDE_DURATION = 15f;
 
     private static readonly (DropObjectDigit digit, int value)[] DIGIT_TABLE =
@@ -543,10 +544,47 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
 
     private async UniTaskVoid ReleaseTauntAfterDelay(float duration)
     {
-        await UniTask.Delay(System.TimeSpan.FromSeconds(duration),
-            cancellationToken: this.GetCancellationTokenOnDestroy());
+        await UniTask.Delay(System.TimeSpan.FromSeconds(duration), cancellationToken: this.GetCancellationTokenOnDestroy());
+        _targetSelector.ClearForcedTarget();
         RefreshTarget();
     }
+
+    public bool ShouldRetreatFromTarget(GameObject target)
+    {
+        if (target == null)
+        {
+            return false;
+        }
+
+        float distanceToTarget = GetDistanceToTarget(target);
+
+        return _viewModel.ShouldRetreat(distanceToTarget);
+    }
+
+    public bool TryGetRetreatPosition(GameObject target, out Vector3 retreatPosition)
+    {
+        retreatPosition = this.transform.position;
+
+        if (target == null)
+        {
+            return false;
+        }
+
+        Vector3 awayDirection = (this.transform.position - target.transform.position);
+        awayDirection.y = 0f;
+        awayDirection.Normalize();
+
+        Vector3 desiredPosition = target.transform.position + awayDirection * _viewModel.PreferredDistance;
+
+        if (NavMesh.SamplePosition(desiredPosition, out NavMeshHit hit, 2f, NavMesh.AllAreas) == false)
+        {
+            return false;
+        }
+
+        retreatPosition = hit.position;
+        return true;
+    }
+
 
 #if UNITY_EDITOR
     [ContextMenu("TakeDamage")]
