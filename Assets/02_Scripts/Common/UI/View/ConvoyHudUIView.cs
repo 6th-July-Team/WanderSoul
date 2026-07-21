@@ -60,22 +60,5 @@ public class ConvoyHudUIView : BaseUI<ConvoyHudUIView, WagonViewModel>
 
         _progressSlider.value = progress;
         _progressText.text = $"{Mathf.RoundToInt(progress * 100f)}%";
-
-        RefreshWagonIcon(progress);
-    }
-
-    private void RefreshWagonIcon(float progress)
-    {
-        if (_wagonIcon == null || _sliderFillArea == null)
-        {
-            return;
-        }
-
-        float width = _sliderFillArea.rect.width;
-        float x = width * progress;
-
-        Vector2 pos = _wagonIcon.anchoredPosition;
-        pos.x = x;
-        _wagonIcon.anchoredPosition = pos;
     }
 }
