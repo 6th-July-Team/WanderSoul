@@ -20,6 +20,16 @@ public class UIGameFlowTest : MonoBehaviour
         {
             OpenLevelUpTest();
         }
+
+        if (Keyboard.current.kKey.wasPressedThisFrame)
+        {
+            OpenLoadingTest();
+        }
+
+        if (Keyboard.current.pKey.wasPressedThisFrame)
+        {
+            GameManager.UI.OpenSimplePopup("테스트 알림입니다");
+        }
     }
 
     private void ShowTitle()
@@ -88,7 +98,28 @@ public class UIGameFlowTest : MonoBehaviour
 
     private void OpenLevelUpTest()
     {
-        var testIds = new List<string> { "옵션ID1", "옵션ID2", "옵션ID3" };
+        var testIds = new List<string> { "opt_power_001", "opt_speed_001", "opt_crit_001" };
         GameManager.UI.OpenLevelUpUI(testIds);
+    }
+
+    private async void OpenLoadingTest()
+    {
+        var loading = GameManager.UI.OpenLoadingUI();
+        if (loading == null)
+        {
+            return;
+        }
+
+        float elapsed = 0f;
+        float duration = 3f;
+        while (elapsed < duration)
+        {
+            elapsed += Time.deltaTime;
+            loading.SetProgress(elapsed / duration);
+            await Cysharp.Threading.Tasks.UniTask.Yield();
+        }
+
+        loading.SetProgress(1f);
+        GameManager.UI.CloseUI(UIType.LoadingUIView);
     }
 }

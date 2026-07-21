@@ -1,0 +1,30 @@
+﻿[
+  {
+    "Id": "region_selvanera",
+    "Name": "셀바네라",
+    "Description": "시작 지역",
+    "EmblemPath": "",
+    "HudFramePath": ""
+  },
+  {
+    "Id": "region_gloomwater",
+    "Name": "글룸워터",
+    "Description": "후순위",
+    "EmblemPath": "",
+    "HudFramePath": ""
+  },
+  {
+    "Id": "region_vairen",
+    "Name": "바이런",
+    "Description": "후순위",
+    "EmblemPath": "",
+    "HudFramePath": ""
+  },
+  {
+    "Id": "region_luindell",
+    "Name": "루인델",
+    "Description": "후순위",
+    "EmblemPath": "",
+    "HudFramePath": ""
+  }
+]

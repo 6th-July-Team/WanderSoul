@@ -1,0 +1,13 @@
+﻿[
+  {
+    "Id": "quest_001",
+    "Name": "기본 퀘스트",
+    "Description": "어디부터 어디까지 마차를 호위합니다.",
+    "stringQuestType": "Transport",
+    "Difficulty": 1,
+    "RequiredReputation": 0,
+    "StageId": "stage_001",
+    "GoldReward": 100,
+    "ReputationReward": 50
+  }
+]

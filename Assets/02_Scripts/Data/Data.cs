@@ -62,12 +62,14 @@ public class QuestData : BaseData
 {
     public string Name;
     public string Description;
-    public string QuestType;
+    public string stringQuestType;
     public int Difficulty;
     public int RequiredReputation;
     public string StageId;
     public int GoldReward;
     public int ReputationReward;
+    public string StartTownId;
+    public string ArrivalTownId;
 }
 
 [Serializable]
@@ -78,8 +80,6 @@ public class StageData : BaseData
     public string WagonId;
     public string TerrainType;
     public string Description;
-    public string StartTownId;
-    public string ArrivalTownId;
 }
 
 [Serializable]
@@ -144,10 +144,15 @@ public class PlayerStatData : BaseData
 }
 
 [Serializable]
-public class EnemySpawnData : BaseData
+public class AutoSpawnData : BaseData
 {
-    public float SpawnInterval;
+    public string Name;
+    public string Description;
+    public float StartTime;
     public List<string> EnemyIds;
+    public int MinPressureEnemyCount;     
+    public float SpawnInterval;
+    public int SpawnBatchCount;
 }
 
 [Serializable]
@@ -205,9 +210,15 @@ public class EnemyData : BaseData, ISerializationCallbackReceiver
     public bool CanMove;
     public float MoveSpeed;
 
+    //투사체발사(원거리) 전용
     public float ProjectileSpeed;
     public float ProjectileLifeTime;
     public string ProjectilePrefabAddress;
+
+    // 고정 포대형(예고 후 장판 공격) 전용
+    public float AreaRadius;
+    public float AreaDelayTime;
+    public string AreaPrefabAddress;
 }
 
 [Serializable]
@@ -299,15 +310,15 @@ public class LevelUpOptionData : BaseData
 {
     public string Name;
     public string Description;
-    public string OptionCategory;
-    public string Grade;
+    public string stringOptionCategory;
+    public string stringGrade;
     public int MinLevel;
     public int MaxLevel;
     public string RequiredClassId;
-    public string TargetStatType;
-    public string TargetSkillSlot;
-    public string EffectType;
-    public string Operation;
+    public string stringTargetStatType;
+    public string stringTargetSkillSlot;
+    public string stringEffectType;
+    public string stringOperation;
     public float Value;
     public int MaxStack;
     public int Weight;
@@ -401,4 +412,22 @@ public class SkillModifierData : BaseData
 
     public StatModifierOperation GetOperation()
         => Enum.TryParse<StatModifierOperation>(stringOperation, out var result) ? result : default;
+}
+
+[Serializable]
+public class WagonData : BaseData
+{
+    public string Name;
+    public int BaseHp;
+    public int BaseCapacity;
+    public float BaseMoveSpeed;
+    public string SlowDataId;
+}
+
+[Serializable]
+public class WagonSlowRuleData : BaseData
+{
+    public List<int> MinEnemyCount;
+    public List<int> MaxEnemyCount;
+    public List<float> MoveSpeedRate;
 }

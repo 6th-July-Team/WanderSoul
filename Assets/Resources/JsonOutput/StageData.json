@@ -1,0 +1,10 @@
+﻿[
+  {
+    "Id": "stage_001",
+    "Name": "첫 호위길",
+    "StagePrefabPath": "",
+    "WagonId": "",
+    "stringTerrainType": "",
+    "Description": "라벤딜에서 엘돈까지"
+  }
+]

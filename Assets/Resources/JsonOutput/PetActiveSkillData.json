@@ -1,4 +1,4 @@
-﻿[
+[
   {
     "Id": "pet_skill_fire_001",
     "Name": "화염 구슬",
@@ -96,7 +96,7 @@
     "Pierce": null,
     "MaxProjectileCount": null,
     "stringSkillType": null,
-    "ExecutionId": "WindBlessing",
+    "ExecutionId": "Buff",
     "stringDamageType": "Heal",
     "VFXPath": null,
     "SFXPath": null,
