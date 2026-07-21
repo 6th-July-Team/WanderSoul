@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Splines;
@@ -7,7 +8,6 @@ public class ConvoyManager
 {
     private PetSkillMaker _petSkillMaker;
     private string _selectedQuestId;
-    private WagonViewModel _wagonViewModel;
     private List<string> _selectedPetIds = new();
 
     private Wagon _wagon;
@@ -55,13 +55,12 @@ public class ConvoyManager
     private async UniTaskVoid StartConvoyAsync()
     {
         // TODO(UI): 로딩 UI 또는 Fade In/Out 처리
-        var loading = GameManager.UI.OpenLoadingUI();
+        GameManager.UI.OpenLoadingUI();
 
         await UniTask.Delay(System.TimeSpan.FromSeconds(1f));
 
         LoadMap();
-        SpawnPlayer();
-        //SpawnPet();
+        SpawnPet();
 
         // CameraManager.SetBattleView(player.transform);
         // LoadingUI.Hide();
@@ -73,24 +72,25 @@ public class ConvoyManager
 
     private void LoadMap()
     {
-        var tradeRouteHandler = Object.Instantiate(Utils.ResourcesLoad<TradeRouteHandler>("Map_01-TEST"));
-        SpawnWagon(tradeRouteHandler.SplineContainer, "wagon_001");
+        var tradeRouteHandler = GameObject.Instantiate(Utils.ResourcesLoad<TradeRouteHandler>("Map_01-TEST"));
+
+        SpawnPlayer();
+
+        SpawnWagon(tradeRouteHandler.SplineContainer);
     }
 
-    private void SpawnWagon(SplineContainer splineContainer, string wagonId)
+    private void SpawnWagon(SplineContainer splineContainer)
     {
-        GameManager.Network.RequestCreateWagon(wagonId);
-        _wagonViewModel = GameManager.Network.WagonService.GetWagonViewModel(wagonId);
+        var wagonViewModel = GameManager.Network.RequestCreateWagon();
 
-        _wagon = Object.Instantiate(Utils.ResourcesLoad<Wagon>("Wagon_ProtoType"));
-        _wagon.Init(wagonId, _wagonViewModel);
+        _wagon = GameObject.Instantiate(Utils.ResourcesLoad<Wagon>("Wagon_ProtoType"));
+        _wagon.Init(wagonViewModel, _playerEntity);
         _wagon.SetSpline(splineContainer);
     }
 
     private void SpawnPlayer()
     {
-        GameManager.Network.RequestCreatePlayer();
-        var playerViewModel = GameManager.Network.PlayerService.GetPlayerViewModel();
+        var playerViewModel = GameManager.Network.RequestCreatePlayer();
         var playerStatController = GameManager.Network.PlayerService.StatController;
 
         _playerEntity = GameObject.Instantiate(Utils.ResourcesLoad<PlayerEntity>("Test_Mercenary"));
@@ -100,12 +100,16 @@ public class ConvoyManager
     private void SpawnPet()
     {
         List<PetController> petControllers = new();
-        foreach (var petId in _selectedPetIds)
+
+        for(int index = 0; index < _selectedPetIds.Count; index++)
         {
             GameObject petInstance = GameObject.Instantiate(Utils.ResourcesLoad<GameObject>("Test_Pet"));
 
-            // TODO(김익환): 펫 생성 코드 수정
-            petInstance.GetComponent<PetController>().Init(petId, _playerEntity, _wagon, _petSkillMaker, _playerEntity, _playerEntity);
+            petInstance.GetComponent<PetController>().Init(_selectedPetIds[index]
+                            , _playerEntity, _wagon
+                            , _petSkillMaker
+                            , _playerEntity, _playerEntity
+                            , 30 + index * 10);
 
             petControllers.Add(petInstance.GetComponent<PetController>());
         }
@@ -126,9 +130,10 @@ public class ConvoyManager
     private void OpenConvoyHuds()
     {
 
-        if (_wagonViewModel != null)
+        var wagonVm = GameManager.Network.WagonService.GetWagonViewModel();
+        if (wagonVm != null)
         {
-            GameManager.UI.OpenConvoyHudUI(_wagonViewModel, _selectedQuestId);
+            GameManager.UI.OpenConvoyHudUI(wagonVm, _selectedQuestId);
         }
 
         var partyHud = GameManager.UI.OpenPartyHudUI();

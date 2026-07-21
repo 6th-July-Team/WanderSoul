@@ -125,8 +125,6 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     private void InitNonAsync()
     {
-        _networkManager.InitNetworkService();
-
         _soundManager.Init(this.gameObject);
         PoolInit();
 
@@ -214,6 +212,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         // TODO 간단 로딩 실행
         string resultVillageId = _convoyManager.Release();
         EnterVillage(resultVillageId);
+        _networkManager.InGameServiceRelease();
     }
 
     #region TEST Functions
