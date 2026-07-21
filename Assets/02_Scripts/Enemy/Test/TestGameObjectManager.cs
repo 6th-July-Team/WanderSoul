@@ -28,7 +28,6 @@ public class TestGameObjectManager : MonoBehaviour
 
     private void Start()
     {
-        GameManager.Instance.OnLoadEnded += SpawnAllEnemies;
     }
 
     private void SpawnAllEnemies()
