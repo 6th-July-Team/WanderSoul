@@ -24,7 +24,7 @@ public class PetProjectileSkill : IPetActiveSkillExecution
 
         projectileInstance.Init(new ProjectileStruct
         {
-            Speed = 5f,
+            Speed = context.PetActiveSkillData.ProjectileSpeed,
             Damage = context.PetActiveSkillData.Power,
             Direction = direct,
             DamageType = context.PetActiveSkillData.GetDamageType(),
