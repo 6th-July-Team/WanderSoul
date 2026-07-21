@@ -2,38 +2,29 @@
 
 public class NetworkManager
 {
-    public NetworkPlayerService PlayerService { get; private set; }
-    public NetworkWagonService WagonService { get; private set; }
+    public NetworkPlayerService PlayerService { get; private set; } = new();
+    public NetworkWagonService WagonService { get; private set; } = new();
+    public NetworkEnemyService EnemyService { get; private set; } = new();
 
-    public void InitNetworkService()
+    public void InGameServiceRelease()
     {
-        PlayerService = new();
-        WagonService = new();
+        PlayerService.Dispose();
+        WagonService.Dispose();
     }
 
-    public void RequestCreatePlayer()
+    public PlayerViewModel RequestCreatePlayer()
     {
         // 맵 진입 시 플레이어를 요청
-        var playerVm = PlayerService.GetPlayerViewModel();
-
-        // 응답 받았다고 가정한다
-        OnRecvCreateLocalPlayer(playerVm);
+        return PlayerService.GetPlayerViewModel();
     }
 
-    public void OnRecvCreateLocalPlayer(PlayerViewModel playerVm)
+    public WagonViewModel RequestCreateWagon()
     {
-        
+        return WagonService.GetWagonViewModel();
     }
 
-    public void RequestCreateWagon(string wagonId)
+    public EnemyViewModel CreateEnemyViewModel(string enemyId)
     {
-        var wagonVm = WagonService.GetWagonViewModel(wagonId);
-
-        OnRecvCreateLocalWagon(wagonVm);
-    }
-
-    public void OnRecvCreateLocalWagon(WagonViewModel wagonVm)
-    {
-        
+        return EnemyService.CreateEnemyViewModel(enemyId);
     }
 }

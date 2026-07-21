@@ -31,4 +31,9 @@ public class NetworkPlayerService
 
         return _playerViewModel;
     }
+
+    public void Dispose()
+    {
+        _playerViewModel.Dispose();
+    }
 }
