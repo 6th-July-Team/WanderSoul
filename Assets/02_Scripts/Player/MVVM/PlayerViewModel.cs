@@ -13,6 +13,12 @@ public class PlayerViewModel : BaseViewModel<PlayerModel>
     public float GetMp => _model.MP;
     public float MaxMP => _statController.GetValue(StatType.MaxMana);
     public float MaxHP => _statController.GetValue(StatType.MaxHealth);
+    public float GetExp => _model.EXP;
+
+    public void SetExp(float exp)
+    {
+        _model.EXP += exp;
+    }
 
     public void SetHp(float hp)
     {
