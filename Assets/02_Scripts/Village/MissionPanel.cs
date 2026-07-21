@@ -1,4 +1,6 @@
-﻿using TMPro;
+﻿using NUnit.Framework.Interfaces;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,20 +12,50 @@ public class MissionPanel : MonoBehaviour
     [SerializeField] private Button _startMissionButton;
     [SerializeField] private TMP_Text _startMissionButtonText;
 
-    private int _selectedQuestNumber;
+    private readonly List<QuestData> _quests = new();
+
+    private int _selectedQuestIndex = -1;
     private bool _isMissionConfirmed;
 
     private void OnEnable()
     {
-        _selectedQuestNumber = 0;
+        _selectedQuestIndex = -1;
         _isMissionConfirmed = false;
 
-        _questOneButton.interactable = true;
-        _questTwoButton.interactable = true;
-        _questThreeButton.interactable = true;
+        LoadQuests();
 
         _startMissionButton.interactable = false;
-        _startMissionButtonText.text = "Start Mission";
+        _startMissionButtonText.text = "Start Misson";
+    }
+
+    private void LoadQuests()
+    {
+        _quests.Clear();
+
+        foreach (QuestData questData in GameManager.DataTable.QuestDataTable.Values)
+        {
+            _quests.Add(questData);
+        }
+
+        _quests.Sort((left,right) => string.Compare(left.Id,right.Id));
+
+        SetQuestButton(_questOneButton, 0);
+        SetQuestButton(_questTwoButton, 1);
+        SetQuestButton(_questThreeButton, 2);
+    }
+
+    private void SetQuestButton(Button button, int questIndex)
+    {
+        bool hasQuest = questIndex < _quests.Count;
+
+        button.interactable = hasQuest;
+
+        TMP_Text buttonText = button.GetComponentInChildren<TMP_Text>();
+
+        if (buttonText != null)
+        {
+            buttonText.text = hasQuest ? _quests[questIndex].Name : "-";
+        }
     }
 
     public void SelectQuest(int questNumber)
@@ -33,29 +65,55 @@ public class MissionPanel : MonoBehaviour
             return;
         }
 
-        _selectedQuestNumber = questNumber;
+        int questIndex = questNumber - 1;
 
-        _questOneButton.interactable = questNumber != 1;
-        _questTwoButton.interactable = questNumber != 2;
-        _questThreeButton.interactable = questNumber != 3;
+        if (questIndex < 0 || questIndex >= _quests.Count)
+        {
+            return;
+        }
+
+        _selectedQuestIndex = questIndex;
+
+        RefreshQuestButtons();
 
         _startMissionButton.interactable = true;
 
-        Debug.Log($"Selected Quest: {_selectedQuestNumber}");
+        QuestData selectedQuest = _quests[_selectedQuestIndex];
+        Debug.Log($"Selected Quest: {selectedQuest.Id} / {selectedQuest.Name}");
     }
 
     public void StartMission()
     {
-        if (_selectedQuestNumber == 0)
+        if (_selectedQuestIndex < 0)
         {
             return;
         }
 
         _isMissionConfirmed = true;
 
+        RefreshQuestButtons();
+
         _startMissionButton.interactable = false;
         _startMissionButtonText.text = "Already Selected";
 
-        Debug.Log($"Starting Quest: {_selectedQuestNumber}");
+        QuestData selectedQuest = _quests[_selectedQuestIndex];
+        Debug.Log($"Selected Quest: {selectedQuest.Id} / {selectedQuest.Name}");
+    }
+
+    private void RefreshQuestButtons()
+    {
+        _questOneButton.interactable = CanSelectQuest(0);
+        _questTwoButton.interactable = CanSelectQuest(1);
+        _questThreeButton.interactable = CanSelectQuest(2);
+    }
+
+    private bool CanSelectQuest(int questIndex)
+    {
+        if (_isMissionConfirmed || questIndex >= _quests.Count)
+        {
+            return false;
+        }
+
+        return questIndex != _selectedQuestIndex;
     }
 }
