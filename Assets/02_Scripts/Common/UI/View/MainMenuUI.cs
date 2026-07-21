@@ -73,22 +73,14 @@ public class MainMenuUI : BaseUI
 
     private void CreateTestPetList()
     {
-        string[] testPetDataIdArray = new string[]
-        {
-        "pet_fire_001", "pet_water_002", "pet_earth_003", "pet_air_004",
-        "pet_fire_001", "pet_water_002", "pet_earth_003", "pet_air_004",
-        "pet_fire_001"
-        };
-
         long uniqueId = 1;
 
-        foreach (string petDataId in testPetDataIdArray)
+        foreach (var petData in GameManager.DataTable.PetDataTable.Values)
         {
             var pet = new PetSlotModel();
             pet.PetUniqueId = uniqueId;
-            pet.PetDataId = petDataId;
+            pet.PetDataId = petData.Id;
             pet.Level = 1;
-
             _petInventoryModelTest.AddPet(pet);
             uniqueId++;
         }
