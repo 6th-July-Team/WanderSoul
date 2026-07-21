@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Splines;
-using Cysharp.Threading.Tasks;
 
 public class ConvoyManager
 {
     private PetSkillMaker _petSkillMaker;
     private string _selectedQuestId;
+    private WagonViewModel _wagonViewModel;
     private List<string> _selectedPetIds = new();
 
     private Wagon _wagon;
@@ -80,10 +80,10 @@ public class ConvoyManager
     private void SpawnWagon(SplineContainer splineContainer, string wagonId)
     {
         GameManager.Network.RequestCreateWagon(wagonId);
-        var wagonViewModel = GameManager.Network.WagonService.GetWagonViewModel(wagonId);
+        _wagonViewModel = GameManager.Network.WagonService.GetWagonViewModel(wagonId);
 
         _wagon = Object.Instantiate(Utils.ResourcesLoad<Wagon>("Wagon_ProtoType"));
-        _wagon.Init(wagonId, wagonViewModel);
+        _wagon.Init(wagonId, _wagonViewModel);
         _wagon.SetSpline(splineContainer);
     }
 
@@ -126,9 +126,9 @@ public class ConvoyManager
     private void OpenConvoyHuds()
     {
 
-        if (_wagon != null)
+        if (_wagonViewModel != null)
         {
-            GameManager.UI.OpenConvoyHudUI(_wagon.ViewModel, _selectedQuestId);
+            GameManager.UI.OpenConvoyHudUI(_wagonViewModel, _selectedQuestId);
         }
 
         var partyHud = GameManager.UI.OpenPartyHudUI();
@@ -136,16 +136,37 @@ public class ConvoyManager
         if (partyHud != null)
         {
             partyHud.SetWagon("마차", 1f);
-            partyHud.AddPet("펫1", 1f);
+
+            for (int i = 0; i < _selectedPetIds.Count; i++)
+            {
+                var petData = GameManager.DataTable.GetPetData(_selectedPetIds[i]);
+                if (petData == null)
+                {
+                    continue;
+                }
+
+                partyHud.AddPet(petData.Name, 1f);
+            }
+        }
+
+        var playerVm = GameManager.Network.PlayerService.GetPlayerViewModel();
+        if (playerVm != null)
+        {
+            GameManager.UI.OpenPlayerHudUI(playerVm);
         }
 
         var resourceModel = new ResourceModel();
 
         resourceModel.Soul = 5;
         resourceModel.Money = 999999;
-        GameManager.UI.OpenResourceHudUI(resourceModel);
+
+        var resourceHud = GameManager.UI.OpenResourceHudUI(resourceModel);
+
+        if (resourceHud != null)
+        {
+            resourceHud.SetConvoyLayout();
+        }
 
         // TODO(이태영): 스킬 HUD - PlayerCombatController 접근 방법 확인 필요
-        // TODO(이태영): 플레이어 HP/MP HUD - ManaPool, HP 소스 확인 필요
     }
 }
