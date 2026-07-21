@@ -9,6 +9,7 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
 
     public Vector3 Position => transform.position;
+    public Transform Transform => this.transform;
     public EntityType EntityType => EntityType.Pet;
     public bool IsAlive => _petViewModel.GetHp > 0;
     public PetElement Element => __SOPetDefinition.Element;
@@ -49,7 +50,7 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
         _combatController = petSkillMaker.CreateCombatController(petId, _petStatController
             , playerEffectReceiver, playerHealable, StatModifierReceiver
-            , this);
+            , this, this);
 
         // TODO(김익환): SO 제거
         _petCommandController = new(playerAnchor, wagonAnchor, this, __SOPetSearch, 32);

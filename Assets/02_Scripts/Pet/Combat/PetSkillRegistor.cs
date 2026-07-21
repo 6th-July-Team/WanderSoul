@@ -21,6 +21,8 @@ public static class PetSkillRegistor
                 createInfo.PlayerReceiver,
                 createInfo.PetReceiver
             ));
+
+        
     }
 
     public static void RegisterAllPassiveSkills(PetPassiveSkillExecutionRegistry registry)
@@ -33,5 +35,14 @@ public static class PetSkillRegistor
                 createInfo.PlayerReceiver.StatModifierReceiver,
                 createInfo.PetModifierReceiver
             ));
+
+        registry.Register("AreaBuff"
+           , (createInfo) => new PetAreaBuffPassive
+           (
+               createInfo.EffectData,
+               createInfo.PetPassiveSkillData,
+               createInfo.PlayerReceiver.StatModifierReceiver,
+               createInfo.IPet
+           ));
     }
 }

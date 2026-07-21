@@ -47,12 +47,13 @@ public struct PetSkillCreateInfo
     public StatusEffectData EffectData;
 
     public IStatusEffectReceiver PetReceiver;
+    public IPet IPet;
 
     private PetSkillCreateInfo(StatusEffectMaker statusEffectMaker
         , IStatusEffectReceiver playerReceiver, IHealable playerHealable
         , IStatModifierReceiver petModifierReceiver
         , PetActiveSkillData petSkillData, PetPassiveSkillData petPassiveSkillData, StatusEffectData effectData
-        , IStatusEffectReceiver petReceiver)
+        , IStatusEffectReceiver petReceiver, IPet iPet)
     {
         StatusEffectMaker = statusEffectMaker;
 
@@ -66,6 +67,7 @@ public struct PetSkillCreateInfo
         EffectData = effectData;
 
         PetReceiver = petReceiver;
+        IPet = iPet;
     }
 
     public static PetSkillCreateInfo CreateActiveSkillInfo(StatusEffectMaker statusEffectMaker
@@ -75,15 +77,15 @@ public struct PetSkillCreateInfo
         , IStatusEffectReceiver petReceiver)
     {
         return new PetSkillCreateInfo(statusEffectMaker, playerReceiver, playerHealable
-            , petModifierReceiver, petActiveSkillData, null, effectDatas, petReceiver);
+            , petModifierReceiver, petActiveSkillData, null, effectDatas, petReceiver, null);
     }
 
     public static PetSkillCreateInfo CreatePassiveSkillInfo(StatusEffectMaker statusEffectMaker
         , IStatusEffectReceiver playerReceiver, IHealable playerHealable
         , IStatModifierReceiver petModifierReceiver
-        , PetPassiveSkillData petPassiveSkillData, StatusEffectData effectDatas)
+        , PetPassiveSkillData petPassiveSkillData, StatusEffectData effectDatas, IPet iPet)
     {
         return new PetSkillCreateInfo(statusEffectMaker, playerReceiver, playerHealable
-            , petModifierReceiver, null, petPassiveSkillData, effectDatas, null);
+            , petModifierReceiver, null, petPassiveSkillData, effectDatas, null, iPet);
     }
 }

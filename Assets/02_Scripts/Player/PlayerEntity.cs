@@ -14,6 +14,7 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
     public EntityType EntityType => EntityType.Player;
 
     public Vector3 Position => transform.position;
+    public Transform Transform => this.transform;
 
     public bool IsHealthFull => _testIsHealthFull;
 

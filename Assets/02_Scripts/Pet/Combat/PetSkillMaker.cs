@@ -15,7 +15,7 @@ public class PetSkillMaker
 
     public PetCombatController CreateCombatController(string id, PetStatController statController
         , IStatusEffectReceiver playerReceiver, IHealable playerHealable
-        , IStatModifierReceiver petModifierReceiver, IStatusEffectReceiver petReceiver)
+        , IStatModifierReceiver petModifierReceiver, IStatusEffectReceiver petReceiver, IPet iPet)
     {
         PetCombatController combatController = new();
 
@@ -31,7 +31,7 @@ public class PetSkillMaker
 
         foreach (var skillId in petData.PassiveSkillIds)
         {
-            CreatePassiveSkill(skillId, combatController, playerReceiver, playerHealable, petModifierReceiver);
+            CreatePassiveSkill(skillId, combatController, playerReceiver, playerHealable, petModifierReceiver, iPet);
         }
 
         return combatController;
@@ -68,7 +68,7 @@ public class PetSkillMaker
 
     private void CreatePassiveSkill(string skillId, PetCombatController combatController
         , IStatusEffectReceiver playerReceiver, IHealable playerHealable
-        , IStatModifierReceiver petModifierReceiver)
+        , IStatModifierReceiver petModifierReceiver, IPet iPet)
     {
         PetPassiveSkillData skillData = GameManager.DataTable.GetPetPassiveSkillData(skillId);
 
@@ -82,7 +82,8 @@ public class PetSkillMaker
 
         PetSkillCreateInfo createInfo 
             = PetSkillCreateInfo.CreatePassiveSkillInfo(_statusEffectMaker, playerReceiver, playerHealable
-                                                        , petModifierReceiver, skillData, effectData);
+                                                        , petModifierReceiver, skillData, effectData
+                                                        , iPet);
 
         IPetPassiveSkillExecution execution = _passiveRegistry.Create(skillData.ExecutionId, createInfo);
 
