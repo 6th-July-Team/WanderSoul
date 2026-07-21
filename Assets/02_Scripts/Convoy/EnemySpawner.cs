@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Profiling.HierarchyFrameDataView;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class EnemySpawner : MonoBehaviour
             _spawnData[i] = GameManager.DataTable.GetAutoSpawnData(spawnIds[i]);
         }
 
-        _wagonViewModel = GameManager.Network.WagonService.GetWagonViewModel();
+        _wagonViewModel = GameManager.Network.RequestCreateWagon();
 
         _player = player;
         _wagon = wagon;
@@ -77,11 +78,14 @@ public class EnemySpawner : MonoBehaviour
                 Random.Range(spawnArea.bounds.min.z, spawnArea.bounds.max.z)
             );
 
-            //var instanceEnemy = GameManager.Pool.SpawnFromPool(enemyId, spawnPosition);
-            //if (instanceEnemy.TryGetComponent(out IEnemy enemy))
-            //{
-            //    enemy.Init(_player.gameObject, _wagon.gameObject);
-            //}
+            var instanceEnemy = GameManager.Pool.SpawnFromPool(enemyId, spawnPosition);
+
+            if (instanceEnemy.TryGetComponent(out EnemyView enemyView))
+            {
+                var viewModel = GameManager.Network.CreateEnemyViewModel(enemyId);
+                enemyView.BindViewModel(viewModel);
+                enemyView.Init(_player.gameObject, _wagon.gameObject);
+            }
         }
     }
 }

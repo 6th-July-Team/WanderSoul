@@ -82,7 +82,7 @@ public class ConvoyManager
     private void SpawnWagon(SplineContainer splineContainer)
     {
         GameManager.Network.RequestCreateWagon();
-        var wagonViewModel = GameManager.Network.WagonService.GetWagonViewModel();
+        var wagonViewModel = GameManager.Network.RequestCreateWagon();
 
         _wagon = GameObject.Instantiate(Utils.ResourcesLoad<Wagon>("Wagon_ProtoType"));
         _wagon.Init(wagonViewModel, _playerEntity);
@@ -92,7 +92,7 @@ public class ConvoyManager
     private void SpawnPlayer()
     {
         GameManager.Network.RequestCreatePlayer();
-        var playerViewModel = GameManager.Network.PlayerService.GetPlayerViewModel();
+        var playerViewModel = GameManager.Network.RequestCreatePlayer();
         var playerStatController = GameManager.Network.PlayerService.StatController;
 
         _playerEntity = GameObject.Instantiate(Utils.ResourcesLoad<PlayerEntity>("Test_Mercenary"));
