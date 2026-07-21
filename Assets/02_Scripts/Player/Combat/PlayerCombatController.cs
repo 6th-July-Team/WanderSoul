@@ -87,6 +87,11 @@ public class PlayerCombatController : MonoBehaviour
         }
     }
 
+    public float GetSkillCoolTime(SkillSlot slot)
+    {
+        return _skillBuild.GetSkillCoolTime(slot);
+    }
+
     public void SetSkill(SkillSlot slot, PlayerSkill skill)
     {
         _skillBuild.SetSkill(slot, skill);

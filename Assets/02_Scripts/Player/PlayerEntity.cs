@@ -80,6 +80,11 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
         return 0f;// StatusEffects.Heal(amount);
     }
 
+    public float GetSkillCoolTime(SkillSlot skillSlot)
+    {
+        return _combatController.GetSkillCoolTime(skillSlot);
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.TryGetComponent(out IBarrierable barrierable))
