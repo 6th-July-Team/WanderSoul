@@ -261,8 +261,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   _skipStartupUIForTest: 0
-  TestSkillDefinition_ScholarBasicSkill: {fileID: 0}
-  TestSOPetSkillInfo: {fileID: 0}
 --- !u!4 &154838557
 Transform:
   m_ObjectHideFlags: 0
@@ -386,7 +384,7 @@ Transform:
   m_GameObject: {fileID: 240073335}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.5, y: 0.95, z: -9.7}
+  m_LocalPosition: {x: -30.1, y: 0.95, z: 36.21}
   m_LocalScale: {x: 6.9991503, y: 3.0011, z: 4.24335}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -633,6 +631,9 @@ MonoBehaviour:
   MeleeEnemySummonCount: 1
   ProjectileEnemySummonCount: 1
   AreaDelayedEnemySummonCount: 1
+  MeleeWagonOnlyEnemySummonCount: 1
+  ProjectilePlayerOnlyEnemySummonCount: 1
+  ProjectilePlayerOnlyTwoEnemySummonCount: 1
 --- !u!4 &327632112
 Transform:
   m_ObjectHideFlags: 0
@@ -1535,7 +1536,7 @@ Transform:
   m_GameObject: {fileID: 1740318924}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 16.11, y: -0.14, z: 33}
+  m_LocalPosition: {x: -34.4, y: -0.14, z: 33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

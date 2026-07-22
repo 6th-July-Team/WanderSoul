@@ -1,4 +1,4 @@
-[
+﻿[
   {
     "Id": "Test",
     "InitSize": 200
@@ -13,6 +13,19 @@
   },
   {
     "Id": "EnemyDropObject/Soul/One",
+    "InitSize": 100
+  },
+  {
+    "Id": "Enemy/Prefab/WagonOnly/Melee/Test_03",
+    "InitSize": 100
+  },
+  {
+    "Id": "Enemy/Prefab/PlayerOnly/Projectile/Test_04",
+    "InitSize": 100
+  },
+  {
+
+    "Id": "Enemy/Prefab/PlayerOnly/Projectile/Test_06",
     "InitSize": 100
   }
 ]
