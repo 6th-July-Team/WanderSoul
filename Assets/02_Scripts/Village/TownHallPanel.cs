@@ -29,7 +29,7 @@ public class TownHallPanel : MonoBehaviour
 
     private void RefreshTexts()
     {
-        _villageLevelText.text = $"Village Level: {_villageLevel}";
-        _upgradeCostText.text = $"Upgrade Cost: {_upgradeCost}";
+        _villageLevelText.text = $"마을 레벨: {_villageLevel}";
+        _upgradeCostText.text = $"업그레이드 비용: {_upgradeCost}";
     }
 }
