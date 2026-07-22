@@ -132,7 +132,7 @@ public class ConvoyManager
         var playerViewModel = GameManager.Network.RequestCreatePlayer();
         var playerStatController = GameManager.Network.PlayerService.StatController;
 
-        _playerEntity = GameObject.Instantiate(Utils.ResourcesLoad<PlayerEntity>("Test_Mercenary"));
+        _playerEntity = GameObject.Instantiate(Utils.ResourcesLoad<PlayerEntity>("Test_Scholar"));
 
         string playerId = "player_scholar"; // 현재 플레이어 선택 불가능하여, 학자가 고정되어 있음.
         _playerEntity.Init(playerId, playerViewModel, playerStatController, _playerSkillMaker);
@@ -148,7 +148,7 @@ public class ConvoyManager
 
             var viewModel = GameManager.Network.CreatePetViewModel(_selectedPetIds[index]);
 
-            petInstance.GetComponent<PetController>().Init("pet_fire_001"/*_selectedPetIds[index]*/
+            petInstance.GetComponent<PetController>().Init("pet_earth_003"/*_selectedPetIds[index]*/
                             , _playerEntity, _wagon
                             , _petSkillMaker
                             , _playerEntity, _playerEntity

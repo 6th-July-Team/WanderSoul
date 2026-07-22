@@ -20,7 +20,7 @@ public class ScholarElementalExplosion : IPlayerSkillExecution, ISkillRangeCheck
         _skillRangeIndicator.Hide();
     }
 
-    public void Execute(PlayerSkillUseContext context, PlayerSkillData SkillData, float damage)
+    public void Execute(PlayerSkillUseContext context, PlayerSkillData SkillData, float damage, float coolTimeReductionOfStat)
     {
         _skillRangeIndicator.Hide();
 
@@ -42,6 +42,14 @@ public class ScholarElementalExplosion : IPlayerSkillExecution, ISkillRangeCheck
 
             target.GetComponent<IDamageable>().TakeDamage(damageInfo);
         }
+
+        var viewModel = GameManager.Network.RequestPlayerSkillViewModel();
+
+        float coolTime = context.PlayerSkillModifier.GetValue(SkillData.Id, SkillData.GetSkillSlot()
+            , SkillValueType.Cooldown, SkillData.Cooldown) - coolTimeReductionOfStat;
+
+
+        viewModel.UseSkill(SkillData.GetSkillSlot(), coolTime);
     }
 
     private void InitIndicator()

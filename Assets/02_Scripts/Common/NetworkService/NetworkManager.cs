@@ -15,8 +15,17 @@ public class NetworkManager
 
     public PlayerViewModel RequestCreatePlayer()
     {
-        // 맵 진입 시 플레이어를 요청
         return PlayerService.GetPlayerViewModel();
+    }
+
+    public PlayerSkillViewModel RequestPlayerSkillViewModel()
+    {
+        return PlayerService.GetPlayerSkillViewModel();
+    }
+
+    public PlayerOutGameViewModel RequestPlayerOutGameViewModel()
+    {
+        return PlayerService.GetPlayerOutGameViewModel();
     }
 
     public WagonViewModel RequestCreateWagon()

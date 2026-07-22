@@ -8,10 +8,9 @@ public class PlayerCombatController : MonoBehaviour
     private PlayerInputHandle _inputHandle;
     private PlayerAnimationController _animationController;
 
-    private PlayerStatController _statController;
-
     // skill
     private PlayerClassSkillBuild _skillBuild;
+    private PlayerSkillModifier _skillModifier;
 
     private bool _isInitialized = false;
 
@@ -26,10 +25,9 @@ public class PlayerCombatController : MonoBehaviour
         _animationController = GetComponent<PlayerAnimationController>();
     }
 
-    public void Init(PlayerStatController statController, PlayerClassSkillBuild skillBuild
-        , PlayerSkillModifier skillModifier)
+    public void Init(PlayerClassSkillBuild skillBuild , PlayerSkillModifier skillModifier)
     {
-        _statController = statController;
+        _skillModifier = skillModifier;
 
         _skillBuild = skillBuild;
         _skillBuild.Init(skillModifier);
@@ -89,11 +87,6 @@ public class PlayerCombatController : MonoBehaviour
     public float GetSkillCoolTime(SkillSlot slot)
     {
         return _skillBuild.GetSkillCoolTime(slot);
-    }
-
-    public void SetSkill(SkillSlot slot, PlayerSkill skill)
-    {
-        _skillBuild.SetSkill(slot, skill);
     }
 
     public PlayerSkillData GetSkillInfo(SkillSlot slot)
@@ -157,7 +150,8 @@ public class PlayerCombatController : MonoBehaviour
 
     private PlayerSkillUseContext CreateSkillUseContext()
     {
-        return new PlayerSkillUseContext(_aimHandler.transform, _aimHandler.AimDirection, _aimHandler.AimWorldPoint);
+        return new PlayerSkillUseContext(_aimHandler.transform, _aimHandler.AimDirection, _aimHandler.AimWorldPoint
+            , _skillModifier);
     }
 
     public void EndAnimationEvent()

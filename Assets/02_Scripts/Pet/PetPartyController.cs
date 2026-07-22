@@ -40,6 +40,12 @@ public class PetPartyController : IPetPartyReader
     {
         int elementMask = 0;
 
+        if(_pets.Count == 0)
+            return PetElement.None;
+
+        if (_pets.Count == 1)
+            return _pets[0].Element;
+
         foreach (PetController pet in _pets)
         {
             int bitPosition = 1 << (int)pet.Element;

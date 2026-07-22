@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerStatController
+public class PlayerStatController : IDisposable
 {
     private readonly Dictionary<StatType, float> _baseValues = new();
     private readonly Dictionary<int, StatModifier> _modifiers = new();
@@ -100,5 +100,10 @@ public class PlayerStatController
             StatType.MoveSpeed => Math.Max(0f, value),
             _ => value
         };
+    }
+
+    public void Dispose()
+    {
+        ClearAll();
     }
 }

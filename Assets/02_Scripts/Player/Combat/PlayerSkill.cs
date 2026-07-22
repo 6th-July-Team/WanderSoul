@@ -3,17 +3,18 @@
 public class PlayerSkill
 {
     public PlayerSkillData SkillData { get; private set; }
-    public float RemainingCooldTime => _remainingCooldtime;
-    public bool IsReady => _remainingCooldtime <= 0f;
+    public float RemainingCooldTime => _skillViewModel.GetSkillCoolTime(_slot);
+    public bool IsReady => RemainingCooldTime <= 0f;
 
     private PlayerStatController _statController;
     private PlayerSkillModifier _skillModifier;
 
     private IPlayerSkillExecution _execution;
+
     private PlayerViewModel _playerViewModel;
+    private PlayerSkillViewModel _skillViewModel;
 
     private SkillSlot _slot;
-    private float _remainingCooldtime;
 
     private bool _isInitialized = false;
 
@@ -27,6 +28,9 @@ public class PlayerSkill
         _playerViewModel = playerViewModel;
         _execution = execution;
         _statController = statController;
+
+        _skillViewModel = GameManager.Network.RequestPlayerSkillViewModel();
+        _skillViewModel.SetSkill(_slot, 0f);
     }
 
     public void Init(PlayerSkillModifier skillModifier)
@@ -38,10 +42,10 @@ public class PlayerSkill
 
     public void Update(float deltaTime)
     {
-        if (_remainingCooldtime <= 0f || !_isInitialized)
+        if (IsReady || !_isInitialized)
             return;
 
-        _remainingCooldtime = Mathf.Max(0f, _remainingCooldtime - deltaTime);
+        _skillViewModel.Update(_slot, deltaTime);
     }
 
     public void CheckSkillRange(PlayerSkillUseContext context)
@@ -70,9 +74,9 @@ public class PlayerSkill
 
         float skillDamage = GetSkillDamage() * _statController.GetValue(StatType.AdditionalDamage);
 
-        _remainingCooldtime = GetSkillCooldown() - _statController.GetValue(StatType.CooldownReduction);
-        Debug.Log($"{SkillData.Id} 스킬 : 쿨타임 = {_remainingCooldtime}");
-        _execution.Execute(context, SkillData, skillDamage);
+        float coolTimeReductionOfStat = _statController.GetValue(StatType.CooldownReduction);
+
+        _execution.Execute(context, SkillData, skillDamage, coolTimeReductionOfStat);
         
         Debug.Log($"스킬 사용 : {SkillData.Id}");
         return true;
@@ -81,10 +85,5 @@ public class PlayerSkill
     public float GetSkillDamage()
     {
         return _skillModifier.GetValue(SkillData.Id, _slot, SkillValueType.Power, SkillData.Power);
-    }
-
-    public float GetSkillCooldown()
-    {
-        return _skillModifier.GetValue(SkillData.Id, _slot, SkillValueType.Cooldown, SkillData.Cooldown);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class ScholarElementalArrow : IPlayerSkillExecution
 {
@@ -19,10 +20,21 @@ public class ScholarElementalArrow : IPlayerSkillExecution
         };
     }
 
-    public void Execute(PlayerSkillUseContext context, PlayerSkillData SkillData, float damage)
+    public void Execute(PlayerSkillUseContext context, PlayerSkillData SkillData, float damage, float coolTimeReductionOfStat)
     {
         PetElement element = _petPartyReader.GetPriorityPetElement();
-        _variants[element].Fire(context, damage, SkillData);
+        var selectedSkillData = GameManager.DataTable.GetPlayerSkillData(SkillData.Id + "_" + element.ToString());
+
+        _variants[element].Fire(context, damage, selectedSkillData);
+
+        var viewModel = GameManager.Network.RequestPlayerSkillViewModel();
+
+        float coolTime = context.PlayerSkillModifier.GetValue(selectedSkillData.Id, selectedSkillData.GetSkillSlot()
+            , SkillValueType.Cooldown, selectedSkillData.Cooldown) - coolTimeReductionOfStat;
+
+
+        viewModel.UseSkill(selectedSkillData.GetSkillSlot(), coolTime);
     }
+
     public void CheckSkillRange(PlayerSkillUseContext context) { }
 }
