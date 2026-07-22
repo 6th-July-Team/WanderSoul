@@ -1,6 +1,6 @@
 [
   {
-    "Id": "skill_scholar_basic_fire",
+    "Id": "skill_scholar_basic_Fire",
     "Name": "화염 화살",
     "Description": "화염 화살을 발사해 적중 지점 주변에 작은 폭발 피해를 줍니다.",
     "Power": 18,
@@ -23,7 +23,7 @@
     "stringSkillSlot": null
   },
   {
-    "Id": "skill_scholar_basic_water",
+    "Id": "skill_scholar_basic_Water",
     "Name": "냉기 화살",
     "Description": "냉기 화살을 발사해 적을 관통하고 이동을 늦추는 기본 공격입니다.",
     "Power": 15,
@@ -46,7 +46,7 @@
     "stringSkillSlot": null
   },
   {
-    "Id": "skill_scholar_basic_earth",
+    "Id": "skill_scholar_basic_Earth",
     "Name": "암석 화살",
     "Description": "느리지만 강한 암석 화살을 발사해 높은 단일 피해를 줍니다.",
     "Power": 28,
@@ -69,7 +69,7 @@
     "stringSkillSlot": null
   },
   {
-    "Id": "skill_scholar_basic_air",
+    "Id": "skill_scholar_basic_Air",
     "Name": "번개 화살",
     "Description": "빠른 번개 화살을 짧은 간격으로 발사하는 기본 공격입니다.",
     "Power": 10,
@@ -92,7 +92,7 @@
     "stringSkillSlot": null
   },
   {
-    "Id": "skill_scholar_basic_magic",
+    "Id": "skill_scholar_basic_Magic",
     "Name": "마력 화살",
     "Description": "균형 잡힌 마력 화살을 발사하고 일정 공격마다 강화 화살로 이어지는 기본 공격입니다.",
     "Power": 20,

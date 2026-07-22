@@ -12,6 +12,7 @@ public class PlayerCombatController : MonoBehaviour
 
     // skill
     private PlayerClassSkillBuild _skillBuild;
+    private PlayerSkillModifier _skillModifier;
 
     private bool _isInitialized = false;
 
@@ -30,6 +31,8 @@ public class PlayerCombatController : MonoBehaviour
         , PlayerSkillModifier skillModifier)
     {
         _statController = statController;
+
+        _skillModifier = skillModifier;
 
         _skillBuild = skillBuild;
         _skillBuild.Init(skillModifier);
@@ -157,7 +160,8 @@ public class PlayerCombatController : MonoBehaviour
 
     private PlayerSkillUseContext CreateSkillUseContext()
     {
-        return new PlayerSkillUseContext(_aimHandler.transform, _aimHandler.AimDirection, _aimHandler.AimWorldPoint);
+        return new PlayerSkillUseContext(_aimHandler.transform, _aimHandler.AimDirection, _aimHandler.AimWorldPoint
+            , _skillModifier);
     }
 
     public void EndAnimationEvent()

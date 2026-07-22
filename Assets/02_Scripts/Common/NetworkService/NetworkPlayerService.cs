@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class NetworkPlayerService
 {
@@ -7,6 +8,7 @@ public class NetworkPlayerService
     private PlayerViewModel _playerViewModel;
     private PlayerStatController _statController;
 
+    private PlayerSkillViewModel _playerSkillViewModel;
 
     public PlayerViewModel GetPlayerViewModel()
     {
@@ -16,6 +18,30 @@ public class NetworkPlayerService
         }
 
         return _playerViewModel;
+    }
+
+    public PlayerSkillViewModel GetPlayerSkillViewModel()
+    {
+        if (_playerSkillViewModel == null)
+        {
+            CreatePlayerSkillViewModel();
+        }
+
+        return _playerSkillViewModel;
+    }
+
+    public void Dispose()
+    {
+        _playerViewModel.Dispose();
+    }
+
+    private PlayerSkillViewModel CreatePlayerSkillViewModel()
+    {
+        var model = new PlayerSkillModel();
+        var viewModel = new PlayerSkillViewModel(model);
+        _playerSkillViewModel = viewModel;
+
+        return viewModel;
     }
 
     private PlayerViewModel CreatePlayerViewModel()
@@ -30,10 +56,5 @@ public class NetworkPlayerService
         _playerViewModel = new PlayerViewModel(playerModel, _statController);
 
         return _playerViewModel;
-    }
-
-    public void Dispose()
-    {
-        _playerViewModel.Dispose();
     }
 }
