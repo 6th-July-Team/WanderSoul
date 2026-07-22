@@ -3,7 +3,7 @@
     "Id": "skill_scholar_basic_Fire",
     "Name": "화염 화살",
     "Description": "화염 화살을 발사해 적중 지점 주변에 작은 폭발 피해를 줍니다.",
-    "Power": 18,
+    "Power": 15,
     "Cooldown": 0.6,
     "ManaCost": 0,
     "ProjectileDuration": 3,
@@ -15,12 +15,13 @@
     "BarrierAbsorbAmount": null,
     "stringTargetType": "Enemy",
     "stringDamageType": "Fire",
-    "StatusEffectId": "debuff_burn",
+    "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null
+    "stringSkillSlot": null,
+    "ExtraDamage": 10
   },
   {
     "Id": "skill_scholar_basic_Water",
@@ -38,12 +39,13 @@
     "BarrierAbsorbAmount": null,
     "stringTargetType": "Enemy",
     "stringDamageType": "Cold",
-    "StatusEffectId": "debuff_frost",
+    "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null
+    "stringSkillSlot": null,
+    "ExtraDamage": null
   },
   {
     "Id": "skill_scholar_basic_Earth",
@@ -56,7 +58,7 @@
     "ProjectileSpeed": 9,
     "Pierce": 0,
     "MaxProjectileCount": 1,
-    "Radius": 1.2,
+    "Radius": null,
     "CastRange": 10,
     "BarrierAbsorbAmount": null,
     "stringTargetType": "Enemy",
@@ -66,7 +68,8 @@
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null
+    "stringSkillSlot": null,
+    "ExtraDamage": null
   },
   {
     "Id": "skill_scholar_basic_Air",
@@ -89,7 +92,8 @@
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null
+    "stringSkillSlot": null,
+    "ExtraDamage": null
   },
   {
     "Id": "skill_scholar_basic_Magic",
@@ -112,7 +116,8 @@
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null
+    "stringSkillSlot": null,
+    "ExtraDamage": null
   },
   {
     "Id": "skill_scholar_special_fire",
@@ -130,12 +135,13 @@
     "BarrierAbsorbAmount": null,
     "stringTargetType": "Enemy",
     "stringDamageType": "Fire",
-    "StatusEffectId": "debuff_burn",
+    "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null
+    "stringSkillSlot": null,
+    "ExtraDamage": null
   },
   {
     "Id": "skill_scholar_special_water",
@@ -153,12 +159,13 @@
     "BarrierAbsorbAmount": null,
     "stringTargetType": "Enemy",
     "stringDamageType": "Cold",
-    "StatusEffectId": "debuff_frost",
+    "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null
+    "stringSkillSlot": null,
+    "ExtraDamage": null
   },
   {
     "Id": "skill_scholar_special_earth",
@@ -181,7 +188,8 @@
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null
+    "stringSkillSlot": null,
+    "ExtraDamage": null
   },
   {
     "Id": "skill_scholar_special_air",
@@ -204,7 +212,8 @@
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null
+    "stringSkillSlot": null,
+    "ExtraDamage": null
   },
   {
     "Id": "skill_scholar_special_magic",
@@ -227,7 +236,8 @@
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null
+    "stringSkillSlot": null,
+    "ExtraDamage": null
   },
   {
     "Id": "skill_scholar_ult_summonbarrier",
@@ -249,8 +259,9 @@
     "VFXPath": null,
     "SFXPath": null,
     "IconPath": null,
-    "ExecutionId": null,
-    "stringSkillSlot": null
+    "ExecutionId": "ScholarUltBarrier",
+    "stringSkillSlot": "Ultimate",
+    "ExtraDamage": null
   },
   {
     "Id": "skill_scholar_ult_berserksoul",
@@ -272,8 +283,9 @@
     "VFXPath": null,
     "SFXPath": null,
     "IconPath": null,
-    "ExecutionId": null,
-    "stringSkillSlot": null
+    "ExecutionId": "ScholarUltBerserkSoul",
+    "stringSkillSlot": "Ultimate",
+    "ExtraDamage": null
   },
   {
     "Id": "skill_scholar_passive",
@@ -296,7 +308,8 @@
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null
+    "stringSkillSlot": null,
+    "ExtraDamage": null
   },
   {
     "Id": "skill_scholar_basic",
@@ -319,7 +332,8 @@
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": "ScholarBasic",
-    "stringSkillSlot": "Basic"
+    "stringSkillSlot": "Basic",
+    "ExtraDamage": null
   },
   {
     "Id": "skill_scholar_special",
@@ -342,7 +356,8 @@
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": "ScholarSpecial",
-    "stringSkillSlot": "Special"
+    "stringSkillSlot": "Special",
+    "ExtraDamage": null
   },
   {
     "Id": "skill_mercenary_passive",
@@ -365,7 +380,8 @@
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null
+    "stringSkillSlot": null,
+    "ExtraDamage": null
   },
   {
     "Id": "skill_mercenary_basic_slash",
@@ -388,7 +404,8 @@
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null
+    "stringSkillSlot": null,
+    "ExtraDamage": null
   },
   {
     "Id": "skill_mercenary_special_whip",
@@ -411,7 +428,8 @@
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null
+    "stringSkillSlot": null,
+    "ExtraDamage": null
   },
   {
     "Id": "skill_mercenary_ult_finalblow",
@@ -434,7 +452,8 @@
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null
+    "stringSkillSlot": null,
+    "ExtraDamage": null
   },
   {
     "Id": "skill_mercenary_ult_dancestorm",
@@ -457,6 +476,7 @@
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null
+    "stringSkillSlot": null,
+    "ExtraDamage": null
   }
 ]

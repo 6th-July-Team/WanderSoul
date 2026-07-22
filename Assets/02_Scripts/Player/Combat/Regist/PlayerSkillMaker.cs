@@ -1,5 +1,7 @@
 ﻿
 
+using UnityEngine;
+
 public class PlayerSkillMaker
 {
     private PlayerClassSkillBuild _build;
@@ -46,6 +48,15 @@ public class PlayerSkillMaker
             _build.SetSkill(SkillSlot.Basic, basicSkill);
             _build.SetSkill(SkillSlot.Special, specialSkill);
         }
+
+        // 테스트 삭제하기
+        PlayerSkillData ultimateSkillData = GameManager.DataTable.GetPlayerSkillData(playerClassData.UltimateSkillIds[0]);
+        Debug.Log($"UltimateSkillData : {ultimateSkillData.Name} / {ultimateSkillData.ExecutionId}");
+        var ultimateExecution = _skillRegistry.Create(ultimateSkillData.ExecutionId, createInfo);
+
+        PlayerSkill ultimateSkill = new PlayerSkill(ultimateSkillData, ultimateExecution
+                , _playerViewModel, statController);
+        _build.SetSkill(SkillSlot.Ultimate, ultimateSkill);
 
         return _build;
     }

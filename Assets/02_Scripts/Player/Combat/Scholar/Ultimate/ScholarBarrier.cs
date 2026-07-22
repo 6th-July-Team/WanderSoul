@@ -16,8 +16,9 @@ public class ScholarBarrier : MonoBehaviour, IBarrierable, IDamageable
     public void Init(PlayerSkillData skillData)
     {
         _absorbAmount = skillData.BarrierAbsorbAmount;
+        // TODO 지속 시간 추가
         _duration = 5f;// skillData.Duration;
-        transform.localScale = Vector3.one * 7f;//skillData.Radius;
+        transform.localScale = Vector3.one * skillData.Radius;
     }
 
     private void Update()

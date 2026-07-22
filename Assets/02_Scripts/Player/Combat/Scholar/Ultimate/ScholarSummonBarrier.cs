@@ -11,10 +11,10 @@ public class ScholarSummonBarrier : IPlayerSkillExecution, ISkillRangeCheckable
         _skillRangeIndicator.Hide();
 
         Vector3 skillCenter = context.AimWorldPoint;
-        skillCenter.y += 3.5f;//SkillData.Radius;
+        skillCenter.y += SkillData.Radius;
 
         // TODO(김익환): 결계 소환
-        var barrier = Object.Instantiate(Utils.ResourcesLoad<GameObject>("ScholarBarrier"), skillCenter, Quaternion.identity);
+        var barrier = Object.Instantiate(Utils.ResourcesLoad<GameObject>("Barrier"), skillCenter, Quaternion.identity);
         if (barrier.TryGetComponent(out ScholarBarrier scholarBarrier))
         {
             scholarBarrier.Init(SkillData);
