@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿
 
 public class NetworkPlayerService
 {
@@ -7,6 +7,8 @@ public class NetworkPlayerService
     private PlayerViewModel _playerViewModel;
     private PlayerStatController _statController;
 
+    private PlayerSkillViewModel _playerSkillViewModel;
+    private PlayerOutGameViewModel _playerOutGameViewModel;
 
     public PlayerViewModel GetPlayerViewModel()
     {
@@ -18,6 +20,41 @@ public class NetworkPlayerService
         return _playerViewModel;
     }
 
+    public PlayerSkillViewModel GetPlayerSkillViewModel()
+    {
+        if (_playerSkillViewModel == null)
+        {
+            CreatePlayerSkillViewModel();
+        }
+
+        return _playerSkillViewModel;
+    }
+
+    public PlayerOutGameViewModel GetPlayerOutGameViewModel()
+    {
+        if (_playerOutGameViewModel == null)
+        {
+            CreatePlayerOutGameViewModel();
+        }
+
+        return _playerOutGameViewModel;
+    }
+
+    public void Dispose()
+    {
+        _playerViewModel.Dispose();
+        _statController.Dispose();
+    }
+
+    private PlayerSkillViewModel CreatePlayerSkillViewModel()
+    {
+        var model = new PlayerSkillModel();
+        var viewModel = new PlayerSkillViewModel(model);
+        _playerSkillViewModel = viewModel;
+
+        return viewModel;
+    }
+
     private PlayerViewModel CreatePlayerViewModel()
     {
         PlayerStatData playerStatData = new();//GameManager.DataTable.GetPlayerStatData("테스트 직업 아이디");
@@ -26,14 +63,21 @@ public class NetworkPlayerService
         var playerModel = new PlayerModel();
         playerModel.HP = _statController.GetValue(StatType.MaxHealth);
         playerModel.MP = _statController.GetValue(StatType.MaxMana);
+        playerModel.EXP = 0f;
+        playerModel.MagnetRadius = _statController.GetValue(StatType.MagnetRadius);
 
         _playerViewModel = new PlayerViewModel(playerModel, _statController);
 
         return _playerViewModel;
     }
 
-    public void Dispose()
+    private PlayerOutGameViewModel CreatePlayerOutGameViewModel()
     {
-        _playerViewModel.Dispose();
+        var model = new PlayerOutGameModel();
+        var viewModel = new PlayerOutGameViewModel(model);
+
+        _playerOutGameViewModel = viewModel;
+
+        return viewModel;
     }
 }

@@ -2,6 +2,9 @@
 
 public class PlayerSkillMaker
 {
+    private PlayerClassSkillBuild _build;
+    private PlayerStatController _statController;
+
     private PlayerSkillRegistry _skillRegistry;
     private IPetPartyReader _petPartyReader;
 
@@ -18,7 +21,9 @@ public class PlayerSkillMaker
 
     public PlayerClassSkillBuild CreateSkillBuild(string playerId, PlayerStatController statController)
     {
-        PlayerClassSkillBuild build = new();
+        _statController = statController;
+
+        _build = new();
 
         PlayerClassData playerClassData = GameManager.DataTable.GetPlayerClassData(playerId);
 
@@ -38,28 +43,27 @@ public class PlayerSkillMaker
             PlayerSkill specialSkill = new PlayerSkill(specialSkillData, specialExecution
                 , _playerViewModel, statController);
 
-            build.SetSkill(SkillSlot.Basic, basicSkill);
-            build.SetSkill(SkillSlot.Special, specialSkill);
+            _build.SetSkill(SkillSlot.Basic, basicSkill);
+            _build.SetSkill(SkillSlot.Special, specialSkill);
         }
 
-        return build;
+        return _build;
     }
 
     // 궁극기 선택처럼 처음 생성이 아닌 스킬을 추가로 생성할 때 사용
-    //public PlayerSkill CreatePlayerSkill(string skillId)
-    //{
-    //    PlayerSkillData skillData = GameManager.DataTable.GetPlayerSkillData(skillId);
+    public void CreatePlayerSkill(string skillId)
+    {
+        PlayerSkillData skillData = GameManager.DataTable.GetPlayerSkillData(skillId);
 
-    //    PlayerSkillCreateInfo createInfo = new PlayerSkillCreateInfo(_petPartyReader);
+        PlayerSkillCreateInfo createInfo = new PlayerSkillCreateInfo(_petPartyReader);
 
-    //    var execution = _skillRegistry.Create(skillData.ExecutionId, createInfo);
+        var execution = _skillRegistry.Create(skillData.ExecutionId, createInfo);
 
-    //    if (execution != null)
-    //    {
-    //        PlayerSkill playerSkill = new PlayerSkill(skillData, execution
-    //            , _playerViewModel, statController, _playerSkillModifier);
+        if (execution != null)
+        {
+            PlayerSkill playerSkill = new PlayerSkill(skillData, execution, _playerViewModel, _statController);
 
-    //        build.SetSkill(SkillSlot.Basic, playerSkill);
-    //    }
-    //}
+            _build.SetSkill(SkillSlot.Basic, playerSkill);
+        }
+    }
 }

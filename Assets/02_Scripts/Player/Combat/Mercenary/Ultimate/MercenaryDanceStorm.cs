@@ -4,7 +4,7 @@ public class MercenaryDanceStorm : IPlayerSkillExecution, ISkillRangeCheckable
 {
     private SkillRangeIndicator _skillRangeIndicator;
 
-    public void Execute(PlayerSkillUseContext context, PlayerSkillData SkillData, float damage)
+    public void Execute(PlayerSkillUseContext context, PlayerSkillData SkillData, float damage, float coolTimeReductionOfStat)
     {
         Vector3 yOffset = Vector3.up * 1f;
 

@@ -3,7 +3,7 @@
 public class MercenaryWhip : IPlayerSkillExecution
 {
     Collider[] _targets = new Collider[64];
-    public void Execute(PlayerSkillUseContext context, PlayerSkillData SkillData, float damage)
+    public void Execute(PlayerSkillUseContext context, PlayerSkillData SkillData, float damage, float coolTimeReductionOfStat)
     {
         float radius = 2.5f;
         Vector3 posOffset = context.AimDirection * radius;

@@ -53,4 +53,19 @@ public class PlayerModel : BaseModel
             OnPropertyChanged(nameof(EXP));
         }
     }
+
+    private float _magnetRadius;
+    public float MagnetRadius
+    {
+        get { return _magnetRadius; }
+        set
+        {
+            if (_magnetRadius == value)
+            {
+                return;
+            }
+            _magnetRadius = value;
+            OnPropertyChanged(nameof(MagnetRadius));
+        }
+    }
 }
