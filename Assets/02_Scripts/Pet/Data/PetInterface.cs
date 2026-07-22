@@ -2,7 +2,7 @@
 
 public interface IPetActiveSkillExecution
 {
-    void Execute(PetSkillUseContext context, System.Action OnEndSkill);
+    void Execute(PetSkillUseContext context/*, System.Action OnEndSkill*/);
 }
 
 public interface IPetPassiveSkillExecution

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 public abstract class BaseModel : INotifyPropertyChanged
 {
@@ -10,4 +11,16 @@ public abstract class BaseModel : INotifyPropertyChanged
     }
 
     public abstract void PropertyChangedOnInit();
+}
+
+public interface ContainerPropertyChanged<T>
+{
+    event Action<string, ContainerEventType, T> ContainerPropertyChanged;
+}
+
+public enum ContainerEventType
+{
+    Add,
+    Remove,
+    Update
 }

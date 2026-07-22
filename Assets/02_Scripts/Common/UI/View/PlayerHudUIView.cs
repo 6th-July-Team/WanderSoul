@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHudUIView : BaseUI
+public class PlayerHudUIView : BaseUI<PlayerHudUIView, PlayerViewModel>
 {
 
     [Header("HP")]
@@ -13,51 +13,93 @@ public class PlayerHudUIView : BaseUI
     [SerializeField] private Image _manaFillImage;
     [SerializeField] private TMP_Text _manaText;
 
-    //private ManaPool _manaPool; // TODO(김익환, 이태영) : ManaPool 삭제에 따른 주석 처리
-    private float _lastMana = -1f;
+    [Header("Exp")]
+    [SerializeField] private Slider _expSlider;
+    [SerializeField] private TMP_Text _expText;
 
-    // TODO(김익환, 이태영) : ManaPool 삭제에 따른 주석 처리
-    //public void SetManaPool(ManaPool manaPool)
-    //{
-    //    _manaPool = manaPool;
-    //    _lastMana = -1f;
-    //    RefreshMana();
-    //}
 
-    private void Update()
+    [Header("Animation")]
+    [SerializeField] private UISlideAnimation _slideAnimation;
+
+    protected override void OnPropertyChanged(string propertyName)
     {
-        // TODO(김익환, 이태영) : ManaPool 삭제에 따른 주석 처리
-        //if (_manaPool == null)
-        //{
-        //    return;
-        //}
+        if (propertyName == nameof(PlayerModel.HP))
+        {
+            RefreshHp();
+        }
 
-        //float currentMana = _manaPool.CurrentMana;
+        else if (propertyName == nameof(PlayerModel.MP))
+        {
+            RefreshMana();
+        }
 
-        //if (Mathf.Approximately(_lastMana, currentMana) == true)
-        //{
-        //    return;
-        //}
+        // TODO(이태영): PlayerModel에 Exp/Level 추가되면 주석 해제
+        // else if (propertyName == nameof(PlayerModel.Exp) || propertyName == nameof(PlayerModel.Level))
+        // {
+        //     RefreshExp();
+        // }
+    }
 
-        //RefreshMana();
-        //_lastMana = currentMana;
+    protected override void OnOpened()
+    {
+        _slideAnimation.SetHidden();
+        _slideAnimation.SlideIn();
+    }
+
+    private void RefreshHp()
+    {
+        if (_viewModel == null)
+        {
+            return;
+        }
+
+        float maxHp = _viewModel.MaxHP;
+        if (maxHp <= 0f)
+        {
+            return;
+        }
+
+        _hpFillImage.fillAmount = _viewModel.GetHp / maxHp;
+        _hpText.text = $"{(int)_viewModel.GetHp:N0} / {(int)maxHp:N0}";
     }
 
     private void RefreshMana()
     {
-        // TODO(김익환, 이태영) : ManaPool 삭제에 따른 주석 처리
-        //if(_manaPool == null)
-        //{
-        //    return;
-        //}
+        if (_viewModel == null)
+        {
+            return;
+        }
 
-        //float maxMana = _manaPool.MaxMana;
-        //if(maxMana <= 0f)
-        //{
-        //    return;
-        //}
+        float maxMp = _viewModel.MaxMP;
+        if (maxMp <= 0f)
+        {
+            return;
+        }
 
-        //_manaFillImage.fillAmount = _manaPool.CurrentMana / maxMana;
-        //_manaText.text = $"{(int)_manaPool.CurrentMana:N0} / {(int)maxMana:N0}";
+        _manaFillImage.fillAmount = _viewModel.GetMp / maxMp;
+        _manaText.text = $"{(int)_viewModel.GetMp:N0} / {(int)maxMp:N0}";
+    }
+
+    private void RefreshExp()
+    {
+        if (_viewModel == null)
+        {
+            return;
+        }
+
+        // TODO(이태영): PlayerViewModel에 GetExp/GetMaxExp/GetLevel 추가되면 연결
+        // float maxExp = _viewModel.GetMaxExp;
+        // if (maxExp <= 0f)
+        // {
+        //     _expSlider.value = 0f;
+        //     return;
+        // }
+        //
+        // _expSlider.value = _viewModel.GetExp / maxExp;
+        //
+        // if (_expText != null)
+        // {
+        //     _expText.text = $"Lv.{_viewModel.GetLevel}";
+        // }
     }
 }

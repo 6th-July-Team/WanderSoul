@@ -68,4 +68,9 @@ public class PlayerClassSkillBuild
         return _skills.TryGetValue(slot, out PlayerSkill skill) ? skill.SkillData : null;
     }
 
+    public float GetSkillCoolTime(SkillSlot slot)
+    {
+        return _skills[slot].RemainingCooldTime;
+    }
+
 }

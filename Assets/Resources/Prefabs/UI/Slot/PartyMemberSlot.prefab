@@ -259,7 +259,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 25, y: 12.5}
+  m_AnchoredPosition: {x: 0, y: 12.5}
   m_SizeDelta: {x: 100, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8831355185439559265
@@ -292,8 +292,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uD3AB \uC774\uB984"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 059ab392c60a3a642a1dd101f7b0d0bd, type: 2}
-  m_sharedMaterial: {fileID: 6386396331428533127, guid: 059ab392c60a3a642a1dd101f7b0d0bd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 97659cb3ddf1abe47ab1acad734b59ba, type: 2}
+  m_sharedMaterial: {fileID: 6462545548369077948, guid: 97659cb3ddf1abe47ab1acad734b59ba, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -324,8 +324,8 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1

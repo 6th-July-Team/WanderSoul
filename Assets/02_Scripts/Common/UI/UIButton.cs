@@ -43,7 +43,6 @@ public class UIButton : MonoBehaviour, IPointerClickHandler
             Debug.LogWarning($"{gameObject.name}: _button이 null!");
             return;
         }
-        Debug.Log($"{gameObject.name}: 버튼 바인딩 성공");
         _button.onClick.RemoveAllListeners();
         _button.onClick.AddListener(new UnityEngine.Events.UnityAction(onClickCallback));
     }

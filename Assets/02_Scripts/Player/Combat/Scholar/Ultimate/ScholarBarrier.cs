@@ -11,6 +11,8 @@ public class ScholarBarrier : MonoBehaviour, IBarrierable, IDamageable
 
     public Vector3 Position => transform.position;
 
+    public Transform Transform => this.transform;
+
     public void Init(PlayerSkillData skillData)
     {
         _absorbAmount = skillData.BarrierAbsorbAmount;

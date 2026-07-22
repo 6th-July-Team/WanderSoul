@@ -445,8 +445,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uCE90\uB9AD\uD130"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 059ab392c60a3a642a1dd101f7b0d0bd, type: 2}
-  m_sharedMaterial: {fileID: 6386396331428533127, guid: 059ab392c60a3a642a1dd101f7b0d0bd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 97659cb3ddf1abe47ab1acad734b59ba, type: 2}
+  m_sharedMaterial: {fileID: 6462545548369077948, guid: 97659cb3ddf1abe47ab1acad734b59ba, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -569,6 +569,7 @@ MonoBehaviour:
   _characterButton: {fileID: 6524483050487088381}
   _farmButton: {fileID: 606193503217589786}
   _optionButton: {fileID: 1121533720102884176}
+  _slideAnimation: {fileID: 2377272783939178955}
 --- !u!114 &2377272783939178955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -789,8 +790,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC635\uC158"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 059ab392c60a3a642a1dd101f7b0d0bd, type: 2}
-  m_sharedMaterial: {fileID: 6386396331428533127, guid: 059ab392c60a3a642a1dd101f7b0d0bd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 97659cb3ddf1abe47ab1acad734b59ba, type: 2}
+  m_sharedMaterial: {fileID: 6462545548369077948, guid: 97659cb3ddf1abe47ab1acad734b59ba, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -926,8 +927,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC778\uBCA4\uD1A0\uB9AC"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 059ab392c60a3a642a1dd101f7b0d0bd, type: 2}
-  m_sharedMaterial: {fileID: 6386396331428533127, guid: 059ab392c60a3a642a1dd101f7b0d0bd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 97659cb3ddf1abe47ab1acad734b59ba, type: 2}
+  m_sharedMaterial: {fileID: 6462545548369077948, guid: 97659cb3ddf1abe47ab1acad734b59ba, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1199,8 +1200,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC804\uD22C \uC2DC\uC791"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 059ab392c60a3a642a1dd101f7b0d0bd, type: 2}
-  m_sharedMaterial: {fileID: 6386396331428533127, guid: 059ab392c60a3a642a1dd101f7b0d0bd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 97659cb3ddf1abe47ab1acad734b59ba, type: 2}
+  m_sharedMaterial: {fileID: 6462545548369077948, guid: 97659cb3ddf1abe47ab1acad734b59ba, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

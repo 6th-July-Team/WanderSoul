@@ -129,6 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PartyHudUIView
   _memberSlotPrefab: {fileID: 1082292447876538601, guid: fc1df5875673a2f448bc0136140e594a, type: 3}
   _slotRoot: {fileID: 8547841983380343955}
+  _slideAnimation: {fileID: 1564264493727603316}
 --- !u!114 &1564264493727603316
 MonoBehaviour:
   m_ObjectHideFlags: 0

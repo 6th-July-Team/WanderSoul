@@ -5,9 +5,21 @@ public class PartyHudUIView : BaseUI
 {
     [SerializeField] private PartyMemberSlotUIView _memberSlotPrefab;
     [SerializeField] private Transform _slotRoot;
+    [SerializeField] private UISlideAnimation _slideAnimation;
 
     private PartyMemberSlotUIView _wagonSlot;
     private List<PartyMemberSlotUIView> _petSlotList = new();
+
+    protected override void OnOpened()
+    {
+        if (_slideAnimation == null)
+        {
+            return;
+        }
+
+        _slideAnimation.SetHidden();
+        _slideAnimation.SlideIn();
+    }
 
     public void SetWagon(string name, float hpFillAmount)
     {

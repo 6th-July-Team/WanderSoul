@@ -286,12 +286,16 @@ public class PlayerSkillData : BaseData
     public float Cooldown;
     public int ManaCost;
     public float Duration;
+    public float ProjectileDuration;
     public float ProjectileSpeed;
     public int Pierce;
     public int MaxProjectileCount;
     public float Radius;
     public float CastRange;
     public float BarrierAbsorbAmount;
+    public string stringTargetType;
+    public string stringDamageType;
+    public string StatusEffectId;
     public string SkillType;
     public string stringSkillDamageType;
     public string SkillOwnerType;
@@ -303,6 +307,9 @@ public class PlayerSkillData : BaseData
 
     public DamageType GetDamageType()
         => Enum.TryParse<DamageType>(stringSkillDamageType, out var result) ? result : DamageType.Physical;
+
+    public TargetType GetTargetType()
+        => Enum.TryParse<TargetType>(stringTargetType, out var result) ? result : default;
 
     public SkillSlot GetSkillSlot()
         => Enum.TryParse<SkillSlot>(stringSkillSlot, out var result) ? result : default;
@@ -370,6 +377,7 @@ public class PetActiveSkillData : BaseData
     public string IconPath;
     public string StatusEffectId;
     public float CastRange;
+    public float Radius;
 
     public TargetType GetTargetType()
         => Enum.TryParse<TargetType>(stringTargetType, out var result) ? result : default;
@@ -384,9 +392,13 @@ public class PetActiveSkillData : BaseData
 [Serializable]
 public class PetPassiveSkillData : BaseData
 {
-    public string ExecutionId;
-    public string StatusEffectId;
+    public string Name;
+    public string Description;
     public string stringTargetType;
+    public string StatusEffectId;
+    public float ApllyChance;
+    public string ExecutionId;
+    public float Radius;
 
     public TargetType GetTargetType()
         => Enum.TryParse<TargetType>(stringTargetType, out var result) ? result : default;

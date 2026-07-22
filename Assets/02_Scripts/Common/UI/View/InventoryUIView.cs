@@ -13,10 +13,7 @@ public class InventoryUIView : BaseUI<InventoryUIView, InventoryViewModel>
     [SerializeField] private UIButton _closeButton;
 
     [Header("Animation")]
-    [SerializeField] private CanvasGroup _dimCanvasGroup;    
-    [SerializeField] private RectTransform _topRect;     
-    [SerializeField] private RectTransform _leftRect;
-    [SerializeField] private RectTransform _rightRect;
+    [SerializeField] private UIPanelSlideAnimation _panelAnimation;
 
     [Header("Item Detail")]
     [SerializeField] private GameObject _detailPanel;
@@ -25,15 +22,7 @@ public class InventoryUIView : BaseUI<InventoryUIView, InventoryViewModel>
     [SerializeField] private TMP_Text _detailDescriptionText;
     [SerializeField] private Image _detailIconImage;
 
-    private const float ANIM_DURATION = 0.3f;
-    private const float SLIDE_DISTANCE = 100f;
-
     private bool _isClosing = false;
-    private bool _isPositionCached = false;
-
-    private Vector2 _topOriginPos;
-    private Vector2 _leftOriginPos;
-    private Vector2 _rightOriginPos;
 
     private List<ItemSlotUIView> _slotList = new List<ItemSlotUIView>();
 
@@ -47,11 +36,9 @@ public class InventoryUIView : BaseUI<InventoryUIView, InventoryViewModel>
     private void OnEnable()
     {
         _isClosing = false;
-        CacheOriginPositions();
         GameManager.Time.OnPause();
         GameManager.UI.SlideOutHud();
-        PlayOpenAnimation();
-
+        _panelAnimation.PlayOpen();
         _detailPanel.SetActive(false);
     }
 
@@ -72,7 +59,7 @@ public class InventoryUIView : BaseUI<InventoryUIView, InventoryViewModel>
         }
         _isClosing = true;
         GameManager.UI.SlideInHud();
-        PlayCloseAnimation();
+        _panelAnimation.PlayClose(OnCloseAnimationComplete);
     }
 
     private void OnCloseAnimationComplete()
@@ -81,56 +68,7 @@ public class InventoryUIView : BaseUI<InventoryUIView, InventoryViewModel>
         GameManager.UI.CloseUI(UIType.InventoryUIView);
     }
 
-    #region Animation
-    private void CacheOriginPositions()
-    {
-        if (_isPositionCached == true)
-        {
-            return;
-        }
 
-        _topOriginPos = _topRect.anchoredPosition;
-        _leftOriginPos = _leftRect.anchoredPosition;
-        _rightOriginPos = _rightRect.anchoredPosition;
-
-        _isPositionCached = true;
-    }
-
-    private void PlayOpenAnimation()
-    {
-        _dimCanvasGroup.DOKill();
-        _dimCanvasGroup.alpha = 0f;
-        _dimCanvasGroup.DOFade(1f, ANIM_DURATION);
-
-        _topRect.DOKill();
-        _topRect.anchoredPosition = _topOriginPos + new Vector2(0f, SLIDE_DISTANCE);
-        _topRect.DOAnchorPos(_topOriginPos, ANIM_DURATION).SetEase(Ease.OutCubic);
-
-        _leftRect.DOKill();
-        _leftRect.anchoredPosition = _leftOriginPos + new Vector2(-SLIDE_DISTANCE, 0f);
-        _leftRect.DOAnchorPos(_leftOriginPos, ANIM_DURATION).SetEase(Ease.OutCubic);
-
-        _rightRect.DOKill();
-        _rightRect.anchoredPosition = _rightOriginPos + new Vector2(SLIDE_DISTANCE, 0f);
-        _rightRect.DOAnchorPos(_rightOriginPos, ANIM_DURATION).SetEase(Ease.OutCubic);
-    }
-
-    private void PlayCloseAnimation()
-    {
-        _dimCanvasGroup.DOKill();
-        _dimCanvasGroup.DOFade(0f, ANIM_DURATION);
-
-        _topRect.DOKill();
-        _topRect.DOAnchorPos(_topOriginPos + new Vector2(0f, SLIDE_DISTANCE), ANIM_DURATION).SetEase(Ease.InCubic);
-
-        _leftRect.DOKill();
-        _leftRect.DOAnchorPos(_leftOriginPos + new Vector2(-SLIDE_DISTANCE, 0f), ANIM_DURATION).SetEase(Ease.InCubic);
-
-        _rightRect.DOKill();
-        _rightRect.DOAnchorPos(_rightOriginPos + new Vector2(SLIDE_DISTANCE, 0f), ANIM_DURATION).SetEase(Ease.InCubic).OnComplete(OnCloseAnimationComplete);
-    }
-
-    #endregion
 
     #region Slots
 

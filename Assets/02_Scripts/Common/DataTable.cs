@@ -61,7 +61,7 @@ public class DataTable
         PetActiveSkillDataTable = LoadData<PetActiveSkillData>(nameof(PetActiveSkillData));
         StatusEffectDataTable = LoadData<StatusEffectData>(nameof(StatusEffectData));
         //SkillModifierDataTable = LoadData<SkillModifierData>(nameof(SkillModifierData));
-        //PetPassiveSkillDataTable = LoadData<PetPassiveSkillData>(nameof(PetPassiveSkillData));
+        PetPassiveSkillDataTable = LoadData<PetPassiveSkillData>(nameof(PetPassiveSkillData));
         WagonDataTable = LoadData<WagonData>(nameof(WagonData));
         WagonSlowRuleDataTable = LoadData<WagonSlowRuleData>(nameof(WagonSlowRuleData));
         AutoSpawnDataTable = LoadData<AutoSpawnData>(nameof(AutoSpawnData));
