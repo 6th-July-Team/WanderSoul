@@ -167,7 +167,7 @@ public class AutoSpawnData : BaseData
     public List<string> EnemyIds;
     public int MinPressureEnemyCount;     
     public float SpawnInterval;
-    public int SpawnBatchCount;
+    public List<int> SpawnBatchCount;
 }
 
 [Serializable]
@@ -472,6 +472,8 @@ public class PlayerClassData : BaseData
 {
     public string Name;
     public string Description;
+    public string PassiveSkillId;
     public string BasicSkillId;
     public string SpecialSkillId;
+    public List<string> UltimateSkillIds;
 }

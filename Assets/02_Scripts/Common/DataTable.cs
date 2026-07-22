@@ -66,7 +66,7 @@ public class DataTable
         WagonSlowRuleDataTable = LoadData<WagonSlowRuleData>(nameof(WagonSlowRuleData));
         AutoSpawnDataTable = LoadData<AutoSpawnData>(nameof(AutoSpawnData));
         PreLoadAssetDataTable = LoadData<PreLoadAssetData>(nameof(PreLoadAssetData));
-        //PlayerClassDataTable = LoadData<PlayerClassData>(nameof(PlayerClassData));
+        PlayerClassDataTable = LoadData<PlayerClassData>(nameof(PlayerClassData));
     }
 
     #region Getters
@@ -206,6 +206,12 @@ public class DataTable
     {
         if (null == PlayerClassDataTable || string.IsNullOrEmpty(id)) return null;
         return PlayerClassDataTable.TryGetValue(id, out var data) ? data : null;
+    }
+
+    public EnemyData GetEnemyData(string id)
+    {
+        if (null == EnemyDataTable || string.IsNullOrEmpty(id)) return null;
+        return EnemyDataTable.TryGetValue(id, out var data) ? data : null;
     }
 
     #endregion

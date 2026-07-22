@@ -11,6 +11,7 @@ public class WagonModel : BaseModel
         OnPropertyChanged(nameof(Name));
         OnPropertyChanged(nameof(Capacity));
         OnPropertyChanged(nameof(Progress));
+        OnPropertyChanged(nameof(ConvoyTimer));
     }
 
     private float _durability;
@@ -115,6 +116,21 @@ public class WagonModel : BaseModel
             }
             _progress = value;
             OnPropertyChanged(nameof(Progress));
+        }
+    }
+
+    private float _convoyTimer;
+    public float ConvoyTimer
+    {
+        get { return _convoyTimer; }
+        set
+        {
+            if (_convoyTimer == value)
+            {
+                return;
+            }
+            _convoyTimer = value;
+            OnPropertyChanged(nameof(ConvoyTimer));
         }
     }
 }

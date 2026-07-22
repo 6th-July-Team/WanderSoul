@@ -10,7 +10,7 @@ public static class PlayerSkillRegistor
                 createInfo.PetPartyReader
             ));
 
-        registry.Register("ScholarBasic"
+        registry.Register("ScholarSpecial"
             , (createInfo) => new ScholarElementalExplosion
             (
                 
