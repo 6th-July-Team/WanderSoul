@@ -18,7 +18,9 @@
     "StatusEffectId": "debuff_burn",
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_scholar_basic_water",
@@ -39,7 +41,9 @@
     "StatusEffectId": "debuff_frost",
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_scholar_basic_earth",
@@ -60,7 +64,9 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_scholar_basic_air",
@@ -81,7 +87,9 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_scholar_basic_magic",
@@ -102,7 +110,9 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_scholar_special_fire",
@@ -123,7 +133,9 @@
     "StatusEffectId": "debuff_burn",
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_scholar_special_water",
@@ -144,7 +156,9 @@
     "StatusEffectId": "debuff_frost",
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_scholar_special_earth",
@@ -165,7 +179,9 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_scholar_special_air",
@@ -186,7 +202,9 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_scholar_special_magic",
@@ -207,7 +225,9 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_scholar_ult_summonbarrier",
@@ -228,7 +248,9 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_scholar_ult_berserksoul",
@@ -249,7 +271,9 @@
     "StatusEffectId": "buff_berserksoul_petattackspeed, buff_berserksoul_petmaxhealth, buff_berserksoul_petmovespeed",
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_scholar_passive",
@@ -270,7 +294,9 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_scholar_basic",
@@ -291,7 +317,32 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": "ScholarBasic",
+    "stringSkillSlot": "Basic"
+  },
+  {
+    "Id": "skill_scholar_special",
+    "Name": "원소 폭발",
+    "Description": null,
+    "Power": null,
+    "Cooldown": null,
+    "ManaCost": null,
+    "ProjectileDuration": null,
+    "ProjectileSpeed": null,
+    "Pierce": null,
+    "MaxProjectileCount": null,
+    "Radius": null,
+    "CastRange": null,
+    "BarrierAbsorbAmount": null,
+    "stringTargetType": null,
+    "stringDamageType": null,
+    "StatusEffectId": null,
+    "VFXPath": null,
+    "SFXPath": null,
+    "IconPath": null,
+    "ExecutionId": "ScholarSpecial",
+    "stringSkillSlot": "Special"
   },
   {
     "Id": "skill_mercenary_passive",
@@ -312,7 +363,9 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_mercenary_basic_slash",
@@ -333,7 +386,9 @@
     "StatusEffectId": "debuff_bleed",
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_mercenary_special_whip",
@@ -354,7 +409,9 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_mercenary_ult_finalblow",
@@ -375,7 +432,9 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_mercenary_ult_dancestorm",
@@ -396,6 +455,8 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   }
 ]

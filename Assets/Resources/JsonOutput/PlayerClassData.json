@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "player_scholar",
+    "Name": "학자",
+    "Description": "학자입니다",
+    "PassiveSkillId": "skill_scholar_passive",
+    "BasicSkillId": "skill_scholar_basic",
+    "SpecialSkillId": "skill_scholar_special",
+    "UltimateSkillIds": [
+      "skill_scholar_ult_summonbarrier",
+      "skill_scholar_ult_berserksoul"
+    ]
+  },
+  {
+    "Id": "player_mercenary",
+    "Name": "용병",
+    "Description": "용병입니다",
+    "PassiveSkillId": "skill_mercenary_passive",
+    "BasicSkillId": "skill_mercenary_basic_slash",
+    "SpecialSkillId": "skill_mercenary_special_whip",
+    "UltimateSkillIds": [
+      "skill_mercenary_ult_finalblow",
+      "skill_mercenary_ult_dancestorm"
+    ]
+  }
+]

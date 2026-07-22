@@ -42,6 +42,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     private Transform _poolRoot = null;
 
     private PetSkillMaker _petSkillMaker;
+    private PlayerSkillMaker _playerSkillMaker;
     private StatusEffectMaker _statusEffectMaker;
 
     #endregion
@@ -130,7 +131,9 @@ public class GameManager : SingletonBehaviour<GameManager>
 
         InitStatusEffect();
         InitPetSystem();
-        _convoyManager = new ConvoyManager(_petSkillMaker);
+        InitPlayerSkillMaker();
+
+        _convoyManager = new ConvoyManager(_petSkillMaker, _playerSkillMaker);
     }
 
     private void PoolInit()
@@ -152,13 +155,24 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     private void InitPetSystem()
     {
-        var activeRegistry = new PetActiveSkillExecutionRegistry();
-        var passiveRegistry = new PetPassiveSkillExecutionRegistry();
+        PetActiveSkillExecutionRegistry activeRegistry = new();
+        PetPassiveSkillExecutionRegistry passiveRegistry = new();
 
         PetSkillRegistor.RegisterAllActiveSkills(activeRegistry);
         PetSkillRegistor.RegisterAllPassiveSkills(passiveRegistry);
 
         _petSkillMaker = new PetSkillMaker(activeRegistry, passiveRegistry, _statusEffectMaker);
+    }
+
+    private void InitPlayerSkillMaker()
+    {
+        PlayerSkillRegistry playerSkillRegistry = new();
+        PlayerSkillRegistor.RegisterAll(playerSkillRegistry);
+
+        var playerViewModel = _networkManager.RequestCreatePlayer();
+
+        _playerSkillMaker = new PlayerSkillMaker(playerSkillRegistry, _petPartyController
+            , playerViewModel);
     }
 
 

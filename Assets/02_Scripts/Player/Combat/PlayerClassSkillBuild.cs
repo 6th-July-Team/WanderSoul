@@ -4,15 +4,23 @@ public class PlayerClassSkillBuild
 {
     private Dictionary<SkillSlot, PlayerSkill> _skills = new();
 
-    public PlayerClassSkillBuild(PlayerSkill basicSkill, PlayerSkill specialSkill, PlayerSkill ultimateSkill)
+    private bool _isInitialized = false;
+
+    public void Init(PlayerSkillModifier skillModifier)
     {
-        _skills[SkillSlot.Basic] = basicSkill;
-        _skills[SkillSlot.Special] = specialSkill;
-        _skills[SkillSlot.Ultimate] = ultimateSkill;
+        foreach (var skill in _skills.Values)
+        {
+            skill.Init(skillModifier);
+        }
+
+        _isInitialized = true;
     }
 
     public void Update(float deltaTime)
     {
+        if(!_isInitialized)
+            return;
+
         foreach (var skill in _skills.Values)
         {
             if(skill != null)

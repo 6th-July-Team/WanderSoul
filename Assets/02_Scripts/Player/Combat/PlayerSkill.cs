@@ -15,23 +15,30 @@ public class PlayerSkill
     private SkillSlot _slot;
     private float _remainingCooldtime;
 
+    private bool _isInitialized = false;
 
-    public PlayerSkill(string playerSkillId, IPlayerSkillExecution execution, PlayerViewModel playerViewModel
-        , PlayerStatController statController, PlayerSkillModifier skillModifier)
+
+    public PlayerSkill(PlayerSkillData skillData, IPlayerSkillExecution execution, PlayerViewModel playerViewModel
+        , PlayerStatController statController)
     {
-        SkillData = GameManager.DataTable.GetPlayerSkillData(playerSkillId);
+        SkillData = skillData;
+        _slot = skillData.GetSkillSlot();
 
         _playerViewModel = playerViewModel;
         _execution = execution;
-        _skillModifier = skillModifier;
         _statController = statController;
+    }
 
-        _slot = SetSlot(playerSkillId);
+    public void Init(PlayerSkillModifier skillModifier)
+    {
+        _skillModifier = skillModifier;
+
+        _isInitialized = true;
     }
 
     public void Update(float deltaTime)
     {
-        if (_remainingCooldtime <= 0f)
+        if (_remainingCooldtime <= 0f || !_isInitialized)
             return;
 
         _remainingCooldtime = Mathf.Max(0f, _remainingCooldtime - deltaTime);
@@ -79,19 +86,5 @@ public class PlayerSkill
     public float GetSkillCooldown()
     {
         return _skillModifier.GetValue(SkillData.Id, _slot, SkillValueType.Cooldown, SkillData.Cooldown);
-    }
-
-    private SkillSlot SetSlot(string id)
-    {
-        // TODO(김익환) 주석 해제하기
-        string stringSlot = "test_test_basic".Split('_')[2]; //id.Split('_')[2];
-
-        return stringSlot switch
-        {
-            "basic" => SkillSlot.Basic,
-            "special" => SkillSlot.Special,
-            "ultimate" => SkillSlot.Ultimate,
-            _ => throw new System.Exception($"유효하지 않은 슬롯: {stringSlot}"),
-        };
     }
 }

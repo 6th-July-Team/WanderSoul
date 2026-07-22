@@ -10,7 +10,9 @@
     ],
     "MinPressureEnemyCount": 4,
     "SpawnInterval": 6,
-    "SpawnBatchCount": 3
+    "SpawnBatchCount": [
+      3
+    ]
   },
   {
     "Id": "auto_spawn_phase_02",
@@ -24,7 +26,10 @@
     ],
     "MinPressureEnemyCount": 6,
     "SpawnInterval": 5,
-    "SpawnBatchCount": 4
+    "SpawnBatchCount": [
+      3,
+      1
+    ]
   },
   {
     "Id": "auto_spawn_phase_03",
@@ -38,7 +43,10 @@
     ],
     "MinPressureEnemyCount": 8,
     "SpawnInterval": 4.5,
-    "SpawnBatchCount": 5
+    "SpawnBatchCount": [
+      3,
+      2
+    ]
   },
   {
     "Id": "auto_spawn_phase_04",
@@ -52,7 +60,10 @@
     ],
     "MinPressureEnemyCount": 10,
     "SpawnInterval": 4,
-    "SpawnBatchCount": 6
+    "SpawnBatchCount": [
+      4,
+      2
+    ]
   },
   {
     "Id": "auto_spawn_phase_05",
@@ -66,6 +77,9 @@
     ],
     "MinPressureEnemyCount": 14,
     "SpawnInterval": 3.5,
-    "SpawnBatchCount": 7
+    "SpawnBatchCount": [
+      5,
+      2
+    ]
   }
 ]
