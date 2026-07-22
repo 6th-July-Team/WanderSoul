@@ -133,16 +133,7 @@ public partial class UIManager
         view.BindViewModel(viewModel);
     }
 
-    public void OpenSkillHudUI()
-    {
-        var view = OpenUI<SkillHudUIView>(UIType.SkillHudUIView);
-        if (view == null)
-        {
-            Debug.LogWarning("SkillHudUIView를 열 수 없습니다.");
-        }
-    }
-
-    public void OpenSkillHudUI(PlayerCombatController combatController)
+    public void OpenSkillHudUI(string playerClassId)
     {
         var view = OpenUI<SkillHudUIView>(UIType.SkillHudUIView);
         if (view == null)
@@ -151,7 +142,7 @@ public partial class UIManager
             return;
         }
 
-        view.SetSkills(combatController);
+        view.SetSkills(playerClassId);
     }
 
     public void OpenLevelUpUI(List<string> optionIdList, System.Action<string> onOptionSelected)

@@ -15,6 +15,9 @@ public class ConvoyManager
     private PlayerEntity _playerEntity;
     private PlayerSkillMaker _playerSkillMaker;
 
+    // 현재 플레이어 선택 불가능하여, 학자가 고정되어 있음.
+    private string _playerClassId = "player_scholar";
+
     public ConvoyManager(PetSkillMaker petSkillMaker, PlayerSkillMaker playerSkillMaker)
     {
         _petSkillMaker = petSkillMaker;
@@ -134,8 +137,7 @@ public class ConvoyManager
 
         _playerEntity = GameObject.Instantiate(Utils.ResourcesLoad<PlayerEntity>("Test_Scholar"));
 
-        string playerId = "player_scholar"; // 현재 플레이어 선택 불가능하여, 학자가 고정되어 있음.
-        _playerEntity.Init(playerId, playerViewModel, playerStatController, _playerSkillMaker);
+        _playerEntity.Init(_playerClassId, playerViewModel, playerStatController, _playerSkillMaker);
     }
 
     private void SpawnPet()
@@ -217,6 +219,6 @@ public class ConvoyManager
             resourceHud.SetConvoyLayout();
         }
 
-        // TODO(이태영): 스킬 HUD - PlayerCombatController 접근 방법 확인 필요
+        GameManager.UI.OpenSkillHudUI(_playerClassId);
     }
 }
