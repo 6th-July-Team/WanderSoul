@@ -63,6 +63,8 @@ public class NetworkPlayerService
         var playerModel = new PlayerModel();
         playerModel.HP = _statController.GetValue(StatType.MaxHealth);
         playerModel.MP = _statController.GetValue(StatType.MaxMana);
+        playerModel.EXP = 0f;
+        playerModel.MagnetRadius = _statController.GetValue(StatType.MagnetRadius);
 
         _playerViewModel = new PlayerViewModel(playerModel, _statController);
 
