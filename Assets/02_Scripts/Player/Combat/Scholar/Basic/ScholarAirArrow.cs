@@ -2,7 +2,7 @@
 
 public class ScholarAirArrow : IElementArrowVariant
 {
-    public void Fire(PlayerSkillUseContext context, float damage)
+    public void Fire(PlayerSkillUseContext context, float damage, PlayerSkillData SkillData)
     {
         // 빠른 번개 화살을 발사해서 전기 피해를 입힌다.
         // 단발의 피해량은 낮지만 공격 주기와 투사체 속도가 빠르다.
@@ -16,8 +16,8 @@ public class ScholarAirArrow : IElementArrowVariant
             Speed = 5f,
             Damage = damage,
             Direction = context.AimDirection,
-            DamageType = DamageType.Electric,
-            TargetType = EntityType.Enemy,
+            DamageType = SkillData.GetDamageType(),
+            TargetType = SkillData.GetTargetType(),
             AdditionalDamage = damage * 2
         });
     }

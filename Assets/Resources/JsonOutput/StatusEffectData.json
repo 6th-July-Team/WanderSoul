@@ -10,7 +10,8 @@
     "MaxStack": 9999,
     "Value": 3,
     "stringStatType": null,
-    "stringOperation": "Flat"
+    "stringOperation": "Flat",
+    "SkillModifierId": null
   },
   {
     "Id": "debuff_poison",
@@ -23,7 +24,8 @@
     "MaxStack": 9999,
     "Value": 3,
     "stringStatType": null,
-    "stringOperation": "Flat"
+    "stringOperation": "Flat",
+    "SkillModifierId": null
   },
   {
     "Id": "debuff_frost",
@@ -36,7 +38,8 @@
     "MaxStack": 20,
     "Value": 0.025,
     "stringStatType": "MoveSpeed",
-    "stringOperation": "AddPercent"
+    "stringOperation": "AddPercent",
+    "SkillModifierId": null
   },
   {
     "Id": "debuff_bleed",
@@ -49,7 +52,8 @@
     "MaxStack": 9999,
     "Value": 3,
     "stringStatType": null,
-    "stringOperation": "Flat"
+    "stringOperation": "Flat",
+    "SkillModifierId": null
   },
   {
     "Id": "buff_berserksoul_petattackspeed",
@@ -62,7 +66,8 @@
     "MaxStack": null,
     "Value": 0.1,
     "stringStatType": "BasicAttackCooldownReduction",
-    "stringOperation": "MultiplePercent"
+    "stringOperation": "MultiplePercent",
+    "SkillModifierId": null
   },
   {
     "Id": "buff_berserksoul_petmaxhealth",
@@ -75,7 +80,8 @@
     "MaxStack": null,
     "Value": 10,
     "stringStatType": "MaxHealth",
-    "stringOperation": "MultiplePercent"
+    "stringOperation": "MultiplePercent",
+    "SkillModifierId": null
   },
   {
     "Id": "buff_berserksoul_petmovespeed",
@@ -88,45 +94,63 @@
     "MaxStack": null,
     "Value": 10,
     "stringStatType": "MoveSpeed",
-    "stringOperation": "MultiplePercent"
+    "stringOperation": "MultiplePercent",
+    "SkillModifierId": null
   },
   {
     "Id": "buff_windblessing",
     "Name": "바람의 축복",
-    "Description": null,
+    "Description": "플레이어의 체력이 최대일 때 일반 공격 쿨다운을 15% 감소시킵니다.",
     "ExecutionId": "StatModifier",
     "StackPolicy": "RefreshDuration",
     "Duration": 5,
     "TickInterval": null,
     "MaxStack": null,
-    "Value": 0.8,
+    "Value": 0.15,
     "stringStatType": "BasicAttackCooldownReduction",
-    "stringOperation": "MultiplePercent"
+    "stringOperation": "MultiplePercent",
+    "SkillModifierId": null
   },
   {
-    "Id": "buff",
-    "Name": null,
-    "Description": null,
+    "Id": "buff_taunt",
+    "Name": "도발 중",
+    "Description": "도발 지속 중 어스폰의 방어력을 50 증가시킵니다.",
+    "ExecutionId": null,
+    "StackPolicy": "RefreshDuration",
+    "Duration": 4,
+    "TickInterval": null,
+    "MaxStack": null,
+    "Value": 50,
+    "stringStatType": "Defense",
+    "stringOperation": "Flat",
+    "SkillModifierId": null
+  },
+  {
+    "Id": "buff_water_regeneration",
+    "Name": "물의 재생력",
+    "Description": "플레이어의 체력 재생력을 초당 0.5 증가시킵니다.",
     "ExecutionId": null,
     "StackPolicy": null,
     "Duration": null,
     "TickInterval": null,
     "MaxStack": null,
-    "Value": null,
-    "stringStatType": null,
-    "stringOperation": null
+    "Value": 0.5,
+    "stringStatType": "HealthRegeneration",
+    "stringOperation": "Flat",
+    "SkillModifierId": null
   },
   {
-    "Id": "바람의 축복 일반 공격 쿨다운 버프 테스트 아이디",
-    "Name": "테스트",
-    "Description": "테스트",
-    "ExecutionId": "StatModifier",
-    "StackPolicy": "RefreshDuration",
-    "Duration": 3,
+    "Id": "buff_fire_force",
+    "Name": "불의 힘",
+    "Description": "플레이어의 피해량을 10% 증가시킵니다",
+    "ExecutionId": null,
+    "StackPolicy": null,
+    "Duration": null,
     "TickInterval": null,
     "MaxStack": null,
-    "Value": 0.2,
-    "stringStatType": "BasicAttackCooldownReduction",
-    "stringOperation": "Flat"
+    "Value": 10,
+    "stringStatType": "AdditionalDamage",
+    "stringOperation": "Flat",
+    "SkillModifierId": null
   }
 ]

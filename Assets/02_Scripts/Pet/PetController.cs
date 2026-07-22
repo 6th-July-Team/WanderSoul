@@ -1,17 +1,21 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using System;
+using UnityEngine;
 
 
-public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEffectReceiver
+public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEffectReceiver, IPet, IDisposable
 {
     public StatusEffectController StatusEffects { get; private set; }
     public IStatModifierReceiver StatModifierReceiver { get; private set; }
     public ISkillModifierReceiver SkillModifierReceiver { get; private set; }
 
-    public float AttackPower => _petStausController.AttackPower;
+
     public Vector3 Position => transform.position;
+    public Transform Transform => this.transform;
     public EntityType EntityType => EntityType.Pet;
-    public bool IsAlive => _petStausController.IsAlive;
+    public bool IsAlive => _petViewModel.GetHp > 0;
     public PetElement Element => __SOPetDefinition.Element;
+
 
     [Header("Command Setting")]
     [SerializeField] private float _commandRefreshInterval = 0.2f;
@@ -24,8 +28,9 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
     private PetMovement _petMovement;
     private PetStatController _petStatController;
     private PetCombatController _combatController;
-    private PetStausController _petStausController;
     private PetCommandController _petCommandController;
+
+    private PetViewModel _petViewModel;
 
     private bool isInitialized = false;
 
@@ -39,22 +44,24 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
     public void Init(string petId, IPositionProvider playerAnchor, IPositionProvider wagonAnchor
         , PetSkillMaker petSkillMaker, IStatusEffectReceiver playerEffectReceiver, IHealable playerHealable
-        , int avoidancePriority)
+        , int avoidancePriority, PetViewModel viewModel)
     {
         PetStatData petStatData = GameManager.DataTable.GetPetStatData(petId);
 
         _petStatController = new(petStatData);
 
-        _combatController = petSkillMaker.CreateCombatController(petId, _petStatController, playerEffectReceiver, playerHealable, StatModifierReceiver);
+        _combatController = petSkillMaker.CreateCombatController(petId, _petStatController
+            , playerEffectReceiver, playerHealable, StatModifierReceiver
+            , this, this);
 
         // TODO(김익환): SO 제거
         _petCommandController = new(playerAnchor, wagonAnchor, this, __SOPetSearch, 32);
 
         _petMovement.Init(petId, avoidancePriority);
 
-        _petStausController = new();
-        _petStausController.Init(__SOPetDefinition.BaseStats.MaxHp); // TODO(김익환): SO 제거
+        _petViewModel = viewModel;
 
+        _petViewModel.OnPropertyChanged_View += OnPropertyChanged;
 
         StatusEffects = new StatusEffectController();
         StatModifierReceiver = new PetStatusEffectAdapter(_petStatController);
@@ -95,11 +102,11 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
     private void UpdateCombat()
     {
-        if (_combatController.IsBusy)
-        {
-            _petMovement.Stop();
-            return;
-        }
+        //if (_combatController.IsBusy)
+        //{
+        //    _petMovement.Stop();
+        //    return;
+        //}
 
         ITargetable target = _commandResult.Target;
 
@@ -123,7 +130,7 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
     public void TakeDamage(DamageInfo damageInfo)
     {
         // TODO(김익환): 저항 적용하기
-        _petStausController.TakeDamage(damageInfo);
+        _petViewModel.SetHp(_petViewModel.GetHp - damageInfo.DamageAmount);
     }
 
     public void SetCommandMode(PetCommand commandMode)
@@ -151,14 +158,14 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
     private void ExecuteNoEnemySkill(PetActiveSkill skill)
     {
-        PetSkillUseContext context = new(transform.position, skill.SkillData);
+        PetSkillUseContext context = new(this, transform.position, skill.SkillData);
 
         _combatController.TryExecute(skill, context);
     }
 
     private void ExecuteEnemySkill(PetActiveSkill skill, ITargetable target)
     {
-        if(null == target || !target.IsAlive)
+        if (null == target || !target.IsAlive)
             return;
 
         float castRange = skill.CastRange;
@@ -170,9 +177,37 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
         _petMovement.Stop();
 
-        PetSkillUseContext context = new PetSkillUseContext(transform.position, skill.SkillData);
+        PetSkillUseContext context = new PetSkillUseContext(this, transform.position, skill.SkillData);
 
         _combatController.TryExecute(skill, context);
+    }
+
+    private void OnPropertyChanged(string propertyName)
+    {
+        switch (propertyName)
+        {
+            case nameof(PetViewModel.GetHp):
+                {
+                    if (_petViewModel.GetHp <= 0f)
+                    {
+                        // TODO(김익환): 사망 처리
+                        // TODO(김익환): 사망 이펙트
+                        // TODO(김익환): 사망 사운드
+                        Debug.Log("사망");
+                        DieAndRevive().Forget();
+                        this.gameObject.SetActive(false);
+
+                    }
+                }
+                break;
+        }
+    }
+
+    private async UniTaskVoid DieAndRevive()
+    {
+        await UniTask.Delay(TimeSpan.FromSeconds(1f));
+        _petViewModel.SetHp(_petViewModel.GetMaxHp);
+        this.gameObject.SetActive(true);
     }
 
     private void OnDrawGizmos()
@@ -185,5 +220,10 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, __SOPetSearch.RangeWhenAggressive);
+    }
+
+    public void Dispose()
+    {
+        _petViewModel.OnPropertyChanged_View -= OnPropertyChanged;
     }
 }

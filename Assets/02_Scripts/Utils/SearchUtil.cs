@@ -34,7 +34,15 @@ public static class SearchUtil
         return nearestTarget;
     }
 
-    public static int FindTargetBox(Vector3 center, Vector3 halfExtents, LayerMask targetLayerMask, Collider[] buffer, Vector3 attackDirection)
+    public static int FindTargetSphere(Vector3 center, float radius, LayerMask targetLayerMask, Collider[] buffer)
+    {
+        int count = Physics.OverlapSphereNonAlloc(center, radius, buffer, targetLayerMask);
+        DrawWireSphere(center, radius, 0.3f);
+        return count;
+    }
+
+    public static int FindTargetBox(Vector3 center, Vector3 halfExtents, LayerMask targetLayerMask
+        , Collider[] buffer, Vector3 attackDirection)
     {
         Quaternion rotation = Quaternion.LookRotation(attackDirection, Vector3.up);
 
@@ -55,6 +63,20 @@ public static class SearchUtil
 
 
     #region Debug
+
+    public static void DrawWireSphere(Vector3 center, float radius, float duration)
+    {
+        int segments = 24;
+        float angle = 360f / segments;
+        for (int i = 0; i < segments; i++)
+        {
+            float currentAngle = angle * i;
+            float nextAngle = angle * (i + 1);
+            Vector3 currentPoint = center + new Vector3(Mathf.Cos(currentAngle * Mathf.Deg2Rad), 0, Mathf.Sin(currentAngle * Mathf.Deg2Rad)) * radius;
+            Vector3 nextPoint = center + new Vector3(Mathf.Cos(nextAngle * Mathf.Deg2Rad), 0, Mathf.Sin(nextAngle * Mathf.Deg2Rad)) * radius;
+            Debug.DrawLine(currentPoint, nextPoint, Color.green, duration);
+        }
+    }
 
     public static void DrawWireBox(Vector3 center, Vector3 halfExtents, Quaternion rotation, float duration)
     {

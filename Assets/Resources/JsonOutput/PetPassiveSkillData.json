@@ -1,0 +1,22 @@
+[
+  {
+    "Id": "pet_passive_fire_force",
+    "Name": "불의 힘",
+    "Description": "범위 내 아군의 피해량이 오른다",
+    "stringTargetType": "Player",
+    "StatusEffectId": 0,
+    "ApllyChance": null,
+    "ExecutionId": "AreaBuff",
+    "Radius": null
+  },
+  {
+    "Id": "pet_passive_water_regeneration",
+    "Name": "물의 치유력",
+    "Description": "아군의 체력을 조금씩 회복한다",
+    "stringTargetType": "Player",
+    "StatusEffectId": 0,
+    "ApllyChance": null,
+    "ExecutionId": "AreaBuff",
+    "Radius": null
+  }
+]

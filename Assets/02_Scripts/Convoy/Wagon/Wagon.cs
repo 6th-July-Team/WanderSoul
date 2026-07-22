@@ -8,6 +8,7 @@ public class Wagon : MonoBehaviour, ITargetable, IDamageable
 
     public bool IsAlive => true;
     public Vector3 Position => transform.position;
+    public Transform Transform => this.transform;
     public EntityType EntityType => EntityType.Wagon;
 
 
@@ -15,6 +16,7 @@ public class Wagon : MonoBehaviour, ITargetable, IDamageable
 
     private WagonViewModel _wagonViewModel;
     public WagonViewModel ViewModel { get { return _wagonViewModel; } }
+
 
     private WagonSlowRuleData _wagonSlowRuleData;
 

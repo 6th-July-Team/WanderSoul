@@ -14,6 +14,7 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
     public EntityType EntityType => EntityType.Player;
 
     public Vector3 Position => transform.position;
+    public Transform Transform => this.transform;
 
     public bool IsHealthFull => _testIsHealthFull;
 
@@ -78,6 +79,11 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
     {
         Debug.Log($"{GetType()} 플레이어 회복: {amount}");
         return 0f;// StatusEffects.Heal(amount);
+    }
+
+    public float GetSkillCoolTime(SkillSlot skillSlot)
+    {
+        return _combatController.GetSkillCoolTime(skillSlot);
     }
 
     private void OnTriggerEnter(Collider other)

@@ -5,7 +5,7 @@ public class PetCombatController
     private readonly Dictionary<SkillType, PetActiveSkill> _aciveSkills = new();
     private readonly List<PetPassiveSkill> _passiveSkills = new();
 
-    public bool IsBusy { get; private set; }
+    //public bool IsBusy { get; private set; }
 
     public void Update(float deltaTime)
     {
@@ -37,15 +37,15 @@ public class PetCombatController
 
     public bool TryExecute(PetActiveSkill skill, PetSkillUseContext context)
     {
-        if (IsBusy || skill == null || !skill.IsReady)
+        if (/*IsBusy ||*/ skill == null || !skill.IsReady)
             return false;
 
-        IsBusy = true;
+        //IsBusy = true;
 
-        bool started = skill.TryExecute(context, OnEndSkill);
+        bool started = skill.TryExecute(context/*, OnEndSkill*/);
 
-        if (!started)
-            IsBusy = false;
+        //if (!started)
+        //    IsBusy = false;
 
         return started;
     }
@@ -78,7 +78,7 @@ public class PetCombatController
         _passiveSkills.Clear();
         _aciveSkills.Clear();
 
-        IsBusy = false;
+        //IsBusy = false;
     }
 
     public PetActiveSkillData GetSkillInfo(SkillType skillType)
@@ -88,8 +88,8 @@ public class PetCombatController
 
     // TODO: 패시브 스킬 데이터도 반환해야 하는데, 어떻게 엑티브와 동시에 반환 못하나?
 
-    private void OnEndSkill()
-    {
-        IsBusy = false;
-    }
+    //private void OnEndSkill()
+    //{
+    //    IsBusy = false;
+    //}
 }

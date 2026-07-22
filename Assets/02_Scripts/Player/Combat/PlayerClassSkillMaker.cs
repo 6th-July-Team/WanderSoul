@@ -23,7 +23,7 @@ public class PlayerClassSkillMaker
         }
 
         build = new(
-               new PlayerSkill("test", new MercenarySlash(), _playerViewModel, statController, _playerSkillModifier)
+               new PlayerSkill("skill_scholar_basic_fire", new MercenarySlash(), _playerViewModel, statController, _playerSkillModifier)
                , new PlayerSkill("test", new MercenaryWhip(), _playerViewModel, statController, _playerSkillModifier)
                , new PlayerSkill("test", new MercenaryDanceStorm(), _playerViewModel, statController, _playerSkillModifier)
                );
