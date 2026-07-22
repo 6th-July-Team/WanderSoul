@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uD3C9\uD310:"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 059ab392c60a3a642a1dd101f7b0d0bd, type: 2}
-  m_sharedMaterial: {fileID: 6386396331428533127, guid: 059ab392c60a3a642a1dd101f7b0d0bd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 97659cb3ddf1abe47ab1acad734b59ba, type: 2}
+  m_sharedMaterial: {fileID: 6462545548369077948, guid: 97659cb3ddf1abe47ab1acad734b59ba, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -204,8 +204,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 059ab392c60a3a642a1dd101f7b0d0bd, type: 2}
-  m_sharedMaterial: {fileID: 6386396331428533127, guid: 059ab392c60a3a642a1dd101f7b0d0bd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 97659cb3ddf1abe47ab1acad734b59ba, type: 2}
+  m_sharedMaterial: {fileID: 6462545548369077948, guid: 97659cb3ddf1abe47ab1acad734b59ba, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -345,6 +345,7 @@ MonoBehaviour:
   _direction: 0
   _slideDistance: 300
   _duration: 0.3
+  _registerAsHud: 1
 --- !u!1 &5474700528377116380
 GameObject:
   m_ObjectHideFlags: 0
@@ -843,8 +844,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uB3C4\uB451\uB188"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 059ab392c60a3a642a1dd101f7b0d0bd, type: 2}
-  m_sharedMaterial: {fileID: 6386396331428533127, guid: 059ab392c60a3a642a1dd101f7b0d0bd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 97659cb3ddf1abe47ab1acad734b59ba, type: 2}
+  m_sharedMaterial: {fileID: 6462545548369077948, guid: 97659cb3ddf1abe47ab1acad734b59ba, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

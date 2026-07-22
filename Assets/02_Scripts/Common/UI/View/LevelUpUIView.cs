@@ -13,7 +13,6 @@ public class LevelUpUIView : BaseUI
 
     private bool _isSelecting = false;
 
-    // 선택된 옵션 Id를 바깥으로 알린다. 실제 효과 적용은 이 콜백을 받는 쪽 책임.
     private Action<string> _onOptionSelected;
 
     public void SetOptions(List<string> optionIdList, Action<string> onOptionSelected)

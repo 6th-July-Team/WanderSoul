@@ -27,16 +27,12 @@ public class UIGameFlowTest : MonoBehaviour
         {
             GameManager.UI.OpenSimplePopup("테스트 알림입니다");
         }
-        if (Keyboard.current.digit5Key.wasPressedThisFrame)
-        {
-            GameManager.UI.OpenSkillHudUI();
-        }
     }
 
     private void ShowLevelUp()
     {
         var testIds = new List<string> { "opt_power_001", "opt_speed_001", "opt_crit_001" };
-        GameManager.UI.OpenLevelUpUI(testIds);
+        //GameManager.UI.OpenLevelUpUI(testIds);
     }
 
     private void ShowSuccessResult()
