@@ -154,7 +154,7 @@ public partial class UIManager
         view.SetSkills(combatController);
     }
 
-    public void OpenLevelUpUI(List<string> optionIdList)
+    public void OpenLevelUpUI(List<string> optionIdList, System.Action<string> onOptionSelected)
     {
         var view = OpenUI<LevelUpUIView>(UIType.LevelUpUIView);
 
@@ -164,7 +164,7 @@ public partial class UIManager
             return;
         }
 
-        view.SetOptions(optionIdList);
+        view.SetOptions(optionIdList, onOptionSelected);
     }
 
     public void OpenConvoyHudUI(WagonViewModel wagonViewModel, string questId)

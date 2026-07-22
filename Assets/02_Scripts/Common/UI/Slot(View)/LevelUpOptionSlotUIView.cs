@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.EventSystems;
-using System.Net.NetworkInformation;
 
 public class LevelUpOptionSlotUIView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -67,38 +66,126 @@ public class LevelUpOptionSlotUIView : MonoBehaviour, IPointerEnterHandler, IPoi
         }
 
         _nameText.text = optionData.Name;
-        _gradeText.text = optionData.stringGrade;
         _descriptionText.text = optionData.Description;
-        _statValueText.text = GetStatValueText(optionData);
 
-        RefreshBackgroundColor(optionData.stringGrade);
+        RefreshGrade(optionData.Grade);
+        RefreshStatValue(optionData);
         RefreshIcon(optionData.IconPath);
+    }
+
+    private void RefreshStatValue(LevelUpOptionData optionData)
+    {
+        string statValueText = GetStatValueText(optionData);
+
+        if (string.IsNullOrEmpty(statValueText) == true)
+        {
+            _statValueText.gameObject.SetActive(false);
+            return;
+        }
+
+        _statValueText.gameObject.SetActive(true);
+        _statValueText.text = statValueText;
     }
 
     private string GetStatValueText(LevelUpOptionData optionData)
     {
-        string sign = string.Empty;
-        string suffix = string.Empty;
-
-        if (optionData.stringOperation == "Flat")
+        if (string.IsNullOrEmpty(optionData.Operation) == true)
         {
-            sign = "+";
-        }
-        else if (optionData.stringOperation == "AddPercent")
-        {
-            sign = "+";
-            suffix = "%";
-        }
-        else if (optionData.stringOperation == "MultiplePercent")
-        {
-            sign = "x";
+            return string.Empty;
         }
 
-        return $"{optionData.stringTargetStatType} {sign}{optionData.Value}{suffix}";
+        if (string.IsNullOrEmpty(optionData.TargetStatType) == true)
+        {
+            return string.Empty;
+        }
+
+        string statLabel = GetStatTypeLabel(optionData.TargetStatType);
+
+        if (optionData.Operation == "AddPercent")
+        {
+            return $"{statLabel} +{optionData.Value * 100f:0.##}%";
+        }
+        else if (optionData.Operation == "MultiplePercent")
+        {
+            return $"{statLabel} x{optionData.Value:0.##}";
+        }
+        else
+        {
+            return $"{statLabel} +{optionData.Value:0.##}";
+        }
     }
-    private void RefreshBackgroundColor(string grade)
+
+    private string GetStatTypeLabel(string statType)
     {
-        _backgroundImage.color = GetGradeColor(grade);
+        if (statType == "MaxHealth")
+        {
+            return "최대 체력";
+        }
+        else if (statType == "AdditionalDamage")
+        {
+            return "추가 피해";
+        }
+        else if (statType == "MoveSpeed")
+        {
+            return "이동 속도";
+        }
+        else if (statType == "HealthRegeneration")
+        {
+            return "체력 재생";
+        }
+        else if (statType == "ManaRegeneration")
+        {
+            return "마나 재생";
+        }
+        else if (statType == "MagnetRadius")
+        {
+            return "흡수 반경";
+        }
+        else if (statType == "MaxDashCount")
+        {
+            return "대쉬 횟수";
+        }
+        else if (statType == "MaxReviveCount")
+        {
+            return "부활 횟수";
+        }
+        else
+        {
+            return statType;
+        }
+    }
+
+    private void RefreshGrade(string grade)
+    {
+        Color gradeColor = GetGradeColor(grade);
+
+        _backgroundImage.color = gradeColor;
+        _gradeText.color = gradeColor;
+        _gradeText.text = GetGradeLabel(grade);
+    }
+
+    private string GetGradeLabel(string grade)
+    {
+        if (grade == "Common")
+        {
+            return "일반";
+        }
+        else if (grade == "Rare")
+        {
+            return "희귀";
+        }
+        else if (grade == "Epic")
+        {
+            return "영웅";
+        }
+        else if (grade == "Legendary")
+        {
+            return "전설";
+        }
+        else
+        {
+            return grade;
+        }
     }
 
     private Color GetGradeColor(string grade)
@@ -129,15 +216,20 @@ public class LevelUpOptionSlotUIView : MonoBehaviour, IPointerEnterHandler, IPoi
     {
         if (string.IsNullOrEmpty(iconPath) == true)
         {
+            _iconImage.gameObject.SetActive(false);
             return;
         }
 
         Sprite iconSprite = Utils.ResourcesLoad<Sprite>(iconPath);
 
-        if (iconSprite != null)
+        if (iconSprite == null)
         {
-            _iconImage.sprite = iconSprite;
+            _iconImage.gameObject.SetActive(false);
+            return;
         }
+
+        _iconImage.gameObject.SetActive(true);
+        _iconImage.sprite = iconSprite;
     }
 
 
