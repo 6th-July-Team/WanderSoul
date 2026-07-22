@@ -20,11 +20,11 @@ public class EnemyDropObject : MonoBehaviour
 
     public DropObjectType Type { get; private set; }
     public DropObjectDigit Digit { get; private set; }
-    public int Value {  get; private set; }
+    public int Value { get; private set; }
 
     private Rigidbody _rigidbody;
 
-    private IPlayer _targetPlayer;
+    private IPositionProvider _positionProvicer;
 
     private void Awake()
     {
@@ -42,7 +42,6 @@ public class EnemyDropObject : MonoBehaviour
         Type = type;
         Digit = digit;
         Value = GetDigitValue();
-        _targetPlayer = null;
         enabled = false;
     }
 
@@ -70,34 +69,25 @@ public class EnemyDropObject : MonoBehaviour
         }
     }
 
-    public void StartFollowPlayer(IPlayer player)
+    public void StartFollowPlayer(IPositionProvider provider)
     {
-        if(player.IsAlive == false)
-        {
-            return;
-        }
-
-        _targetPlayer = player;
+        _positionProvicer = provider;
         enabled = true;
     }
 
     private void FixedUpdate()
     {
-        if (_targetPlayer != null && _targetPlayer.IsAlive == true)
-        {
-            FollowPlayer();
-        }
+        FollowPlayer();
     }
 
     private void FollowPlayer()
     {
-        Vector3 direction = (_targetPlayer.Position - transform.position).normalized;
+        Vector3 direction = (_positionProvicer.Transform.position - transform.position).normalized;
         _rigidbody.MovePosition(transform.position + direction * _followSpeed * Time.fixedDeltaTime);
     }
 
     public void OnCollected()
     {
-        _targetPlayer = null;
         enabled = false;
         GameManager.Pool.DespawnToPool(this.gameObject);
     }

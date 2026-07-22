@@ -13,6 +13,7 @@ public class PlayerClassSkillBuild
             skill.Init(skillModifier);
         }
 
+
         _isInitialized = true;
     }
 
@@ -72,5 +73,4 @@ public class PlayerClassSkillBuild
     {
         return _skills[slot].RemainingCooldTime;
     }
-
 }

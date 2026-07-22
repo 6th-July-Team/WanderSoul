@@ -19,11 +19,14 @@ public struct PlayerSkillUseContext
     public Transform Owner { get; }
     public Vector3 AimDirection { get; }
     public Vector3 AimWorldPoint { get; }
+    public PlayerSkillModifier PlayerSkillModifier { get; }
 
-    public PlayerSkillUseContext(Transform owner, Vector3 aimDirection, Vector3 aimWorldPoint)
+    public PlayerSkillUseContext(Transform owner, Vector3 aimDirection, Vector3 aimWorldPoint
+        , PlayerSkillModifier playerSkillModifier)
     {
         Owner = owner;
         AimDirection = aimDirection;
         AimWorldPoint = aimWorldPoint;
+        PlayerSkillModifier = playerSkillModifier;
     }
 }

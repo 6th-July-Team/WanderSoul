@@ -6,7 +6,7 @@ public class ScholarSummonBarrier : IPlayerSkillExecution, ISkillRangeCheckable
     private Collider[] _targets = new Collider[64];
 
 
-    public void Execute(PlayerSkillUseContext context, PlayerSkillData SkillData, float damage)
+    public void Execute(PlayerSkillUseContext context, PlayerSkillData SkillData, float damage, float coolTimeReductionOfStat)
     {
         _skillRangeIndicator.Hide();
 
@@ -20,7 +20,13 @@ public class ScholarSummonBarrier : IPlayerSkillExecution, ISkillRangeCheckable
             scholarBarrier.Init(SkillData);
         }
 
-        Debug.Log("궁극기 사용");
+        var viewModel = GameManager.Network.RequestPlayerSkillViewModel();
+
+        float coolTime = context.PlayerSkillModifier.GetValue(SkillData.Id, SkillData.GetSkillSlot()
+            , SkillValueType.Cooldown, SkillData.Cooldown) - coolTimeReductionOfStat;
+
+
+        viewModel.UseSkill(SkillData.GetSkillSlot(), coolTime);
     }
 
     public void CheckSkillRange(PlayerSkillUseContext context, PlayerSkillData SkillData)

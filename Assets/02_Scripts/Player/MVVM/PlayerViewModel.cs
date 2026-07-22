@@ -14,8 +14,9 @@ public class PlayerViewModel : BaseViewModel<PlayerModel>
     public float MaxMP => _statController.GetValue(StatType.MaxMana);
     public float MaxHP => _statController.GetValue(StatType.MaxHealth);
     public float GetExp => _model.EXP;
+    public float GetMagnetRadius => _model.MagnetRadius;
 
-    public void SetExp(float exp)
+    public void AddExp(float exp)
     {
         _model.EXP += exp;
     }
@@ -68,5 +69,10 @@ public class PlayerViewModel : BaseViewModel<PlayerModel>
     public void RefillMP()
     {
         _model.MP = MaxMP;
+    }
+    
+    public void SetMagnetRadius(float radius)
+    {
+        _model.MagnetRadius = radius;
     }
 }
