@@ -4,11 +4,6 @@ using UnityEngine.InputSystem;
 
 public class UIGameFlowTest : MonoBehaviour
 {
-    void Start()
-    {
-        ShowTitle();
-    }
-
     private void Update()
     {
         if (Keyboard.current == null)
@@ -16,110 +11,58 @@ public class UIGameFlowTest : MonoBehaviour
             return;
         }
 
-        if (Keyboard.current.lKey.wasPressedThisFrame)
+        if (Keyboard.current.digit1Key.wasPressedThisFrame)
         {
-            OpenLevelUpTest();
+            ShowLevelUp();
         }
-
-        if (Keyboard.current.kKey.wasPressedThisFrame)
+        if (Keyboard.current.digit2Key.wasPressedThisFrame)
         {
-            OpenLoadingTest();
+            ShowSuccessResult();
         }
-
-        if (Keyboard.current.pKey.wasPressedThisFrame)
+        if (Keyboard.current.digit3Key.wasPressedThisFrame)
+        {
+            ShowFailResult();
+        }
+        if (Keyboard.current.digit4Key.wasPressedThisFrame)
         {
             GameManager.UI.OpenSimplePopup("테스트 알림입니다");
         }
-    }
-
-    private void ShowTitle()
-    {
-        var titleUI = GameManager.UI.OpenUI<TitleUI>(UIType.TitleUI);
-
-        if (titleUI != null)
+        if (Keyboard.current.digit5Key.wasPressedThisFrame)
         {
-            titleUI.OnStartClicked += StartGame;
+            GameManager.UI.OpenSkillHudUI();
         }
     }
 
-    public void StartGame()
-    {
-        GameManager.UI.CloseUI(UIType.TitleUI);
-        ShowGameHud();
-    }
-
-    private void ShowGameHud()
-    {
-        GameManager.UI.OpenUI<MainMenuUI>(UIType.MainMenuUI);
-
-        OpenResourceHudTest();
-        OpenPartyHudTest();
-        OpenVillageInfoHudTest();
-        OpenSkillHudTest();
-    }
-
-    private void OpenResourceHudTest()
-    {
-        var model = new ResourceModel();
-        model.Soul = 12413451;
-        model.Money = 8520;
-
-        GameManager.UI.OpenResourceHudUI(model);
-    }
-
-    private void OpenPartyHudTest()
-    {
-        var view = GameManager.UI.OpenPartyHudUI();
-        if (view == null)
-        {
-            return;
-        }
-
-        view.SetWagon("마차", 1f);
-        view.AddPet("펫1", 0.8f);
-        view.AddPet("펫2", 0.5f);
-        view.AddPet("펫3", 0.3f);
-
-    }
-
-    private void OpenVillageInfoHudTest()
-    {
-        var model = new VillageModel();
-        model.TownDataId = "town_lavendil";
-        model.CurrentReputation = 50;
-
-        GameManager.UI.OpenVillageInfoHudUI(model);
-    }
-
-    private void OpenSkillHudTest()
-    {
-        GameManager.UI.OpenSkillHudUI();
-    }
-
-    private void OpenLevelUpTest()
+    private void ShowLevelUp()
     {
         var testIds = new List<string> { "opt_power_001", "opt_speed_001", "opt_crit_001" };
         GameManager.UI.OpenLevelUpUI(testIds);
     }
 
-    private async void OpenLoadingTest()
+    private void ShowSuccessResult()
     {
-        var loading = GameManager.UI.OpenLoadingUI();
-        if (loading == null)
-        {
-            return;
-        }
+        var result = new ConvoyResultModel();
+        result.IsSuccess = true;
+        result.ClearTime = 125f;
+        result.IsNewRecord = true;
+        result.KilledMonsterCount = 47;
+        result.GainedSoul = 350;
+        result.GoldReward = 100;
+        result.ReputationReward = 50;
 
-        float elapsed = 0f;
-        float duration = 3f;
-        while (elapsed < duration)
-        {
-            elapsed += Time.deltaTime;
-            loading.SetProgress(elapsed / duration);
-            await Cysharp.Threading.Tasks.UniTask.Yield();
-        }
+        GameManager.UI.OpenConvoySuccessUI(result);
+    }
 
-        loading.SetProgress(1f);
-        GameManager.UI.CloseUI(UIType.LoadingUIView);
+    private void ShowFailResult()
+    {
+        var result = new ConvoyResultModel();
+        result.IsSuccess = false;
+        result.FailReason = ConvoyFailReason.WagonDestroyed;
+        result.ReputationPenalty = 10;
+        result.RepairCost = 50;
+        result.IsRepairCostPaid = false;
+        result.ExtraReputationPenalty = 5;
+
+        GameManager.UI.OpenConvoyFailUI(result);
     }
 }

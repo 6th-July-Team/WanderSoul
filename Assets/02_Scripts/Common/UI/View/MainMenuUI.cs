@@ -7,6 +7,9 @@ public class MainMenuUI : BaseUI
     [SerializeField] private UIButton _farmButton;
     [SerializeField] private UIButton _optionButton;
 
+    [Header("Animation")]
+    [SerializeField] private UISlideAnimation _slideAnimation;
+
     protected override void OnInit()
     {
         _inventoryButton.BindOnClickButtonEvent(OnClickInventory);
@@ -14,6 +17,18 @@ public class MainMenuUI : BaseUI
         _farmButton.BindOnClickButtonEvent(OnClickFarm);
         _optionButton.BindOnClickButtonEvent(OnClickOption);
     }
+
+    protected override void OnOpened()
+    {
+        if (_slideAnimation == null)
+        {
+            return;
+        }
+
+        _slideAnimation.SetHidden();
+        _slideAnimation.SlideIn();
+    }
+
     // 임시: 나중에 Model 소유처 정해지면 이동
     private InventoryModel _inventoryModelTest = new InventoryModel();
     private PetInventoryModel _petInventoryModelTest = new PetInventoryModel();
@@ -58,22 +73,14 @@ public class MainMenuUI : BaseUI
 
     private void CreateTestPetList()
     {
-        string[] testPetDataIdArray = new string[]
-        {
-        "pet_fire_001", "pet_water_002", "pet_earth_003", "pet_air_004",
-        "pet_fire_001", "pet_water_002", "pet_earth_003", "pet_air_004",
-        "pet_fire_001"
-        };
-
         long uniqueId = 1;
 
-        foreach (string petDataId in testPetDataIdArray)
+        foreach (var petData in GameManager.DataTable.PetDataTable.Values)
         {
             var pet = new PetSlotModel();
             pet.PetUniqueId = uniqueId;
-            pet.PetDataId = petDataId;
+            pet.PetDataId = petData.Id;
             pet.Level = 1;
-
             _petInventoryModelTest.AddPet(pet);
             uniqueId++;
         }

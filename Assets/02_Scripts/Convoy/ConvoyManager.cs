@@ -29,15 +29,51 @@ public class ConvoyManager
         StartConvoyAsync().Forget();
     }
 
-    public void FaildConvoy()
+    public void FaildConvoy(ConvoyFailReason failReason = ConvoyFailReason.WagonDestroyed)
     {
-        // TODO(UI): 실패 결과 UI 표시
+        GameManager.UI.CloseAllConvoyHuds();
+        var result = MakeConvoyResult(false, failReason);
+        GameManager.UI.OpenConvoyFailUI(result);
     }
 
     public void SuccessConvoy()
     {
-        // TODO(UI): 성공 결과 UI 표시
-        Debug.Log("호위 성공");
+        GameManager.UI.CloseAllConvoyHuds();
+        var result = MakeConvoyResult(true, ConvoyFailReason.None);
+        GameManager.UI.OpenConvoySuccessUI(result);
+    }
+
+    // TODO(이태영): 집계 데이터 연동 필요 - 몬스터 처치 수, 소요 시간, 보상 계산은 현재 테스트
+    private ConvoyResultModel MakeConvoyResult(bool isSuccess, ConvoyFailReason failReason)
+    {
+        var result = new ConvoyResultModel();
+
+        result.IsSuccess = isSuccess;
+        result.FailReason = failReason;
+
+        // TODO(이태영): 실제 집계 값으로 교체
+        result.ClearTime = 185f;
+        result.IsNewRecord = false;
+        result.KilledMonsterCount = 42;
+        result.GainedSoul = 120;
+
+        if (isSuccess == true)
+        {
+            result.GoldReward = 850;
+            result.ReputationReward = 10;
+        }
+        else
+        {
+            result.ReputationPenalty = 5;
+            result.RepairCost = 300;
+            result.IsRepairCostPaid = true;
+            result.ExtraReputationPenalty = 3;
+        }
+
+        // TODO(이태영): Release()에서 반환하는 마을 ID와 연동 필요
+        result.ReturnTownId = "town_lavendil";
+
+        return result;
     }
 
     public string Release()
@@ -55,7 +91,7 @@ public class ConvoyManager
     private async UniTaskVoid StartConvoyAsync()
     {
         // TODO(UI): 로딩 UI 또는 Fade In/Out 처리
-        var loading = GameManager.UI.OpenLoadingUI();
+        GameManager.UI.OpenLoadingUI();
 
         await UniTask.Delay(System.TimeSpan.FromSeconds(1f));
 
@@ -81,7 +117,6 @@ public class ConvoyManager
 
     private void SpawnWagon(SplineContainer splineContainer)
     {
-        GameManager.Network.RequestCreateWagon();
         var wagonViewModel = GameManager.Network.RequestCreateWagon();
 
         _wagon = GameObject.Instantiate(Utils.ResourcesLoad<Wagon>("Wagon_ProtoType"));
@@ -91,7 +126,6 @@ public class ConvoyManager
 
     private void SpawnPlayer()
     {
-        GameManager.Network.RequestCreatePlayer();
         var playerViewModel = GameManager.Network.RequestCreatePlayer();
         var playerStatController = GameManager.Network.PlayerService.StatController;
 
@@ -135,9 +169,11 @@ public class ConvoyManager
     private void OpenConvoyHuds()
     {
 
-        if (_wagon != null)
+        var wagonVm = GameManager.Network.WagonService.GetWagonViewModel();
+        if (wagonVm != null)
         {
-            GameManager.UI.OpenConvoyHudUI(_wagon.ViewModel, _selectedQuestId);
+            GameManager.UI.OpenConvoyHudUI(wagonVm, _selectedQuestId);
+            GameManager.UI.OpenWagonAreaWarningUI(wagonVm);
         }
 
         var partyHud = GameManager.UI.OpenPartyHudUI();
@@ -145,16 +181,37 @@ public class ConvoyManager
         if (partyHud != null)
         {
             partyHud.SetWagon("마차", 1f);
-            partyHud.AddPet("펫1", 1f);
+
+            for (int i = 0; i < _selectedPetIds.Count; i++)
+            {
+                var petData = GameManager.DataTable.GetPetData(_selectedPetIds[i]);
+                if (petData == null)
+                {
+                    continue;
+                }
+
+                partyHud.AddPet(petData.Name, 1f);
+            }
+        }
+
+        var playerVm = GameManager.Network.PlayerService.GetPlayerViewModel();
+        if (playerVm != null)
+        {
+            GameManager.UI.OpenPlayerHudUI(playerVm);
         }
 
         var resourceModel = new ResourceModel();
 
         resourceModel.Soul = 5;
         resourceModel.Money = 999999;
-        GameManager.UI.OpenResourceHudUI(resourceModel);
+
+        var resourceHud = GameManager.UI.OpenResourceHudUI(resourceModel);
+
+        if (resourceHud != null)
+        {
+            resourceHud.SetConvoyLayout();
+        }
 
         // TODO(이태영): 스킬 HUD - PlayerCombatController 접근 방법 확인 필요
-        // TODO(이태영): 플레이어 HP/MP HUD - ManaPool, HP 소스 확인 필요
     }
 }

@@ -83,23 +83,24 @@ public partial class UIManager
         view.BindViewModel(viewModel);
     }
 
-    public void OpenResourceHudUI(ResourceModel resourceModel)
+    public ResourceHudUIView OpenResourceHudUI(ResourceModel resourceModel)
     {
         if (resourceModel == null)
         {
             Debug.LogWarning("ResourceModel이 null입니다.");
-            return;
+            return null;
         }
 
         var view = OpenUI<ResourceHudUIView>(UIType.ResourceHudUIView);
         if (view == null)
         {
             Debug.LogWarning("ResourceHudUIView를 열 수 없습니다.");
-            return;
+            return null;
         }
 
         var viewModel = new ResourceHudViewModel(resourceModel);
         view.BindViewModel(viewModel);
+        return view;
     }
 
     public PartyHudUIView OpenPartyHudUI()
@@ -175,7 +176,7 @@ public partial class UIManager
             Debug.LogWarning("ConvoyHudUIView를 열 수 없습니다.");
             return;
         }
-
+        
         view.SetConvoy(questId);
         view.BindViewModel(wagonViewModel);
     }
@@ -202,6 +203,82 @@ public partial class UIManager
         }
 
         view.SetPopup(message);
+    }
+
+    public void OpenPlayerHudUI(PlayerViewModel playerViewModel)
+    {
+        var view = OpenUI<PlayerHudUIView>(UIType.PlayerHudUIView);
+        if (view == null)
+        {
+            Debug.LogWarning("PlayerHudUIView를 열 수 없습니다.");
+            return;
+        }
+
+        view.BindViewModel(playerViewModel);
+    }
+
+    public void OpenConvoySuccessUI(ConvoyResultModel result)
+    {
+        if (result == null)
+        {
+            Debug.LogWarning("ConvoyResult가 null입니다.");
+            return;
+        }
+
+        var view = OpenUI<ConvoySuccessUIView>(UIType.ConvoySuccessUIView);
+        if (view == null)
+        {
+            Debug.LogWarning("ConvoySuccessUIView를 열 수 없습니다.");
+            return;
+        }
+
+        view.SetResult(result);
+    }
+
+    public void OpenConvoyFailUI(ConvoyResultModel result)
+    {
+        if (result == null)
+        {
+            Debug.LogWarning("ConvoyResult가 null입니다.");
+            return;
+        }
+
+        var view = OpenUI<ConvoyFailUIView>(UIType.ConvoyFailUIView);
+        if (view == null)
+        {
+            Debug.LogWarning("ConvoyFailUIView를 열 수 없습니다.");
+            return;
+        }
+
+        view.SetResult(result);
+    }
+
+    public void OpenWagonAreaWarningUI(WagonViewModel wagonViewModel)
+    {
+        if (wagonViewModel == null)
+        {
+            Debug.LogWarning("WagonViewModel이 null입니다.");
+            return;
+        }
+
+        var view = OpenUI<WagonAreaWarningUIView>(UIType.WagonAreaWarningUIView);
+
+        if (view == null)
+        {
+            Debug.LogWarning("WagonAreaWarningUIView를 열 수 없습니다.");
+            return;
+        }
+
+        view.BindViewModel(wagonViewModel);
+    }
+    public void CloseAllConvoyHuds() 
+    {
+        CloseUI(UIType.ConvoyHudUIView);
+        CloseUI(UIType.PartyHudUIView);
+        CloseUI(UIType.PlayerHudUIView);
+        CloseUI(UIType.ResourceHudUIView);
+        CloseUI(UIType.SkillHudUIView);
+        CloseUI(UIType.WagonAreaWarningUIView);
     }
 }
 
