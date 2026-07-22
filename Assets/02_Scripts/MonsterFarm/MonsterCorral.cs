@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 public class MonsterCorral : MonoBehaviour
 {
-    private readonly List<SOPetDefinition> _monsters = new();
+    private readonly List<PetData> _monsters = new();
 
-    public IReadOnlyList<SOPetDefinition> Monsters => _monsters;
+    public IReadOnlyList<PetData> Monsters => _monsters;
 
-    public void AddMonster(SOPetDefinition monster)
+    public void AddMonster(PetData monster)
     {
         _monsters.Add(monster);
         Debug.Log($"획득 몬스터: {monster.Name}");

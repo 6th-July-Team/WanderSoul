@@ -10,12 +10,14 @@ public class VillageClickInput : MonoBehaviour
     [SerializeField] private GameObject _townHallPanel;
     [SerializeField] private LocationNavigator _locationNavigator;
     [SerializeField] private GameObject _monsterFarmRoot;
+    [SerializeField] private GameObject _clinicPanel;
 
     private void Awake()
     {
         _shopPanel.SetActive(false);
         _missionPanel.SetActive(false);
         _townHallPanel.SetActive(false);
+        _clinicPanel.SetActive(false);
     }
 
     private void Update()
@@ -53,6 +55,7 @@ public class VillageClickInput : MonoBehaviour
             _shopPanel.SetActive(true);
             _missionPanel.SetActive(false);
             _townHallPanel.SetActive(false);
+            _clinicPanel.SetActive(false);
         }
 
         if (facility.FacilityType == VillageFacilityType.MissionGuild)
@@ -60,12 +63,22 @@ public class VillageClickInput : MonoBehaviour
             _missionPanel.SetActive(true);
             _shopPanel.SetActive(false);
             _townHallPanel.SetActive(false);
+            _clinicPanel.SetActive(false);
         }
 
         if (facility.FacilityType == VillageFacilityType.TownHall)
         {
             _townHallPanel.SetActive(true);
             _shopPanel.SetActive(false);
+            _missionPanel.SetActive(false);
+            _clinicPanel.SetActive(false);
+        }
+
+        if (facility.FacilityType == VillageFacilityType.Clinic)
+        {
+            _clinicPanel.SetActive(true);
+            _shopPanel.SetActive(false);
+            _townHallPanel.SetActive(false);
             _missionPanel.SetActive(false);
         }
     }

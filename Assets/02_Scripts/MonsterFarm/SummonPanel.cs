@@ -13,8 +13,7 @@ public class SummonPanel : MonoBehaviour
     [SerializeField] private Transform _summonResultRoot;
     [SerializeField] private GameObject _summonResultCardTemplate;
     [SerializeField] private MonsterCorral _monsterCorral;
-
-    [SerializeField] private SOPetDefinition[] _PetDefinitions;
+    [SerializeField] private ManagementPanel _managementPanel;
 
     [SerializeField] private int _twistedSoulCount = 3;
 
@@ -63,7 +62,7 @@ public class SummonPanel : MonoBehaviour
 
     private void TrySummon(int cost, int count)
     {
-        if (_PetDefinitions == null || _PetDefinitions.Length == 0)
+        if (GameManager.DataTable.PetDataTable.Count == 0)
         {
             return;
         }
@@ -74,27 +73,43 @@ public class SummonPanel : MonoBehaviour
         }
 
         _twistedSoulCount -= cost;
-        _lastSummonCount = count;
 
-        ShowSummonResultCards(count);
+        int bonusCount = GetBonusSummonCount();
+        int totalCount = count + bonusCount;
+
+        _lastSummonCount = totalCount;
+
+        ShowSummonResultCards(totalCount);
         RefreshButtons();
+    }
+
+    private int GetBonusSummonCount()
+    {
+        float bonusChance = _managementPanel.GetBonusSummonChance();
+
+        if (Random.value < bonusChance)
+        {
+            return 1;
+        }
+
+        return 0;
     }
 
     private void ShowSummonResultCards(int count)
     {
         ClearResultCards();
 
+        List<PetData> petDefinitions = new List<PetData>(GameManager.DataTable.PetDataTable.Values);
+
         for (int i = 0; i < count; i++)
         {
-            SOPetDefinition petDefinition = _PetDefinitions[Random.Range(0, _PetDefinitions.Length)];
+            PetData petDefinition = petDefinitions[Random.Range(0, petDefinitions.Count)];
 
             _monsterCorral.AddMonster(petDefinition);
 
             GameObject card = Instantiate(_summonResultCardTemplate, _summonResultRoot);
             card.SetActive(true);
             card.GetComponentInChildren<TMP_Text>().text = petDefinition.Name;
-
-            Debug.Log($"Summoned: {petDefinition.Name}");
         }
     }
 
