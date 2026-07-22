@@ -22,7 +22,7 @@ public class ScholarElementalArrow : IPlayerSkillExecution
     public void Execute(PlayerSkillUseContext context, PlayerSkillData SkillData, float damage)
     {
         PetElement element = _petPartyReader.GetPriorityPetElement();
-        _variants[element].Fire(context, damage);
+        _variants[element].Fire(context, damage, SkillData);
     }
     public void CheckSkillRange(PlayerSkillUseContext context) { }
 }

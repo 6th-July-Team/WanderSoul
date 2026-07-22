@@ -8,7 +8,7 @@ public class Projectile : MonoBehaviour
     protected Vector3 _direction;
 
     protected DamageType _damageType = DamageType.None;
-    protected EntityType _targetType;
+    protected TargetType _targetType;
 
     // 추가 옵션
     protected float _additionalDamage;
@@ -33,7 +33,7 @@ public class Projectile : MonoBehaviour
     public void Update()
     {
         transform.position += _direction * _speed * Time.deltaTime;
-
+        //TODO 듀레이션 지나면 삭제
     }
 
     private void OnTriggerEnter(Collider other)
@@ -46,13 +46,23 @@ public class Projectile : MonoBehaviour
         if (_continuousDamage)
             return;
 
-        if(other.CompareTag("Enemy"))
+        Debug.Log($"트리거 들어옴");
+
+
+        if (other.CompareTag("Enemy"))
         {
+            Debug.Log($"태그 통과");
+
             if (other.TryGetComponent(out IDamageable damageable))
             {
+                Debug.Log($"IDamageable 통과");
+
                 var damageinfo = new DamageInfo(_damage, _direction, _damageType);
 
                 damageable.TakeDamage(damageinfo);
+
+                Debug.Log($"{_damage}");
+
                 HitEffect();
                 Destroy(gameObject);
             }
@@ -90,14 +100,14 @@ public struct ProjectileStruct
     public float Damage;
     public Vector3 Direction;
     public DamageType DamageType;
-    public EntityType TargetType;
+    public TargetType TargetType;
 
     // 추가 옵션
     public float AdditionalDamage;
     public bool ContinuousDamage;
 
     public ProjectileStruct(float speed, float damage, Vector3 direction
-        , DamageType damageType, EntityType targetType
+        , DamageType damageType, TargetType targetType
         , float additionalDamage = 0, bool continuousDamage = false)
     {
         Speed = speed;

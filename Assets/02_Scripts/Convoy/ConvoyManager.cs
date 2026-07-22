@@ -95,7 +95,7 @@ public class ConvoyManager
         var playerViewModel = GameManager.Network.RequestCreatePlayer();
         var playerStatController = GameManager.Network.PlayerService.StatController;
 
-        _playerEntity = GameObject.Instantiate(Utils.ResourcesLoad<PlayerEntity>("Test_Mercenary"));
+        _playerEntity = GameObject.Instantiate(Utils.ResourcesLoad<PlayerEntity>("Test_Scholar"));
         _playerEntity.Init(playerViewModel, playerStatController);
     }
 
@@ -107,11 +107,14 @@ public class ConvoyManager
         {
             GameObject petInstance = GameObject.Instantiate(Utils.ResourcesLoad<GameObject>("Test_Pet"));
 
-            petInstance.GetComponent<PetController>().Init(_selectedPetIds[index]
+            var viewModel = GameManager.Network.CreatePetViewModel(_selectedPetIds[index]);
+
+            petInstance.GetComponent<PetController>().Init("pet_fire_001"/*_selectedPetIds[index]*/
                             , _playerEntity, _wagon
                             , _petSkillMaker
                             , _playerEntity, _playerEntity
-                            , 30 + index * 10);
+                            , 30 + index * 10
+                            , viewModel);
 
             petControllers.Add(petInstance.GetComponent<PetController>());
         }

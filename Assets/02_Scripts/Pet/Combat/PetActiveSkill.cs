@@ -31,14 +31,14 @@ public class PetActiveSkill
         _remainingCooldtime = Mathf.Max(0f, _remainingCooldtime - deltaTime);
     }
 
-    public bool TryExecute(PetSkillUseContext context, Action onEndSkill)
+    public bool TryExecute(PetSkillUseContext context/*, Action onEndSkill*/)
     {
-        if (!IsReady)
+        if (_remainingCooldtime > 0f)
             return false;
 
         _remainingCooldtime = SkillData.Cooldown - _statController.GetValue(StatType.CooldownReduction);
 
-        _execution.Execute(context, onEndSkill);
+        _execution.Execute(context/*, onEndSkill*/);
 
         return true;
     }

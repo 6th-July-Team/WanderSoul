@@ -17,8 +17,8 @@ public class MercenaryFinalBlow : IPlayerSkillExecution, ISkillRangeCheckable
             Speed = 10f,
             Damage = damage,
             Direction = context.AimDirection,
-            DamageType = DamageType.Physical,
-            TargetType = EntityType.Enemy,
+            DamageType = SkillData.GetDamageType(),
+            TargetType = SkillData.GetTargetType(),
         });
     }
     

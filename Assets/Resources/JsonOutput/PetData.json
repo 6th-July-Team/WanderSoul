@@ -3,9 +3,11 @@
     "Id": "pet_fire_001",
     "Name": "플레임폰",
     "stringElementType": "Fire",
-    "Description": "불속성 기본 펫",
+    "Description": "화염 투사체와 화상 부여 지원에 특화된 기본 펫",
     "stringPetGradeType": "Common",
-    "ActiveSkillIds": null,
+    "ActiveSkillIds": [
+      "pet_skill_fire_001"
+    ],
     "PassiveSkillIds": null,
     "IconPath": null
   },
@@ -13,19 +15,26 @@
     "Id": "pet_water_002",
     "Name": "워터폰",
     "stringElementType": "Water",
-    "Description": "물속성 기본 펫",
+    "Description": "강한 단발 냉기 투사체와 체력 재생 지원에 특화된 기본 펫",
     "stringPetGradeType": "Common",
-    "ActiveSkillIds": null,
-    "PassiveSkillIds": null,
+    "ActiveSkillIds": [
+      "pet_skill_water_001"
+    ],
+    "PassiveSkillIds": [
+      "pet_passive_water_regeneration"
+    ],
     "IconPath": null
   },
   {
     "Id": "pet_earth_003",
     "Name": "어스폰",
     "stringElementType": "Earth",
-    "Description": "땅속성 기본 펫",
+    "Description": "범위 근접 공격과 도발로 전선을 유지하는 방어형 기본 펫",
     "stringPetGradeType": "Common",
-    "ActiveSkillIds": null,
+    "ActiveSkillIds": [
+      "pet_skill_earth_001",
+      "pet_skill_taunt"
+    ],
     "PassiveSkillIds": null,
     "IconPath": null
   },
@@ -33,20 +42,11 @@
     "Id": "pet_air_004",
     "Name": "윈드폰",
     "stringElementType": "Air",
-    "Description": "바람속성 기본 펫",
-    "stringPetGradeType": "Common",
-    "ActiveSkillIds": null,
-    "PassiveSkillIds": null,
-    "IconPath": null
-  },
-  {
-    "Id": "바람의 축복 펫",
-    "Name": " 태스트",
-    "stringElementType": "Air",
-    "Description": " 태스트",
+    "Description": "빠른 물리 투사체와 회복 및 공격속도 지원에 특화된 기본 펫",
     "stringPetGradeType": "Common",
     "ActiveSkillIds": [
-      "바람의 축복"
+      "pet_skill_air_001",
+      "pet_skill_windblessing"
     ],
     "PassiveSkillIds": null,
     "IconPath": null

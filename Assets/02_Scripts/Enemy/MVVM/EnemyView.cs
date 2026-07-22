@@ -7,6 +7,7 @@ using UnityEngine.AI;
 public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
 {
     public Vector3 Position => this.transform.position;
+    public Transform Transform => this.transform;
     public bool IsAlive => _viewModel.EnemyState != BT_EnemyState.Dead;
     public EntityType EntityType => EntityType.Enemy;
 
@@ -32,6 +33,7 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
     };
 
     public ITargetable CurrentTarget => _targetSelector.CurrentTarget;
+
 
     private GameObject _wagon;
     private GameObject _player;
