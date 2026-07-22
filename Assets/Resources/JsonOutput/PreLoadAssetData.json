@@ -1,22 +1,42 @@
 [
   {
-    "Id": "Enemy_Test",
-    "Address": "Test",
+    "Id": "Spider",
+    "Address": "Enemy/Spider",
     "AssetType": "GameObject"
   },
   {
-    "Id": "Enemy_Test_01",
-    "Address": "Test_01",
+    "Id": "EvilMageRed",
+    "Address": "Enemy/EvilMageRed",
     "AssetType": "GameObject"
   },
   {
-    "Id": "Exp/One",
-    "Address": "EnemyDropObject/Exp/One",
+    "Id": "MonsterPlant",
+    "Address": "Enemy/MonsterPlant",
     "AssetType": "GameObject"
   },
   {
-    "Id": "Soul/One",
-    "Address": "EnemyDropObject/Soul/One",
+    "Id": "RatAssassin",
+    "Address": "Enemy/RatAssassin",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "EvilMagePuple",
+    "Address": "Enemy/EvilMagePuple",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "Bat",
+    "Address": "Enemy/Bat",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "EnemyProjectile",
+    "Address": "Enemy/Projectile_01",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "EnemyArea",
+    "Address": "Enemy/Area_01",
     "AssetType": "GameObject"
   }
 ]

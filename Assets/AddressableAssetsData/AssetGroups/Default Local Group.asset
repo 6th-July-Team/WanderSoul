@@ -15,13 +15,38 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: d23e82b11f3c73f429c0814f7fd6f9b0
   m_SerializeEntries:
+  - m_GUID: 0797a141aae1dc54fae5fe8befa76765
+    m_Address: Enemy/Area_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 190967aff63fac14d833bd95c55864d9
+    m_Address: Enemy/Bat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 33b6e62b2617a534c94c4dd78ed21b07
-    m_Address: Test
+    m_Address: Enemy/Spider
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 57cfa6a90f1a9bd469048e899b9f396f
     m_Address: EnemyDropObject/Exp/One
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6f8945e80455876499be89027afb709c
+    m_Address: Enemy/EvilMagePuple
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7344a8ab377e9e74c8e1bca74d833c57
+    m_Address: Enemy/RatAssassin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 93b43cb05b9e6eb4cb38d1491de2489c
+    m_Address: Enemy/MonsterPlant
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -31,7 +56,12 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a80e31d1d6c9b284d81bad99825d7dc3
-    m_Address: Test_01
+    m_Address: Enemy/EvilMageRed
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cfab79379f606514e85219f0f02db805
+    m_Address: Enemy/Projectile_01
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

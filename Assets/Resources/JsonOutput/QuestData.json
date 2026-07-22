@@ -3,7 +3,7 @@
     "Id": "quest_001",
     "Name": "기본 퀘스트",
     "Description": "어디부터 어디까지 마차를 호위합니다.",
-    "stringQuestType": "Transport",
+    "StringQuestType": "Transport",
     "Difficulty": 1,
     "RequiredReputation": 0,
     "StageId": null,
@@ -17,13 +17,14 @@
       "auto_spawn_phase_03",
       "auto_spawn_phase_04",
       "auto_spawn_phase_05"
-    ]
+    ],
+    "DifficultyImagePath": null
   },
   {
     "Id": "quest_002",
     "Name": "기본 퀘스트2",
     "Description": "어디부터 어디까지 마차를 호위합니다.",
-    "stringQuestType": "Transport",
+    "StringQuestType": "Transport",
     "Difficulty": 1,
     "RequiredReputation": 0,
     "StageId": null,
@@ -31,6 +32,7 @@
     "ReputationReward": 50,
     "StartTownId": null,
     "ArrivalTownId": null,
-    "AutoSpawnIds": null
+    "AutoSpawnIds": null,
+    "DifficultyImagePath": null
   }
 ]

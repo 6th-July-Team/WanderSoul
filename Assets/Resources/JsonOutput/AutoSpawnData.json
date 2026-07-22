@@ -6,7 +6,7 @@
     "StartTime": 6,
     "Endtime": 42,
     "EnemyIds": [
-      "Test"
+      "Spider"
     ],
     "MinPressureEnemyCount": 4,
     "SpawnInterval": 6,
@@ -19,8 +19,8 @@
     "StartTime": 42,
     "Endtime": 87,
     "EnemyIds": [
-      "Test",
-      "Test_01"
+      "Spider",
+      "EvilMageRed"
     ],
     "MinPressureEnemyCount": 6,
     "SpawnInterval": 5,
@@ -33,8 +33,8 @@
     "StartTime": 87,
     "Endtime": 132,
     "EnemyIds": [
-      "Test",
-      "Test_01"
+      "Spider",
+      "EvilMageRed"
     ],
     "MinPressureEnemyCount": 8,
     "SpawnInterval": 4.5,
@@ -47,8 +47,8 @@
     "StartTime": 132,
     "Endtime": 232,
     "EnemyIds": [
-      "Test",
-      "Test_01"
+      "Spider",
+      "EvilMageRed"
     ],
     "MinPressureEnemyCount": 10,
     "SpawnInterval": 4,
@@ -61,8 +61,8 @@
     "StartTime": 232,
     "Endtime": null,
     "EnemyIds": [
-      "Test",
-      "Test_01"
+      "Spider",
+      "EvilMageRed"
     ],
     "MinPressureEnemyCount": 14,
     "SpawnInterval": 3.5,
