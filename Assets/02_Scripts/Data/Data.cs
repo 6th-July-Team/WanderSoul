@@ -60,15 +60,15 @@ public class ItemData : BaseData
 [Serializable]
 public class QuestData : BaseData, ISerializationCallbackReceiver
 {
-    [SerializeField] private string QuestType;
+    [SerializeField] private string StringQuestType;
 
     [NonSerialized] public QuestType Type;
 
     public void OnAfterDeserialize()
     {
-        if (Enum.TryParse(QuestType, true, out Type) == false)
+        if (Enum.TryParse(StringQuestType, true, out Type) == false)
         {
-            DataLog.EnumParseFailed<QuestType>(nameof(QuestData), Id, QuestType);
+            DataLog.EnumParseFailed<QuestType>(nameof(QuestData), Id, StringQuestType);
         }
     }
 
