@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 
 public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffectReceiver, IHealable
 {
@@ -20,6 +21,7 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
 
 
     private PlayerViewModel _playerViewModel;
+    private PlayerOutGameViewModel _playerOutGameViewModel;
 
 
     private PlayerCombatController _combatController;
@@ -51,6 +53,8 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
         StatModifierReceiver = adapter;
         SkillModifierReceiver = adapter;
 
+        _playerOutGameViewModel = GameManager.Network.RequestPlayerOutGameViewModel();
+
         _isInitialized = true;
     }
 
@@ -66,7 +70,7 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
     public void TakeDamage(DamageInfo damageInfo)
     {
         // TODO 데미지 입는 로직
-        if(_isInBarrier)
+        if (_isInBarrier)
         {
             Debug.Log($"{GetType()} 플레이어 베리어로 데미지 흡수!");
         }
@@ -94,6 +98,20 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
         {
             _isInBarrier = true;
         }
+
+        if (other.TryGetComponent<EnemyDropObject>(out var enemyDropObject))
+        {
+            if (enemyDropObject.Type == DropObjectType.Exp)
+            {
+                _playerViewModel.AddExp(enemyDropObject.Value);
+            }
+            else if (enemyDropObject.Type == DropObjectType.Soul)
+            {
+                _playerOutGameViewModel.AddSoul(enemyDropObject.Value);
+            }
+
+            enemyDropObject.OnCollected();
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -103,4 +121,4 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
             _isInBarrier = false;
         }
     }
-} 
+}

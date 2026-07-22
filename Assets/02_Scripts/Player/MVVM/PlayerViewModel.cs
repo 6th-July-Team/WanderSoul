@@ -15,7 +15,7 @@ public class PlayerViewModel : BaseViewModel<PlayerModel>
     public float MaxHP => _statController.GetValue(StatType.MaxHealth);
     public float GetExp => _model.EXP;
 
-    public void SetExp(float exp)
+    public void AddExp(float exp)
     {
         _model.EXP += exp;
     }

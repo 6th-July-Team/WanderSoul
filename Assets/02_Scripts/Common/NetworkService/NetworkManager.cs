@@ -23,6 +23,11 @@ public class NetworkManager
         return PlayerService.GetPlayerSkillViewModel();
     }
 
+    public PlayerOutGameViewModel RequestPlayerOutGameViewModel()
+    {
+        return PlayerService.GetPlayerOutGameViewModel();
+    }
+
     public WagonViewModel RequestCreateWagon()
     {
         return WagonService.GetWagonViewModel();
