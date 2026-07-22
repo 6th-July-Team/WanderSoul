@@ -17,7 +17,10 @@ public class PlayerSkillViewModel : BaseViewModel<PlayerSkillModel>
         return _model.SkillCoolTimes[slot];
     }
 
-    public void SetSkill(SkillSlot slot, float coolTime)
+    /// <summary>
+    /// 첫 등록의 경우 쿨타임이 0
+    /// </summary>
+    public void SetSkill(SkillSlot slot, float coolTime = 0f)
     {
         _model.SetSkillCoolTime(slot, coolTime);
     }

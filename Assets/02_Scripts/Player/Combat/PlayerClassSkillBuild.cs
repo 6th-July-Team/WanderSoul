@@ -4,6 +4,8 @@ public class PlayerClassSkillBuild
 {
     private Dictionary<SkillSlot, PlayerSkill> _skills = new();
 
+    private PlayerSkillViewModel _skillViewModel;
+
     private bool _isInitialized = false;
 
     public void Init(PlayerSkillModifier skillModifier)
@@ -12,6 +14,8 @@ public class PlayerClassSkillBuild
         {
             skill.Init(skillModifier);
         }
+
+        _skillViewModel = GameManager.Network.RequestPlayerSkillViewModel();
 
         _isInitialized = true;
     }
@@ -72,5 +76,4 @@ public class PlayerClassSkillBuild
     {
         return _skills[slot].RemainingCooldTime;
     }
-
 }

@@ -47,7 +47,7 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
 
         var build = playerSkillMaker.CreateSkillBuild(playerId, playerStatController);
 
-        _combatController.Init(_statController, build, _skillModifier);
+        _combatController.Init(build, _skillModifier);
 
         var adapter = new PlayerStatusEffectAdapter(_statController, _skillModifier);
         StatModifierReceiver = adapter;
