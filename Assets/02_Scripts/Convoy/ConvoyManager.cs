@@ -192,13 +192,7 @@ public class ConvoyManager
 
             for (int i = 0; i < _selectedPetIds.Count; i++)
             {
-                var petData = GameManager.DataTable.GetPetData(_selectedPetIds[i]);
-                if (petData == null)
-                {
-                    continue;
-                }
-
-                partyHud.AddPet(petData.Name, 1f);
+                partyHud.AddPet(_selectedPetIds[i], 1f);
             }
         }
 

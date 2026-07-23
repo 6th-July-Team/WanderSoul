@@ -96,4 +96,16 @@ public static class Utils
             _ => DamageType.None,
         };
     }
+
+    public static Color GetColorByPetElement(PetElement element)
+    {
+        return element switch
+        {
+            PetElement.Fire => new Color(0.85f, 0.34f, 0.24f),
+            PetElement.Water => new Color(0.26f, 0.52f, 0.84f),
+            PetElement.Earth => new Color(0.56f, 0.43f, 0.26f),
+            PetElement.Air => new Color(0.44f, 0.74f, 0.78f),
+            _ => new Color(0.45f, 0.45f, 0.5f),
+        };
+    }
 }

@@ -374,6 +374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b61280d8e8b816148a918fb9854417ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PetSlotUIView
+  _backgroundImage: {fileID: 398196449839527091}
   _iconImage: {fileID: 2745675797224428606}
   _slotButton: {fileID: 3273359074703244309}
   _selectedImage: {fileID: 1154745221770592225}

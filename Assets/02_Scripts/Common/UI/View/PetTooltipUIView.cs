@@ -7,7 +7,7 @@ public class PetTooltipUIView : MonoBehaviour
 {
     [SerializeField] private RectTransform _rootRect;
     [SerializeField] private CanvasGroup _canvasGroup;
-    [SerializeField] private Image _iconImage;
+    [SerializeField] private Image _backgroundImage;
     [SerializeField] private TMP_Text _nameText;
     [SerializeField] private TMP_Text _elementText;
     [SerializeField] private TMP_Text _gradeText;
@@ -61,12 +61,22 @@ public class PetTooltipUIView : MonoBehaviour
         _gradeText.text = petData.GetGrade().ToString();
         _descriptionText.text = petData.Description;
 
-        RefreshIcon(petData.IconPath);
+        RefreshBackgroundColor(petData.GetElementType());
 
         _isShowing = true;
         _canvasGroup.alpha = 1f;
 
         FollowCursor();
+    }
+
+    private void RefreshBackgroundColor(PetElement element)
+    {
+        if (_backgroundImage == null)
+        {
+            return;
+        }
+
+        _backgroundImage.color = Utils.GetColorByPetElement(element);
     }
 
     public void HideTooltip()
@@ -75,19 +85,6 @@ public class PetTooltipUIView : MonoBehaviour
         _canvasGroup.alpha = 0f;
     }
 
-    private void RefreshIcon(string iconPath)
-    {
-        if (string.IsNullOrEmpty(iconPath) == true)
-        {
-            return;
-        }
-
-        Sprite iconSprite = Utils.ResourcesLoad<Sprite>(iconPath);
-        if (iconSprite != null)
-        {
-            _iconImage.sprite = iconSprite;
-        }
-    }
 
     private void FollowCursor()
     {
