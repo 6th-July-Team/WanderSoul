@@ -113,7 +113,7 @@ public class ConvoyManager
 
     private void LoadMap()
     {
-        var tradeRouteHandler = GameObject.Instantiate(Utils.ResourcesLoad<TradeRouteHandler>("Map_01-TEST"));
+        var tradeRouteHandler = GameObject.Instantiate(Utils.ResourcesLoad<TradeRouteHandler>("Map/Map_01-TEST"));
 
         SpawnPlayer();
 
@@ -124,7 +124,7 @@ public class ConvoyManager
     {
         var wagonViewModel = GameManager.Network.RequestCreateWagon();
 
-        _wagon = GameObject.Instantiate(Utils.ResourcesLoad<Wagon>("Wagon_ProtoType"));
+        _wagon = GameObject.Instantiate(Utils.ResourcesLoad<Wagon>("Wagon/Wagon_ProtoType"));
         _wagon.Init(wagonViewModel, _playerEntity);
         _wagon.SetSpline(splineContainer);
     }
