@@ -149,7 +149,7 @@ public class ConvoyManager
 
             var viewModel = GameManager.Network.CreatePetViewModel(_selectedPetIds[index]);
 
-            petInstance.GetComponent<PetController>().Init("pet_fire_001"/*_selectedPetIds[index]*/
+            petInstance.GetComponent<PetController>().Init(_selectedPetIds[index]
                             , _playerEntity, _wagon
                             , _petSkillMaker
                             , _playerEntity, _playerEntity

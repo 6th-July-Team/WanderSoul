@@ -35,29 +35,19 @@ public class ScholarElementalExplosion : IPlayerSkillExecution, ISkillRangeCheck
 
         if(_elementSkillData == null)
         {
-            _elementSkillData = GameManager.DataTable.GetPlayerSkillData(SkillData.Id + "_" + _element.ToString());
+            _elementSkillData = GameManager.DataTable.GetPlayerSkillData(SkillData.Id + "_" + _element.ToString().ToLower());
         }
 
 
-        Vector3 skillCenter = context.AimWorldPoint;
-        skillCenter.y += 0f;
+        AreaOfEffect aoeInstance = Object.Instantiate(Utils.ResourcesLoad<AreaOfEffect>("AreaOfEffect")
+                , context.AimWorldPoint, Quaternion.identity);
 
-        SearchUtil.FindNearestSphere(skillCenter, _elementSkillData.Radius, LayerMask.GetMask("Enemy"), _targets);
-
-        DamageInfo damageInfo = new DamageInfo(damage, context.AimDirection, Utils.GetTypeByPetElement(_element));
-
-        foreach (var target in _targets)
-        {
-            if (target == null)
-                continue;
-
-            target.GetComponent<IDamageable>().TakeDamage(damageInfo);
-        }
-
-
-
-
-
+        aoeInstance.Init(new AreaOfEffectStruct
+        (
+            context.AimWorldPoint, _elementSkillData.Power, _elementSkillData.Radius
+            , _elementSkillData.GetDamageType(), _elementSkillData.GetTargetType()
+            , _elementSkillData.VFXPath
+        ));
 
 
         var viewModel = GameManager.Network.RequestPlayerSkillViewModel();

@@ -32,7 +32,7 @@ public class ScholarElementalArrow : IPlayerSkillExecution
 
         if(_elementSkillData == null)
         {
-            _elementSkillData = GameManager.DataTable.GetPlayerSkillData(SkillData.Id + "_" + _element.ToString());
+            _elementSkillData = GameManager.DataTable.GetPlayerSkillData(SkillData.Id + "_" + _element.ToString().ToLower());
         }
 
         _variants[_element].Fire(context, damage, _elementSkillData);

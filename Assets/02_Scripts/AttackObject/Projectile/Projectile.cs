@@ -70,16 +70,11 @@ public class Projectile : MonoBehaviour
             return;
         }
 
-        Debug.Log($"트리거 들어옴");
-
-
         if (other.CompareTag("Enemy"))
         {
-            Debug.Log($"태그 통과");
 
             if (other.TryGetComponent(out IDamageable damageable))
             {
-                Debug.Log($"IDamageable 통과");
 
                 var damageinfo = new DamageInfo(_damage, _direction, _damageType);
 
@@ -157,14 +152,13 @@ public class Projectile : MonoBehaviour
 
     private void BurstDamage()
     {
-
         int targetCount = SearchUtil.FindTargetSphere(transform.position, _radius, LayerMask.GetMask("Enemy"), _burstTarget);
+
+        DamageInfo damageInfo = new(_extraDamage, _direction, _damageType);
 
         for (int i = 0; i < targetCount; i++)
         {
             IDamageable damageableTarget = _burstTarget[i].GetComponentInParent<IDamageable>();
-
-            DamageInfo damageInfo = new(_extraDamage, _direction, _damageType);
 
             if (SearchUtil.IsValidTarget(damageableTarget) == false)
             {

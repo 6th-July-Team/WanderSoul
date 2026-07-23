@@ -1,6 +1,6 @@
 [
   {
-    "Id": "skill_scholar_basic_Fire",
+    "Id": "skill_scholar_basic_fire",
     "Name": "화염 화살",
     "Description": "화염 화살을 발사해 적중 지점 주변에 작은 폭발 피해를 줍니다.",
     "Power": 15,
@@ -20,11 +20,11 @@
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null,
+    "stringSkillSlot": "Basic",
     "ExtraDamage": 10
   },
   {
-    "Id": "skill_scholar_basic_Water",
+    "Id": "skill_scholar_basic_water",
     "Name": "냉기 화살",
     "Description": "냉기 화살을 발사해 적을 관통하고 이동을 늦추는 기본 공격입니다.",
     "Power": 15,
@@ -40,15 +40,15 @@
     "stringTargetType": "Enemy",
     "stringDamageType": "Cold",
     "StatusEffectId": null,
-    "VFXPath": null,
+    "VFXPath": "Player/Projectile/Ice Arrow",
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null,
+    "stringSkillSlot": "Basic",
     "ExtraDamage": null
   },
   {
-    "Id": "skill_scholar_basic_Earth",
+    "Id": "skill_scholar_basic_earth",
     "Name": "암석 화살",
     "Description": "느리지만 강한 암석 화살을 발사해 높은 단일 피해를 줍니다.",
     "Power": 28,
@@ -64,15 +64,15 @@
     "stringTargetType": "Enemy",
     "stringDamageType": "Physical",
     "StatusEffectId": null,
-    "VFXPath": null,
+    "VFXPath": "Player/Projectile/Stone Arrow",
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null,
+    "stringSkillSlot": "Basic",
     "ExtraDamage": null
   },
   {
-    "Id": "skill_scholar_basic_Air",
+    "Id": "skill_scholar_basic_air",
     "Name": "번개 화살",
     "Description": "빠른 번개 화살을 짧은 간격으로 발사하는 기본 공격입니다.",
     "Power": 10,
@@ -88,15 +88,15 @@
     "stringTargetType": "Enemy",
     "stringDamageType": "Electric",
     "StatusEffectId": null,
-    "VFXPath": null,
+    "VFXPath": "Player/Projectile/Electric Arrow",
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null,
+    "stringSkillSlot": "Basic",
     "ExtraDamage": null
   },
   {
-    "Id": "skill_scholar_basic_Magic",
+    "Id": "skill_scholar_basic_magic",
     "Name": "마력 화살",
     "Description": "균형 잡힌 마력 화살을 발사하고 일정 공격마다 강화 화살로 이어지는 기본 공격입니다.",
     "Power": 20,
@@ -112,11 +112,11 @@
     "stringTargetType": "Enemy",
     "stringDamageType": "Magic",
     "StatusEffectId": null,
-    "VFXPath": null,
+    "VFXPath": "Player/Projectile/Magic Arrow",
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null,
+    "stringSkillSlot": "Basic",
     "ExtraDamage": null
   },
   {
@@ -136,11 +136,11 @@
     "stringTargetType": "Enemy",
     "stringDamageType": "Fire",
     "StatusEffectId": null,
-    "VFXPath": null,
+    "VFXPath": "Player/Skill/Scholar_AOE/Fire Explosion",
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null,
+    "stringSkillSlot": "Special",
     "ExtraDamage": null
   },
   {
@@ -160,11 +160,11 @@
     "stringTargetType": "Enemy",
     "stringDamageType": "Cold",
     "StatusEffectId": null,
-    "VFXPath": null,
+    "VFXPath": "Player/Skill/Scholar_AOE/Ice Explosion",
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null,
+    "stringSkillSlot": "Special",
     "ExtraDamage": null
   },
   {
@@ -184,11 +184,11 @@
     "stringTargetType": "Enemy",
     "stringDamageType": "Physical",
     "StatusEffectId": null,
-    "VFXPath": null,
+    "VFXPath": "Player/Skill/Scholar_AOE/Earth Explosion",
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null,
+    "stringSkillSlot": "Special",
     "ExtraDamage": null
   },
   {
@@ -208,11 +208,11 @@
     "stringTargetType": "Enemy",
     "stringDamageType": "Electric",
     "StatusEffectId": null,
-    "VFXPath": null,
+    "VFXPath": "Player/Skill/Scholar_AOE/Electric Explosion",
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null,
+    "stringSkillSlot": "Special",
     "ExtraDamage": null
   },
   {
@@ -232,11 +232,11 @@
     "stringTargetType": "Enemy",
     "stringDamageType": "Magic",
     "StatusEffectId": null,
-    "VFXPath": null,
+    "VFXPath": "Player/Skill/Scholar_AOE/Magic Explosion",
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": null,
-    "stringSkillSlot": null,
+    "stringSkillSlot": "Special",
     "ExtraDamage": null
   },
   {
