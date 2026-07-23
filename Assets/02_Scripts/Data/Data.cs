@@ -167,7 +167,7 @@ public class AutoSpawnData : BaseData
     public List<string> EnemyIds;
     public int MinPressureEnemyCount;     
     public float SpawnInterval;
-    public int SpawnBatchCount;
+    public List<int> SpawnBatchCount;
 }
 
 [Serializable]
@@ -302,12 +302,17 @@ public class PlayerSkillData : BaseData
     public string VFXPath;
     public string SFXPath;
     public string IconPath;
+    public string ExecutionId;
+    public string stringSkillSlot;
 
     public DamageType GetDamageType()
         => Enum.TryParse<DamageType>(stringSkillDamageType, out var result) ? result : DamageType.Physical;
 
     public TargetType GetTargetType()
         => Enum.TryParse<TargetType>(stringTargetType, out var result) ? result : default;
+
+    public SkillSlot GetSkillSlot()
+        => Enum.TryParse<SkillSlot>(stringSkillSlot, out var result) ? result : default;
 }
 
 [Serializable]
@@ -460,4 +465,15 @@ public class WagonSlowRuleData : BaseData
     public List<int> MinEnemyCount;
     public List<int> MaxEnemyCount;
     public List<float> MoveSpeedRate;
+}
+
+[Serializable]
+public class PlayerClassData : BaseData
+{
+    public string Name;
+    public string Description;
+    public string PassiveSkillId;
+    public string BasicSkillId;
+    public string SpecialSkillId;
+    public List<string> UltimateSkillIds;
 }

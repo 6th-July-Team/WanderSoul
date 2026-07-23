@@ -1,6 +1,6 @@
 [
   {
-    "Id": "skill_scholar_basic_fire",
+    "Id": "skill_scholar_basic_Fire",
     "Name": "화염 화살",
     "Description": "화염 화살을 발사해 적중 지점 주변에 작은 폭발 피해를 줍니다.",
     "Power": 18,
@@ -18,10 +18,12 @@
     "StatusEffectId": "debuff_burn",
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
-    "Id": "skill_scholar_basic_water",
+    "Id": "skill_scholar_basic_Water",
     "Name": "냉기 화살",
     "Description": "냉기 화살을 발사해 적을 관통하고 이동을 늦추는 기본 공격입니다.",
     "Power": 15,
@@ -39,10 +41,12 @@
     "StatusEffectId": "debuff_frost",
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
-    "Id": "skill_scholar_basic_earth",
+    "Id": "skill_scholar_basic_Earth",
     "Name": "암석 화살",
     "Description": "느리지만 강한 암석 화살을 발사해 높은 단일 피해를 줍니다.",
     "Power": 28,
@@ -60,10 +64,12 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
-    "Id": "skill_scholar_basic_air",
+    "Id": "skill_scholar_basic_Air",
     "Name": "번개 화살",
     "Description": "빠른 번개 화살을 짧은 간격으로 발사하는 기본 공격입니다.",
     "Power": 10,
@@ -81,10 +87,12 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
-    "Id": "skill_scholar_basic_magic",
+    "Id": "skill_scholar_basic_Magic",
     "Name": "마력 화살",
     "Description": "균형 잡힌 마력 화살을 발사하고 일정 공격마다 강화 화살로 이어지는 기본 공격입니다.",
     "Power": 20,
@@ -102,7 +110,9 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_scholar_special_fire",
@@ -123,7 +133,9 @@
     "StatusEffectId": "debuff_burn",
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_scholar_special_water",
@@ -144,7 +156,9 @@
     "StatusEffectId": "debuff_frost",
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_scholar_special_earth",
@@ -165,7 +179,9 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_scholar_special_air",
@@ -186,7 +202,9 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_scholar_special_magic",
@@ -207,7 +225,9 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_scholar_ult_summonbarrier",
@@ -228,7 +248,9 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_scholar_ult_berserksoul",
@@ -249,7 +271,9 @@
     "StatusEffectId": "buff_berserksoul_petattackspeed, buff_berserksoul_petmaxhealth, buff_berserksoul_petmovespeed",
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_scholar_passive",
@@ -270,7 +294,9 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_scholar_basic",
@@ -291,7 +317,32 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": "ScholarBasic",
+    "stringSkillSlot": "Basic"
+  },
+  {
+    "Id": "skill_scholar_special",
+    "Name": "원소 폭발",
+    "Description": null,
+    "Power": null,
+    "Cooldown": null,
+    "ManaCost": null,
+    "ProjectileDuration": null,
+    "ProjectileSpeed": null,
+    "Pierce": null,
+    "MaxProjectileCount": null,
+    "Radius": null,
+    "CastRange": null,
+    "BarrierAbsorbAmount": null,
+    "stringTargetType": null,
+    "stringDamageType": null,
+    "StatusEffectId": null,
+    "VFXPath": null,
+    "SFXPath": null,
+    "IconPath": null,
+    "ExecutionId": "ScholarSpecial",
+    "stringSkillSlot": "Special"
   },
   {
     "Id": "skill_mercenary_passive",
@@ -312,7 +363,9 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_mercenary_basic_slash",
@@ -333,7 +386,9 @@
     "StatusEffectId": "debuff_bleed",
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_mercenary_special_whip",
@@ -354,7 +409,9 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_mercenary_ult_finalblow",
@@ -375,7 +432,9 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   },
   {
     "Id": "skill_mercenary_ult_dancestorm",
@@ -396,6 +455,8 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null
+    "IconPath": null,
+    "ExecutionId": null,
+    "stringSkillSlot": null
   }
 ]
