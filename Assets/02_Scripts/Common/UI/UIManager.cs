@@ -163,6 +163,9 @@ public partial class UIManager
             case UIType.LevelUpUIView:
                 return UIRootType.Content;
 
+            case UIType.UltimateSelectUIView:
+                return UIRootType.Content;
+
             case UIType.LoadingUIView:
                 return UIRootType.Front;
 
