@@ -1,22 +1,42 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class LocationNavigator : MonoBehaviour
 {
     [SerializeField] private GameObject _startLocation;
+    [SerializeField] private GameObject _monsterFarmRoot;
 
     private readonly Stack<GameObject> _locationHistory = new();
     private GameObject _currentLocation;
+
+    public bool IsInMonsterFarm => _currentLocation == _monsterFarmRoot;
 
     private void Awake()
     {
         _currentLocation = _startLocation;
         _currentLocation.SetActive(true);
+        _monsterFarmRoot.SetActive(false);
     }
 
-    public void Enter(GameObject nextlocation)
+    public void ToggleMonsterFarm()
     {
-        if (nextlocation == null || nextlocation == _currentLocation)
+        if (IsInMonsterFarm)
+        {
+            GoBack();
+            return;
+        }
+
+        EnterMonsterFarm();
+    }
+
+    public void EnterMonsterFarm()
+    {
+        Enter(_monsterFarmRoot);
+    }
+
+    public void Enter(GameObject nextLocation)
+    {
+        if (nextLocation == null || nextLocation == _currentLocation)
         {
             return;
         }
@@ -24,9 +44,9 @@ public class LocationNavigator : MonoBehaviour
         _locationHistory.Push(_currentLocation);
 
         _currentLocation.SetActive(false);
-        nextlocation.SetActive(true);
+        nextLocation.SetActive(true);
 
-        _currentLocation = nextlocation;
+        _currentLocation = nextLocation;
     }
 
     public void GoBack()
