@@ -45,6 +45,11 @@ public class Projectile : MonoBehaviour
         _radius = projectileData.Radius;
         _pierce = projectileData.Pierce;
 
+        if(_direction.sqrMagnitude > 0f)
+        {
+            transform.rotation = Quaternion.LookRotation(_direction, Vector3.up);
+        }
+
         if (_duration > 0)
         {
             Destroy(this.gameObject, _duration);
