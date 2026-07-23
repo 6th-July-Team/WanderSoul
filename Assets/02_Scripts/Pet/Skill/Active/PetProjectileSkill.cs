@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PetProjectileSkill : IPetActiveSkillExecution
 {
@@ -19,16 +18,14 @@ public class PetProjectileSkill : IPetActiveSkillExecution
         Vector3 direct = (target.Position - context.PetPos).normalized;
 
         Projectile projectileInstance = GameObject.Instantiate(
-                Resources.Load<Projectile>("TestProjectile")
+                Resources.Load<Projectile>("Pet/TestProjectile")
                 , context.PetPos, Quaternion.identity);
 
         projectileInstance.Init(new ProjectileStruct
-        {
-            Speed = context.PetActiveSkillData.ProjectileSpeed,
-            Damage = context.PetActiveSkillData.Power,
-            Direction = direct,
-            DamageType = context.PetActiveSkillData.GetDamageType(),
-            TargetType = context.PetActiveSkillData.GetTargetType()
-        });
+        (
+            context.PetActiveSkillData.ProjectileSpeed, context.PetActiveSkillData.Power, context.PetActiveSkillData.Duration
+            , direct, context.PetActiveSkillData.GetDamageType(), context.PetActiveSkillData.GetTargetType()
+            , context.PetActiveSkillData.VFXPath
+        ));
     }
 }

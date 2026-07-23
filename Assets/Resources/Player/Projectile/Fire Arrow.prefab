@@ -256,6 +256,7 @@ GameObject:
   - component: {fileID: 5378694723559435430}
   - component: {fileID: 4073716706141605852}
   - component: {fileID: 3233065032871074981}
+  - component: {fileID: -1128235223597287992}
   m_Layer: 0
   m_Name: Fire Arrow
   m_TagString: Untagged
@@ -5084,6 +5085,23 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
+--- !u!114 &-1128235223597287992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6079223365138092924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 713ed7a2728818447968a8f491d25928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ParticleComponent
+  _particles:
+  - {fileID: 4073716706141605852}
+  _trails:
+  - {fileID: 1604023518506526841}
+  _releaseDelay: 2
 --- !u!1 &7606464633296989770
 GameObject:
   m_ObjectHideFlags: 0

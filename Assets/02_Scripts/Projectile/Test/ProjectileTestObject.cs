@@ -28,6 +28,7 @@ public class ProjectileTestObject : MonoBehaviour
     
     [SerializeField] private bool IsCreateProjectile;
 
+    [SerializeField] private string ProjectileVFXPath;
 
     private void Awake()
     {
@@ -59,7 +60,7 @@ public class ProjectileTestObject : MonoBehaviour
         }
 
 
-        ProjectileStruct data = new ProjectileStruct(ProjectileSpeed, ProjectileDamage, ProjectileDuration, Vector3.forward, ProjectileDamageType, TragetType, ProjectileAdditionalDamage, continuousDamage: false, radius: ProjectileBoomRange, pierce: ProjectilePierce);
+        ProjectileStruct data = new ProjectileStruct(ProjectileSpeed, ProjectileDamage, ProjectileDuration, Vector3.forward, ProjectileDamageType, TragetType, ProjectileVFXPath, extraDamage: ProjectileAdditionalDamage, continuousDamage: false, radius: ProjectileBoomRange, pierce: ProjectilePierce);
         projectileComponent.Init(data);
     }
 }

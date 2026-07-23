@@ -3,8 +3,6 @@
 public class Projectile : MonoBehaviour
 {
     // 기본적인 옵션
-    [SerializeField] private GameObject Prefab_VFXHit; // 히트했을 때 나오는 오브젝트
-
     private float _speed;
     private float _damage;
     private float _duration;
@@ -23,6 +21,10 @@ public class Projectile : MonoBehaviour
     // 폭발형 전용
     private Collider[] _burstTarget = new Collider[32];
 
+    [SerializeField] private Transform _visualRoot;
+    private string _visualPath;
+    private string _hitEffectPath;
+
     public void Init(ProjectileStruct projectileData)
     {
         // 기본 옵션
@@ -34,6 +36,9 @@ public class Projectile : MonoBehaviour
         _damageType = projectileData.DamageType;
         _targetType = projectileData.TargetType;
 
+        _visualPath = projectileData.VisualPath;
+        _hitEffectPath = projectileData.HitEffectPath;
+
         // 추가 옵션
         _extraDamage = projectileData.AdditionalDamage;
         _continuousDamage = projectileData.ContinuousDamage;
@@ -44,6 +49,8 @@ public class Projectile : MonoBehaviour
         {
             Destroy(this.gameObject, _duration);
         }
+
+        CreateVisual();
     }
 
     private void Update()
@@ -111,7 +118,6 @@ public class Projectile : MonoBehaviour
 
                     damageable.TakeDamage(damageinfo);
                     HitEffect(transform.position);
-                    Destroy(gameObject);
                 }
             }
         }
@@ -119,22 +125,34 @@ public class Projectile : MonoBehaviour
 
     private void HitEffect(Vector3 position)
     {
-        if (Prefab_VFXHit != null)
+        if(_hitEffectPath == null)
         {
-            GameObject vfxHit = Instantiate(Prefab_VFXHit, position, Quaternion.identity);
-            IProjectileScaler projectileScaler = vfxHit.GetComponentInParent<IProjectileScaler>();
-
-            if (projectileScaler != null)
-            {
-                float scale = Mathf.Max(_radius, 1); // 폭발 범위가 0일 경우 투사체 타격 이펙트의 크기를 1로 만듦
-
-                Vector3 scaleVector = new(scale, scale, scale);
-
-                projectileScaler.SetScale(scaleVector);
-            }
-
-            Destroy(vfxHit, 2f);
+            return;
         }
+
+        GameObject hitPrefab = Resources.Load<GameObject>(_hitEffectPath);
+        if(hitPrefab == null)
+        {
+            Debug.LogError($"Projectile 타격 이펙트를 불러오지 못했습니다. Path: {_hitEffectPath}");
+            return;
+        }
+
+        GameObject hitObject = Instantiate(hitPrefab, position, Quaternion.identity);
+
+        if (!hitObject.TryGetComponent(out ParticleComponent hitVisual))
+        {
+            Debug.LogError($"{hitPrefab.name} 루트에 ParticleComponent 없습니다.");
+
+            Destroy(hitObject);
+            return;
+        }
+
+        float scale = Mathf.Max(_radius, 1f);
+
+        hitVisual.SetScale(Vector3.one * scale);
+        hitVisual.Play();
+
+        Destroy(hitObject, hitVisual.ReleaseDelay);
     }
 
     private void BurstDamage()
@@ -142,7 +160,7 @@ public class Projectile : MonoBehaviour
 
         int targetCount = SearchUtil.FindTargetSphere(transform.position, _radius, LayerMask.GetMask("Enemy"), _burstTarget);
 
-        for(int i = 0;  i < targetCount; i++)
+        for (int i = 0; i < targetCount; i++)
         {
             IDamageable damageableTarget = _burstTarget[i].GetComponentInParent<IDamageable>();
 
@@ -154,6 +172,28 @@ public class Projectile : MonoBehaviour
             }
 
             damageableTarget.TakeDamage(damageInfo);
+        }
+    }
+
+    private void CreateVisual()
+    {
+        GameObject visualPrefab = Resources.Load<GameObject>(_visualPath);
+
+        if (visualPrefab == null)
+        {
+            Debug.LogError($"Projectile 비주얼을 불러오지 못했습니다. Path: {_visualPath}");
+
+            return;
+        }
+
+        var visualObject = Instantiate(visualPrefab, _visualRoot, false);
+
+        visualObject.transform.localPosition = Vector3.zero;
+        visualObject.transform.localRotation = Quaternion.identity;
+
+        if (visualObject.TryGetComponent(out ParticleComponent visualComponent))
+        {
+            visualComponent.Play();
         }
     }
 }
@@ -169,14 +209,19 @@ public struct ProjectileStruct
     public DamageType DamageType;
     public TargetType TargetType;
 
+    public string VisualPath;
+
     // 추가 옵션
     public float AdditionalDamage; // 폭발 같은 추가적인 데미지
     public bool ContinuousDamage; // 틱마다 피해를 입히는가?
     public float Radius; // 폭발 범위 -> 없을 경우 기본값 0
     public int Pierce; // 관통력 -> 없을 경우 기본값 0
+    public string HitEffectPath;
 
-    public ProjectileStruct(float speed, float damage, float duration, Vector3 direction, DamageType damageType, TargetType targetType,
-            float extraDamage = 0, bool continuousDamage = false, float radius = 0, int pierce = 0)
+    public ProjectileStruct(float speed, float damage, float duration, Vector3 direction
+        , DamageType damageType, TargetType targetType
+        , string visualPath, string hitEffectPath = null
+        , float extraDamage = 0, bool continuousDamage = false, float radius = 0, int pierce = 0)
     {
         Speed = speed;
         Damage = damage;
@@ -185,6 +230,9 @@ public struct ProjectileStruct
         Direction = direction;
         DamageType = damageType;
         TargetType = targetType;
+
+        VisualPath = visualPath;
+        HitEffectPath = hitEffectPath;
 
         AdditionalDamage = extraDamage;
         ContinuousDamage = continuousDamage;
