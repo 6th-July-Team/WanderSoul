@@ -4,8 +4,10 @@ public class MainMenuUI : BaseUI
 {
     [SerializeField] private UIButton _inventoryButton;
     [SerializeField] private UIButton _characterButton;
-    [SerializeField] private UIButton _farmButton;
+    [SerializeField] private UIButton _startBattleButton;
     [SerializeField] private UIButton _optionButton;
+    [SerializeField] private UIButton _farmButton;
+
 
     [Header("Animation")]
     [SerializeField] private UISlideAnimation _slideAnimation;
@@ -14,8 +16,9 @@ public class MainMenuUI : BaseUI
     {
         _inventoryButton.BindOnClickButtonEvent(OnClickInventory);
         _characterButton.BindOnClickButtonEvent(OnClickCharacter);
-        _farmButton.BindOnClickButtonEvent(OnClickFarm);
+        _startBattleButton.BindOnClickButtonEvent(OnClickStartBattleButton);
         _optionButton.BindOnClickButtonEvent(OnClickOption);
+        _farmButton.BindOnClickButtonEvent(OnClickFarm);
     }
 
     protected override void OnOpened()
@@ -61,7 +64,7 @@ public class MainMenuUI : BaseUI
         Debug.Log("캐릭터 창 열기");
     }
 
-    private void OnClickFarm()
+    private void OnClickStartBattleButton()
     {
         if (_petInventoryModelTest.PetList.Count == 0)
         {
@@ -84,6 +87,23 @@ public class MainMenuUI : BaseUI
             _petInventoryModelTest.AddPet(pet);
             uniqueId++;
         }
+    }
+
+    private void OnClickFarm()
+    {
+        LocationNavigator locationNavigator = Object.FindFirstObjectByType<LocationNavigator>();
+
+        if (locationNavigator == null )
+        {
+            Debug.LogWarning("LocationNavigator를 찾을 수 없습니다.");
+            return;
+        }
+
+        locationNavigator.ToggleMonsterFarm();
+
+        string buttonText = locationNavigator.IsInMonsterFarm ? "마을 복귀" : "팜";
+
+        _farmButton.ChangeText(buttonText);
     }
 
     private void OnClickOption()

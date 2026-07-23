@@ -8,8 +8,6 @@ public class VillageClickInput : MonoBehaviour
     [SerializeField] private GameObject _shopPanel;
     [SerializeField] private GameObject _missionPanel;
     [SerializeField] private GameObject _townHallPanel;
-    [SerializeField] private LocationNavigator _locationNavigator;
-    [SerializeField] private GameObject _monsterFarmRoot;
     [SerializeField] private GameObject _clinicPanel;
 
     private void Awake()
@@ -41,12 +39,6 @@ public class VillageClickInput : MonoBehaviour
 
         if (!hit.collider.TryGetComponent(out VillageFacility facility))
         {
-            return;
-        }
-
-        if (facility.FacilityType == VillageFacilityType.MonsterFarm)
-        {
-            _locationNavigator.Enter(_monsterFarmRoot);
             return;
         }
 
