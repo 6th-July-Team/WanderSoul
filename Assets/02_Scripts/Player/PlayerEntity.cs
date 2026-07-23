@@ -1,5 +1,4 @@
-﻿using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffectReceiver, IHealable
 {
@@ -40,14 +39,10 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
         StatusEffects = new StatusEffectController();
     }
 
-    public void Init(string playerId, PlayerViewModel playerViewModel, PlayerStatController playerStatController, PlayerSkillMaker playerSkillMaker)
+    public void Init(string playerId, PlayerViewModel playerViewModel, PlayerStatController playerStatController)
     {
         _playerViewModel = playerViewModel;
         _statController = playerStatController;
-
-        var build = playerSkillMaker.CreateSkillBuild(playerId, playerStatController);
-
-        _combatController.Init(build, _skillModifier);
 
         var adapter = new PlayerStatusEffectAdapter(_statController, _skillModifier);
         StatModifierReceiver = adapter;
@@ -56,6 +51,13 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
         _playerOutGameViewModel = GameManager.Network.RequestPlayerOutGameViewModel();
 
         _isInitialized = true;
+    }
+
+    public void InitAfterSpawnPet(string playerId, PlayerSkillMaker playerSkillMaker, IStatusEffectReceiver[] petStatusEffectReceviers)
+    {
+        var build = playerSkillMaker.CreateSkillBuild(playerId, _statController, petStatusEffectReceviers);
+
+        _combatController.Init(build, _skillModifier);
     }
 
     private void Update()

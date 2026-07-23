@@ -26,5 +26,13 @@
   {
     "Id": "Enemy/Projectile_01",
     "InitSize": 200
+  },
+  {
+    "Id": "EnemyDropObject/Soul/One",
+    "InitSize": 100
+  },
+  {
+    "Id": "EnemyDropObject/Exp/One",
+    "InitSize": 100
   }
 ]

@@ -171,8 +171,8 @@ public class GameManager : SingletonBehaviour<GameManager>
 
         var playerViewModel = _networkManager.RequestCreatePlayer();
 
-        _playerSkillMaker = new PlayerSkillMaker(playerSkillRegistry, _petPartyController
-            , playerViewModel);
+        _playerSkillMaker = new PlayerSkillMaker(playerSkillRegistry, _petPartyController, playerViewModel
+            , _statusEffectMaker);
     }
 
 
@@ -228,22 +228,4 @@ public class GameManager : SingletonBehaviour<GameManager>
         EnterVillage(resultVillageId);
         _networkManager.InGameServiceRelease();
     }
-
-    #region TEST Functions
-
-    public void TestPlayerFollowMode()
-    {
-        _petPartyController.SetPetCommand(PetCommand.PlayerFollow);
-    }
-
-    public void TestWagonDefenseMode()
-    {
-        _petPartyController.SetPetCommand(PetCommand.GuardWagon);
-    }
-
-    public void TestWagonAggressiveMode()
-    {
-        _petPartyController.SetPetCommand(PetCommand.Aggressive);
-    }
-    #endregion
 }

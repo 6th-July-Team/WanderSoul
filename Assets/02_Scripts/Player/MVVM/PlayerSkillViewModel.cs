@@ -28,6 +28,5 @@ public class PlayerSkillViewModel : BaseViewModel<PlayerSkillModel>
     public void Update(SkillSlot slot, float deltaTime)
     {
         _model.SetSkillCoolTime(slot, Mathf.Max(0f, _model.SkillCoolTimes[slot] - deltaTime));
-        Debug.Log($"Skill {slot} cool time updated to {_model.SkillCoolTimes[slot]}");
     }
 }
