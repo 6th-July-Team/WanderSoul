@@ -1,27 +1,37 @@
 ﻿
 
+using UnityEngine;
+
 public class PlayerSkillMaker
 {
     private PlayerClassSkillBuild _build;
     private PlayerStatController _statController;
 
     private PlayerSkillRegistry _skillRegistry;
-    private IPetPartyReader _petPartyReader;
-
     private PlayerViewModel _playerViewModel;
 
-    public PlayerSkillMaker(PlayerSkillRegistry skillRegistry, IPetPartyReader petPartyReader
-        , PlayerViewModel playerViewModel)
+
+    private IPetPartyReader _petPartyReader;
+    private IStatusEffectReceiver[] _petStatusEffectReceviers;
+
+    private StatusEffectMaker _statusEffectMaker;
+
+
+    public PlayerSkillMaker(PlayerSkillRegistry skillRegistry, IPetPartyReader petPartyReader, PlayerViewModel playerViewModel
+        , StatusEffectMaker statusEffectMaker)
     {
         _skillRegistry = skillRegistry;
         _petPartyReader = petPartyReader;
 
         _playerViewModel = playerViewModel;
+        _statusEffectMaker = statusEffectMaker;
     }
 
-    public PlayerClassSkillBuild CreateSkillBuild(string playerId, PlayerStatController statController)
+    public PlayerClassSkillBuild CreateSkillBuild(string playerId, PlayerStatController statController
+        , IStatusEffectReceiver[] petStatusEffectReceviers)
     {
         _statController = statController;
+        _petStatusEffectReceviers = petStatusEffectReceviers;
 
         _build = new();
 
@@ -30,7 +40,7 @@ public class PlayerSkillMaker
         PlayerSkillData basicSkillData = GameManager.DataTable.GetPlayerSkillData(playerClassData.BasicSkillId);
         PlayerSkillData specialSkillData = GameManager.DataTable.GetPlayerSkillData(playerClassData.SpecialSkillId);
 
-        PlayerSkillCreateInfo createInfo = new PlayerSkillCreateInfo(_petPartyReader);
+        PlayerSkillCreateInfo createInfo = new PlayerSkillCreateInfo(_petPartyReader, petStatusEffectReceviers, _statusEffectMaker);
 
         var basicExecution = _skillRegistry.Create(basicSkillData.ExecutionId, createInfo);
         var specialExecution = _skillRegistry.Create(specialSkillData.ExecutionId, createInfo);
@@ -47,6 +57,15 @@ public class PlayerSkillMaker
             _build.SetSkill(SkillSlot.Special, specialSkill);
         }
 
+        // 테스트 삭제하기
+        PlayerSkillData ultimateSkillData = GameManager.DataTable.GetPlayerSkillData(playerClassData.UltimateSkillIds[1]);
+        Debug.Log($"UltimateSkillData : {ultimateSkillData.Name} / {ultimateSkillData.ExecutionId}");
+        var ultimateExecution = _skillRegistry.Create(ultimateSkillData.ExecutionId, createInfo);
+
+        PlayerSkill ultimateSkill = new PlayerSkill(ultimateSkillData, ultimateExecution
+                , _playerViewModel, statController);
+        _build.SetSkill(SkillSlot.Ultimate, ultimateSkill);
+
         return _build;
     }
 
@@ -55,7 +74,7 @@ public class PlayerSkillMaker
     {
         PlayerSkillData skillData = GameManager.DataTable.GetPlayerSkillData(skillId);
 
-        PlayerSkillCreateInfo createInfo = new PlayerSkillCreateInfo(_petPartyReader);
+        PlayerSkillCreateInfo createInfo = new PlayerSkillCreateInfo(_petPartyReader, _petStatusEffectReceviers, _statusEffectMaker);
 
         var execution = _skillRegistry.Create(skillData.ExecutionId, createInfo);
 

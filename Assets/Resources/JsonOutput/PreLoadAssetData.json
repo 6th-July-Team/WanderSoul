@@ -38,5 +38,15 @@
     "Id": "EnemyArea",
     "Address": "Enemy/Area_01",
     "AssetType": "GameObject"
+  },
+  {
+    "Id": "Exp",
+    "Address": "EnemyDropObject/Exp/One",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "Soul",
+    "Address": "EnemyDropObject/Soul/One",
+    "AssetType": "GameObject"
   }
 ]
