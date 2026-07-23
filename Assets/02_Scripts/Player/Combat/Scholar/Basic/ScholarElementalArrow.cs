@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
 
 public class ScholarElementalArrow : IPlayerSkillExecution
 {
-    private readonly IPetPartyReader _petPartyReader;
-    private readonly Dictionary<PetElement, IElementArrowVariant> _variants;
+    private IPetPartyReader _petPartyReader;
+    private Dictionary<PetElement, IElementArrowVariant> _variants;
+
+    // 캐싱
+    private PlayerSkillData _elementSkillData;
+    private PetElement _element;
 
     public ScholarElementalArrow(IPetPartyReader petPartyReader)
     {
@@ -22,18 +25,25 @@ public class ScholarElementalArrow : IPlayerSkillExecution
 
     public void Execute(PlayerSkillUseContext context, PlayerSkillData SkillData, float damage, float coolTimeReductionOfStat)
     {
-        PetElement element = _petPartyReader.GetPriorityPetElement();
-        var selectedSkillData = GameManager.DataTable.GetPlayerSkillData(SkillData.Id + "_" + element.ToString());
+        if(_element == default)
+        {
+            _element = _petPartyReader.GetPriorityPetElement();
+        }
 
-        _variants[element].Fire(context, damage, selectedSkillData);
+        if(_elementSkillData == null)
+        {
+            _elementSkillData = GameManager.DataTable.GetPlayerSkillData(SkillData.Id + "_" + _element.ToString());
+        }
+
+        _variants[_element].Fire(context, damage, _elementSkillData);
 
         var viewModel = GameManager.Network.RequestPlayerSkillViewModel();
 
-        float coolTime = context.PlayerSkillModifier.GetValue(selectedSkillData.Id, selectedSkillData.GetSkillSlot()
-            , SkillValueType.Cooldown, selectedSkillData.Cooldown) - coolTimeReductionOfStat;
+        float coolTime = context.PlayerSkillModifier.GetValue(_elementSkillData.Id, _elementSkillData.GetSkillSlot()
+            , SkillValueType.Cooldown, _elementSkillData.Cooldown) - coolTimeReductionOfStat;
 
 
-        viewModel.UseSkill(selectedSkillData.GetSkillSlot(), coolTime);
+        viewModel.UseSkill(_elementSkillData.GetSkillSlot(), coolTime);
     }
 
     public void CheckSkillRange(PlayerSkillUseContext context) { }

@@ -14826,6 +14826,7 @@ GameObject:
   - component: {fileID: 3771859713433291333}
   - component: {fileID: 1200728588214599432}
   - component: {fileID: 8805139628879757494}
+  - component: {fileID: -7922517643291792236}
   m_Layer: 0
   m_Name: Upgraded Magic Arrow
   m_TagString: Untagged
@@ -19755,6 +19756,28 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &-7922517643291792236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7801568344676892648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 713ed7a2728818447968a8f491d25928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ParticleComponent
+  _particles:
+  - {fileID: 8805139628879757494}
+  - {fileID: 7556472863294036478}
+  - {fileID: 3194487055601438857}
+  - {fileID: 412017901771856468}
+  - {fileID: 1591172237851569189}
+  _trails:
+  - {fileID: 3452102684134819750}
+  - {fileID: 8235201465246762748}
+  _releaseDelay: 2
 --- !u!1 &8035866928447003778
 GameObject:
   m_ObjectHideFlags: 0

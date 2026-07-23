@@ -14557,6 +14557,7 @@ GameObject:
   - component: {fileID: 6044478218522326892}
   - component: {fileID: 6467669327034164755}
   - component: {fileID: 1966723613996318758}
+  - component: {fileID: -4972254337849151867}
   m_Layer: 0
   m_Name: Magic Arrow
   m_TagString: Untagged
@@ -19486,6 +19487,28 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &-4972254337849151867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2993596875925274209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 713ed7a2728818447968a8f491d25928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ParticleComponent
+  _particles:
+  - {fileID: 1966723613996318758}
+  - {fileID: 2961539527426808225}
+  - {fileID: 568139915628531941}
+  - {fileID: 900292868088218877}
+  - {fileID: 2619528643387853682}
+  _trails:
+  - {fileID: 8850458324385355904}
+  - {fileID: 6769194926467186437}
+  _releaseDelay: 2
 --- !u!1 &3632363537553650112
 GameObject:
   m_ObjectHideFlags: 0

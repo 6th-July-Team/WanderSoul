@@ -4856,6 +4856,7 @@ GameObject:
   - component: {fileID: 7630313037830704381}
   - component: {fileID: 6288058633676088624}
   - component: {fileID: 5238357602821822003}
+  - component: {fileID: 4862920165770879360}
   m_Layer: 0
   m_Name: Stone Arrow
   m_TagString: Untagged
@@ -9684,6 +9685,25 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
+--- !u!114 &4862920165770879360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5039051367086035848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 713ed7a2728818447968a8f491d25928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ParticleComponent
+  _particles:
+  - {fileID: 6288058633676088624}
+  - {fileID: 8481585992878392924}
+  - {fileID: 7073493528495751506}
+  _trails:
+  - {fileID: 904320336034987113}
+  _releaseDelay: 2
 --- !u!1 &6498054597132134716
 GameObject:
   m_ObjectHideFlags: 0

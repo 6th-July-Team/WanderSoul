@@ -14826,6 +14826,7 @@ GameObject:
   - component: {fileID: 490705197846555722}
   - component: {fileID: 3771175141565339764}
   - component: {fileID: 8562474870494646699}
+  - component: {fileID: 5905609371353252625}
   m_Layer: 0
   m_Name: Electric Arrow
   m_TagString: Untagged
@@ -19755,6 +19756,28 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &5905609371353252625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7870823301277125610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 713ed7a2728818447968a8f491d25928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ParticleComponent
+  _particles:
+  - {fileID: 8562474870494646699}
+  - {fileID: 734432759578136958}
+  - {fileID: 893970154826239237}
+  - {fileID: 3885752306830522746}
+  - {fileID: 3331022992864050139}
+  _trails:
+  - {fileID: 3945679776086046149}
+  - {fileID: 9148524002175022474}
+  _releaseDelay: 2
 --- !u!1 &9010312595786528016
 GameObject:
   m_ObjectHideFlags: 0
