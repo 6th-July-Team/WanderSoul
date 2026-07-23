@@ -2,25 +2,31 @@
 
 public class PlayerSkillViewModel : BaseViewModel<PlayerSkillModel>
 {
-    PlayerSkillModel model;
 
     public PlayerSkillViewModel(PlayerSkillModel model) : base(model)
     {
-        this.model = model;
     }
 
-    public void UseSkill(SkillSlot slot)
+    public void UseSkill(SkillSlot slot, float coolTime)
     {
-        model.SkillCoolTimes[slot] = 0;
+        _model.SkillCoolTimes[slot] = coolTime;
     }
 
     public float GetSkillCoolTime(SkillSlot slot)
     {
-        return model.SkillCoolTimes[slot];
+        return _model.SkillCoolTimes[slot];
     }
 
-    public void Update(float deltaTime)
+    /// <summary>
+    /// 첫 등록의 경우 쿨타임이 0
+    /// </summary>
+    public void SetSkill(SkillSlot slot, float coolTime = 0f)
     {
+        _model.SetSkillCoolTime(slot, coolTime);
+    }
 
+    public void Update(SkillSlot slot, float deltaTime)
+    {
+        _model.SetSkillCoolTime(slot, Mathf.Max(0f, _model.SkillCoolTimes[slot] - deltaTime));
     }
 }

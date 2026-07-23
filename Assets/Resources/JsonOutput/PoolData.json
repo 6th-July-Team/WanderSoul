@@ -1,11 +1,11 @@
 [
   {
     "Id": "Enemy/Spider",
-    "InitSize": 200
+    "InitSize": 100
   },
   {
     "Id": "Enemy/EvilMageRed",
-    "InitSize": 200
+    "InitSize": 100
   },
   {
     "Id": "Enemy/MonsterPlant",
@@ -13,7 +13,7 @@
   },
   {
     "Id": "Enemy/RatAssassin",
-    "InitSize": 200
+    "InitSize": 100
   },
   {
     "Id": "Enemy/EvilMagePuple",
@@ -26,5 +26,13 @@
   {
     "Id": "Enemy/Projectile_01",
     "InitSize": 200
+  },
+  {
+    "Id": "EnemyDropObject/Soul/One",
+    "InitSize": 100
+  },
+  {
+    "Id": "EnemyDropObject/Exp/One",
+    "InitSize": 100
   }
 ]

@@ -14,6 +14,7 @@ public class WagonViewModel : BaseViewModel<WagonModel>
     public string GetWagonName => _model.Name;
     public int GetWagonCapacity => _model.Capacity;
     public float GetProgress => _model.Progress;
+    public float GetTime => _model.ConvoyTimer;
 
     public void ReduceDurability(float amount)
     {
@@ -53,5 +54,10 @@ public class WagonViewModel : BaseViewModel<WagonModel>
     public void SetProgress(float progress)
     {
         _model.Progress = progress;
+    }
+
+    public void Updata(float deltaTime)
+    {
+        _model.ConvoyTimer += deltaTime;
     }
 }

@@ -2,22 +2,25 @@
 
 public class ScholarBarrier : MonoBehaviour, IBarrierable, IDamageable
 {
-    private float _absorbAmount;
+    public bool IsAlive => _durability > 0 && _duration > 0;
+    public EntityType EntityType => EntityType.Player;
+    public Vector3 Position => transform.position;
+    public Transform Transform => this.transform;
+
+
+    private float _totalDamage;
+    private float _durability;
     private float _duration;
 
-    public bool IsAlive => _absorbAmount > 0 && _duration > 0;
 
-    public EntityType EntityType => EntityType.Player;
+    private Collider[] _colliders = new Collider[64];
 
-    public Vector3 Position => transform.position;
-
-    public Transform Transform => this.transform;
 
     public void Init(PlayerSkillData skillData)
     {
-        _absorbAmount = skillData.BarrierAbsorbAmount;
-        _duration = 5f;// skillData.Duration;
-        transform.localScale = Vector3.one * 7f;//skillData.Radius;
+        _durability = skillData.BarrierAbsorbAmount;
+        _duration = skillData.Duration;
+        transform.localScale = Vector3.one * skillData.Radius * 2;
     }
 
     private void Update()
@@ -35,9 +38,10 @@ public class ScholarBarrier : MonoBehaviour, IBarrierable, IDamageable
 
     public void AbsorbDamage(float damage)
     {
-        _absorbAmount -= damage;
+        _durability -= damage;
+        _totalDamage += damage;
 
-        if (_absorbAmount <= 0)
+        if (_durability <= 0)
         {
             BarrierDestory();
         }
@@ -51,7 +55,16 @@ public class ScholarBarrier : MonoBehaviour, IBarrierable, IDamageable
     private void BarrierDestory()
     {
         // TOODO(김익환): 결계 파괴 이펙트
-        // 주변 적 탐색 후 데미지 입히기 결계내부까지 ㅇㅇ
+        int count = SearchUtil.FindTargetSphere(transform.position, transform.localScale.x / 2f, LayerMask.GetMask("Enemy"), _colliders);
+        for (int i = 0; i < count; i++)
+        {
+            if(_colliders[i].TryGetComponent(out IDamageable damageable))
+            {
+
+                DamageInfo damageInfo = new DamageInfo(_totalDamage, damageable.Position - transform.position, DamageType.None);
+                damageable.TakeDamage(damageInfo);
+            }
+        }
         Destroy(gameObject);
     }
 }

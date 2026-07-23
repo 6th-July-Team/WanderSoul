@@ -3,7 +3,7 @@
 public class MercenarySlash : IPlayerSkillExecution
 {
     Collider[] _targets = new Collider[32];
-    public void Execute(PlayerSkillUseContext context, PlayerSkillData SkillData, float damage)
+    public void Execute(PlayerSkillUseContext context, PlayerSkillData SkillData, float damage, float coolTimeReductionOfStat)
     {
         // 곡검을 휘둘러 일정 범위를 공격한다.
         // 검에 맞은 적은 일정 확률로 출혈 상태 이상에 걸린다.

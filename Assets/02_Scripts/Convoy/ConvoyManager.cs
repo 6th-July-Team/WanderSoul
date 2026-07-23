@@ -11,11 +11,16 @@ public class ConvoyManager
     private List<string> _selectedPetIds = new();
 
     private Wagon _wagon;
-    private PlayerEntity _playerEntity;
 
-    public ConvoyManager(PetSkillMaker petSkillMaker)
+    private PlayerEntity _playerEntity;
+    private PlayerSkillMaker _playerSkillMaker;
+
+    private const string PLAYER_ID = "player_scholar"; // 현재 플레이어 선택 불가능하여, 학자가 고정되어 있음.
+
+    public ConvoyManager(PetSkillMaker petSkillMaker, PlayerSkillMaker playerSkillMaker)
     {
         _petSkillMaker = petSkillMaker;
+        _playerSkillMaker = playerSkillMaker;
     }
 
     // 의뢰 시작 -> 펫 선택 -> 로딩 UI를 보여주며 아래 init 함수 호출.
@@ -130,7 +135,8 @@ public class ConvoyManager
         var playerStatController = GameManager.Network.PlayerService.StatController;
 
         _playerEntity = GameObject.Instantiate(Utils.ResourcesLoad<PlayerEntity>("Test_Scholar"));
-        _playerEntity.Init(playerViewModel, playerStatController);
+
+        _playerEntity.Init(PLAYER_ID, playerViewModel, playerStatController);
     }
 
     private void SpawnPet()
@@ -143,7 +149,7 @@ public class ConvoyManager
 
             var viewModel = GameManager.Network.CreatePetViewModel(_selectedPetIds[index]);
 
-            petInstance.GetComponent<PetController>().Init("pet_fire_001"/*_selectedPetIds[index]*/
+            petInstance.GetComponent<PetController>().Init("pet_earth_003"/*_selectedPetIds[index]*/
                             , _playerEntity, _wagon
                             , _petSkillMaker
                             , _playerEntity, _playerEntity
@@ -154,6 +160,8 @@ public class ConvoyManager
         }
 
         GameManager.PetParty.Init(petControllers);
+
+        _playerEntity.InitAfterSpawnPet(PLAYER_ID, _playerSkillMaker, GameManager.PetParty.GetStatusEffectReceiverForAllPet());
     }
 
 

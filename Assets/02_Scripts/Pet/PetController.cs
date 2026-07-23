@@ -14,16 +14,16 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
     public Transform Transform => this.transform;
     public EntityType EntityType => EntityType.Pet;
     public bool IsAlive => _petViewModel.GetHp > 0;
-    public PetElement Element => __SOPetDefinition.Element;
+    public PetElement Element => _petData.GetElementType();
+
+    // Data
+    private PetData _petData;
+    [SerializeField] private SOPetSearch __SOPetSearch; // 거리 체크 용 - 추후 삭제
 
 
     [Header("Command Setting")]
     [SerializeField] private float _commandRefreshInterval = 0.2f;
     private float _commandRefreshTimer;
-
-    [Header("TEMP Pet Data")]
-    [SerializeField] private SOPetDefinition __SOPetDefinition;
-    [SerializeField] private SOPetSearch __SOPetSearch;
 
     private PetMovement _petMovement;
     private PetStatController _petStatController;
@@ -46,6 +46,8 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
         , PetSkillMaker petSkillMaker, IStatusEffectReceiver playerEffectReceiver, IHealable playerHealable
         , int avoidancePriority, PetViewModel viewModel)
     {
+        _petData = GameManager.DataTable.GetPetData(petId);
+
         PetStatData petStatData = GameManager.DataTable.GetPetStatData(petId);
 
         _petStatController = new(petStatData);
@@ -146,14 +148,9 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
         _petMovement.ApplyCommand(_commandResult);
     }
 
-    public void AddModifier(StatModifier modifier)
+    public void ApplyEffect(StatusEffectInstance instance)
     {
-        _petStatController.AddModifier(modifier);
-    }
-
-    public void RemoveModifiers(StatType statType)
-    {
-        // _petStatController.RemoveModifiers(statType);
+        StatusEffects.Apply(instance);
     }
 
     private void ExecuteNoEnemySkill(PetActiveSkill skill)
@@ -224,6 +221,7 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
     public void Dispose()
     {
+        StatusEffects.Clear();
         _petViewModel.OnPropertyChanged_View -= OnPropertyChanged;
     }
 }

@@ -12,18 +12,16 @@ public class PlayerSkillModel : BaseModel, ContainerPropertyChanged<SkillSlot>
     }
 
     private Dictionary<SkillSlot, float> _skillCoolTimes = new();
-    public Dictionary<SkillSlot, float> SkillCoolTimes
-    {
-        get => _skillCoolTimes;
-        set
-        {
-            if (_skillCoolTimes != value)
-            {
+    public Dictionary<SkillSlot, float> SkillCoolTimes { get => _skillCoolTimes; }
 
-                _skillCoolTimes = value;
-                OnPropertyChanged(nameof(SkillCoolTimes));
-                //ContainerPropertyChanged?.Invoke(nameof(SkillCoolTimes), ContainerEventType.Update, SkillSlot);
-            }
+    public void SetSkillCoolTime(SkillSlot slot, float value)
+    {
+        if (_skillCoolTimes.TryGetValue(slot, out float current) && Mathf.Approximately(current, value))
+        {
+            return;
         }
+
+        _skillCoolTimes[slot] = value;
+        ContainerPropertyChanged?.Invoke(nameof(SkillCoolTimes), ContainerEventType.Update, slot);
     }
 }
