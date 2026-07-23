@@ -130,6 +130,7 @@ public class PlayerStatData : BaseData
     public float MagnetRadius;
     public int MaxReviveCount;
     public int MaxDashCount;
+    public float MagnetRadius;
 
     public float GetBaseValue(StatType statType)
     {
