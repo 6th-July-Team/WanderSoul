@@ -1,6 +1,6 @@
 [
   {
-    "Id": "pet_fire_001",
+    "Id": "Pet_Fire_001",
     "Name": "플레임폰",
     "stringElementType": "Fire",
     "Description": "화염 투사체와 화상 부여 지원에 특화된 기본 펫",
@@ -9,10 +9,10 @@
       "pet_skill_fire_001"
     ],
     "PassiveSkillIds": null,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Pet_Fire_001"
   },
   {
-    "Id": "pet_water_002",
+    "Id": "Pet_Water_001",
     "Name": "워터폰",
     "stringElementType": "Water",
     "Description": "강한 단발 냉기 투사체와 체력 재생 지원에 특화된 기본 펫",
@@ -23,10 +23,10 @@
     "PassiveSkillIds": [
       "pet_passive_water_regeneration"
     ],
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Pet_Water_001"
   },
   {
-    "Id": "pet_earth_003",
+    "Id": "Pet_Earth_001",
     "Name": "어스폰",
     "stringElementType": "Earth",
     "Description": "범위 근접 공격과 도발로 전선을 유지하는 방어형 기본 펫",
@@ -36,10 +36,10 @@
       "pet_skill_taunt"
     ],
     "PassiveSkillIds": null,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Pet_Earth_001"
   },
   {
-    "Id": "pet_air_004",
+    "Id": "Pet_Air_001",
     "Name": "윈드폰",
     "stringElementType": "Air",
     "Description": "빠른 물리 투사체와 회복 및 공격속도 지원에 특화된 기본 펫",
@@ -49,6 +49,6 @@
       "pet_skill_windblessing"
     ],
     "PassiveSkillIds": null,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Pet_Air_001"
   }
 ]
