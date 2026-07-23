@@ -341,15 +341,15 @@ public class LevelUpOptionData : BaseData
 {
     public string Name;
     public string Description;
-    public string stringOptionCategory;
-    public string stringGrade;
+    public string OptionCategory;
+    public string Grade;
     public int MinLevel;
     public int MaxLevel;
     public string RequiredClassId;
-    public string stringTargetStatType;
-    public string stringTargetSkillSlot;
-    public string stringEffectType;
-    public string stringOperation;
+    public string TargetStatType;
+    public string TargetSkillSlot;
+    public string EffectType;
+    public string Operation;
     public float Value;
     public int MaxStack;
     public int Weight;

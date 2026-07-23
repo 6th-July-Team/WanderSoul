@@ -7,10 +7,12 @@ public class PlayerHudUIView : BaseUI<PlayerHudUIView, PlayerViewModel>
 
     [Header("HP")]
     [SerializeField] private Image _hpFillImage;
+    [SerializeField] private UIOrbLiquid _hpOrbLiquid;
     [SerializeField] private TMP_Text _hpText;
 
     [Header("Mana")]
     [SerializeField] private Image _manaFillImage;
+    [SerializeField] private UIOrbLiquid _manaOrbLiquid;
     [SerializeField] private TMP_Text _manaText;
 
     [Header("Exp")]
@@ -59,7 +61,7 @@ public class PlayerHudUIView : BaseUI<PlayerHudUIView, PlayerViewModel>
             return;
         }
 
-        _hpFillImage.fillAmount = _viewModel.GetHp / maxHp;
+        RefreshOrb(_hpOrbLiquid, _hpFillImage, _viewModel.GetHp / maxHp);
         _hpText.text = $"{(int)_viewModel.GetHp:N0} / {(int)maxHp:N0}";
     }
 
@@ -76,8 +78,24 @@ public class PlayerHudUIView : BaseUI<PlayerHudUIView, PlayerViewModel>
             return;
         }
 
-        _manaFillImage.fillAmount = _viewModel.GetMp / maxMp;
+        RefreshOrb(_manaOrbLiquid, _manaFillImage, _viewModel.GetMp / maxMp);
         _manaText.text = $"{(int)_viewModel.GetMp:N0} / {(int)maxMp:N0}";
+    }
+
+    // 오브 셰이더가 액체 높이를 그리므로, 오브가 있으면 fillAmount는 건드리지 않는다.
+    // (같은 Image를 공유해서 둘 다 적용하면 이중으로 잘린다)
+    private void RefreshOrb(UIOrbLiquid orbLiquid, Image fillImage, float normalizedValue)
+    {
+        if (orbLiquid != null)
+        {
+            orbLiquid.SetValue(normalizedValue);
+            return;
+        }
+
+        if (fillImage != null)
+        {
+            fillImage.fillAmount = normalizedValue;
+        }
     }
 
     private void RefreshExp()

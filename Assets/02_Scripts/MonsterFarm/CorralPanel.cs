@@ -25,17 +25,17 @@ public class CorralPanel : MonoBehaviour
 
         if (monsterCorral.Monsters.Count == 0)
         {
-            CreateListItem(_petTemplate, "No monsters stored.");
-            CreateListItem(_productTemplate, "No products in production.");
+            CreateListItem(_petTemplate, "보관 중인 펫이 없습니다.");
+            CreateListItem(_productTemplate, "생산 중인 특산물이 없습니다.");
 
             return;
         }
 
-        foreach (SOPetDefinition monster in monsterCorral.Monsters)
+        foreach (PetData monster in monsterCorral.Monsters)
         {
             CreateListItem(_petTemplate, monster.Name);
 
-            CreateListItem(_productTemplate, $"{monster.Name}'s specialty");
+            CreateListItem(_productTemplate, $"{monster.Name}의 특산물");
         }
     }
 

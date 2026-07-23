@@ -5,7 +5,8 @@ public enum VillageFacilityType
     TownHall,
     MonsterFarm,
     MissionGuild,
-    Shop
+    Shop,
+    Clinic
 }
 
 public class VillageFacility : MonoBehaviour

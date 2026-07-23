@@ -4,6 +4,10 @@ using UnityEngine.InputSystem;
 
 public class UIGameFlowTest : MonoBehaviour
 {
+    [Header("LevelUp Test")]
+    [SerializeField] private string _testPlayerClassId = "player_scholar";
+    [SerializeField] private bool _testUltimateAfterLevelUp = true;
+
     private void Update()
     {
         if (Keyboard.current == null)
@@ -27,16 +31,43 @@ public class UIGameFlowTest : MonoBehaviour
         {
             GameManager.UI.OpenSimplePopup("테스트 알림입니다");
         }
-        if (Keyboard.current.digit5Key.wasPressedThisFrame)
-        {
-            GameManager.UI.OpenSkillHudUI();
-        }
     }
 
     private void ShowLevelUp()
     {
-        var testIds = new List<string> { "opt_power_001", "opt_speed_001", "opt_crit_001" };
-        GameManager.UI.OpenLevelUpUI(testIds);
+        var testIds = new List<string>
+        {
+            "levelup_health_common",
+            "levelup_move_speed_rare",
+            "levelup_all_stats_legendary",
+        };
+
+        GameManager.UI.OpenLevelUpUI(testIds, OnLevelUpOptionSelected, OnLevelUpUIClosed);
+    }
+
+    private void OnLevelUpOptionSelected(string optionId)
+    {
+        // TODO(이태영): 레벨업 로직이 붙으면 여기서 실제 스탯 적용 요청
+        Debug.Log($"레벨업 옵션 선택: {optionId}");
+    }
+
+    // TODO(이태영): 레벨 시스템이 붙으면 '레벨 10 도달' 조건으로 교체
+    private void OnLevelUpUIClosed()
+    {
+        if (_testUltimateAfterLevelUp == false)
+        {
+            return;
+        }
+
+        GameManager.UI.OpenUltimateSelectUI(_testPlayerClassId, OnUltimateSelected);
+    }
+
+    private void OnUltimateSelected(string skillId)
+    {
+        Debug.Log($"궁극기 선택: {skillId}");
+
+        // TODO(이태영): PlayerSkillMaker.CreatePlayerSkill로 실제 스킬 교체 요청 필요
+        GameManager.UI.SetSkillHudUltimate(skillId);
     }
 
     private void ShowSuccessResult()

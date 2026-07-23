@@ -26,6 +26,7 @@
     ConvoySuccessUIView,
     ConvoyFailUIView,
     WagonAreaWarningUIView,
+    UltimateSelectUIView,
 }
 
 public enum UIRootType : byte

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 public class FarmClickInput : MonoBehaviour
 {
@@ -23,6 +24,11 @@ public class FarmClickInput : MonoBehaviour
             return;
         }
 
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+        {
+            return;
+        }
+
         Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
 
         if (!Physics.Raycast(ray, out RaycastHit hit))
@@ -34,6 +40,8 @@ public class FarmClickInput : MonoBehaviour
         {
             return;
         }
+
+        CloseAllPanels();
 
         if (farmFacility.FacilityType == FarmFacilityType.SummonCircle)
         {
@@ -49,5 +57,12 @@ public class FarmClickInput : MonoBehaviour
         {
             _managementPanel.Open();
         }
+    }
+
+    private void CloseAllPanels()
+    {
+        _summonPanel.SetActive(false);
+        _corralPanel.Close();
+        _managementPanel.Close();
     }
 }
