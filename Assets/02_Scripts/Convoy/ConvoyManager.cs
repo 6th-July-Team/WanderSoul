@@ -15,6 +15,8 @@ public class ConvoyManager
     private PlayerEntity _playerEntity;
     private PlayerSkillMaker _playerSkillMaker;
 
+    private const string PLAYER_ID = "player_scholar"; // 현재 플레이어 선택 불가능하여, 학자가 고정되어 있음.
+
     public ConvoyManager(PetSkillMaker petSkillMaker, PlayerSkillMaker playerSkillMaker)
     {
         _petSkillMaker = petSkillMaker;
@@ -134,8 +136,7 @@ public class ConvoyManager
 
         _playerEntity = GameObject.Instantiate(Utils.ResourcesLoad<PlayerEntity>("Test_Scholar"));
 
-        string playerId = "player_scholar"; // 현재 플레이어 선택 불가능하여, 학자가 고정되어 있음.
-        _playerEntity.Init(playerId, playerViewModel, playerStatController, _playerSkillMaker);
+        _playerEntity.Init(PLAYER_ID, playerViewModel, playerStatController);
     }
 
     private void SpawnPet()
@@ -159,6 +160,8 @@ public class ConvoyManager
         }
 
         GameManager.PetParty.Init(petControllers);
+
+        _playerEntity.InitAfterSpawnPet(PLAYER_ID, _playerSkillMaker, GameManager.PetParty.GetStatusEffectReceiverForAllPet());
     }
 
 

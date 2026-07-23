@@ -25,7 +25,8 @@ public static class PlayerSkillRegistor
         registry.Register("ScholarUltBerserkSoul"
             , (createInfo) => new ScholarBererkSoul
             (
-
+                createInfo.StatusEffectMaker,
+                createInfo.PetStatusEffectReceivers
             ));
     }
 }
@@ -35,9 +36,14 @@ public static class PlayerSkillRegistor
 public struct PlayerSkillCreateInfo
 {
     public IPetPartyReader PetPartyReader;
+    public IStatusEffectReceiver[] PetStatusEffectReceivers;
+    public StatusEffectMaker StatusEffectMaker;
 
-    public PlayerSkillCreateInfo(IPetPartyReader petPartyReader)
+    public PlayerSkillCreateInfo(IPetPartyReader petPartyReader, IStatusEffectReceiver[] petStatusEffectReceivers
+        , StatusEffectMaker statusEffectMaker)
     {
         PetPartyReader = petPartyReader;
+        PetStatusEffectReceivers = petStatusEffectReceivers;
+        StatusEffectMaker = statusEffectMaker;
     }
 }

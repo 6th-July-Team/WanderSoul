@@ -279,7 +279,11 @@
     "BarrierAbsorbAmount": null,
     "stringTargetType": "Pet",
     "stringDamageType": null,
-    "StatusEffectId": "buff_berserksoul_petattackspeed, buff_berserksoul_petmaxhealth, buff_berserksoul_petmovespeed",
+    "StatusEffectId": [
+      "buff_berserksoul_petattackspeed",
+      "buff_berserksoul_petmaxhealth",
+      "buff_berserksoul_petmovespeed"
+    ],
     "VFXPath": null,
     "SFXPath": null,
     "IconPath": null,
@@ -399,7 +403,9 @@
     "BarrierAbsorbAmount": null,
     "stringTargetType": "Enemy",
     "stringDamageType": "Physical",
-    "StatusEffectId": "debuff_bleed",
+    "StatusEffectId": [
+      "debuff_bleed"
+    ],
     "VFXPath": null,
     "SFXPath": null,
     "IconPath": null,

@@ -3,7 +3,6 @@
 public class ScholarSummonBarrier : IPlayerSkillExecution, ISkillRangeCheckable
 {
     private SkillRangeIndicator _skillRangeIndicator;
-    private Collider[] _targets = new Collider[64];
 
 
     public void Execute(PlayerSkillUseContext context, PlayerSkillData SkillData, float damage, float coolTimeReductionOfStat)
@@ -13,7 +12,6 @@ public class ScholarSummonBarrier : IPlayerSkillExecution, ISkillRangeCheckable
         Vector3 skillCenter = context.AimWorldPoint;
         skillCenter.y += SkillData.Radius;
 
-        // TODO(김익환): 결계 소환
         var barrier = Object.Instantiate(Utils.ResourcesLoad<GameObject>("Barrier"), skillCenter, Quaternion.identity);
         if (barrier.TryGetComponent(out ScholarBarrier scholarBarrier))
         {
@@ -33,8 +31,7 @@ public class ScholarSummonBarrier : IPlayerSkillExecution, ISkillRangeCheckable
     {
         InitIndicator();
 
-        // TODO 데이터 작성 후 주석 해제
-        _skillRangeIndicator.Show(context.AimWorldPoint, 7f/*SkillData.Radius*/);
+        _skillRangeIndicator.Show(context.AimWorldPoint, SkillData.Radius);
     }
 
     public void HideSkillRange()

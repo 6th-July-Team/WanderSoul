@@ -8,20 +8,17 @@ public class PetAggroSkill : IPetActiveSkillExecution
     private StatusEffectMaker _effectMaker;
 
     private IStatusEffectReceiver _playerEffectReceiver;
-    private IStatusEffectReceiver _statusEffectReceiver;
+    private IStatusEffectReceiver _petEffectReceiver;
 
-    public PetAggroSkill(StatusEffectMaker effectMaker, IStatusEffectReceiver playerEffectReceiver, IStatusEffectReceiver statusEffectReceiver)
+    public PetAggroSkill(StatusEffectMaker effectMaker, IStatusEffectReceiver playerEffectReceiver, IStatusEffectReceiver petEffectReceiver)
     {
         _effectMaker = effectMaker;
         _playerEffectReceiver = playerEffectReceiver;
-        _statusEffectReceiver = statusEffectReceiver;
+        _petEffectReceiver = petEffectReceiver;
     }
 
     public void Execute(PetSkillUseContext context/*, Action OnEndSkill*/)
     {
-        // 펫 원형 범위 적에게
-        // 도발을 걸고
-
         SearchUtil.FindTargetSphere(context.PetPos, context.PetActiveSkillData.Radius
             , LayerMask.GetMask("Enemy"), _targets);
 
@@ -38,14 +35,9 @@ public class PetAggroSkill : IPetActiveSkillExecution
             enemy.ApplyTaunt(context.IPet, context.PetActiveSkillData.Duration);
         }
 
-
         // 도발 상태에선 펫 방어력이 50 증가.
         var data = GameManager.DataTable.GetStatusEffectData(context.PetActiveSkillData.StatusEffectId);
-        SkillModifierData skillModifierData = GameManager.DataTable.GetSkillModifierData(data.SkillModifierId);
-
-        StatusEffectInstance effect = _effectMaker.Create(_playerEffectReceiver, data, skillModifierData);
-
-
-        _statusEffectReceiver.StatusEffects.Apply(effect);
+        StatusEffectInstance effect = _effectMaker.Create(_playerEffectReceiver, data);
+        _petEffectReceiver.StatusEffects.Apply(effect);
     }
 }
