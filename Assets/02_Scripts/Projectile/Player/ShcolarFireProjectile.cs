@@ -1,5 +1,4 @@
-﻿using Cysharp.Threading.Tasks;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 // 화염 화살을 발사해서 화염 피해를 입힌다.
@@ -7,21 +6,18 @@ using UnityEngine;
 
 public class ShcolarFireProjectile : Projectile
 {
-    private bool isShowGizmo = false;
+    [SerializeField] private bool isShowGizmo = false;
     private Collider[] _targets = new Collider[32];
 
-    // TEST
-    private float _range = 5f;
-
-    protected override void HitEffect()
+    protected override void HitEffect(Vector3 position)
     {
-        base.HitEffect();
+        base.HitEffect(position);
 
         StartCoroutine(ShowGizmoRoutine());
 
-        SearchUtil.FindNearestSphere(transform.position, _range, LayerMask.GetMask("Enemy"), _targets);
+        SearchUtil.FindTargetSphere(transform.position, _radius, LayerMask.GetMask("Enemy"), _targets);
 
-        DamageInfo damageInfo = new DamageInfo(_damage, _direction, _damageType, _additionalDamage);
+        DamageInfo damageInfo = new DamageInfo(_additionalDamage, _direction, _damageType);
 
         foreach (var target in _targets)
         {
@@ -39,7 +35,7 @@ public class ShcolarFireProjectile : Projectile
         {
             Gizmos.color = Color.red; // 기즈모 색상 지정
             // 구체 기즈모를 해당 오브젝트 위치에 그림
-            Gizmos.DrawSphere(transform.position, _range);
+            Gizmos.DrawSphere(transform.position, _radius);
         }
     }
 
