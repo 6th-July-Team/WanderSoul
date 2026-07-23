@@ -5,6 +5,10 @@ public class ScholarElementalExplosion : IPlayerSkillExecution, ISkillRangeCheck
     private SkillRangeIndicator _skillRangeIndicator;
     private Collider[] _targets = new Collider[32];
 
+    // 캐싱
+    private PlayerSkillData _elementSkillData;
+    private PetElement _element;
+
     public void CheckSkillRange(PlayerSkillUseContext context, PlayerSkillData SkillData)
     {
         InitIndicator();
@@ -24,16 +28,23 @@ public class ScholarElementalExplosion : IPlayerSkillExecution, ISkillRangeCheck
     {
         _skillRangeIndicator.Hide();
 
-        PetElement element = GameManager.PetParty.GetPriorityPetElement();
+        if(_element == default)
+        {
+            _element = GameManager.PetParty.GetPriorityPetElement();
+        }
 
-        float attackRange = SkillData.Radius;
+        if(_elementSkillData == null)
+        {
+            _elementSkillData = GameManager.DataTable.GetPlayerSkillData(SkillData.Id + "_" + _element.ToString());
+        }
+
 
         Vector3 skillCenter = context.AimWorldPoint;
-        skillCenter.y += attackRange;
-        SearchUtil.FindNearestSphere(skillCenter, attackRange, LayerMask.GetMask("Enemy"), _targets);
+        skillCenter.y += 0f;
 
-        DamageInfo damageInfo = new DamageInfo(damage, context.AimDirection
-            , Utils.GetTypeByPetElement(element));
+        SearchUtil.FindNearestSphere(skillCenter, _elementSkillData.Radius, LayerMask.GetMask("Enemy"), _targets);
+
+        DamageInfo damageInfo = new DamageInfo(damage, context.AimDirection, Utils.GetTypeByPetElement(_element));
 
         foreach (var target in _targets)
         {
@@ -43,13 +54,19 @@ public class ScholarElementalExplosion : IPlayerSkillExecution, ISkillRangeCheck
             target.GetComponent<IDamageable>().TakeDamage(damageInfo);
         }
 
+
+
+
+
+
+
         var viewModel = GameManager.Network.RequestPlayerSkillViewModel();
 
-        float coolTime = context.PlayerSkillModifier.GetValue(SkillData.Id, SkillData.GetSkillSlot()
-            , SkillValueType.Cooldown, SkillData.Cooldown) - coolTimeReductionOfStat;
+        float coolTime = context.PlayerSkillModifier.GetValue(_elementSkillData.Id, _elementSkillData.GetSkillSlot()
+            , SkillValueType.Cooldown, _elementSkillData.Cooldown) - coolTimeReductionOfStat;
 
 
-        viewModel.UseSkill(SkillData.GetSkillSlot(), coolTime);
+        viewModel.UseSkill(_elementSkillData.GetSkillSlot(), coolTime);
     }
 
     private void InitIndicator()
