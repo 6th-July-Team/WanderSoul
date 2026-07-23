@@ -13,33 +13,26 @@ public class ScholarMagicArrow : IElementArrowVariant
         {
             // 강화 화살 발사 로직 추가
             Projectile projectileInstance = Object.Instantiate(
-                Resources.Load<Projectile>("TestProjectile2")
+                Resources.Load<Projectile>("Player/Skill/Magic Arrow")
                 , context.Owner.position + context.AimDirection * 1f, Quaternion.identity);
 
             projectileInstance.Init(new ProjectileStruct
-            {
-                Speed = 15f,
-                Damage = damage * 2,
-                Direction = context.AimDirection,
-                DamageType = SkillData.GetDamageType(),
-                TargetType = SkillData.GetTargetType()
-            });
+            (
+                SkillData.ProjectileSpeed, SkillData.Power, SkillData.Duration, context.AimDirection
+                , SkillData.GetDamageType(), SkillData.GetTargetType()
+            ));
         }
         else
         {
             Projectile projectileInstance = Object.Instantiate(
-                Resources.Load<Projectile>("TestProjectile")
+                Resources.Load<Projectile>("Player/Skill/Upgraded Magic Arrow")
                 , context.Owner.position + context.AimDirection * 1f, Quaternion.identity);
 
             projectileInstance.Init(new ProjectileStruct
-            {
-                Speed = 5f,
-                Damage = damage,
-                Direction = context.AimDirection,
-                DamageType = SkillData.GetDamageType(),
-                TargetType = SkillData.GetTargetType()
-
-            });
+            (
+                SkillData.ProjectileSpeed, SkillData.Power, SkillData.Duration, context.AimDirection
+                , SkillData.GetDamageType(), SkillData.GetTargetType()
+            ));
         }
 
         _castCount++;

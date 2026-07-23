@@ -8,17 +8,14 @@ public class ScholarFireArrow : IElementArrowVariant
         // 대상에 닿으면 폭발하여 넓은 범위의 적에게 피해를 준다.
 
         Projectile projectileInstance = Object.Instantiate(
-                Resources.Load<Projectile>("TestProjectileFire")
+                Resources.Load<Projectile>("Player/Skill/Fire Arrow")
                 , context.Owner.position + context.AimDirection * 1f, Quaternion.identity);
 
         projectileInstance.Init(new ProjectileStruct
-        {
-            Speed = 5f,
-            Damage = damage,
-            Direction = context.AimDirection,
-            DamageType = SkillData.GetDamageType(),
-            TargetType = SkillData.GetTargetType(),
-            AdditionalDamage = damage * 2
-        });
+        (
+            SkillData.ProjectileSpeed, SkillData.Power, SkillData.Duration, context.AimDirection
+            , SkillData.GetDamageType(), SkillData.GetTargetType()
+            , SkillData.ExtraDamage, radius: SkillData.Radius
+        ));
     }
 }

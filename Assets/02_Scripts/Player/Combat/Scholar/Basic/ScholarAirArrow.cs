@@ -8,17 +8,13 @@ public class ScholarAirArrow : IElementArrowVariant
         // 단발의 피해량은 낮지만 공격 주기와 투사체 속도가 빠르다.
 
         Projectile projectileInstance = Object.Instantiate(
-                Resources.Load<Projectile>("TestProjectileFire")
+                Resources.Load<Projectile>("Player/Skill/Electric Arrow")
                 , context.Owner.position + context.AimDirection * 1f, Quaternion.identity);
 
         projectileInstance.Init(new ProjectileStruct
-        {
-            Speed = 5f,
-            Damage = damage,
-            Direction = context.AimDirection,
-            DamageType = SkillData.GetDamageType(),
-            TargetType = SkillData.GetTargetType(),
-            AdditionalDamage = damage * 2
-        });
+        (
+            SkillData.ProjectileSpeed, SkillData.Power, SkillData.Duration, context.AimDirection
+            , SkillData.GetDamageType(), SkillData.GetTargetType()
+        ));
     }
 }
