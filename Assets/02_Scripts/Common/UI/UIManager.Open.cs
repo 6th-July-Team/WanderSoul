@@ -146,6 +146,23 @@ public partial class UIManager
         view.SetSkills(playerClassId);
     }
 
+    public void SetSkillHudUltimate(string skillId)
+    {
+        if (IsActiveUI(UIType.SkillHudUIView) == false)
+        {
+            return;
+        }
+
+        var view = GetCreatUI<SkillHudUIView>(UIType.SkillHudUIView);
+
+        if (view == null)
+        {
+            return;
+        }
+
+        view.SetUltimateSkill(skillId);
+    }
+
     public void OpenLevelUpUI(List<string> optionIdList, Action<string> onOptionSelected
         , Action onClosed = null)
     {

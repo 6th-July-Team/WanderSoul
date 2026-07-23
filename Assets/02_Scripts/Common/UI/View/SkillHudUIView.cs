@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SkillHudUIView : BaseUI
 {
@@ -21,10 +21,30 @@ public class SkillHudUIView : BaseUI
 
         SetSlot(_basicSlot, SkillSlot.Basic, classData.BasicSkillId, skillViewModel, playerViewModel);
         SetSlot(_specialSlot, SkillSlot.Special, classData.SpecialSkillId, skillViewModel, playerViewModel);
+        SetSlot(_ultimateSlot, SkillSlot.Ultimate, GetEquippedUltimateSkillId(classData)
+            , skillViewModel, playerViewModel);
+    }
+    public void SetUltimateSkill(string skillId)
+    {
+        var skillViewModel = GameManager.Network.RequestPlayerSkillViewModel();
+        var playerViewModel = GameManager.Network.RequestCreatePlayer();
 
-        // TODO(이태영): 궁극기는 PlayerSkillMaker가 아직 슬롯에 등록하지 않아 빈 슬롯으로 둔다.
-        // PlayerSkillViewModel에 Ultimate가 등록되면 classData.UltimateSkillIds에서 선택된 것으로 연결할 것.
-        SetSlot(_ultimateSlot, SkillSlot.Ultimate, null, skillViewModel, playerViewModel);
+        SetSlot(_ultimateSlot, SkillSlot.Ultimate, skillId, skillViewModel, playerViewModel);
+    }
+
+    private string GetEquippedUltimateSkillId(PlayerClassData classData)
+    {
+        if (classData.UltimateSkillIds == null || classData.UltimateSkillIds.Count == 0)
+        {
+            return null;
+        }
+
+        if (classData.UltimateSkillIds.Count > 1)
+        {
+            return classData.UltimateSkillIds[1];
+        }
+
+        return classData.UltimateSkillIds[0];
     }
 
     private void SetSlot(SkillSlotUiView slotView, SkillSlot slot, string skillId

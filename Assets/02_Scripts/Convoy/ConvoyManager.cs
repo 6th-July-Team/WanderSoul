@@ -220,6 +220,6 @@ public class ConvoyManager
             resourceHud.SetConvoyLayout();
         }
 
-        GameManager.UI.OpenSkillHudUI(_playerClassId);
+        GameManager.UI.OpenSkillHudUI(PLAYER_ID);
     }
 }

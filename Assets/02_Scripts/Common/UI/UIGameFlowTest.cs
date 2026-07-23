@@ -64,8 +64,10 @@ public class UIGameFlowTest : MonoBehaviour
 
     private void OnUltimateSelected(string skillId)
     {
-        // TODO(이태영): PlayerSkillMaker.CreatePlayerSkill 연결 필요
         Debug.Log($"궁극기 선택: {skillId}");
+
+        // TODO(이태영): PlayerSkillMaker.CreatePlayerSkill로 실제 스킬 교체 요청 필요
+        GameManager.UI.SetSkillHudUltimate(skillId);
     }
 
     private void ShowSuccessResult()
