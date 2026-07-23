@@ -6,7 +6,6 @@ public enum ProjectileType
 
 }
 
-
 public class ProjectileTestObject : MonoBehaviour
 {
     [SerializeField] private GameObject Prefab_Projectile;
@@ -14,9 +13,11 @@ public class ProjectileTestObject : MonoBehaviour
 
     [SerializeField] private int ProjectileSpeed;
     [SerializeField] private float ProjectileDamage;
+    [SerializeField] private float ProjectileDuration;
+
     [SerializeField] private float ProjectileAdditionalDamage;
     [SerializeField] private float ProjectileBoomRange;
-    [SerializeField] private float ProjectilePierce;
+    [SerializeField] private int ProjectilePierce;
 
     [SerializeField] private DamageType ProjectileDamageType;
     [SerializeField] private TargetType TragetType;
@@ -50,14 +51,15 @@ public class ProjectileTestObject : MonoBehaviour
     {
         GameObject projectile = Instantiate(Prefab_Projectile, Transform_ShootPosition.position, Quaternion.identity);
 
-        ShcolarFireProjectile projectileComponent = projectile.GetComponent<ShcolarFireProjectile>();
+        Projectile projectileComponent = projectile.GetComponent<Projectile>();
 
         if (projectileComponent == null)
         {
             Logger.LogError("생성한 Proejctile에 ShcolarFireProjectile가 없습니다.");
         }
 
-        ProjectileStruct data = new ProjectileStruct(ProjectileSpeed, ProjectileDamage, Vector3.forward, ProjectileDamageType, TragetType, ProjectileAdditionalDamage, radius: ProjectileBoomRange, pierce: ProjectilePierce);
+
+        ProjectileStruct data = new ProjectileStruct(ProjectileSpeed, ProjectileDamage, ProjectileDuration, Vector3.forward, ProjectileDamageType, TragetType, ProjectileAdditionalDamage, continuousDamage: false, radius: ProjectileBoomRange, pierce: ProjectilePierce);
         projectileComponent.Init(data);
     }
 }

@@ -3,43 +3,52 @@
 public class Projectile : MonoBehaviour
 {
     // 기본적인 옵션
-    [SerializeField] protected GameObject Prefab_VFXHit;
+    [SerializeField] private GameObject Prefab_VFXHit; // 히트했을 때 나오는 오브젝트
 
-    protected float _speed;
-    protected float _damage;
+    private float _speed;
+    private float _damage;
+    private float _duration;
 
-    protected Vector3 _direction;
+    private Vector3 _direction;
 
-    protected DamageType _damageType = DamageType.None;
-    protected TargetType _targetType;
+    private DamageType _damageType = DamageType.None;
+    private TargetType _targetType;
 
     // 추가 옵션
-    protected float _additionalDamage;
+    private float _extraDamage;
     private bool _continuousDamage;
-    protected float _radius;
-    protected int _pierce;
+    private float _radius;
+    private int _pierce;
+
+    // 폭발형 전용
+    private Collider[] _burstTarget = new Collider[32];
 
     public void Init(ProjectileStruct projectileData)
     {
         // 기본 옵션
         _speed = projectileData.Speed;
         _damage = projectileData.Damage;
+        _duration = projectileData.Duration;
+
         _direction = projectileData.Direction;
         _damageType = projectileData.DamageType;
         _targetType = projectileData.TargetType;
 
         // 추가 옵션
-        _additionalDamage = projectileData.AdditionalDamage;
+        _extraDamage = projectileData.AdditionalDamage;
         _continuousDamage = projectileData.ContinuousDamage;
         _radius = projectileData.Radius;
+        _pierce = projectileData.Pierce;
+
+        if (_duration > 0)
+        {
+            Destroy(this.gameObject, _duration);
+        }
     }
 
-    public void Update()
+    private void Update()
     {
         transform.position += _direction * _speed * Time.deltaTime;
-        //TODO 듀레이션 지나면 삭제
-
-
     }
 
     private void OnTriggerEnter(Collider other)
@@ -50,7 +59,9 @@ public class Projectile : MonoBehaviour
         // Target Type을 받아서 이를 설정해야함.
 
         if (_continuousDamage)
+        {
             return;
+        }
 
         Debug.Log($"트리거 들어옴");
 
@@ -79,6 +90,11 @@ public class Projectile : MonoBehaviour
                 {
                     _pierce--;
                 }
+
+                if (_radius > 0)
+                {
+                    BurstDamage();
+                }
             }
         }
     }
@@ -101,23 +117,43 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    protected virtual void HitEffect(Vector3 position)
+    private void HitEffect(Vector3 position)
     {
         if (Prefab_VFXHit != null)
         {
             GameObject vfxHit = Instantiate(Prefab_VFXHit, position, Quaternion.identity);
-            IProjectileScaler projectileScaler = vfxHit.GetComponent<IProjectileScaler>();
+            IProjectileScaler projectileScaler = vfxHit.GetComponentInParent<IProjectileScaler>();
 
             if (projectileScaler != null)
             {
                 float scale = Mathf.Max(_radius, 1); // 폭발 범위가 0일 경우 투사체 타격 이펙트의 크기를 1로 만듦
 
-                Vector3 scaleVector = new Vector3 (scale, scale, scale);
+                Vector3 scaleVector = new(scale, scale, scale);
 
                 projectileScaler.SetScale(scaleVector);
             }
 
             Destroy(vfxHit, 2f);
+        }
+    }
+
+    private void BurstDamage()
+    {
+
+        int targetCount = SearchUtil.FindTargetSphere(transform.position, _radius, LayerMask.GetMask("Enemy"), _burstTarget);
+
+        for(int i = 0;  i < targetCount; i++)
+        {
+            IDamageable damageableTarget = _burstTarget[i].GetComponentInParent<IDamageable>();
+
+            DamageInfo damageInfo = new(_extraDamage, _direction, _damageType);
+
+            if (SearchUtil.IsValidTarget(damageableTarget) == false)
+            {
+                continue;
+            }
+
+            damageableTarget.TakeDamage(damageInfo);
         }
     }
 }
@@ -127,6 +163,7 @@ public struct ProjectileStruct
     // 기본 옵션
     public float Speed;
     public float Damage;
+    public float Duration;
 
     public Vector3 Direction;
     public DamageType DamageType;
@@ -136,21 +173,20 @@ public struct ProjectileStruct
     public float AdditionalDamage; // 폭발 같은 추가적인 데미지
     public bool ContinuousDamage; // 틱마다 피해를 입히는가?
     public float Radius; // 폭발 범위 -> 없을 경우 기본값 0
-    public float Pierce; // 관통력 -> 없을 경우 기본값 0
+    public int Pierce; // 관통력 -> 없을 경우 기본값 0
 
-    public ProjectileStruct(float speed, float damage,
-            Vector3 direction, DamageType damageType, TargetType targetType,
-            float additionalDamage = 0, bool continuousDamage = false,
-            float radius = 0, float pierce = 0)
+    public ProjectileStruct(float speed, float damage, float duration, Vector3 direction, DamageType damageType, TargetType targetType,
+            float extraDamage = 0, bool continuousDamage = false, float radius = 0, int pierce = 0)
     {
         Speed = speed;
         Damage = damage;
+        Duration = duration;
 
         Direction = direction;
         DamageType = damageType;
         TargetType = targetType;
 
-        AdditionalDamage = additionalDamage;
+        AdditionalDamage = extraDamage;
         ContinuousDamage = continuousDamage;
 
         Radius = radius;
