@@ -1,5 +1,4 @@
 ﻿using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -7,7 +6,6 @@ using UnityEngine.UI;
 public class PetSlotUIView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Image _iconImage;
-    [SerializeField] private TMP_Text _nameText;
     [SerializeField] private UIButton _slotButton;
     [SerializeField] private Image _selectedImage;
     [SerializeField] private CanvasGroup _canvasGroup;
@@ -46,7 +44,6 @@ public class PetSlotUIView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             return;
         }
 
-        _nameText.text = petData.Name;
         RefreshIcon(petData.IconPath);
     }
 
