@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public partial class UIManager
@@ -145,7 +146,8 @@ public partial class UIManager
         view.SetSkills(playerClassId);
     }
 
-    public void OpenLevelUpUI(List<string> optionIdList, System.Action<string> onOptionSelected)
+    public void OpenLevelUpUI(List<string> optionIdList, Action<string> onOptionSelected
+        , Action onClosed = null)
     {
         var view = OpenUI<LevelUpUIView>(UIType.LevelUpUIView);
 
@@ -155,7 +157,20 @@ public partial class UIManager
             return;
         }
 
-        view.SetOptions(optionIdList, onOptionSelected);
+        view.SetOptions(optionIdList, onOptionSelected, onClosed);
+    }
+
+    public void OpenUltimateSelectUI(string playerClassId, Action<string> onSelected)
+    {
+        var view = OpenUI<UltimateSelectUIView>(UIType.UltimateSelectUIView);
+
+        if (view == null)
+        {
+            Debug.LogWarning("UltimateSelectUIView를 열 수 없습니다.");
+            return;
+        }
+
+        view.SetUltimates(playerClassId, onSelected);
     }
 
     public void OpenConvoyHudUI(WagonViewModel wagonViewModel, string questId)
