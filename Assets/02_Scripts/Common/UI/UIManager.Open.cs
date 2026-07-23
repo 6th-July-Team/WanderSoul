@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public partial class UIManager
@@ -133,16 +134,7 @@ public partial class UIManager
         view.BindViewModel(viewModel);
     }
 
-    public void OpenSkillHudUI()
-    {
-        var view = OpenUI<SkillHudUIView>(UIType.SkillHudUIView);
-        if (view == null)
-        {
-            Debug.LogWarning("SkillHudUIView를 열 수 없습니다.");
-        }
-    }
-
-    public void OpenSkillHudUI(PlayerCombatController combatController)
+    public void OpenSkillHudUI(string playerClassId)
     {
         var view = OpenUI<SkillHudUIView>(UIType.SkillHudUIView);
         if (view == null)
@@ -151,10 +143,28 @@ public partial class UIManager
             return;
         }
 
-        view.SetSkills(combatController);
+        view.SetSkills(playerClassId);
     }
 
-    public void OpenLevelUpUI(List<string> optionIdList)
+    public void SetSkillHudUltimate(string skillId)
+    {
+        if (IsActiveUI(UIType.SkillHudUIView) == false)
+        {
+            return;
+        }
+
+        var view = GetCreatUI<SkillHudUIView>(UIType.SkillHudUIView);
+
+        if (view == null)
+        {
+            return;
+        }
+
+        view.SetUltimateSkill(skillId);
+    }
+
+    public void OpenLevelUpUI(List<string> optionIdList, Action<string> onOptionSelected
+        , Action onClosed = null)
     {
         var view = OpenUI<LevelUpUIView>(UIType.LevelUpUIView);
 
@@ -164,7 +174,20 @@ public partial class UIManager
             return;
         }
 
-        view.SetOptions(optionIdList);
+        view.SetOptions(optionIdList, onOptionSelected, onClosed);
+    }
+
+    public void OpenUltimateSelectUI(string playerClassId, Action<string> onSelected)
+    {
+        var view = OpenUI<UltimateSelectUIView>(UIType.UltimateSelectUIView);
+
+        if (view == null)
+        {
+            Debug.LogWarning("UltimateSelectUIView를 열 수 없습니다.");
+            return;
+        }
+
+        view.SetUltimates(playerClassId, onSelected);
     }
 
     public void OpenConvoyHudUI(WagonViewModel wagonViewModel, string questId)

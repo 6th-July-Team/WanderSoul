@@ -1,0 +1,8 @@
+[
+  {
+    "Id": "repgrade_lv1",
+    "Name": "수상한 외지인",
+    "MinValue": 0,
+    "MaxValue": 99
+  }
+]
