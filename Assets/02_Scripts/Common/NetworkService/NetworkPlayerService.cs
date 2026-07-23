@@ -57,7 +57,7 @@ public class NetworkPlayerService
 
     private PlayerViewModel CreatePlayerViewModel()
     {
-        PlayerStatData playerStatData = new();//GameManager.DataTable.GetPlayerStatData("테스트 직업 아이디");
+        PlayerStatData playerStatData = GameManager.DataTable.GetPlayerStatData("player_scholar");
         _statController = new(playerStatData);
 
         var playerModel = new PlayerModel();

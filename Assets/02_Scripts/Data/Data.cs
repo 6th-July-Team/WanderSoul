@@ -286,7 +286,6 @@ public class PlayerSkillData : BaseData
     public float Cooldown;
     public int ManaCost;
     public float Duration;
-    public float ProjectileDuration;
     public float ProjectileSpeed;
     public int Pierce;
     public int MaxProjectileCount;
@@ -295,7 +294,7 @@ public class PlayerSkillData : BaseData
     public float BarrierAbsorbAmount;
     public string stringTargetType;
     public string stringDamageType;
-    public string StatusEffectId;
+    public List<string> StatusEffectId;
     public string SkillType;
     public string stringSkillDamageType;
     public string SkillOwnerType;
@@ -304,6 +303,7 @@ public class PlayerSkillData : BaseData
     public string IconPath;
     public string ExecutionId;
     public string stringSkillSlot;
+    public float ExtraDamage;
 
     public DamageType GetDamageType()
         => Enum.TryParse<DamageType>(stringSkillDamageType, out var result) ? result : DamageType.Physical;

@@ -59,19 +59,22 @@ public class PetPartyController : IPetPartyReader
         return PetElement.None;
     }
 
-    public void AddModifierForAllPet(StatModifier modifier)
+    public void ApplyEffectForAllPet(StatusEffectInstance instance)
     {
         foreach(var pet in _pets)
         {
-            pet.AddModifier(modifier);
+            pet.ApplyEffect(instance);
         }
     }
 
-    public void RemoveModifierForAllPet(StatType petStatType)
+    public IStatusEffectReceiver[] GetStatusEffectReceiverForAllPet()
     {
-        foreach (var pet in _pets)
+        IStatusEffectReceiver[] receivers = new IStatusEffectReceiver[_pets.Count];
+
+        for (int i = 0; i < _pets.Count; i++)
         {
-            pet.RemoveModifiers(petStatType);
+            receivers[i] = _pets[i];
         }
+        return receivers;
     }
 }

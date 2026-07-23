@@ -148,14 +148,9 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
         _petMovement.ApplyCommand(_commandResult);
     }
 
-    public void AddModifier(StatModifier modifier)
+    public void ApplyEffect(StatusEffectInstance instance)
     {
-        _petStatController.AddModifier(modifier);
-    }
-
-    public void RemoveModifiers(StatType statType)
-    {
-        // _petStatController.RemoveModifiers(statType);
+        StatusEffects.Apply(instance);
     }
 
     private void ExecuteNoEnemySkill(PetActiveSkill skill)
@@ -226,6 +221,7 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
     public void Dispose()
     {
+        StatusEffects.Clear();
         _petViewModel.OnPropertyChanged_View -= OnPropertyChanged;
     }
 }

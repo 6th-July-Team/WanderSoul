@@ -19,7 +19,7 @@ public static class EnemyDamageExtension
         {
             IDamageable damageableTarget = damageableTargets[i];
 
-            if(damageableTarget == null)
+            if(damageableTarget is Object unityObject && unityObject == null)
             {
                 continue;
             }

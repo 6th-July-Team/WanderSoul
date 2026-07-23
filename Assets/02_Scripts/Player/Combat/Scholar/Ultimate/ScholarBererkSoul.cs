@@ -1,48 +1,49 @@
-﻿using Cysharp.Threading.Tasks;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 public class ScholarBererkSoul : IPlayerSkillExecution
 {
-    private List<StatType> _statsToApply;
+    // 캐싱
+    private List<StatusEffectData> _effectDatas = new();
+
+    private StatusEffectMaker _effectMaker;
+    private IStatusEffectReceiver[] _petEffectReceivers;
+
+    public ScholarBererkSoul(StatusEffectMaker effectMaker, IStatusEffectReceiver[] petEffectReceivers)
+    {
+        _effectMaker = effectMaker;
+        _petEffectReceivers = petEffectReceivers;
+    }
 
     public void Execute(PlayerSkillUseContext context, PlayerSkillData SkillData, float damage, float coolTimeReductionOfStat)
     {
-        // 공속, 이속, 체력 증가
-        //펫 컨트롤러 -> 펫 스텟 컨트롤러의 모디파이어 설정
+        var effectIds = SkillData.StatusEffectId;
 
-        // TODO(김익환): 어떤 스텟, 어떤 방식으로 적용할지 데이터 들고 오기
-        if(null == _statsToApply)
+        if (_effectDatas.Count == 0)
         {
-            _statsToApply = new List<StatType>() { /* TODO(김익환): 스텟 작성하기*/ };
+            foreach(var effectId in effectIds)
+            {
+                var statusEffectData = GameManager.DataTable.GetStatusEffectData(effectId);
+                if (null == statusEffectData)
+                {
+                    continue;
+                }
+
+                _effectDatas.Add(statusEffectData);
+            }
         }
 
-        foreach(var statType in _statsToApply)
+        foreach(var effectData in _effectDatas)
         {
-            var modifire = new StatModifier(statType, StatModifierOperation.AddPercent, 0.5f);
-
-            GameManager.PetParty.AddModifierForAllPet(modifire);
+            ApplyBuff(effectData);
         }
-
-        // TODO: 데이터에서 지속 시간 가져오기
-        StartDurationTimer(5f).Forget();
-
-        var viewModel = GameManager.Network.RequestPlayerSkillViewModel();
-
-        float coolTime = context.PlayerSkillModifier.GetValue(SkillData.Id, SkillData.GetSkillSlot()
-            , SkillValueType.Cooldown, SkillData.Cooldown) - coolTimeReductionOfStat;
-
-
-        viewModel.UseSkill(SkillData.GetSkillSlot(), coolTime);
     }
 
-    private async UniTaskVoid StartDurationTimer(float duration)
+    private void ApplyBuff(StatusEffectData data)
     {
-        await UniTask.Delay(TimeSpan.FromSeconds(duration));
-
-        foreach (var statType in _statsToApply)
+        foreach(var petEffectReceiver in _petEffectReceivers)
         {
-            GameManager.PetParty.RemoveModifierForAllPet(statType);
+            StatusEffectInstance effect = _effectMaker.Create(petEffectReceiver, data);
+            petEffectReceiver.StatusEffects.Apply(effect);
         }
     }
 }
