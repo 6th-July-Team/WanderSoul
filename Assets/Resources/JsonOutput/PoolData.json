@@ -30,5 +30,53 @@
   {
     "Id": "EnemyDropObject/Exp/One",
     "InitSize": 100
+  },
+  {
+    "Id": "Scholar/ElectricArrowEffect",
+    "InitSize": 0
+  },
+  {
+    "Id": "Scholar/FireArrowEffect",
+    "InitSize": 0
+  },
+  {
+    "Id": "Scholar/IceArrowEffect",
+    "InitSize": 0
+  },
+  {
+    "Id": "Scholar/MagicArrowEffect",
+    "InitSize": 0
+  },
+  {
+    "Id": "Scholar/StoneArrowEffect",
+    "InitSize": 0
+  },
+  {
+    "Id": "Scholar/UpgradedMagicArrowEffect",
+    "InitSize": 0
+  },
+  {
+    "Id": "Scholar/EarthExplosionEffect",
+    "InitSize": 0
+  },
+  {
+    "Id": "Scholar/ElectricExplosionEffect",
+    "InitSize": 0
+  },
+  {
+    "Id": "Scholar/FireExplosionEffect",
+    "InitSize": 0
+  },
+  {
+    "Id": "Scholar/IceExplosionEffect",
+    "InitSize": 0
+  },
+  {
+    "Id": "Scholar/MagicExplosionEffect",
+    "InitSize": 0
+  },
+  {
+    "Id": "Scholar/Barrier",
+    "InitSize": 1
   }
 ]
