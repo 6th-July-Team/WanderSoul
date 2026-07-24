@@ -40,7 +40,7 @@ public class PlayerAnimationController : MonoBehaviour
             _ => throw new System.ArgumentOutOfRangeException(nameof(anim), anim, null)
         };
 
-        UpdateActionTrigger();
+        ResetTrigger();
         _animator.SetTrigger(triggerHash);
     }
 
@@ -63,7 +63,7 @@ public class PlayerAnimationController : MonoBehaviour
         return nextInfo.IsTag(_upperBodyActionTag);
     }
 
-    private void UpdateActionTrigger()
+    private void ResetTrigger()
     {
         _animator.ResetTrigger(_isSpecialAttackHash);
         _animator.ResetTrigger(_isUltimateAttackHash);
