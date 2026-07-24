@@ -70,6 +70,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 791469abee35c1b4492de32cd4634c29
+    m_Address: Hit/FireArrowHitEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7b1cf43efae12ec4381ba6bb09bd7db9
     m_Address: Scholar/Barrier
     m_ReadOnly: 0
@@ -122,6 +127,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cfab79379f606514e85219f0f02db805
     m_Address: Enemy/Projectile_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e0e7adf4a5c8ab04eb4e2accfe3c19af
+    m_Address: Hit/StoneArrowHitEffect
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
