@@ -1,4 +1,5 @@
-﻿using GAP_LaserSystem;
+﻿using Cysharp.Threading.Tasks;
+using System;
 using UnityEngine;
 
 public class ParticleComponent : MonoBehaviour
@@ -50,6 +51,8 @@ public class ParticleComponent : MonoBehaviour
         {
             _particles[i].Play(true);
         }
+
+        Despawn().Forget();
     }
 
     public void Stop()
@@ -64,7 +67,11 @@ public class ParticleComponent : MonoBehaviour
             _trails[i].emitting = false;
             ClearTrails();
         }
+    }
 
+    public void SetScale(Vector3 scale)
+    {
+        transform.localScale = scale;
     }
 
     public void Clear()
@@ -77,16 +84,18 @@ public class ParticleComponent : MonoBehaviour
         ClearTrails();
     }
 
-    public void SetScale(Vector3 scale)
-    {
-        transform.localScale = scale;
-    }
-
     private void ClearTrails()
     {
         for (int i = 0; i < _trails.Length; i++)
         {
             _trails[i].Clear();
         }
+    }
+
+    public async UniTask Despawn()
+    {
+        await UniTask.Delay(TimeSpan.FromSeconds(_releaseDelay));
+        Clear();
+        GameManager.Pool.DespawnToPool(gameObject);
     }
 }

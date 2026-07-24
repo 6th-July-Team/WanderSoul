@@ -31,8 +31,8 @@ public class AreaOfEffect : MonoBehaviour
 
         _visualPath = aoeStruct.VisualPath;
 
+        VFXSpawner.SpawnAttachedVFX(_visualPath, _visualRoot, Vector3.zero, Quaternion.identity);
 
-        CreateVisual();
         BurstDamage();
     }
 
@@ -54,28 +54,6 @@ public class AreaOfEffect : MonoBehaviour
             DamageInfo damageInfo = new(_damage, direction, _damageType);
 
             damageableTarget.TakeDamage(damageInfo);
-        }
-    }
-
-    private void CreateVisual()
-    {
-        GameObject visualPrefab = Utils.ResourcesLoad<GameObject>(_visualPath);
-
-        if (visualPrefab == null)
-        {
-            Debug.LogError($"Projectile 비주얼을 불러오지 못했습니다. Path: {_visualPath}");
-
-            return;
-        }
-
-        var visualObject = Instantiate(visualPrefab, _visualRoot, false);
-
-        visualObject.transform.localPosition = Vector3.zero;
-        visualObject.transform.localRotation = Quaternion.identity;
-
-        if (visualObject.TryGetComponent(out ParticleComponent visualComponent))
-        {
-            visualComponent.Play();
         }
     }
 }

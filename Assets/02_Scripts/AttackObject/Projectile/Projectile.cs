@@ -22,8 +22,8 @@ public class Projectile : MonoBehaviour
     private Collider[] _burstTarget = new Collider[32];
 
     [SerializeField] private Transform _visualRoot;
-    private string _visualPath;
-    private string _hitEffectPath;
+    private string _visualAddress;
+    private string _hitEffectAddress;
 
     public void Init(ProjectileStruct projectileData)
     {
@@ -36,8 +36,8 @@ public class Projectile : MonoBehaviour
         _damageType = projectileData.DamageType;
         _targetType = projectileData.TargetType;
 
-        _visualPath = projectileData.VisualPath;
-        _hitEffectPath = projectileData.HitEffectPath;
+        _visualAddress = projectileData.VisualPath;
+        _hitEffectAddress = projectileData.HitEffectPath;
 
         // 추가 옵션
         _extraDamage = projectileData.AdditionalDamage;
@@ -55,7 +55,7 @@ public class Projectile : MonoBehaviour
             Destroy(this.gameObject, _duration);
         }
 
-        CreateVisual();
+        VFXSpawner.SpawnAttachedVFX(_visualAddress, _visualRoot, Vector3.zero, Quaternion.identity);
     }
 
     private void Update()
@@ -124,34 +124,8 @@ public class Projectile : MonoBehaviour
 
     private void HitEffect(Vector3 position)
     {
-        if (string.IsNullOrWhiteSpace(_hitEffectPath))
-        {
-            return;
-        }
-
-        GameObject hitPrefab = Resources.Load<GameObject>(_hitEffectPath);
-        if(hitPrefab == null)
-        {
-            Debug.LogError($"Projectile 타격 이펙트를 불러오지 못했습니다. Path: {_hitEffectPath}");
-            return;
-        }
-
-        GameObject hitObject = Instantiate(hitPrefab, position, Quaternion.identity);
-
-        if (!hitObject.TryGetComponent(out ParticleComponent hitVisual))
-        {
-            Debug.LogError($"{hitPrefab.name} 루트에 ParticleComponent 없습니다.");
-
-            Destroy(hitObject);
-            return;
-        }
-
         float scale = Mathf.Max(_radius, 1f);
-
-        hitVisual.SetScale(Vector3.one * scale);
-        hitVisual.Play();
-
-        Destroy(hitObject, hitVisual.ReleaseDelay);
+        VFXSpawner.SpawnVFX(_hitEffectAddress, position, Quaternion.identity, scale);
     }
 
     private void BurstDamage()
@@ -170,33 +144,6 @@ public class Projectile : MonoBehaviour
             }
 
             damageableTarget.TakeDamage(damageInfo);
-        }
-    }
-
-    private void CreateVisual()
-    {
-        if(string.IsNullOrWhiteSpace(_visualPath))
-        {
-            return;
-        }
-
-        GameObject visualPrefab = Resources.Load<GameObject>(_visualPath);
-
-        if (visualPrefab == null)
-        {
-            Debug.LogError($"Projectile 비주얼을 불러오지 못했습니다. Path: {_visualPath}");
-
-            return;
-        }
-
-        var visualObject = Instantiate(visualPrefab, _visualRoot, false);
-
-        visualObject.transform.localPosition = Vector3.zero;
-        visualObject.transform.localRotation = Quaternion.identity;
-
-        if (visualObject.TryGetComponent(out ParticleComponent visualComponent))
-        {
-            visualComponent.Play();
         }
     }
 }
