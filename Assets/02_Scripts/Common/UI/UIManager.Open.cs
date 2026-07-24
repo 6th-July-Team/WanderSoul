@@ -65,6 +65,28 @@ public partial class UIManager
         view.BindViewModel(viewModel);
     }
 
+    public void OpenQuestDetailUI(QuestModel questModel, int currentReputation, PetInventoryModel petInventoryModel)
+    {
+        if (questModel == null)
+        {
+            Debug.LogWarning("QuestModel이 null입니다.");
+            return;
+        }
+
+        var view = OpenUI<QuestDetailUIView>(UIType.QuestDetailUIView);
+        if (view == null)
+        {
+            Debug.LogWarning("QuestDetailUIView를 열 수 없습니다.");
+            return;
+        }
+
+        view.SetCurrentReputation(currentReputation);
+        view.SetAcceptedCallback(() => OpenPetInventoryUI(petInventoryModel));
+
+        var viewModel = new QuestViewModel(questModel);
+        view.BindViewModel(viewModel);
+    }
+
     public void OpenInventoryUI(InventoryModel inventoryModel)
     {
         if (inventoryModel == null)

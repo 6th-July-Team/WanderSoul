@@ -8,6 +8,13 @@ public class UIGameFlowTest : MonoBehaviour
     [SerializeField] private string _testPlayerClassId = "player_scholar";
     [SerializeField] private bool _testUltimateAfterLevelUp = true;
 
+    [Header("QuestDetail Test")]
+    [SerializeField] private string _testQuestId = "quest_001";
+    [SerializeField] private int _testReputation = 50;
+    [SerializeField] private QuestState _testQuestState = QuestState.NotStarted;
+
+    private readonly PetInventoryModel _testPetInventoryModel = new PetInventoryModel();
+
     private void Update()
     {
         if (Keyboard.current == null)
@@ -30,6 +37,46 @@ public class UIGameFlowTest : MonoBehaviour
         if (Keyboard.current.digit4Key.wasPressedThisFrame)
         {
             GameManager.UI.OpenSimplePopup("테스트 알림입니다");
+        }
+        if (Keyboard.current.digit5Key.wasPressedThisFrame)
+        {
+            ShowQuestDetail();
+        }
+    }
+
+    private void ShowQuestDetail()
+    {
+        var questData = GameManager.DataTable.GetQuestData(_testQuestId);
+
+        if (questData == null)
+        {
+            Debug.LogWarning($"QuestData를 찾을 수 없습니다: {_testQuestId}");
+            return;
+        }
+
+        if (_testPetInventoryModel.PetList.Count == 0)
+        {
+            CreateTestPetList();
+        }
+
+        var questModel = new QuestModel(questData);
+        questModel.State = _testQuestState;
+
+        GameManager.UI.OpenQuestDetailUI(questModel, _testReputation, _testPetInventoryModel);
+    }
+
+    private void CreateTestPetList()
+    {
+        long uniqueId = 1;
+
+        foreach (var petData in GameManager.DataTable.PetDataTable.Values)
+        {
+            var pet = new PetSlotModel();
+            pet.PetUniqueId = uniqueId;
+            pet.PetDataId = petData.Id;
+            pet.Level = 1;
+            _testPetInventoryModel.AddPet(pet);
+            uniqueId++;
         }
     }
 

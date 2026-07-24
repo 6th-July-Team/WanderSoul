@@ -8,11 +8,12 @@
     public int ReputationReward => _model.Data.ReputationReward;
     public string StartTownId => _model.Data.StartTownId;
     public string ArrivalTownId => _model.Data.ArrivalTownId;
+    public int RequiredReputation => _model.Data.RequiredReputation;
     public QuestState QuestState => _model.State;
 
     public QuestViewModel(QuestModel model) : base(model) { }
 
-    private bool CanAcceptQuest(int currentReputation)
+    public bool CanAcceptQuest(int currentReputation)
     {
         if (_model.State != QuestState.NotStarted)
         {
