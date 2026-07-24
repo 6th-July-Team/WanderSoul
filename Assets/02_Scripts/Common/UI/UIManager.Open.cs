@@ -87,6 +87,27 @@ public partial class UIManager
         view.BindViewModel(viewModel);
     }
 
+    public void OpenMagicCircleUI(MagicCircleModel magicCircleModel)
+    {
+        if (magicCircleModel == null)
+        {
+            Debug.LogWarning("MagicCircleModel이 null입니다.");
+            return;
+        }
+
+        var view = OpenUI<MagicCircleUIView>(UIType.MagicCircleUIView);
+        if (view == null)
+        {
+            Debug.LogWarning("MagicCircleUIView를 열 수 없습니다.");
+            return;
+        }
+
+        view.SetSoulSource(GameManager.Network.RequestPlayerOutGameViewModel());
+
+        var viewModel = new MagicCircleViewModel(magicCircleModel);
+        view.BindViewModel(viewModel);
+    }
+
     public void OpenInventoryUI(InventoryModel inventoryModel)
     {
         if (inventoryModel == null)

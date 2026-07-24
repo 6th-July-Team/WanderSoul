@@ -166,6 +166,9 @@ public partial class UIManager
             case UIType.UltimateSelectUIView:
                 return UIRootType.Content;
 
+            case UIType.MagicCircleUIView:
+                return UIRootType.Content;
+
             case UIType.LoadingUIView:
                 return UIRootType.Front;
 

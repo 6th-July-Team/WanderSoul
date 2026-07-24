@@ -42,6 +42,21 @@ public class UIGameFlowTest : MonoBehaviour
         {
             ShowQuestDetail();
         }
+        if (Keyboard.current.digit6Key.wasPressedThisFrame)
+        {
+            ShowMagicCircle();
+        }
+    }
+
+    private void ShowMagicCircle()
+    {
+        var model = new MagicCircleModel();
+
+        // TODO(태영): 소환 비용 데이터 정해지면 교체. 지금은 UI 확인용 임시값
+        model.SummonOneCost = 1;
+        model.SummonFiveCost = 5;
+
+        GameManager.UI.OpenMagicCircleUI(model);
     }
 
     private void ShowQuestDetail()
