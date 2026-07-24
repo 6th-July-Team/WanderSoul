@@ -189,7 +189,6 @@ public class GameManager : SingletonBehaviour<GameManager>
         _uiManager.OpenUI<MainMenuUI>(UIType.MainMenuUI);
 
         var resourceModel = new ResourceModel();
-        resourceModel.Soul = 12413451;
         resourceModel.Money = 8520;
 
         var resourceHud = _uiManager.OpenResourceHudUI(resourceModel);

@@ -123,6 +123,8 @@ public partial class UIManager
 
         var viewModel = new ResourceHudViewModel(resourceModel);
         view.BindViewModel(viewModel);
+
+        view.SetSoulSource(GameManager.Network.RequestPlayerOutGameViewModel());
         return view;
     }
 

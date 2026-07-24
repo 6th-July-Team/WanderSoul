@@ -206,7 +206,6 @@ public class ConvoyManager
 
         var resourceModel = new ResourceModel();
 
-        resourceModel.Soul = 5;
         resourceModel.Money = 999999;
 
         var resourceHud = GameManager.UI.OpenResourceHudUI(resourceModel);
