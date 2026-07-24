@@ -18,6 +18,9 @@ public class PlayerCombatController : MonoBehaviour
     private bool _isCheckingSkillRange = false;
     private SkillSlot _checkingSkillSlot;
 
+    // 기본 공격 발사 위치
+    private Transform _basicAttackAnchor;
+
     private void Awake()
     {
         _aimHandler = GetComponent<PlayerAimHandler>();
@@ -25,12 +28,14 @@ public class PlayerCombatController : MonoBehaviour
         _animationController = GetComponent<PlayerAnimationController>();
     }
 
-    public void Init(PlayerClassSkillBuild skillBuild , PlayerSkillModifier skillModifier)
+    public void Init(PlayerClassSkillBuild skillBuild , PlayerSkillModifier skillModifier, Transform basicAttackAnchor)
     {
         _skillModifier = skillModifier;
 
         _skillBuild = skillBuild;
         _skillBuild.Init(skillModifier);
+
+        _basicAttackAnchor = basicAttackAnchor;
 
         _isInitialized = true;
     }
@@ -152,7 +157,7 @@ public class PlayerCombatController : MonoBehaviour
     private PlayerSkillUseContext CreateSkillUseContext()
     {
         return new PlayerSkillUseContext(_aimHandler.transform, _aimHandler.AimDirection, _aimHandler.AimWorldPoint
-            , _skillModifier);
+            , _skillModifier, _basicAttackAnchor);
     }
 
     private void PlayAnimation(SkillSlot skillSlot)

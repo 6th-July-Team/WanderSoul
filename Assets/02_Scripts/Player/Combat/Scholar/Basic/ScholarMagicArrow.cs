@@ -10,7 +10,7 @@ public class ScholarMagicArrow : IElementArrowVariant
         {
             // 강화 화살 발사 로직 추가
             Projectile projectileInstance = Object.Instantiate(Resources.Load<Projectile>("PlayerProjectile")
-                , context.Owner.position + context.AimDirection * 1f, Quaternion.identity);
+                , context.BasicAttackAnchor.position + context.AimDirection * 1f, Quaternion.identity);
 
             projectileInstance.Init(new ProjectileStruct
             (
@@ -22,7 +22,7 @@ public class ScholarMagicArrow : IElementArrowVariant
         else
         {
             Projectile projectileInstance = Object.Instantiate(Resources.Load<Projectile>("PlayerProjectile")
-                , context.Owner.position + context.AimDirection * 1f, Quaternion.identity);
+                , context.BasicAttackAnchor.position + context.AimDirection * 1f, Quaternion.identity);
 
             projectileInstance.Init(new ProjectileStruct
             (
