@@ -24,10 +24,6 @@
     "InitSize": 100
   },
   {
-    "Id": "Enemy/Projectile_01",
-    "InitSize": 200
-  },
-  {
     "Id": "EnemyDropObject/Soul/One",
     "InitSize": 100
   },

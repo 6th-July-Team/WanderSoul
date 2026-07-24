@@ -1,4 +1,4 @@
-[
+﻿[
   {
     "Id": "Spider",
     "TargetPolicy": "PriorityBased",
@@ -49,7 +49,7 @@
     "MoveSpeed": 2.8,
     "ProjectileSpeed": 11,
     "ProjectileLifeTime": 4,
-    "ProjectilePrefabAddress": "Enemy/Projectile_01",
+    "ProjectilePrefabAddress": "Enemy/Projectile/OrbRed",
     "AreaRadius": null,
     "AreaDelayTime": null,
     "AreaPrefabAddress": null,
@@ -78,8 +78,8 @@
     "ProjectileSpeed": null,
     "ProjectileLifeTime": null,
     "ProjectilePrefabAddress": null,
-    "AreaRadius": 4,
-    "AreaDelayTime": 2,
+    "AreaRadius": 2,
+    "AreaDelayTime": 1,
     "AreaPrefabAddress": "Enemy/Area_01",
     "PreferredDistance": null
   },
@@ -112,11 +112,11 @@
     "PreferredDistance": null
   },
   {
-    "Id": "EvilMagePuple",
+    "Id": "EvilMagePurple",
     "TargetPolicy": "PlayerOnly",
     "EnemyAttackType": "Projectile",
     "DamageType": "Physical",
-    "PrefabAddress": "Enemy/EvilMagePuple",
+    "PrefabAddress": "Enemy/EvilMagePurple",
     "Name": "플레이어저격형 테스트몹",
     "Description": "플레이어만 타겟한다 ( 히트는 Pet, Wagon도 가능 )",
     "MaxHp": 30,
@@ -133,7 +133,7 @@
     "MoveSpeed": 1.5,
     "ProjectileSpeed": 22,
     "ProjectileLifeTime": 4,
-    "ProjectilePrefabAddress": "Enemy/Projectile_01",
+    "ProjectilePrefabAddress": "Enemy/Projectile/OrbPurple",
     "AreaRadius": null,
     "AreaDelayTime": null,
     "AreaPrefabAddress": null,
@@ -161,7 +161,7 @@
     "MoveSpeed": 1.5,
     "ProjectileSpeed": 22,
     "ProjectileLifeTime": 4,
-    "ProjectilePrefabAddress": "Enemy/Projectile_01",
+    "ProjectilePrefabAddress": "Enemy/Projectile/WindRed",
     "AreaRadius": null,
     "AreaDelayTime": null,
     "AreaPrefabAddress": null,

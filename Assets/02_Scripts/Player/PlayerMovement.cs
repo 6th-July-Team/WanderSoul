@@ -31,6 +31,9 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController _characterController;
     private PlayerAnimationController _animationController;
 
+    // 캐싱
+    private Vector3 _horizontalVelocity;
+
     private void Awake()
     {
         _inputHandle = GetComponent<PlayerInputHandle>();
@@ -207,7 +210,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void UpdateMoveAnimation()
     {
-        bool isMove = _inputHandle.MoveInputV3.sqrMagnitude > 0.01f;
-        _animationController.SetMove(isMove);
+        //_horizontalVelocity = _characterController.velocity;
+        //_horizontalVelocity.y = 0f;
+
+        //float normalizedSpeed = _horizontalVelocity.magnitude / _moveSpeed;
+
+        float moveSpeed = _inputHandle.MoveInputV3.sqrMagnitude > 0.01f ? 1f : 0f;
+
+        _animationController.SetMoveSpeed(moveSpeed);
     }
 }
