@@ -37,6 +37,9 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
     private GameObject _tauntEffect;
     private CancellationTokenSource _tauntCts;
 
+    private GameObject _falldownEffect;
+    private CancellationTokenSource _falldownCts;
+
     private GameObject _wagon;
     private GameObject _player;
     private ITargetable _wagonTargetable;
@@ -44,7 +47,7 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
 
     public event System.Action OnEnemyDied;
 
-    [SerializeField] private float DeadDelay;
+    private float _deadDelay = 2f;
 
     [Header("Melee 전용")]
     [SerializeField] private EnemyAttackHitbox AttackHitbox_Self;
@@ -175,7 +178,6 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
         {
             case nameof(_viewModel.MaxHp):
                 {
-                    // [TODO : 이기웅] 최대 체력이 바뀔 경우
                 }
                 break;
             case nameof(_viewModel.Hp):
@@ -185,7 +187,6 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
                 break;
             case nameof(_viewModel.Attack):
                 {
-                    // [TODO : 이기웅] 공격력이 바뀔 경우
                 }
                 break;
             case nameof(_viewModel.AttackRange):
@@ -284,6 +285,7 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
     {
         Animator_Self.SetBool(IS_DEAD_HASH, true);
     }
+
 
     #endregion
 
@@ -400,7 +402,7 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
 
         OnEnemyDied?.Invoke();
 
-        // TODO : 사망 이펙트 추가
+        PlayFalldownEffect(true);
         SpawnDropObjects(DropObjectType.Soul);
         SpawnDropObjects(DropObjectType.Exp);
         DespawnAfterDelay().Forget();
@@ -415,7 +417,6 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
         }
 
         int amount = _viewModel.GetDropAmount(type);
-
         foreach ((DropObjectDigit digit, int value) in DIGIT_TABLE)
         {
             int count = amount / value;
@@ -445,8 +446,37 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
 
     private async UniTaskVoid DespawnAfterDelay()
     {
-        await UniTask.Delay(System.TimeSpan.FromSeconds(DeadDelay));
+        await UniTask.Delay(System.TimeSpan.FromSeconds(_deadDelay));
+        PlayFalldownEffect(false);
         GameManager.Pool.DespawnToPool(this.gameObject);
+    }
+
+    private void PlayFalldownEffect(bool isActive)
+    {
+        if(_falldownEffect == null)
+        {
+            if(isActive == false)
+            {
+                return;
+            }
+
+            GameObject prefab = Utils.ResourcesLoad<GameObject>("FalldownEffect");
+            
+            if(prefab == null)
+            {
+                return;
+            }
+
+            _falldownEffect = Instantiate(prefab, this.transform);
+            _falldownEffect.transform.localPosition = Vector3.zero;
+        }
+
+        _falldownEffect.SetActive(isActive);
+
+        if (isActive && _falldownEffect.TryGetComponent(out ParticleSystem ps))
+        {
+            ps.Play(true);
+        }
     }
 
     #endregion
