@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading;
 using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
@@ -22,7 +23,6 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
     private static readonly int GET_DAMAGE_HASH = Animator.StringToHash("GetDamage");
     private static readonly int IS_DEAD_HASH = Animator.StringToHash("IsDead");
 
-    private const float RETREAT_ENTER_RATIO = 0.8f;
     private const float TARGET_EXCLUDE_DURATION = 15f;
 
     private static readonly (DropObjectDigit digit, int value)[] DIGIT_TABLE =
@@ -34,6 +34,11 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
 
     public ITargetable CurrentTarget => _targetSelector.CurrentTarget;
 
+    private GameObject _tauntEffect;
+    private CancellationTokenSource _tauntCts;
+
+    private GameObject _falldownEffect;
+    private CancellationTokenSource _falldownCts;
 
     private GameObject _wagon;
     private GameObject _player;
@@ -42,7 +47,7 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
 
     public event System.Action OnEnemyDied;
 
-    [SerializeField] private float DeadDelay;
+    private float _deadDelay = 2f;
 
     [Header("Melee 전용")]
     [SerializeField] private EnemyAttackHitbox AttackHitbox_Self;
@@ -173,7 +178,6 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
         {
             case nameof(_viewModel.MaxHp):
                 {
-                    // [TODO : 이기웅] 최대 체력이 바뀔 경우
                 }
                 break;
             case nameof(_viewModel.Hp):
@@ -183,7 +187,6 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
                 break;
             case nameof(_viewModel.Attack):
                 {
-                    // [TODO : 이기웅] 공격력이 바뀔 경우
                 }
                 break;
             case nameof(_viewModel.AttackRange):
@@ -215,6 +218,12 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
         }
     }
     #endregion
+
+    private void OnDisable()
+    {
+        CancelTaunt();
+        SetTauntEffect(false);
+    }
 
     #region Sensor
     private void SetActiveSensor()
@@ -276,6 +285,7 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
     {
         Animator_Self.SetBool(IS_DEAD_HASH, true);
     }
+
 
     #endregion
 
@@ -387,8 +397,12 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
             return;
         }
 
+        CancelTaunt();
+        SetTauntEffect(false);
+
         OnEnemyDied?.Invoke();
 
+        PlayFalldownEffect(true);
         SpawnDropObjects(DropObjectType.Soul);
         SpawnDropObjects(DropObjectType.Exp);
         DespawnAfterDelay().Forget();
@@ -403,7 +417,6 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
         }
 
         int amount = _viewModel.GetDropAmount(type);
-
         foreach ((DropObjectDigit digit, int value) in DIGIT_TABLE)
         {
             int count = amount / value;
@@ -433,8 +446,37 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
 
     private async UniTaskVoid DespawnAfterDelay()
     {
-        await UniTask.Delay(System.TimeSpan.FromSeconds(DeadDelay));
+        await UniTask.Delay(System.TimeSpan.FromSeconds(_deadDelay));
+        PlayFalldownEffect(false);
         GameManager.Pool.DespawnToPool(this.gameObject);
+    }
+
+    private void PlayFalldownEffect(bool isActive)
+    {
+        if(_falldownEffect == null)
+        {
+            if(isActive == false)
+            {
+                return;
+            }
+
+            GameObject prefab = Utils.ResourcesLoad<GameObject>("FalldownEffect");
+            
+            if(prefab == null)
+            {
+                return;
+            }
+
+            _falldownEffect = Instantiate(prefab, this.transform);
+            _falldownEffect.transform.localPosition = Vector3.zero;
+        }
+
+        _falldownEffect.SetActive(isActive);
+
+        if (isActive && _falldownEffect.TryGetComponent(out ParticleSystem ps))
+        {
+            ps.Play(true);
+        }
     }
 
     #endregion
@@ -529,6 +571,7 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
         return true;
     }
 
+    #region Taunt
     public void ApplyTaunt(IPet taunter, float duration)
     {
         if (_viewModel.EnemyState == BT_EnemyState.Dead)
@@ -539,15 +582,64 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
         _targetSelector.SetForcedTarget(taunter, duration);
         RefreshTarget();
 
-        ReleaseTauntAfterDelay(duration).Forget();
+        SetTauntEffect(true);
+
+        CancelTaunt();
+        _tauntCts = CancellationTokenSource.CreateLinkedTokenSource(this.GetCancellationTokenOnDestroy());
+
+        ReleaseTauntAfterDelay(duration, _tauntCts.Token).Forget();
     }
 
-    private async UniTaskVoid ReleaseTauntAfterDelay(float duration)
+    private async UniTaskVoid ReleaseTauntAfterDelay(float duration, CancellationToken token)
     {
-        await UniTask.Delay(System.TimeSpan.FromSeconds(duration), cancellationToken: this.GetCancellationTokenOnDestroy());
+        await UniTask.Delay(System.TimeSpan.FromSeconds(duration), cancellationToken: token);
         _targetSelector.ClearForcedTarget();
+
+        SetTauntEffect(false);
         RefreshTarget();
     }
+
+    private void CancelTaunt()
+    {
+        _tauntCts?.Cancel();
+        _tauntCts?.Dispose();
+        _tauntCts = null;
+    }
+
+    private void SetTauntEffect(bool isActive)
+    {
+        if (_tauntEffect == null)
+        {
+            if (isActive == false)
+            {
+                return;
+            }
+
+            GameObject prefab = Utils.ResourcesLoad<GameObject>("TauntEffect");
+
+            if (prefab == null)
+            {
+                return;
+            }
+
+            _tauntEffect = Instantiate(prefab, this.transform);
+            _tauntEffect.transform.localPosition = GetTauntEffectOffset();
+        }
+
+        _tauntEffect.SetActive(isActive);
+    }
+
+    private Vector3 GetTauntEffectOffset()
+    {
+        if(this.TryGetComponent(out Collider collider_self))
+        {
+            Vector3 tauntEffectOffest = new(0, collider_self.bounds.size.y, 0);
+            return tauntEffectOffest;
+        }
+
+        return new Vector3(0, 2f, 0);
+    }
+    #endregion
 
     public bool ShouldRetreatFromTarget(GameObject target)
     {

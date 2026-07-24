@@ -30,11 +30,6 @@
     "AssetType": "GameObject"
   },
   {
-    "Id": "EnemyProjectile",
-    "Address": "Enemy/Projectile_01",
-    "AssetType": "GameObject"
-  },
-  {
     "Id": "EnemyArea",
     "Address": "Enemy/Area_01",
     "AssetType": "GameObject"
@@ -47,6 +42,21 @@
   {
     "Id": "Soul",
     "Address": "EnemyDropObject/Soul/One",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "EnemyProjectileOne",
+    "Address": "Enemy/Projectile/OrbRed",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "EnemyProjectileTwo",
+    "Address": "Enemy/Projectile/OrbPurple",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "EnemyProjectileThree",
+    "Address": "Enemy/Projectile/WindRed",
     "AssetType": "GameObject"
   }
 ]

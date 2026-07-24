@@ -9,6 +9,7 @@ public class EnemyAreaDelayObject : MonoBehaviour
     [SerializeField] private GameObject EruptionObject;
 
     public event Action<IDamageable, Vector3> OnDamageableTargetHited;
+    private float _gizmoRadius;
 
     private void Awake()
     {
@@ -20,7 +21,7 @@ public class EnemyAreaDelayObject : MonoBehaviour
             hasObject = false;
         }
 
-        if(EruptionObject == null)
+        if (EruptionObject == null)
         {
             Logger.LogError($"{this.name}: {nameof(EruptionObject)}가 없습니다!!");
             hasObject = false;
@@ -39,10 +40,11 @@ public class EnemyAreaDelayObject : MonoBehaviour
 
     public void Deploy(float radius, float delayTime)
     {
+        _gizmoRadius = radius;
         float diameter = radius * 2;
 
         Vector3 telegraphScale = TelegraphObject.transform.localScale;
-        TelegraphObject.transform.localScale = new Vector3(diameter, telegraphScale.y, diameter);
+        TelegraphObject.transform.localScale = new Vector3(telegraphScale.x * diameter, telegraphScale.y + 0.01f, telegraphScale.z * diameter);
 
         //Vector3 EruptionScale = EruptionObject.transform.localScale;
         //EruptionObject.transform.localScale = new Vector3(diameter, diameter, diameter);
@@ -88,5 +90,11 @@ public class EnemyAreaDelayObject : MonoBehaviour
         }
 
         Destroy(gameObject, 1.5f);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _gizmoRadius);
     }
 }

@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
-public class TestEnemy : MonoBehaviour, IDamageable
+public class TestPlayer : MonoBehaviour, IDamageable
 {
     public bool IsAlive => true;
-    public EntityType EntityType => EntityType.Enemy;
+    public EntityType EntityType => EntityType.Player;
     public Transform Transform => transform;
     public Vector3 Position => transform.position;
 

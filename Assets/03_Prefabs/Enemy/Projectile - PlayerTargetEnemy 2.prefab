@@ -91,7 +91,7 @@ Transform:
   m_GameObject: {fileID: 2307094483213658316}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 2}
+  m_LocalPosition: {x: 0, y: 1.3, z: 0.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -181,7 +181,6 @@ MonoBehaviour:
   BehaviorGraphAgent_Self: {fileID: 4140874394314075143}
   NavMeshAgent_Self: {fileID: 3588498139104855009}
   Animator_Self: {fileID: 5029912548978446135}
-  DeadDelay: 0
   AttackHitbox_Self: {fileID: 0}
   ShootPoint_Self: {fileID: 6246233210637934751}
 --- !u!195 &3588498139104855009
