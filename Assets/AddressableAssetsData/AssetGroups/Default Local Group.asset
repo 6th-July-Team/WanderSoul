@@ -45,8 +45,18 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8b9805d661d53a94a9483471f3c188f0
+    m_Address: Enemy/Projectile/WindRed
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 93b43cb05b9e6eb4cb38d1491de2489c
     m_Address: Enemy/MonsterPlant
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 999f288e8f73c1449bde70c30c20951e
+    m_Address: Enemy/Projectile/OrbRed
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -62,6 +72,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cfab79379f606514e85219f0f02db805
     m_Address: Enemy/Projectile_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f15f4bdb19040574fa970affbf59dbff
+    m_Address: Enemy/Projectile/OrbPurple
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

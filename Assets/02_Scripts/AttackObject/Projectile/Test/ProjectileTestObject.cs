@@ -1,34 +1,19 @@
 ﻿using UnityEngine;
 
-public enum ProjectileType
-{
-    ShcolarFireProjectile,
-
-}
-
 public class ProjectileTestObject : MonoBehaviour
 {
     [SerializeField] private GameObject Prefab_Projectile;
+    [SerializeField] private GameObject Target;
     [SerializeField] private Transform Transform_ShootPosition;
 
-    [SerializeField] private int ProjectileSpeed;
-    [SerializeField] private float ProjectileDamage;
-    [SerializeField] private float ProjectileDuration;
-
-    [SerializeField] private float ProjectileAdditionalDamage;
-    [SerializeField] private float ProjectileBoomRange;
-    [SerializeField] private int ProjectilePierce;
-
-    [SerializeField] private DamageType ProjectileDamageType;
-    [SerializeField] private TargetType TragetType;
-    [SerializeField] private ProjectileType ProjectileType;
+    [SerializeField] private float ProjectileSpeed;
+    [SerializeField] private float ProjectileLifeTime;
 
     [SerializeField] private float FireSecond;
     private float _time = 0;
     
     [SerializeField] private bool IsCreateProjectile;
 
-    [SerializeField] private string ProjectileVFXPath;
 
     private void Awake()
     {
@@ -52,15 +37,14 @@ public class ProjectileTestObject : MonoBehaviour
     {
         GameObject projectile = Instantiate(Prefab_Projectile, Transform_ShootPosition.position, Quaternion.identity);
 
-        Projectile projectileComponent = projectile.GetComponent<Projectile>();
+        EnemyProjectileObject script = projectile.GetComponent<EnemyProjectileObject>();
 
-        if (projectileComponent == null)
+        if(script == null)
         {
-            Logger.LogError("생성한 Proejctile에 ShcolarFireProjectile가 없습니다.");
+            Logger.LogError("오류 발생! EnemyProjectileObject 스크립트가 없습니다!!");
+            return;
         }
 
-
-        ProjectileStruct data = new ProjectileStruct(ProjectileSpeed, ProjectileDamage, ProjectileDuration, Vector3.forward, ProjectileDamageType, TragetType, ProjectileVFXPath, extraDamage: ProjectileAdditionalDamage, continuousDamage: false, radius: ProjectileBoomRange, pierce: ProjectilePierce);
-        projectileComponent.Init(data);
+        script.Launch(Target, ProjectileSpeed, ProjectileLifeTime);
     }
 }
