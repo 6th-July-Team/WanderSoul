@@ -12,7 +12,7 @@ public class ScholarSummonBarrier : IPlayerSkillExecution, ISkillRangeCheckable
         Vector3 skillCenter = context.AimWorldPoint;
         skillCenter.y += SkillData.Radius;
 
-        var barrier = Object.Instantiate(Utils.ResourcesLoad<GameObject>("Barrier"), skillCenter, Quaternion.identity);
+        var barrier = Object.Instantiate(Utils.ResourcesLoad<GameObject>("Player/Skill/Barrier"), skillCenter, Quaternion.identity);
         if (barrier.TryGetComponent(out ScholarBarrier scholarBarrier))
         {
             scholarBarrier.Init(SkillData);

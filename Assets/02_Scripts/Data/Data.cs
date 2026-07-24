@@ -152,6 +152,7 @@ public class PlayerStatData : BaseData
             StatType.CritMultiplier => CritMultiplier,
             StatType.MaxReviveCount => MaxReviveCount,
             StatType.MaxDashCount => MaxDashCount,
+            StatType.MagnetRadius => MagnetRadius,
             _ => 0f
         };
     }
