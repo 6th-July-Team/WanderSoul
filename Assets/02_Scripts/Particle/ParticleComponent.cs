@@ -39,6 +39,12 @@ public class ParticleComponent : MonoBehaviour
     {
         Clear();
 
+        for (int i = 0; i < _trails.Length; i++)
+        {
+            _trails[i].enabled = true;
+            _trails[i].emitting = true;
+        }
+
         for (int i = 0; i < _particles.Length; i++)
         {
             _particles[i].Play(true);
@@ -49,21 +55,22 @@ public class ParticleComponent : MonoBehaviour
     {
         for (int i = 0; i < _particles.Length; i++)
         {
-            _particles[i].Stop(
-                true,
-                ParticleSystemStopBehavior.StopEmittingAndClear);
+            _particles[i].Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
 
-        ClearTrails();
+        for (int i = 0; i < _trails.Length; i++)
+        {
+            _trails[i].emitting = false;
+            ClearTrails();
+        }
+
     }
 
     public void Clear()
     {
         for (int i = 0; i < _particles.Length; i++)
         {
-            _particles[i].Stop(
-                true,
-                ParticleSystemStopBehavior.StopEmittingAndClear);
+            _particles[i].Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
 
         ClearTrails();
@@ -80,5 +87,10 @@ public class ParticleComponent : MonoBehaviour
         {
             _trails[i].Clear();
         }
+    }
+
+    private void OnDisable()
+    {
+        Stop();
     }
 }

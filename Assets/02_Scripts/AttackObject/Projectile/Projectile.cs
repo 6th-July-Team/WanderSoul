@@ -32,7 +32,7 @@ public class Projectile : MonoBehaviour
         _damage = projectileData.Damage;
         _duration = projectileData.Duration;
 
-        _direction = projectileData.Direction;
+        _direction = projectileData.Direction.normalized;
         _damageType = projectileData.DamageType;
         _targetType = projectileData.TargetType;
 
@@ -80,7 +80,6 @@ public class Projectile : MonoBehaviour
 
             if (other.TryGetComponent(out IDamageable damageable))
             {
-
                 var damageinfo = new DamageInfo(_damage, _direction, _damageType);
 
                 damageable.TakeDamage(damageinfo);
@@ -125,7 +124,7 @@ public class Projectile : MonoBehaviour
 
     private void HitEffect(Vector3 position)
     {
-        if(_hitEffectPath == null)
+        if (string.IsNullOrWhiteSpace(_hitEffectPath))
         {
             return;
         }
@@ -176,6 +175,11 @@ public class Projectile : MonoBehaviour
 
     private void CreateVisual()
     {
+        if(string.IsNullOrWhiteSpace(_visualPath))
+        {
+            return;
+        }
+
         GameObject visualPrefab = Resources.Load<GameObject>(_visualPath);
 
         if (visualPrefab == null)

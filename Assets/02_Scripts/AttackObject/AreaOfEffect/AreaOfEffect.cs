@@ -40,19 +40,18 @@ public class AreaOfEffect : MonoBehaviour
     {
         int targetCount = SearchUtil.FindTargetSphere(transform.position, _radius, LayerMask.GetMask("Enemy"), _targets);
 
-
         for (int i = 0; i < targetCount; i++)
         {
             IDamageable damageableTarget = _targets[i].GetComponent<IDamageable>();
-
-            var direction = (_centerPos - damageableTarget.Position).normalized;
-
-            DamageInfo damageInfo = new(_damage, direction, _damageType);
 
             if (SearchUtil.IsValidTarget(damageableTarget) == false)
             {
                 continue;
             }
+
+            var direction = (damageableTarget.Position - _centerPos).normalized;
+
+            DamageInfo damageInfo = new(_damage, direction, _damageType);
 
             damageableTarget.TakeDamage(damageInfo);
         }
