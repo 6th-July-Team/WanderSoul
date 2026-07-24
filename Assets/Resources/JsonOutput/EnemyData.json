@@ -78,8 +78,8 @@
     "ProjectileSpeed": null,
     "ProjectileLifeTime": null,
     "ProjectilePrefabAddress": null,
-    "AreaRadius": 4,
-    "AreaDelayTime": 2,
+    "AreaRadius": 2,
+    "AreaDelayTime": 1,
     "AreaPrefabAddress": "Enemy/Area_01",
     "PreferredDistance": null
   },
