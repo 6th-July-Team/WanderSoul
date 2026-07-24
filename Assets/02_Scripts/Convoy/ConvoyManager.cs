@@ -143,18 +143,18 @@ public class ConvoyManager
     {
         List<PetController> petControllers = new();
 
+        var petViewModels = GameManager.Network.PetService.GetPetViewModels(_selectedPetIds);
+
         for(int index = 0; index < _selectedPetIds.Count; index++)
         {
             GameObject petInstance = GameObject.Instantiate(Utils.ResourcesLoad<GameObject>("Test_Pet"));
-
-            var viewModel = GameManager.Network.CreatePetViewModel(_selectedPetIds[index]);
 
             petInstance.GetComponent<PetController>().Init(_selectedPetIds[index]
                             , _playerEntity, _wagon
                             , _petSkillMaker
                             , _playerEntity, _playerEntity
                             , 30 + index * 10
-                            , viewModel);
+                            , petViewModels[index]);
 
             petControllers.Add(petInstance.GetComponent<PetController>());
         }
@@ -188,11 +188,13 @@ public class ConvoyManager
 
         if (partyHud != null)
         {
-            partyHud.SetWagon("마차", 1f);
+            partyHud.BindWagon(wagonVm);
+
+            var petViewModels = GameManager.Network.PetService.GetPetViewModels(_selectedPetIds);
 
             for (int i = 0; i < _selectedPetIds.Count; i++)
             {
-                partyHud.AddPet(_selectedPetIds[i], 1f);
+                partyHud.BindPet(_selectedPetIds[i], petViewModels[i]);
             }
         }
 
