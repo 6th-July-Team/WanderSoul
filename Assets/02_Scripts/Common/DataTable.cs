@@ -44,7 +44,7 @@ public class DataTable
     {
         TownDataTable = LoadData<TownData>(nameof(TownData));
         RegionDataTable = LoadData<RegionData>(nameof(RegionData));
-        //ReputationGradeDataTable = LoadData<ReputationGradeData>("ReputationGrade");
+        ReputationGradeDataTable = LoadData<ReputationGradeData>(nameof(ReputationGradeData));
         //ItemDataTable = LoadData<ItemData>("Item");
         //CharacterDataTable = LoadData<CharacterData>("Character");
         PoolDataTable = LoadData<PoolData>(nameof(PoolData));

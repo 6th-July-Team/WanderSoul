@@ -24,20 +24,12 @@ public class PartyMemberSlotUIView : MonoBehaviour
             _hpFillImage.color = _wagonColor;
         }
 
-        if (_elementImage != null)
-        {
-            _elementImage.enabled = false;
-        }
-
-        if (_iconImage != null)
-        {
-            _iconImage.enabled = false;
-        }
+        SetImageEnabled(_elementImage, false);
+        SetImageEnabled(_iconImage, false);
     }
 
-    public void SetPet(string name, float hpFillAmount)
+    public void SetPet(string petId, float hpFillAmount)
     {
-        _nameText.text = name;
         _hpSlider.value = hpFillAmount;
 
         if (_hpFillImage != null)
@@ -45,14 +37,64 @@ public class PartyMemberSlotUIView : MonoBehaviour
             _hpFillImage.color = _perColor;
         }
 
-        if (_elementImage != null)
+        var petData = GameManager.DataTable.GetPetData(petId);
+
+        if (petData == null)
         {
-            _elementImage.enabled = true;
+            Debug.LogWarning($"펫 데이터를 찾을 수 없습니다: {petId}");
+            _nameText.text = string.Empty;
+            SetImageEnabled(_elementImage, false);
+            SetImageEnabled(_iconImage, false);
+            return;
         }
 
-        if (_iconImage != null)
+        _nameText.text = petData.Name;
+
+        RefreshSprite(_iconImage, petData.IconPath);
+        RefreshSprite(_elementImage, GetElementIconPath(petData.GetElementType()));
+    }
+
+    private string GetElementIconPath(PetElement element)
+    {
+        if (element == PetElement.None)
         {
-            _iconImage.enabled = true;
+            return string.Empty;
+        }
+
+        return $"Sprites/UI/Icon/Element_{element}_128";
+    }
+
+    private void RefreshSprite(Image targetImage, string spritePath)
+    {
+        if (targetImage == null)
+        {
+            return;
+        }
+
+        if (string.IsNullOrEmpty(spritePath) == true)
+        {
+            targetImage.enabled = false;
+            return;
+        }
+
+        Sprite sprite = Utils.ResourcesLoad<Sprite>(spritePath);
+
+        if (sprite == null)
+        {
+            Debug.LogWarning($"스프라이트를 찾을 수 없습니다: {spritePath}");
+            targetImage.enabled = false;
+            return;
+        }
+
+        targetImage.sprite = sprite;
+        targetImage.enabled = true;
+    }
+
+    private void SetImageEnabled(Image targetImage, bool isEnabled)
+    {
+        if (targetImage != null)
+        {
+            targetImage.enabled = isEnabled;
         }
     }
 

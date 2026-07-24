@@ -1,5 +1,4 @@
-﻿using NUnit.Framework.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,7 +24,7 @@ public class MissionPanel : MonoBehaviour
         LoadQuests();
 
         _startMissionButton.interactable = false;
-        _startMissionButtonText.text = "Start Misson";
+        _startMissionButtonText.text = "의뢰 출발";
     }
 
     private void LoadQuests()
@@ -37,7 +36,7 @@ public class MissionPanel : MonoBehaviour
             _quests.Add(questData);
         }
 
-        _quests.Sort((left,right) => string.Compare(left.Id,right.Id));
+        _quests.Sort((left, right) => string.Compare(left.Id, right.Id));
 
         SetQuestButton(_questOneButton, 0);
         SetQuestButton(_questTwoButton, 1);
@@ -79,7 +78,7 @@ public class MissionPanel : MonoBehaviour
         _startMissionButton.interactable = true;
 
         QuestData selectedQuest = _quests[_selectedQuestIndex];
-        Debug.Log($"Selected Quest: {selectedQuest.Id} / {selectedQuest.Name}");
+        Debug.Log($"선택 의뢰: {selectedQuest.Id} / {selectedQuest.Name}");
     }
 
     public void StartMission()
@@ -94,10 +93,10 @@ public class MissionPanel : MonoBehaviour
         RefreshQuestButtons();
 
         _startMissionButton.interactable = false;
-        _startMissionButtonText.text = "Already Selected";
+        _startMissionButtonText.text = "선택 완료";
 
         QuestData selectedQuest = _quests[_selectedQuestIndex];
-        Debug.Log($"Selected Quest: {selectedQuest.Id} / {selectedQuest.Name}");
+        Debug.Log($"선택 의뢰: {selectedQuest.Id} / {selectedQuest.Name}");
     }
 
     private void RefreshQuestButtons()

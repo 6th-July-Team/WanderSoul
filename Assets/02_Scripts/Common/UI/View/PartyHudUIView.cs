@@ -31,10 +31,10 @@ public class PartyHudUIView : BaseUI
         _wagonSlot.SetWagon(name, hpFillAmount);
     }
 
-    public void AddPet(string name, float hpFillAmount)
+    public void AddPet(string petId, float hpFillAmount)
     {
         var slot = CreateSlot();
-        slot.SetPet(name, hpFillAmount);
+        slot.SetPet(petId, hpFillAmount);
         _petSlotList.Add(slot);
     }
 

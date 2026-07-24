@@ -1,13 +1,12 @@
 ﻿using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PetSlotUIView : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField] private Image _backgroundImage;
     [SerializeField] private Image _iconImage;
-    [SerializeField] private TMP_Text _nameText;
     [SerializeField] private UIButton _slotButton;
     [SerializeField] private Image _selectedImage;
     [SerializeField] private CanvasGroup _canvasGroup;
@@ -46,8 +45,18 @@ public class PetSlotUIView : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
             return;
         }
 
-        _nameText.text = petData.Name;
+        RefreshBackgroundColor(petData.GetElementType());
         RefreshIcon(petData.IconPath);
+    }
+
+    private void RefreshBackgroundColor(PetElement element)
+    {
+        if (_backgroundImage == null)
+        {
+            return;
+        }
+
+        _backgroundImage.color = Utils.GetColorByPetElement(element);
     }
 
     private void RefreshIcon(string iconPath)
