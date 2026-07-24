@@ -20,13 +20,33 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 18ebfa723f6112e49adfc854e10a587b
+    m_Address: Scholar/FireArrowEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 190967aff63fac14d833bd95c55864d9
     m_Address: Enemy/Bat
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 32cca0270278b20468c1fb16b9f50d90
+    m_Address: Scholar/MagicArrowEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 33b6e62b2617a534c94c4dd78ed21b07
     m_Address: Enemy/Spider
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 35440e7caffb4d3419424c9ad514a698
+    m_Address: Scholar/ElectricArrowEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 410500729318ebe49a58f9cbe5d86e1b
+    m_Address: Scholar/IceExplosionEffect
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -40,13 +60,38 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6f8d1a88ffc1c424dbbb70f7f469b43b
+    m_Address: Scholar/MagicExplosionEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7344a8ab377e9e74c8e1bca74d833c57
     m_Address: Enemy/RatAssassin
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 791469abee35c1b4492de32cd4634c29
+    m_Address: Hit/FireArrowHitEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7b1cf43efae12ec4381ba6bb09bd7db9
+    m_Address: Scholar/Barrier
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8b09aa011ffed4f42acf797c9b743e7d
+    m_Address: Scholar/FireExplosionEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8b9805d661d53a94a9483471f3c188f0
     m_Address: Enemy/Projectile/WindRed
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 93aa8c19879927e40a710c48f510ed78
+    m_Address: Scholar/UpgradedMagicArrowEffect
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -70,13 +115,38 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: aea1d1f30299a914d8f4c72abf1031cf
+    m_Address: Scholar/EarthExplosionEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cb8e9c127b5593946b74630f4c8480ff
+    m_Address: Scholar/ElectricExplosionEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cfab79379f606514e85219f0f02db805
     m_Address: Enemy/Projectile_01
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e0e7adf4a5c8ab04eb4e2accfe3c19af
+    m_Address: Hit/StoneArrowHitEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e600a49488a90334a92bf1db2d7e0963
+    m_Address: Scholar/StoneArrowEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f15f4bdb19040574fa970affbf59dbff
     m_Address: Enemy/Projectile/OrbPurple
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f626230bb4846c04cad784c79a066d55
+    m_Address: Scholar/IceArrowEffect
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

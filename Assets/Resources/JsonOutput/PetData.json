@@ -1,4 +1,4 @@
-﻿[
+[
   {
     "Id": "pet_fire_001",
     "Name": "플레임폰",
@@ -20,7 +20,9 @@
     "ActiveSkillIds": [
       "pet_skill_water_001"
     ],
-    "PassiveSkillIds": null,
+    "PassiveSkillIds": [
+      "pet_passive_water_regeneration"
+    ],
     "IconPath": "Sprites/UI/Icon/PetIcon_Water_001"
   },
   {
