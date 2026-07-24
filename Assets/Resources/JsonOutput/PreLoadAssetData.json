@@ -118,5 +118,15 @@
     "Id": "Scholar/Barrier",
     "Address": "Scholar/Barrier",
     "AssetType": "GameObject"
+  },
+  {
+    "Id": "Hit/FireArrowHitEffect",
+    "Address": "Hit/FireArrowHitEffect",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "Hit/StoneArrowHitEffect",
+    "Address": "Hit/StoneArrowHitEffect",
+    "AssetType": "GameObject"
   }
 ]
