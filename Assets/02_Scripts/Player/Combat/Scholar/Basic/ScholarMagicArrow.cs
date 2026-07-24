@@ -10,11 +10,12 @@ public class ScholarMagicArrow : IElementArrowVariant
         {
             // 강화 화살 발사 로직 추가
             Projectile projectileInstance = Object.Instantiate(Resources.Load<Projectile>("PlayerProjectile")
-                , context.BasicAttackAnchor.position + context.AimDirection * 1f, Quaternion.identity);
+                , context.BasicAttackAnchor.position, Quaternion.identity);
 
             projectileInstance.Init(new ProjectileStruct
             (
-                SkillData.ProjectileSpeed, SkillData.Power, SkillData.Duration, context.AimDirection
+                SkillData.ProjectileSpeed, SkillData.Power, SkillData.Duration
+                , context.AimWorldPoint - context.BasicAttackAnchor.position
                 , SkillData.GetDamageType(), SkillData.GetTargetType()
                 , SkillData.VFXPath
             ));
@@ -22,11 +23,12 @@ public class ScholarMagicArrow : IElementArrowVariant
         else
         {
             Projectile projectileInstance = Object.Instantiate(Resources.Load<Projectile>("PlayerProjectile")
-                , context.BasicAttackAnchor.position + context.AimDirection * 1f, Quaternion.identity);
+                , context.BasicAttackAnchor.position, Quaternion.identity);
 
             projectileInstance.Init(new ProjectileStruct
             (
-                SkillData.ProjectileSpeed, SkillData.Power, SkillData.Duration, context.AimDirection
+                SkillData.ProjectileSpeed, SkillData.Power, SkillData.Duration
+                , context.AimWorldPoint - context.BasicAttackAnchor.position
                 , SkillData.GetDamageType(), SkillData.GetTargetType()
                 , SkillData.VFXPath
             ));
