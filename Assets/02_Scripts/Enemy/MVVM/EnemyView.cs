@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
+using System.Threading;
 using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
@@ -22,7 +23,6 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
     private static readonly int GET_DAMAGE_HASH = Animator.StringToHash("GetDamage");
     private static readonly int IS_DEAD_HASH = Animator.StringToHash("IsDead");
 
-    private const float RETREAT_ENTER_RATIO = 0.8f;
     private const float TARGET_EXCLUDE_DURATION = 15f;
 
     private static readonly (DropObjectDigit digit, int value)[] DIGIT_TABLE =
@@ -34,6 +34,8 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
 
     public ITargetable CurrentTarget => _targetSelector.CurrentTarget;
 
+    private GameObject _tauntEffect;
+    private CancellationTokenSource _tauntCts;
 
     private GameObject _wagon;
     private GameObject _player;
@@ -216,6 +218,12 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
     }
     #endregion
 
+    private void OnDisable()
+    {
+        CancelTaunt();
+        SetTauntEffect(false);
+    }
+
     #region Sensor
     private void SetActiveSensor()
     {
@@ -387,8 +395,12 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
             return;
         }
 
+        CancelTaunt();
+        SetTauntEffect(false);
+
         OnEnemyDied?.Invoke();
 
+        // TODO : 사망 이펙트 추가
         SpawnDropObjects(DropObjectType.Soul);
         SpawnDropObjects(DropObjectType.Exp);
         DespawnAfterDelay().Forget();
@@ -529,6 +541,7 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
         return true;
     }
 
+    #region Taunt
     public void ApplyTaunt(IPet taunter, float duration)
     {
         if (_viewModel.EnemyState == BT_EnemyState.Dead)
@@ -539,15 +552,64 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
         _targetSelector.SetForcedTarget(taunter, duration);
         RefreshTarget();
 
-        ReleaseTauntAfterDelay(duration).Forget();
+        SetTauntEffect(true);
+
+        CancelTaunt();
+        _tauntCts = CancellationTokenSource.CreateLinkedTokenSource(this.GetCancellationTokenOnDestroy());
+
+        ReleaseTauntAfterDelay(duration, _tauntCts.Token).Forget();
     }
 
-    private async UniTaskVoid ReleaseTauntAfterDelay(float duration)
+    private async UniTaskVoid ReleaseTauntAfterDelay(float duration, CancellationToken token)
     {
-        await UniTask.Delay(System.TimeSpan.FromSeconds(duration), cancellationToken: this.GetCancellationTokenOnDestroy());
+        await UniTask.Delay(System.TimeSpan.FromSeconds(duration), cancellationToken: token);
         _targetSelector.ClearForcedTarget();
+
+        SetTauntEffect(false);
         RefreshTarget();
     }
+
+    private void CancelTaunt()
+    {
+        _tauntCts?.Cancel();
+        _tauntCts?.Dispose();
+        _tauntCts = null;
+    }
+
+    private void SetTauntEffect(bool isActive)
+    {
+        if (_tauntEffect == null)
+        {
+            if (isActive == false)
+            {
+                return;
+            }
+
+            GameObject prefab = Utils.ResourcesLoad<GameObject>("TauntEffect");
+
+            if (prefab == null)
+            {
+                return;
+            }
+
+            _tauntEffect = Instantiate(prefab, this.transform);
+            _tauntEffect.transform.localPosition = GetTauntEffectOffset();
+        }
+
+        _tauntEffect.SetActive(isActive);
+    }
+
+    private Vector3 GetTauntEffectOffset()
+    {
+        if(this.TryGetComponent(out Collider collider_self))
+        {
+            Vector3 tauntEffectOffest = new(0, collider_self.bounds.size.y, 0);
+            return tauntEffectOffest;
+        }
+
+        return new Vector3(0, 2f, 0);
+    }
+    #endregion
 
     public bool ShouldRetreatFromTarget(GameObject target)
     {
