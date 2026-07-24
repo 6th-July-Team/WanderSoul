@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GAP_LaserSystem;
+using UnityEngine;
 
 public class ParticleComponent : MonoBehaviour
 {
@@ -87,10 +88,5 @@ public class ParticleComponent : MonoBehaviour
         {
             _trails[i].Clear();
         }
-    }
-
-    private void OnDisable()
-    {
-        Stop();
     }
 }
