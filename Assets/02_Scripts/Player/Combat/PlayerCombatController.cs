@@ -99,7 +99,7 @@ public class PlayerCombatController : MonoBehaviour
         bool isExecute = TryExecuteSkill(SkillSlot.Basic);
         if (isExecute)
         {
-            _animationController.PlayBasicAttack();
+
         }
     }
 
@@ -111,15 +111,16 @@ public class PlayerCombatController : MonoBehaviour
 
     private bool TryExecuteSkill(SkillSlot skillSlot)
     {
-        //if (_isAnimating)
-        //{
-        //    Debug.Log($"{GetType()}: 애니메이션 실행 중이라 차단.");
-        //    return false;
-        //}
+        if (!_isInitialized)
+            return false;
+
+        if(!_animationController.CanStartUpperBodyAction)
+            return false;
+
 
         if (_skillBuild.TryExecuteSkill(skillSlot, CreateSkillUseContext()))
         {
-            //_isAnimating = true;
+            PlayAnimation(skillSlot);
             return true;
         }
 
@@ -132,7 +133,7 @@ public class PlayerCombatController : MonoBehaviour
             return;
 
         _checkingSkillSlot = skillSlot;
-        Debug.Log($"{GetType()}: 스킬 범위 체크 시작. 스킬 슬롯: {skillSlot}");
+
         _isCheckingSkillRange = true;
     }
 
@@ -154,9 +155,23 @@ public class PlayerCombatController : MonoBehaviour
             , _skillModifier);
     }
 
+    private void PlayAnimation(SkillSlot skillSlot)
+    {
+        if(skillSlot == SkillSlot.Basic)
+            return;
+
+        PlayerAnimationAction action = skillSlot switch
+        {
+            SkillSlot.Special => PlayerAnimationAction.SpecialAttack,
+            SkillSlot.Ultimate => PlayerAnimationAction.UltimateAttack,
+            _ => throw new System.ArgumentOutOfRangeException(nameof(skillSlot), skillSlot, null)
+        };
+
+        _animationController.PlayAction(action);
+    }
+
     public void EndAnimationEvent()
     {
-        //_isAnimating = false;
-        Debug.Log($"{GetType()}: 애니메이션 종료 이벤트 호출.");
+
     }
 }
