@@ -18,7 +18,7 @@
     "StatusEffectId": null,
     "VFXPath": "Player/Projectile/Fire Arrow",
     "SFXPath": null,
-    "IconPath": null,
+    "IconPath": "Sprites/UI/Icon/skill_scholar_basic_fire",
     "ExecutionId": null,
     "stringSkillSlot": "Basic",
     "ExtraDamage": 10
@@ -42,7 +42,7 @@
     "StatusEffectId": null,
     "VFXPath": "Player/Projectile/Ice Arrow",
     "SFXPath": null,
-    "IconPath": null,
+    "IconPath": "Sprites/UI/Icon/skill_scholar_basic_water",
     "ExecutionId": null,
     "stringSkillSlot": "Basic",
     "ExtraDamage": null
@@ -66,7 +66,7 @@
     "StatusEffectId": null,
     "VFXPath": "Player/Projectile/Stone Arrow",
     "SFXPath": null,
-    "IconPath": null,
+    "IconPath": "Sprites/UI/Icon/skill_scholar_basic_earth",
     "ExecutionId": null,
     "stringSkillSlot": "Basic",
     "ExtraDamage": null
@@ -90,7 +90,7 @@
     "StatusEffectId": null,
     "VFXPath": "Player/Projectile/Electric Arrow",
     "SFXPath": null,
-    "IconPath": null,
+    "IconPath": "Sprites/UI/Icon/skill_scholar_basic_air",
     "ExecutionId": null,
     "stringSkillSlot": "Basic",
     "ExtraDamage": null
@@ -114,7 +114,7 @@
     "StatusEffectId": null,
     "VFXPath": "Player/Projectile/Magic Arrow",
     "SFXPath": null,
-    "IconPath": null,
+    "IconPath": "Sprites/UI/Icon/skill_scholar_basic_magic",
     "ExecutionId": null,
     "stringSkillSlot": "Basic",
     "ExtraDamage": null
@@ -138,7 +138,7 @@
     "StatusEffectId": null,
     "VFXPath": "Player/Skill/Scholar_AOE/Fire Explosion",
     "SFXPath": null,
-    "IconPath": null,
+    "IconPath": "Sprites/UI/Icon/skill_scholar_special_fire",
     "ExecutionId": null,
     "stringSkillSlot": "Special",
     "ExtraDamage": null
@@ -162,7 +162,7 @@
     "StatusEffectId": null,
     "VFXPath": "Player/Skill/Scholar_AOE/Ice Explosion",
     "SFXPath": null,
-    "IconPath": null,
+    "IconPath": "Sprites/UI/Icon/skill_scholar_special_water",
     "ExecutionId": null,
     "stringSkillSlot": "Special",
     "ExtraDamage": null
@@ -186,7 +186,7 @@
     "StatusEffectId": null,
     "VFXPath": "Player/Skill/Scholar_AOE/Earth Explosion",
     "SFXPath": null,
-    "IconPath": null,
+    "IconPath": "Sprites/UI/Icon/skill_scholar_special_earth",
     "ExecutionId": null,
     "stringSkillSlot": "Special",
     "ExtraDamage": null
@@ -210,7 +210,7 @@
     "StatusEffectId": null,
     "VFXPath": "Player/Skill/Scholar_AOE/Electric Explosion",
     "SFXPath": null,
-    "IconPath": null,
+    "IconPath": "Sprites/UI/Icon/skill_scholar_special_air",
     "ExecutionId": null,
     "stringSkillSlot": "Special",
     "ExtraDamage": null
@@ -234,7 +234,7 @@
     "StatusEffectId": null,
     "VFXPath": "Player/Skill/Scholar_AOE/Magic Explosion",
     "SFXPath": null,
-    "IconPath": null,
+    "IconPath": "Sprites/UI/Icon/skill_scholar_special_magic",
     "ExecutionId": null,
     "stringSkillSlot": "Special",
     "ExtraDamage": null
@@ -258,7 +258,7 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null,
+    "IconPath": "Sprites/UI/Icon/skill_scholar_ult_summonbarrier_v3",
     "ExecutionId": "ScholarUltBarrier",
     "stringSkillSlot": "Ultimate",
     "ExtraDamage": null
@@ -310,7 +310,7 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null,
+    "IconPath": "Sprites/UI/Icon/skill_scholar_ult_berserksoul_sample_B_charge",
     "ExecutionId": null,
     "stringSkillSlot": null,
     "ExtraDamage": null
@@ -334,7 +334,7 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null,
+    "IconPath": "Sprites/UI/Icon/skill_scholar_basic",
     "ExecutionId": "ScholarBasic",
     "stringSkillSlot": "Basic",
     "ExtraDamage": null
@@ -358,7 +358,7 @@
     "StatusEffectId": null,
     "VFXPath": null,
     "SFXPath": null,
-    "IconPath": null,
+    "IconPath": "Sprites/UI/Icon/skill_scholar_special",
     "ExecutionId": "ScholarSpecial",
     "stringSkillSlot": "Special",
     "ExtraDamage": null

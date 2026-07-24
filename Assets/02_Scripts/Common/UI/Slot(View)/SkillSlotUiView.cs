@@ -1,4 +1,4 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +10,8 @@ public class SkillSlotUiView : MonoBehaviour
     [SerializeField] private CanvasGroup _canvasGroup;
     [SerializeField] private GameObject _emptySlotObject;
 
+    [SerializeField] private GameObject _readyEffectObject;
+
     private SkillSlot _slot;
     private PlayerSkillData _skillData;
 
@@ -20,7 +22,6 @@ public class SkillSlotUiView : MonoBehaviour
 
     private const float DISABLED_ALPHA = 0.5f;
 
-    // skillData가 null이면 빈 슬롯으로 표시한다.
     public void SetSkill(SkillSlot slot, PlayerSkillData skillData
         , PlayerSkillViewModel skillViewModel, PlayerViewModel playerViewModel)
     {
@@ -104,6 +105,11 @@ public class SkillSlotUiView : MonoBehaviour
             _cooldownText.gameObject.SetActive(false);
         }
 
+        if (_readyEffectObject != null && isEmpty == true)
+        {
+            _readyEffectObject.SetActive(false);
+        }
+
         if (_canvasGroup != null && isEmpty == true)
         {
             _canvasGroup.alpha = DISABLED_ALPHA;
@@ -117,7 +123,6 @@ public class SkillSlotUiView : MonoBehaviour
             return;
         }
 
-        // 아이콘 경로가 없으면 프리팹에 설정된 스프라이트를 그대로 쓴다. (슬롯 자체는 계속 보여야 함)
         if (string.IsNullOrEmpty(_skillData.IconPath) == true)
         {
             return;
@@ -144,7 +149,6 @@ public class SkillSlotUiView : MonoBehaviour
         float remaining = GetRemainingCooldown();
         float total = _skillData.Cooldown;
 
-        // 쿨타임이 없는 스킬은 게이지/숫자를 쓰지 않는다.
         if (total <= 0f)
         {
             _cooldownFillImage.fillAmount = 0f;
@@ -168,12 +172,22 @@ public class SkillSlotUiView : MonoBehaviour
 
     private void RefreshUsable()
     {
-        if (IsBound() == false || _canvasGroup == null)
+        if (IsBound() == false)
         {
             return;
         }
 
         bool isReady = (GetRemainingCooldown() <= 0f);
+
+        if (_readyEffectObject != null)
+        {
+            _readyEffectObject.SetActive(isReady);
+        }
+
+        if (_canvasGroup == null)
+        {
+            return;
+        }
 
         bool hasEnoughMana = true;
 
