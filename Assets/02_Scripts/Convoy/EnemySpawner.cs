@@ -48,6 +48,11 @@ public class EnemySpawner : MonoBehaviour
         _isInitialized = true;
     }
 
+    public void EncounterSpawn()
+    {
+
+    }
+
     private void Update()
     {
         if (!_isInitialized)
