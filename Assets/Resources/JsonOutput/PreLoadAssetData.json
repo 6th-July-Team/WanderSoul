@@ -128,5 +128,20 @@
     "Id": "Hit/StoneArrowHitEffect",
     "Address": "Hit/StoneArrowHitEffect",
     "AssetType": "GameObject"
+  },
+  {
+    "Id": "Scholar/BererkSoulEffect",
+    "Address": "Scholar/BererkSoulEffect",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "Scholar/BarrierExplosionEffect",
+    "Address": "Scholar/BarrierExplosionEffect",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "PlayerProjectile",
+    "Address": "PlayerProjectile",
+    "AssetType": "GameObject"
   }
 ]
