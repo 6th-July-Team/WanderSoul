@@ -108,4 +108,17 @@ public static class Utils
             _ => new Color(0.45f, 0.45f, 0.5f),
         };
     }
+
+    public static EffectColorType GetEffectColorByPetElement(PetElement element)
+    {
+        return element switch
+        {
+            PetElement.Fire => EffectColorType.Red,
+            PetElement.Water => EffectColorType.Blue,
+            PetElement.Earth => EffectColorType.Brown,
+            PetElement.Air => EffectColorType.Yellow,
+            PetElement.None => EffectColorType.Purple,
+            _ => EffectColorType.Purple,
+        };
+    }
 }

@@ -76,15 +76,15 @@
     "InitSize": 0
   },
   {
-    "Id": "Scholar/Barrier",
-    "InitSize": 1
-  },
-  {
     "Id": "Hit/FireArrowHitEffect",
     "InitSize": 0
   },
   {
     "Id": "Hit/StoneArrowHitEffect",
     "InitSize": 0
+  },
+  {
+    "Id": "PlayerProjectile",
+    "InitSize": 30
   }
 ]

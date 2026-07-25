@@ -30,6 +30,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2b33a04148e62e740b3265891517a9d0
+    m_Address: PlayerProjectile
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 32cca0270278b20468c1fb16b9f50d90
     m_Address: Scholar/MagicArrowEffect
     m_ReadOnly: 0
@@ -47,6 +52,16 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 410500729318ebe49a58f9cbe5d86e1b
     m_Address: Scholar/IceExplosionEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4b1c4545cd4f5a94197ff225f2b746d9
+    m_Address: Scholar/BererkSoulEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 4d0e7664e80901b4089027c478cbbf39
+    m_Address: Scholar/BarrierExplosionEffect
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
