@@ -1,9 +1,15 @@
 ﻿using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CorralPanel : MonoBehaviour
 {
-    [SerializeField] private Transform _listRoot;
+    [SerializeField] private Transform _petListRoot;
+    [SerializeField] private Transform _productListRoot;
+
+    [SerializeField] private TMP_Text _petEmptyText;
+    [SerializeField] private TMP_Text _productEmptyText;
 
     [SerializeField] private GameObject _petTemplate;
     [SerializeField] private GameObject _productTemplate;
@@ -21,41 +27,77 @@ public class CorralPanel : MonoBehaviour
 
     private void Refresh(MonsterCorral monsterCorral)
     {
-        ClearList();
+        ClearList(_petListRoot, _petTemplate);
+        ClearList(_productListRoot, _productTemplate);
 
-        if (monsterCorral.Monsters.Count == 0)
+        bool isEmpty = monsterCorral.Monsters.Count == 0;
+
+        _petEmptyText.gameObject.SetActive(isEmpty);
+        _productEmptyText.gameObject.SetActive(isEmpty);
+
+        if (isEmpty)
         {
-            CreateListItem(_petTemplate, "보관 중인 펫이 없습니다.");
-            CreateListItem(_productTemplate, "생산 중인 특산물이 없습니다.");
-
             return;
         }
 
         foreach (PetData monster in monsterCorral.Monsters)
         {
-            CreateListItem(_petTemplate, monster.Name);
+            string petText = $"{monster.Name} / 능력치 정보 없음";
 
-            CreateListItem(_productTemplate, $"{monster.Name}의 특산물");
+            PetStatData statData = GameManager.DataTable.GetPetStatData(monster.Id);
+
+            if (statData != null)
+            {
+                petText = $"{monster.Name}\nHP {statData.MaxHealth:0}\n 이동속도 {statData.MoveSpeed:0.#}";
+            }
+
+            CreatePetListItem(monster, petText);
+            CreateListItem(_productTemplate, _productListRoot, $"{monster.Name}\n특산물");
         }
     }
 
-    private void ClearList()
+    private void CreatePetListItem(PetData monster, string text)
     {
-        foreach (Transform child in _listRoot)
+        GameObject item = Instantiate(_petTemplate, _petListRoot);
+        item.SetActive(true);
+
+        TMP_Text infoText = item.GetComponentInChildren<TMP_Text>();
+        infoText.text = text;
+
+        Transform iconTransform = item.transform.Find("IconImage");
+
+        if (iconTransform == null)
         {
-            if (child.gameObject == _petTemplate || child.gameObject == _productTemplate)
+            return;
+        }
+
+        Image iconImage = iconTransform.GetComponent<Image>();
+        Sprite iconSprite = Utils.ResourcesLoad<Sprite>(monster.IconPath);
+
+        if (iconSprite != null)
+        {
+            iconImage.sprite = iconSprite;
+            iconImage.preserveAspect = true;
+        }
+    }
+
+    private void CreateListItem(GameObject template, Transform listRoot, string text)
+    {
+        GameObject item = Instantiate(template, listRoot);
+        item.SetActive(true);
+        item.GetComponentInChildren<TMP_Text>().text = text;
+    }
+
+    private void ClearList(Transform listRoot, GameObject template)
+    {
+        foreach (Transform child in listRoot)
+        {
+            if (child.gameObject == template)
             {
                 continue;
             }
 
             Destroy(child.gameObject);
         }
-    }
-
-    private void CreateListItem(GameObject template, string text)
-    {
-        GameObject item = Instantiate(template, _listRoot);
-        item.SetActive(true);
-        item.GetComponentInChildren<TMP_Text>().text = text;
     }
 }
