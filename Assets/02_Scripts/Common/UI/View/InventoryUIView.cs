@@ -33,10 +33,19 @@ public class InventoryUIView : BaseUI<InventoryUIView, InventoryViewModel>
         _closeButton.BindOnClickButtonEvent(OnClickClose);
     }
 
+    protected override void OnOpened()
+    {
+        GameManager.Time.OnPause();
+    }
+
+    protected override void OnClosed()
+    {
+        GameManager.Time.OnResume();
+    }
+
     private void OnEnable()
     {
         _isClosing = false;
-        GameManager.Time.OnPause();
         GameManager.UI.SlideOutHud();
         _panelAnimation.PlayOpen();
         _detailPanel.SetActive(false);
@@ -64,7 +73,6 @@ public class InventoryUIView : BaseUI<InventoryUIView, InventoryViewModel>
 
     private void OnCloseAnimationComplete()
     {
-        GameManager.Time.OnResume();
         GameManager.UI.CloseUI(UIType.InventoryUIView);
     }
 
