@@ -20,13 +20,15 @@ public struct PlayerSkillUseContext
     public Vector3 AimDirection { get; }
     public Vector3 AimWorldPoint { get; }
     public PlayerSkillModifier PlayerSkillModifier { get; }
+    public Transform BasicAttackAnchor { get; }
 
     public PlayerSkillUseContext(Transform owner, Vector3 aimDirection, Vector3 aimWorldPoint
-        , PlayerSkillModifier playerSkillModifier)
+        , PlayerSkillModifier playerSkillModifier, Transform basicAttackAnchor)
     {
         Owner = owner;
         AimDirection = aimDirection;
         AimWorldPoint = aimWorldPoint;
         PlayerSkillModifier = playerSkillModifier;
+        BasicAttackAnchor = basicAttackAnchor;
     }
 }

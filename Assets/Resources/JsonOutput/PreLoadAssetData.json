@@ -58,5 +58,90 @@
     "Id": "EnemyProjectileThree",
     "Address": "Enemy/Projectile/WindRed",
     "AssetType": "GameObject"
+  },
+  {
+    "Id": "Scholar/ElectricArrowEffect",
+    "Address": "Scholar/ElectricArrowEffect",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "Scholar/FireArrowEffect",
+    "Address": "Scholar/FireArrowEffect",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "Scholar/IceArrowEffect",
+    "Address": "Scholar/IceArrowEffect",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "Scholar/MagicArrowEffect",
+    "Address": "Scholar/MagicArrowEffect",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "Scholar/StoneArrowEffect",
+    "Address": "Scholar/StoneArrowEffect",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "Scholar/UpgradedMagicArrowEffect",
+    "Address": "Scholar/UpgradedMagicArrowEffect",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "Scholar/EarthExplosionEffect",
+    "Address": "Scholar/EarthExplosionEffect",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "Scholar/ElectricExplosionEffect",
+    "Address": "Scholar/ElectricExplosionEffect",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "Scholar/FireExplosionEffect",
+    "Address": "Scholar/FireExplosionEffect",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "Scholar/IceExplosionEffect",
+    "Address": "Scholar/IceExplosionEffect",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "Scholar/MagicExplosionEffect",
+    "Address": "Scholar/MagicExplosionEffect",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "Scholar/Barrier",
+    "Address": "Scholar/Barrier",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "Hit/FireArrowHitEffect",
+    "Address": "Hit/FireArrowHitEffect",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "Hit/StoneArrowHitEffect",
+    "Address": "Hit/StoneArrowHitEffect",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "Scholar/BererkSoulEffect",
+    "Address": "Scholar/BererkSoulEffect",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "Scholar/BarrierExplosionEffect",
+    "Address": "Scholar/BarrierExplosionEffect",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "PlayerProjectile",
+    "Address": "PlayerProjectile",
+    "AssetType": "GameObject"
   }
 ]

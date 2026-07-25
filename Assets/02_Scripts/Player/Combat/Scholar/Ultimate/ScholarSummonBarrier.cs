@@ -4,19 +4,23 @@ public class ScholarSummonBarrier : IPlayerSkillExecution, ISkillRangeCheckable
 {
     private SkillRangeIndicator _skillRangeIndicator;
 
+    private PetElement _element;
+
 
     public void Execute(PlayerSkillUseContext context, PlayerSkillData SkillData, float damage, float coolTimeReductionOfStat)
     {
+        if(_element == default)
+        {
+            _element = GameManager.PetParty.GetPriorityPetElement();
+        }
+
         _skillRangeIndicator.Hide();
 
         Vector3 skillCenter = context.AimWorldPoint;
         skillCenter.y += SkillData.Radius;
 
-        var barrier = Object.Instantiate(Utils.ResourcesLoad<GameObject>("Player/Skill/Barrier"), skillCenter, Quaternion.identity);
-        if (barrier.TryGetComponent(out ScholarBarrier scholarBarrier))
-        {
-            scholarBarrier.Init(SkillData);
-        }
+        GameManager.Pool.SpawnFromPool<ScholarBarrier>(SkillData.VFXPath, skillCenter, Quaternion.identity)
+            .Init(SkillData, _element);
 
         var viewModel = GameManager.Network.RequestPlayerSkillViewModel();
 

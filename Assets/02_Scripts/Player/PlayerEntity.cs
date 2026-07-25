@@ -4,6 +4,8 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
 {
     [SerializeField] // TEST
     private bool _testIsHealthFull;
+    [Header("Orb")]
+    [SerializeField] private Transform _orbTransform;
 
     public StatusEffectController StatusEffects { get; private set; }
     public IStatModifierReceiver StatModifierReceiver { get; private set; }
@@ -57,7 +59,12 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
     {
         var build = playerSkillMaker.CreateSkillBuild(playerId, _statController, petStatusEffectReceviers);
 
-        _combatController.Init(build, _skillModifier);
+        var playerOrb = Instantiate(Utils.ResourcesLoad<ScholarOrb>("Player/ScholarOrb")
+            , _orbTransform.position, Quaternion.identity);
+
+        playerOrb.Init(_orbTransform);
+
+        _combatController.Init(build, _skillModifier, playerOrb.transform);
     }
 
     private void Update()
