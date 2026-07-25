@@ -21,6 +21,18 @@ public class LoadingUIView : BaseUI
     [SerializeField] private Image _backgroundImage;
     [SerializeField] private Sprite[] _backgroundSprites;
 
+    [Header("Status")]
+    [SerializeField] private TMP_Text _statusText;
+    [SerializeField] private TMP_Text _statusDotText;
+    [SerializeField] private string[] _statusMessages;
+    [SerializeField] private float _statusInterval = 1.5f;
+    [SerializeField] private float _dotInterval = 0.4f;
+
+    private int _statusIndex = -1;
+    private float _statusTimer = 0f;
+    private float _dotTimer = 0f;
+    private int _dotCount = 0;
+
     public void SetupRandom()
     {
         _targetProgress = 0f;
@@ -30,12 +42,20 @@ public class LoadingUIView : BaseUI
             _loadingBar.value = 0f;
         }
 
+        _statusIndex = -1;
+        _statusTimer = 0f;
+        _dotTimer = 0f;
+        _dotCount = 0;
+
         RefreshRandomTip();
         RefreshRandomBackground();
+        RefreshNextStatus();
     }
 
     private void Update()
     {
+        UpdateStatus();
+
         if (_loadingBar == null)
         {
             return;
@@ -45,6 +65,70 @@ public class LoadingUIView : BaseUI
             , _fillSpeed * Time.unscaledDeltaTime);
 
         ChangeColorByProgress(_loadingBar.value);
+    }
+
+    private void UpdateStatus()
+    {
+        if (_statusText == null || _statusMessages == null || _statusMessages.Length == 0)
+        {
+            return;
+        }
+
+        _statusTimer += Time.unscaledDeltaTime;
+        _dotTimer += Time.unscaledDeltaTime;
+
+        if (_statusTimer >= _statusInterval)
+        {
+            _statusTimer = 0f;
+            RefreshNextStatus();
+            return;
+        }
+
+        if (_dotTimer >= _dotInterval)
+        {
+            _dotTimer = 0f;
+            _dotCount = (_dotCount + 1) % 4;
+            ApplyStatusText();
+        }
+    }
+
+    private void RefreshNextStatus()
+    {
+        if (_statusText == null || _statusMessages == null || _statusMessages.Length == 0)
+        {
+            return;
+        }
+
+        int index = Random.Range(0, _statusMessages.Length);
+
+        if (_statusMessages.Length > 1 && index == _statusIndex)
+        {
+            index = (index + 1) % _statusMessages.Length;
+        }
+
+        _statusIndex = index;
+        _dotCount = 0;
+
+        ApplyStatusText();
+    }
+
+    private void ApplyStatusText()
+    {
+        if (_statusIndex < 0 || _statusIndex >= _statusMessages.Length)
+        {
+            return;
+        }
+
+        string dots = new string('.', _dotCount);
+
+        if (_statusDotText != null)
+        {
+            _statusText.text = _statusMessages[_statusIndex];
+            _statusDotText.text = dots;
+            return;
+        }
+
+        _statusText.text = _statusMessages[_statusIndex] + dots;
     }
     private void RefreshRandomTip()
     {
