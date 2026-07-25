@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 2172365168072473723}
   - component: {fileID: 1364723481341846187}
   - component: {fileID: 2468723965274741898}
-  - component: {fileID: 5122484841661406241}
   - component: {fileID: 9016873231112440012}
   - component: {fileID: 6272798032681702983}
+  - component: {fileID: 5122484841661406241}
   m_Layer: 0
   m_Name: Test_Pet
   m_TagString: Untagged
@@ -115,21 +115,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5122484841661406241
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6297179494557163484}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08f5f3d4d3307914d80b1e2ed4aa9e25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PetController
-  _commandRefreshInterval: 0.2
-  __SOPetDefinition: {fileID: 11400000, guid: a434ece8aad48f74ba3c470353a50c04, type: 2}
-  __SOPetSearch: {fileID: 11400000, guid: 6ea5631651619e14f9484c6bf765b215, type: 2}
 --- !u!195 &9016873231112440012
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -167,3 +152,17 @@ MonoBehaviour:
   _stopDistanceFromAnchor: 3
   _destinationUpdateDistance: 0.5
   _destinationRefreshInterval: 0.1
+--- !u!114 &5122484841661406241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6297179494557163484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08f5f3d4d3307914d80b1e2ed4aa9e25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetController
+  __SOPetSearch: {fileID: 11400000, guid: 6ea5631651619e14f9484c6bf765b215, type: 2}
+  _commandRefreshInterval: 0.2
