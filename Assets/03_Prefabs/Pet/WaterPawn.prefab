@@ -864,6 +864,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4992545855237082986}
+  - component: {fileID: 4135045681539620048}
   m_Layer: 0
   m_Name: WaterPawn
   m_TagString: Untagged
@@ -888,6 +889,28 @@ Transform:
   - {fileID: 3849723252094632008}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &4135045681539620048
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7209759979817846486}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 59fc84e7375bbb44e9ceaf291ddc79a1, type: 3}
+  m_Controller: {fileID: 9100000, guid: 0b369cba92622c944998a62f3c0bb1d3, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &7411570499527114900
 GameObject:
   m_ObjectHideFlags: 0
