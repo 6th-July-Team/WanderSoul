@@ -308,7 +308,7 @@
       "buff_berserksoul_petmaxhealth",
       "buff_berserksoul_petmovespeed"
     ],
-    "VFXPath": null,
+    "VFXPath": "Scholar/BererkSoulEffect",
     "SFXPath": null,
     "IconPath": null,
     "ExecutionId": "ScholarUltBerserkSoul",
