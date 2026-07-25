@@ -11,16 +11,22 @@ public class ScholarBarrier : MonoBehaviour, IBarrierable, IDamageable
     private float _totalDamage;
     private float _durability;
     private float _duration;
+    private float _radius;
 
 
     private Collider[] _colliders = new Collider[64];
 
+    private EffectColorType _effectColor;
 
-    public void Init(PlayerSkillData skillData)
+    public void Init(PlayerSkillData skillData, PetElement element)
     {
         _durability = skillData.BarrierAbsorbAmount;
         _duration = skillData.Duration;
-        transform.localScale = Vector3.one * skillData.Radius * 2;
+        _radius = skillData.Radius;
+
+        transform.localScale = Vector3.one * _radius * 2;
+
+        _effectColor = Utils.GetEffectColorByPetElement(element);
     }
 
     private void Update()
@@ -54,7 +60,12 @@ public class ScholarBarrier : MonoBehaviour, IBarrierable, IDamageable
 
     private void BarrierDestory()
     {
-        // TOODO(김익환): 결계 파괴 이펙트
+        var effect = VFXSpawner.SpawnVFX("Scholar/BarrierExplosionEffect"
+            , transform.position, Quaternion.identity, _radius * 2);
+
+
+        effect.GetComponent<PariclePaletteController>().ApplyPalette(_effectColor);
+
         int count = SearchUtil.FindTargetSphere(transform.position, transform.localScale.x / 2f, LayerMask.GetMask("Enemy"), _colliders);
         for (int i = 0; i < count; i++)
         {

@@ -1,4 +1,4 @@
-﻿[
+[
   {
     "Id": "Spider",
     "TargetPolicy": "PriorityBased",
@@ -78,8 +78,8 @@
     "ProjectileSpeed": null,
     "ProjectileLifeTime": null,
     "ProjectilePrefabAddress": null,
-    "AreaRadius": 2,
-    "AreaDelayTime": 1,
+    "AreaRadius": 4,
+    "AreaDelayTime": 2,
     "AreaPrefabAddress": "Enemy/Area_01",
     "PreferredDistance": null
   },

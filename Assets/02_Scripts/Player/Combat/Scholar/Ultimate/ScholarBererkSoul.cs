@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class ScholarBererkSoul : IPlayerSkillExecution
 {
@@ -36,6 +37,8 @@ public class ScholarBererkSoul : IPlayerSkillExecution
         {
             ApplyBuff(effectData);
         }
+
+        VFXSpawner.SpawnVFX(SkillData.VFXPath, context.Owner.position, Quaternion.identity);
     }
 
     private void ApplyBuff(StatusEffectData data)
