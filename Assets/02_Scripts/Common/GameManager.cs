@@ -74,14 +74,45 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         if (_skipStartupUIForTest)
         {
-            InitNonAsync();
-            // 테스트: 타이틀/로딩 없이 바로 전투 진입
-            var testPetIds = new List<string> { "pet_fire_001", "pet_water_002", "pet_earth_003" };
-            StartConvoy(testPetIds);
+            // 테스트: 타이틀/로딩 화면 없이 바로 전투 진입
+            SkipStartupAsync().Forget();
             return;
         }
 
+        ShowTitleAsync().Forget();
+    }
+
+    private async UniTaskVoid ShowTitleAsync()
+    {
+        ScreenFadeUIView fade = _uiManager.OpenScreenFade();
+
+        if (fade != null)
+        {
+            fade.SetBlackImmediate();
+        }
+
         ShowTitle();
+
+        if (fade != null)
+        {
+            await UniTask.NextFrame();
+
+            await fade.PlayIntroAsync();
+
+            await fade.FadeInAsync();
+
+            _uiManager.CloseUI(UIType.ScreenFadeUIView);
+        }
+    }
+
+    private async UniTaskVoid SkipStartupAsync()
+    {
+        await _resourceManager.Init();
+
+        InitNonAsync();
+
+        var testPetIds = new List<string> { "pet_fire_001", "pet_water_002", "pet_earth_003" };
+        StartConvoy(testPetIds);
     }
 
     private void Update()
