@@ -115,6 +115,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 812a0ede91804224aafedfd941b5b570
+    m_Address: buff_water_regeneration
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8b09aa011ffed4f42acf797c9b743e7d
     m_Address: Scholar/FireExplosionEffect
     m_ReadOnly: 0
@@ -145,6 +150,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9b8776ecb3c53e94eb0ab5549505a76c
+    m_Address: buff_fire_force
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a68f25067db76e144a6538dba43e7c5d
     m_Address: EnemyDropObject/Soul/One
     m_ReadOnly: 0
@@ -172,11 +182,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cb8e9c127b5593946b74630f4c8480ff
     m_Address: Scholar/ElectricExplosionEffect
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: cfab79379f606514e85219f0f02db805
-    m_Address: Enemy/Projectile_01
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
