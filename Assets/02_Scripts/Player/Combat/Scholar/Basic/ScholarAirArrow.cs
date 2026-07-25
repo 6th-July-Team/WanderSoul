@@ -4,10 +4,8 @@ public class ScholarAirArrow : IElementArrowVariant
 {
     public void Fire(PlayerSkillUseContext context, float damage, PlayerSkillData SkillData)
     {
-        Projectile projectileInstance = Object.Instantiate(Resources.Load<Projectile>("PlayerProjectile")
-                , context.BasicAttackAnchor.position, Quaternion.identity);
-
-        projectileInstance.Init(new ProjectileStruct
+        GameManager.Pool.SpawnFromPool<Projectile>("PlayerProjectile", context.BasicAttackAnchor.position)
+            .Init(new ProjectileStruct
         (
             SkillData.ProjectileSpeed, SkillData.Power, SkillData.Duration
             , context.AimWorldPoint - context.BasicAttackAnchor.position
