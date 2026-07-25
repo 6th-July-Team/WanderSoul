@@ -4,7 +4,7 @@ public class ScholarWaterArrow : IElementArrowVariant
 {
     public void Fire(PlayerSkillUseContext context, float damage, PlayerSkillData SkillData)
     {
-        GameManager.Pool.SpawnFromPool<Projectile>("PlayerProjectile", context.BasicAttackAnchor.position)
+        GameManager.Pool.SpawnFromPool<Projectile>("ProjectileHusks", context.BasicAttackAnchor.position)
             .Init(new ProjectileStruct
         (
             SkillData.ProjectileSpeed, SkillData.Power, SkillData.Duration

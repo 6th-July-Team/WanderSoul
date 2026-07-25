@@ -143,5 +143,30 @@
     "Id": "ProjectileHusks",
     "Address": "ProjectileHusks",
     "AssetType": "GameObject"
+  },
+  {
+    "Id": "EarthPawn_ActiveEffect",
+    "Address": "EarthPawn_ActiveEffect",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "FramePawn_ActiveEffect",
+    "Address": "FramePawn_ActiveEffect",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "WaterPawn_ActiveEffect",
+    "Address": "WaterPawn_ActiveEffect",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "WindBlass_Pet",
+    "Address": "WindBlass_Pet",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "WindPawn_ActiveEffect",
+    "Address": "WindPawn_ActiveEffect",
+    "AssetType": "GameObject"
   }
 ]

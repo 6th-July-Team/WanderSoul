@@ -10,7 +10,7 @@ public class ScholarMagicArrow : IElementArrowVariant
     {
         if (_castCount % 4 == 0)
         {
-            GameManager.Pool.SpawnFromPool<Projectile>("PlayerProjectile", context.BasicAttackAnchor.position)
+            GameManager.Pool.SpawnFromPool<Projectile>("ProjectileHusks", context.BasicAttackAnchor.position)
                 .Init(new ProjectileStruct
                 (
                     SkillData.ProjectileSpeed, SkillData.Power, SkillData.Duration
@@ -26,7 +26,7 @@ public class ScholarMagicArrow : IElementArrowVariant
                 _upgradeSkillData = GameManager.DataTable.GetPlayerSkillData(SkillData.Id + "_upgrade");
             }
 
-            GameManager.Pool.SpawnFromPool<Projectile>("PlayerProjectile", context.BasicAttackAnchor.position)
+            GameManager.Pool.SpawnFromPool<Projectile>("ProjectileHusks", context.BasicAttackAnchor.position)
                 .Init(new ProjectileStruct
                 (
                     _upgradeSkillData.ProjectileSpeed, _upgradeSkillData.Power, _upgradeSkillData.Duration
