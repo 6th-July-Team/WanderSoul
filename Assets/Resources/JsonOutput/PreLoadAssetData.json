@@ -140,8 +140,8 @@
     "AssetType": "GameObject"
   },
   {
-    "Id": "PlayerProjectile",
-    "Address": "PlayerProjectile",
+    "Id": "ProjectileHusks",
+    "Address": "ProjectileHusks",
     "AssetType": "GameObject"
   }
 ]
