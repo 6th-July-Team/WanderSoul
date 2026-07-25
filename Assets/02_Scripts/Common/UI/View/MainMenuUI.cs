@@ -8,6 +8,14 @@ public class MainMenuUI : BaseUI
     [SerializeField] private UIButton _optionButton;
     [SerializeField] private UIButton _farmButton;
 
+    [Header("장소 프리팹")]
+    [SerializeField] private GameObject _villagePrefab;
+    [SerializeField] private GameObject _monsterFarmPrefab;
+
+    private GameObject _villageInstance;
+    private GameObject _monsterFarmInstance;
+    private Camera _gameCamera;
+    private bool _isInMonsterFarm;
 
     [Header("Animation")]
     [SerializeField] private UISlideAnimation _slideAnimation;
@@ -23,6 +31,9 @@ public class MainMenuUI : BaseUI
 
     protected override void OnOpened()
     {
+        CreateLocations();
+        ShowVillage();
+
         if (_slideAnimation == null)
         {
             return;
@@ -35,6 +46,27 @@ public class MainMenuUI : BaseUI
     // 임시: 나중에 Model 소유처 정해지면 이동
     private InventoryModel _inventoryModelTest = new InventoryModel();
     private PetInventoryModel _petInventoryModelTest = new PetInventoryModel();
+
+    protected override void OnClosed()
+    {
+        if (_villageInstance != null)
+        {
+            _villageInstance.SetActive(false);
+        }
+
+        if (_monsterFarmInstance != null)
+        {
+            _monsterFarmInstance.SetActive(false);
+        }
+
+        if (_gameCamera != null)
+        {
+            _gameCamera.gameObject.SetActive(true);
+        }
+
+        _isInMonsterFarm = false;
+        _farmButton.ChangeText("팜");
+    }
 
     private void OnClickInventory()
     {
@@ -91,19 +123,73 @@ public class MainMenuUI : BaseUI
 
     private void OnClickFarm()
     {
-        LocationNavigator locationNavigator = Object.FindFirstObjectByType<LocationNavigator>();
-
-        if (locationNavigator == null )
+        if (_isInMonsterFarm)
         {
-            Debug.LogWarning("LocationNavigator를 찾을 수 없습니다.");
+            ShowVillage();
             return;
         }
 
-        locationNavigator.ToggleMonsterFarm();
+        ShowMonsterFarm();
+    }
 
-        string buttonText = locationNavigator.IsInMonsterFarm ? "마을 복귀" : "팜";
+    private void CreateLocations()
+    {
+        if (_villageInstance != null && _monsterFarmInstance != null)
+        {
+            return;
+        }
 
-        _farmButton.ChangeText(buttonText);
+        if (_villagePrefab == null || _monsterFarmPrefab == null)
+        {
+            Debug.LogWarning("마을 또는 몬스터 팜 프리팹이 연결되지 않았습니다.");
+            return;
+        }
+
+        _gameCamera = Camera.main;
+
+        _villageInstance = Instantiate(_villagePrefab);
+        _monsterFarmInstance = Instantiate(_monsterFarmPrefab);
+
+        _villageInstance.SetActive(false);
+        _monsterFarmInstance.SetActive(false);
+    }
+
+    private void ShowVillage()
+    {
+        if (_villageInstance == null || _monsterFarmInstance == null)
+        {
+            return;
+        }
+
+        if (_gameCamera != null)
+        {
+            _gameCamera.gameObject.SetActive(false);
+        }
+
+        _monsterFarmInstance.SetActive(false);
+        _villageInstance.SetActive(true);
+
+        _isInMonsterFarm = false;
+        _farmButton.ChangeText("팜");
+    }
+
+    private void ShowMonsterFarm()
+    {
+        if (_villageInstance == null || _monsterFarmInstance == null)
+        {
+            return;
+        }
+
+        if (_gameCamera != null)
+        {
+            _gameCamera.gameObject.SetActive(false);
+        }
+
+        _villageInstance.SetActive(false);
+        _monsterFarmInstance.SetActive(true);
+
+        _isInMonsterFarm = true;
+        _farmButton.ChangeText("마을 복귀");
     }
 
     private void OnClickOption()

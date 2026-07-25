@@ -571,6 +571,8 @@ MonoBehaviour:
   _startBattleButton: {fileID: 606193503217589786}
   _optionButton: {fileID: 1121533720102884176}
   _farmButton: {fileID: 6747720157552683467}
+  _villagePrefab: {fileID: 2983919527084978667, guid: 59d085067c3fd104aaa8ac4c95486949, type: 3}
+  _monsterFarmPrefab: {fileID: 7584889789157666527, guid: c1f670a8ede792b4ca89a0f761e96b1e, type: 3}
   _slideAnimation: {fileID: 2377272783939178955}
 --- !u!114 &2377272783939178955
 MonoBehaviour:
