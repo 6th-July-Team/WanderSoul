@@ -24,14 +24,14 @@ public class ConvoyManager
     }
 
     // 의뢰 시작 -> 펫 선택 -> 로딩 UI를 보여주며 아래 init 함수 호출.
-    public void InitConvoy(string questId, List<string> selectedPetIds)
+    public async UniTask InitConvoy(string questId, List<string> selectedPetIds)
     {
         _selectedQuestId = questId;
 
         _selectedPetIds.Clear();
         _selectedPetIds.AddRange(selectedPetIds);
 
-        StartConvoyAsync().Forget();
+        await StartConvoyAsync();
     }
 
     public void FaildConvoy(ConvoyFailReason failReason = ConvoyFailReason.WagonDestroyed)
@@ -93,13 +93,8 @@ public class ConvoyManager
         return "테스트 ID";
     }
 
-    private async UniTaskVoid StartConvoyAsync()
+    private async UniTask StartConvoyAsync()
     {
-        // TODO(UI): 로딩 UI 또는 Fade In/Out 처리
-        GameManager.UI.OpenLoadingUI();
-
-        await UniTask.Delay(System.TimeSpan.FromSeconds(1f));
-
         LoadMap();
         SpawnPet();
 
@@ -108,7 +103,7 @@ public class ConvoyManager
 
         StartBattle();
 
-        GameManager.UI.CloseUI(UIType.LoadingUIView);
+        await UniTask.NextFrame();
     }
 
     private void LoadMap()

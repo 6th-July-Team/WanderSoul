@@ -222,18 +222,61 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     public void StartConvoy(List<string> selectedPetIds)
     {
-        // 해당 시점 이전에 의뢰 선택 및 펫 선택이 완료되어야 합니다.
-        // 선택된 의뢰 ID 및 선택된 펫 ID 리스트가 아래 필요합니다.
-        _convoyManager.InitConvoy("TEST_QuestId", selectedPetIds);
+        EnterConvoyAsync(selectedPetIds).Forget();
+    }
+
+    private async UniTaskVoid EnterConvoyAsync(List<string> selectedPetIds)
+    {
+        ScreenFadeUIView fade = await BeginTransitionAsync();
 
         ExitVillage();
+
+        // 해당 시점 이전에 의뢰 선택 및 펫 선택이 완료되어야 합니다.
+        // 선택된 의뢰 ID 및 선택된 펫 ID 리스트가 아래 필요합니다.
+        await _convoyManager.InitConvoy("TEST_QuestId", selectedPetIds);
+
+        await EndTransitionAsync(fade);
     }
 
     public void EndConvoy()
     {
-        // TODO 간단 로딩 실행
+        ExitConvoyAsync().Forget();
+    }
+
+    private async UniTaskVoid ExitConvoyAsync()
+    {
+        ScreenFadeUIView fade = await BeginTransitionAsync();
+
         string resultVillageId = _convoyManager.Release();
         EnterVillage(resultVillageId);
         _networkManager.InGameServiceRelease();
+
+        await EndTransitionAsync(fade);
+    }
+
+    private async UniTask<ScreenFadeUIView> BeginTransitionAsync()
+    {
+        var fade = _uiManager.OpenScreenFade();
+
+        if (fade == null)
+        {
+            return null;
+        }
+
+        await fade.FadeOutAsync();
+
+        return fade;
+    }
+
+    private async UniTask EndTransitionAsync(ScreenFadeUIView fade)
+    {
+        if (fade == null)
+        {
+            return;
+        }
+
+        await fade.FadeInAsync();
+
+        _uiManager.CloseUI(UIType.ScreenFadeUIView);
     }
 }
