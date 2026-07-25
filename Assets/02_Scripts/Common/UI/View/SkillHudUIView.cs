@@ -17,19 +17,17 @@ public class SkillHudUIView : BaseUI
         }
 
         var skillViewModel = GameManager.Network.RequestPlayerSkillViewModel();
-        var playerViewModel = GameManager.Network.RequestCreatePlayer();
 
-        SetSlot(_basicSlot, SkillSlot.Basic, classData.BasicSkillId, skillViewModel, playerViewModel);
-        SetSlot(_specialSlot, SkillSlot.Special, classData.SpecialSkillId, skillViewModel, playerViewModel);
+        SetSlot(_basicSlot, SkillSlot.Basic, classData.BasicSkillId, skillViewModel);
+        SetSlot(_specialSlot, SkillSlot.Special, classData.SpecialSkillId, skillViewModel);
         SetSlot(_ultimateSlot, SkillSlot.Ultimate, GetEquippedUltimateSkillId(classData)
-            , skillViewModel, playerViewModel);
+            , skillViewModel);
     }
     public void SetUltimateSkill(string skillId)
     {
         var skillViewModel = GameManager.Network.RequestPlayerSkillViewModel();
-        var playerViewModel = GameManager.Network.RequestCreatePlayer();
 
-        SetSlot(_ultimateSlot, SkillSlot.Ultimate, skillId, skillViewModel, playerViewModel);
+        SetSlot(_ultimateSlot, SkillSlot.Ultimate, skillId, skillViewModel);
     }
 
     private string GetEquippedUltimateSkillId(PlayerClassData classData)
@@ -48,7 +46,7 @@ public class SkillHudUIView : BaseUI
     }
 
     private void SetSlot(SkillSlotUiView slotView, SkillSlot slot, string skillId
-        , PlayerSkillViewModel skillViewModel, PlayerViewModel playerViewModel)
+        , PlayerSkillViewModel skillViewModel)
     {
         if (slotView == null)
         {
@@ -67,6 +65,6 @@ public class SkillHudUIView : BaseUI
             }
         }
 
-        slotView.SetSkill(slot, skillData, skillViewModel, playerViewModel);
+        slotView.SetSkill(slot, skillData, skillViewModel);
     }
 }

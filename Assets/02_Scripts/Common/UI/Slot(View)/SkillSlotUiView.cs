@@ -5,10 +5,8 @@ using UnityEngine.UI;
 public class SkillSlotUiView : MonoBehaviour
 {
     [SerializeField] private Image _iconImage;
-    [SerializeField] private Image _cooldownFillImage;
     [SerializeField] private TMP_Text _cooldownText;
     [SerializeField] private CanvasGroup _canvasGroup;
-    [SerializeField] private GameObject _emptySlotObject;
 
     [SerializeField] private GameObject _readyEffectObject;
 
@@ -16,28 +14,27 @@ public class SkillSlotUiView : MonoBehaviour
     private PlayerSkillData _skillData;
 
     private PlayerSkillViewModel _skillViewModel;
-    private PlayerViewModel _playerViewModel;
 
     private float _lastCooldown = -1f;
 
     private const float DISABLED_ALPHA = 0.5f;
 
     public void SetSkill(SkillSlot slot, PlayerSkillData skillData
-        , PlayerSkillViewModel skillViewModel, PlayerViewModel playerViewModel)
+        , PlayerSkillViewModel skillViewModel)
     {
         _slot = slot;
         _skillData = skillData;
         _skillViewModel = skillViewModel;
-        _playerViewModel = playerViewModel;
         _lastCooldown = -1f;
 
-        RefreshEmptyState();
+        gameObject.SetActive(skillData != null);
 
         if (_skillData == null)
         {
             return;
         }
 
+        RefreshEmptyState();
         RefreshIcon();
         RefreshCooldown();
     }
@@ -85,19 +82,9 @@ public class SkillSlotUiView : MonoBehaviour
     {
         bool isEmpty = (_skillData == null);
 
-        if (_emptySlotObject != null)
-        {
-            _emptySlotObject.SetActive(isEmpty);
-        }
-
         if (_iconImage != null)
         {
             _iconImage.gameObject.SetActive(isEmpty == false);
-        }
-
-        if (_cooldownFillImage != null)
-        {
-            _cooldownFillImage.gameObject.SetActive(isEmpty == false);
         }
 
         if (_cooldownText != null && isEmpty == true)
@@ -110,9 +97,17 @@ public class SkillSlotUiView : MonoBehaviour
             _readyEffectObject.SetActive(false);
         }
 
-        if (_canvasGroup != null && isEmpty == true)
+        if (_canvasGroup != null)
         {
-            _canvasGroup.alpha = DISABLED_ALPHA;
+            if (isEmpty == true)
+            {
+                _canvasGroup.alpha = DISABLED_ALPHA;
+            }
+
+            else
+            {
+                _canvasGroup.alpha = 1f;
+            }
         }
     }
 
@@ -151,13 +146,13 @@ public class SkillSlotUiView : MonoBehaviour
 
         if (total <= 0f)
         {
-            _cooldownFillImage.fillAmount = 0f;
+            SetIconFill(1f);
             _cooldownText.gameObject.SetActive(false);
             RefreshUsable();
             return;
         }
 
-        _cooldownFillImage.fillAmount = remaining / total;
+        SetIconFill((total - remaining) / total);
 
         bool isOnCooldown = (remaining > 0f);
         _cooldownText.gameObject.SetActive(isOnCooldown);
@@ -183,27 +178,15 @@ public class SkillSlotUiView : MonoBehaviour
         {
             _readyEffectObject.SetActive(isReady);
         }
+    }
 
-        if (_canvasGroup == null)
+    private void SetIconFill(float amount)
+    {
+        if (_iconImage == null)
         {
             return;
         }
 
-        bool hasEnoughMana = true;
-
-        if (_playerViewModel != null)
-        {
-            hasEnoughMana = (_playerViewModel.GetMp >= _skillData.ManaCost);
-        }
-
-        if (isReady == true && hasEnoughMana == true)
-        {
-            _canvasGroup.alpha = 1f;
-        }
-
-        else
-        {
-            _canvasGroup.alpha = DISABLED_ALPHA;
-        }
+        _iconImage.fillAmount = amount;
     }
 }
