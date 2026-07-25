@@ -36,10 +36,20 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
     private PetCommandResult _commandResult;
 
+
+    private Renderer _petRenderer; // 기웅 : 펫 렌더러 << Awake에서 GetComponentInChildren으로 가져오게 했음 나중에 기호에 맞게 Parent나 그냥 GetComponent로 바꾸기 << 아직 프리팹 구조를 몰라서 이렇게 했음
+    private bool _isDead = false; // 기웅 : 사망 했을 때 사망 처리가 끝나기 전에 DieAndRevive로 재집입 하는 걸 막기 위해서 임시로 추가 ( 비동기니까 ) << 나중에 맞는 위치로 이동해야 할듯
+
+    [Header("Dissolve Effect")]
+    [SerializeField] private float DissolveDuration = 1f; // 디졸브 유지시간 << 이 유지시간 동안 디졸브 이펙트 출력 (아마도?)
+
+    private static readonly int DISSOLVE_ID = Shader.PropertyToID("_DissolveAmount"); // 디졸브 머터리얼 내부에 있는 프로퍼티를 int로 변환하는 메서드 << AI 도움 받음
+
     private void Awake()
     {
         isInitialized = false;
         _petMovement = GetComponent<PetMovement>();
+        _petRenderer = GetComponentInChildren<Renderer>();
     }
 
     public void Init(string petId, IPositionProvider playerAnchor, IPositionProvider wagonAnchor
@@ -185,14 +195,12 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
         {
             case nameof(PetViewModel.GetHp):
                 {
-                    if (_petViewModel.GetHp <= 0f)
+                    if (_petViewModel.GetHp <= 0f && _isDead == false)
                     {
-                        // TODO(김익환): 사망 처리
-                        // TODO(김익환): 사망 이펙트
                         // TODO(김익환): 사망 사운드
                         Debug.Log("사망");
-                        DieAndRevive().Forget();
-                        this.gameObject.SetActive(false);
+                        _isDead = true;
+                        DieAndRevive().Forget(); // 기웅 : DieAndRevive에 사망 이펙트 및 소환 이펙트 추가함
 
                     }
                 }
@@ -202,9 +210,33 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
     private async UniTaskVoid DieAndRevive()
     {
+        float live = 0f; // 디졸브에서 0은 오브젝트가 보이는 것
+        float dead = 1f; // 디졸브에서 1은 오브젝트가 사라진 것
+
+        await Dissolve(live, dead); // 생존 > 사망
+        gameObject.SetActive(false);
+
         await UniTask.Delay(TimeSpan.FromSeconds(1f));
         _petViewModel.SetHp(_petViewModel.GetMaxHp);
-        this.gameObject.SetActive(true);
+
+        gameObject.SetActive(true);
+        await Dissolve(dead, live); // 사망 > 생존
+
+        _isDead = false;
+    }
+
+    private async UniTask Dissolve(float start, float end)
+    {
+        float time = 0f;
+
+        while (time < DissolveDuration)
+        {
+            time += Time.deltaTime;
+            _petRenderer.material.SetFloat(DISSOLVE_ID, Mathf.Lerp(start, end, (time / DissolveDuration)));
+            await UniTask.Yield();
+        }
+
+        _petRenderer.material.SetFloat(DISSOLVE_ID, end);
     }
 
     private void OnDrawGizmos()
@@ -224,4 +256,16 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
         StatusEffects.Clear();
         _petViewModel.OnPropertyChanged_View -= OnPropertyChanged;
     }
+
+#if UNITY_EDITOR
+    [ContextMenu("체력 1/2 감소시키기")] // 기웅 : 테스트용
+    private void TakeHalfHpDamage()
+    {
+        Vector3 hitDirection = Vector3.forward;
+
+        DamageInfo damageInfo = new(_petViewModel.GetMaxHp * 0.5f, hitDirection, DamageType.Physical);
+
+        TakeDamage(damageInfo);
+    }
+#endif
 }
