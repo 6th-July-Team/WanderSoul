@@ -156,7 +156,6 @@ public class OptionUI : BaseUI
 
         _isRefreshing = false;
 
-        RefreshSliderInteractable();
         RefreshMuteIcon();
     }
 
@@ -232,7 +231,6 @@ public class OptionUI : BaseUI
         PlayerPrefs.Save();
 
         ApplyVolume();
-        RefreshSliderInteractable();
         RefreshMuteIcon();
     }
 
@@ -259,21 +257,6 @@ public class OptionUI : BaseUI
 
         GameManager.Sound.SetBGMVolume(bgm);
         GameManager.Sound.SetSFXVolume(sfx);
-    }
-
-    private void RefreshSliderInteractable()
-    {
-        bool interactable = (_isMute == false);
-
-        if (_bgmSlider != null)
-        {
-            _bgmSlider.interactable = interactable;
-        }
-
-        if (_sfxSlider != null)
-        {
-            _sfxSlider.interactable = interactable;
-        }
     }
 
     public void Close()
