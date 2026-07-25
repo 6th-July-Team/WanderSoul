@@ -65,6 +65,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5359673bd41c2924e99ce3053f895901
+    m_Address: WindBlass_Pet
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 57cfa6a90f1a9bd469048e899b9f396f
     m_Address: EnemyDropObject/Exp/One
     m_ReadOnly: 0
@@ -105,6 +110,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8dda7d7dddcc40b4ca4d1a2ff92784f3
+    m_Address: WindPawn_ActiveEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 93aa8c19879927e40a710c48f510ed78
     m_Address: Scholar/UpgradedMagicArrowEffect
     m_ReadOnly: 0
@@ -135,6 +145,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b6a4b7fb066282846aab983a56799397
+    m_Address: FramePawn_ActiveEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c03723f97bc188641873de004b8b5b4a
+    m_Address: EarthPawn_ActiveEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cb8e9c127b5593946b74630f4c8480ff
     m_Address: Scholar/ElectricExplosionEffect
     m_ReadOnly: 0
@@ -142,6 +162,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cfab79379f606514e85219f0f02db805
     m_Address: Enemy/Projectile_01
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d9fa77424b8302a4db2819b4f0e931ae
+    m_Address: WaterPawn_ActiveEffect
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
