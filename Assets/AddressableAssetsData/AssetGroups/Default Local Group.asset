@@ -36,7 +36,7 @@ MonoBehaviour:
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 315a0b5c47a0a504bade2040204b4252
-    m_Address: Assets/03_Prefabs/Pet/WindPawn.prefab
+    m_Address: pet_air_004
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
