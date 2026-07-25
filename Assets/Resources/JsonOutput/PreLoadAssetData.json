@@ -168,5 +168,25 @@
     "Id": "WindPawn_ActiveEffect",
     "Address": "WindPawn_ActiveEffect",
     "AssetType": "GameObject"
+  },
+  {
+    "Id": "pet_fire_001",
+    "Address": "pet_fire_001",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "pet_water_002",
+    "Address": "pet_water_002",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "pet_earth_003",
+    "Address": "pet_earth_003",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "pet_air_004",
+    "Address": "pet_air_004",
+    "AssetType": "GameObject"
   }
 ]

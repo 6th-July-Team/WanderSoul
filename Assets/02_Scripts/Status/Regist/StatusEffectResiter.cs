@@ -19,6 +19,18 @@ public static class StatusEffectResiter
                 return new StatModifierEffect(createInfo.Receiver.StatModifierReceiver, modifier);
             });
 
+
+        registry.Register(
+            "PeriodicBuff"
+            , (createInfo) =>
+            {
+                StatusEffectData data = createInfo.EffectData;
+
+                StatModifier modifier = new(data.GetStat(), data.GetOperation(), data.Value);
+
+                return new PeriodicBuffEffect(createInfo.Receiver.StatModifierReceiver, modifier);
+            });
+
         registry.Register(
             "SkillModifier"
             , (createInfo) =>
@@ -29,8 +41,7 @@ public static class StatusEffectResiter
 
                 return new SkillModifierEffect(createInfo.Receiver.SkillModifierReceiver, modifier);
             });
-
-
+        
 
     }
 

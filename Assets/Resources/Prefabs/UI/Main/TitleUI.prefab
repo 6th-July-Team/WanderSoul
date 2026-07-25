@@ -1544,7 +1544,7 @@ MonoBehaviour:
   _cloud1: {fileID: 5332380915241932810}
   _largeCloud2: {fileID: 3430814779073942192}
   _cloud2: {fileID: 3709249816557461625}
-  _horizontalSpeed: 9
+  _horizontalSpeed: 20
   _firstLargeCloudStartX: -757
   _firstCloudStartX: -457
   _secondLargeCloudStartX: -2863

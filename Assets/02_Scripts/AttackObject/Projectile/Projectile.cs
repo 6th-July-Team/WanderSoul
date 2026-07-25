@@ -1,5 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
+using System.Threading;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class Projectile : MonoBehaviour
 {
@@ -26,6 +28,12 @@ public class Projectile : MonoBehaviour
     private string _visualAddress;
     private string _hitEffectAddress;
 
+    // 이펙트
+    private ParticleComponent _effect;
+
+    private CancellationTokenSource _token;
+    private bool _isReleased;
+
     public void Init(ProjectileStruct projectileData)
     {
         // 기본 옵션
@@ -51,12 +59,17 @@ public class Projectile : MonoBehaviour
             transform.rotation = Quaternion.LookRotation(_direction, Vector3.up);
         }
 
+        DisposeToken();
+
+        _isReleased = false;
+
         if (_duration > 0)
         {
-            DespawnDelay().Forget();
+            _token = new CancellationTokenSource();
+            DespawnDelay(_token.Token).Forget();
         }
 
-        VFXSpawner.SpawnAttachedVFX(_visualAddress, _visualRoot, Vector3.zero, Quaternion.identity);
+        _effect = VFXSpawner.SpawnAttachedVFX(_visualAddress, _visualRoot, Vector3.zero, Quaternion.identity);
     }
 
     private void Update()
@@ -91,7 +104,7 @@ public class Projectile : MonoBehaviour
 
                 if (_pierce <= 0)
                 {
-                    GameManager.Pool.DespawnToPool(this.gameObject);
+                    ReleaseToPool();
                 }
                 else
                 {
@@ -148,10 +161,47 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    private async UniTaskVoid DespawnDelay()
+    private async UniTaskVoid DespawnDelay(CancellationToken token)
     {
-        await UniTask.Delay((int)(_duration * 1000f));
-        GameManager.Pool.DespawnToPool(this.gameObject);    
+        bool isCanceled = await UniTask.Delay((int)(_duration * 1000f), cancellationToken: token)
+            .SuppressCancellationThrow();
+
+        if (isCanceled)
+        {
+            return;
+        }
+
+        ReleaseToPool();
+    }
+
+    private void ReleaseToPool()
+    {
+        if (_isReleased)
+        {
+            return;
+        }
+
+        _isReleased = true;
+
+        DisposeToken();
+
+        if (_effect != null)
+        {
+            _effect.ReleaseToPool();
+            _effect = null;
+        }
+
+        GameManager.Pool.DespawnToPool(gameObject);
+    }
+
+    private void DisposeToken()
+    {
+        if (_token != null)
+        {
+            _token.Cancel();
+            _token.Dispose();
+            _token = null;
+        }
     }
 }
 
