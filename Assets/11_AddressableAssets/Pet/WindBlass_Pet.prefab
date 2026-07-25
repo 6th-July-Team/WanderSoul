@@ -14868,6 +14868,7 @@ GameObject:
   - component: {fileID: 2006853994463353216}
   - component: {fileID: 956528858942600118}
   - component: {fileID: 3718373704877952261}
+  - component: {fileID: -7455282657890085249}
   m_Layer: 0
   m_Name: WindBlass_Pet
   m_TagString: Untagged
@@ -14884,7 +14885,7 @@ Transform:
   m_GameObject: {fileID: 6233950540726897735}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.54, y: -0, z: -8.11}
+  m_LocalPosition: {x: 0, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -19867,6 +19868,27 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
+--- !u!114 &-7455282657890085249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6233950540726897735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 713ed7a2728818447968a8f491d25928, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ParticleComponent
+  _particles:
+  - {fileID: 956528858942600118}
+  - {fileID: 5733379197939539078}
+  - {fileID: 1894711000235445324}
+  - {fileID: 5514569200713015181}
+  - {fileID: 3873288395902107065}
+  - {fileID: 6760955537385097555}
+  _trails: []
+  _releaseDelay: 2
 --- !u!1 &7882160700145170821
 GameObject:
   m_ObjectHideFlags: 0
