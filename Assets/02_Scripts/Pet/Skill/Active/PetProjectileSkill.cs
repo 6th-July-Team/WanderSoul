@@ -17,15 +17,16 @@ public class PetProjectileSkill : IPetActiveSkillExecution
 
         Vector3 direct = (target.Position - context.PetPos).normalized;
 
-        Projectile projectileInstance = GameObject.Instantiate(
-                Resources.Load<Projectile>("Pet/TestProjectile")
-                , context.PetPos, Quaternion.identity);
+        // 펫 임시 주석 TODO(김익환): 펫 스킬 보완 시 처리
+        //Projectile projectileInstance = GameObject.Instantiate(
+        //        Resources.Load<Projectile>("Pet/TestProjectile")
+        //        , context.PetPos, Quaternion.identity);
 
-        projectileInstance.Init(new ProjectileStruct
-        (
-            context.PetActiveSkillData.ProjectileSpeed, context.PetActiveSkillData.Power, context.PetActiveSkillData.Duration
-            , direct, context.PetActiveSkillData.GetDamageType(), context.PetActiveSkillData.GetTargetType()
-            , context.PetActiveSkillData.VFXPath
-        ));
+        //projectileInstance.Init(new ProjectileStruct
+        //(
+        //    context.PetActiveSkillData.ProjectileSpeed, context.PetActiveSkillData.Power, context.PetActiveSkillData.Duration
+        //    , direct, context.PetActiveSkillData.GetDamageType(), context.PetActiveSkillData.GetTargetType()
+        //    , context.PetActiveSkillData.VFXPath
+        //));
     }
 }

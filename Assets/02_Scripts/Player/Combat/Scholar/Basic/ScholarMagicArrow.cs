@@ -3,35 +3,37 @@
 public class ScholarMagicArrow : IElementArrowVariant
 {
     private int _castCount = 1;
+    private PlayerSkillData _upgradeSkillData;
+
 
     public void Fire(PlayerSkillUseContext context, float damage, PlayerSkillData SkillData)
     {
         if (_castCount % 4 == 0)
         {
-            // 강화 화살 발사 로직 추가
-            Projectile projectileInstance = Object.Instantiate(Resources.Load<Projectile>("PlayerProjectile")
-                , context.BasicAttackAnchor.position, Quaternion.identity);
-
-            projectileInstance.Init(new ProjectileStruct
-            (
-                SkillData.ProjectileSpeed, SkillData.Power, SkillData.Duration
-                , context.AimWorldPoint - context.BasicAttackAnchor.position
-                , SkillData.GetDamageType(), SkillData.GetTargetType()
-                , SkillData.VFXPath
-            ));
+            GameManager.Pool.SpawnFromPool<Projectile>("PlayerProjectile", context.BasicAttackAnchor.position)
+                .Init(new ProjectileStruct
+                (
+                    SkillData.ProjectileSpeed, SkillData.Power, SkillData.Duration
+                    , context.AimWorldPoint - context.BasicAttackAnchor.position
+                    , SkillData.GetDamageType(), SkillData.GetTargetType()
+                    , SkillData.VFXPath
+                ));
         }
         else
         {
-            Projectile projectileInstance = Object.Instantiate(Resources.Load<Projectile>("PlayerProjectile")
-                , context.BasicAttackAnchor.position, Quaternion.identity);
+            if(_upgradeSkillData == null)
+            {
+                _upgradeSkillData = GameManager.DataTable.GetPlayerSkillData(SkillData.Id + "_upgrade");
+            }
 
-            projectileInstance.Init(new ProjectileStruct
-            (
-                SkillData.ProjectileSpeed, SkillData.Power, SkillData.Duration
-                , context.AimWorldPoint - context.BasicAttackAnchor.position
-                , SkillData.GetDamageType(), SkillData.GetTargetType()
-                , SkillData.VFXPath
-            ));
+            GameManager.Pool.SpawnFromPool<Projectile>("PlayerProjectile", context.BasicAttackAnchor.position)
+                .Init(new ProjectileStruct
+                (
+                    _upgradeSkillData.ProjectileSpeed, _upgradeSkillData.Power, _upgradeSkillData.Duration
+                    , context.AimWorldPoint - context.BasicAttackAnchor.position
+                    , _upgradeSkillData.GetDamageType(), _upgradeSkillData.GetTargetType()
+                    , _upgradeSkillData.VFXPath
+                ));
         }
 
         _castCount++;

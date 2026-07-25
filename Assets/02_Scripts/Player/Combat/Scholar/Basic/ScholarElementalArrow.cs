@@ -15,7 +15,7 @@ public class ScholarElementalArrow : IPlayerSkillExecution
 
         _variants = new Dictionary<PetElement, IElementArrowVariant>
         {
-            { PetElement.None, new ScholarMagicArrow() },
+            { PetElement.Magic, new ScholarMagicArrow() },
             { PetElement.Fire, new ScholarFireArrow() },
             { PetElement.Water, new ScholarWaterArrow() },
             { PetElement.Earth, new ScholarEarthArrow() },
