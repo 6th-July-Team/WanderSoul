@@ -145,7 +145,8 @@ public class ConvoyManager
 
         for(int index = 0; index < _selectedPetIds.Count; index++)
         {
-            GameObject petInstance = GameObject.Instantiate(Utils.ResourcesLoad<GameObject>("Test_Pet"));
+            var petOB = GameManager.Resource.GetLoadedAsset<GameObject>(_selectedPetIds[index]);
+            GameObject petInstance = GameObject.Instantiate(petOB);
 
             var viewModel = GameManager.Network.CreatePetViewModel(_selectedPetIds[index]);
 
