@@ -41,7 +41,7 @@ public class PetPartyController : IPetPartyReader
         int elementMask = 0;
 
         if(_pets.Count == 0)
-            return PetElement.None;
+            return PetElement.Magic;
 
         if (_pets.Count == 1)
             return _pets[0].Element;
@@ -56,7 +56,7 @@ public class PetPartyController : IPetPartyReader
             elementMask |= bitPosition;
         }
 
-        return PetElement.None;
+        return PetElement.Magic;
     }
 
     public void ApplyEffectForAllPet(StatusEffectInstance instance)

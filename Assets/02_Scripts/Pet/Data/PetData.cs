@@ -8,6 +8,7 @@ public enum PetElement
     Water,
     Earth,
     Air,
+    Magic,
     COUNT
 }
 
