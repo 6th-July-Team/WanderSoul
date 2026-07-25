@@ -419,6 +419,7 @@ public class StatusEffectData : BaseData
     public string stringOperation;
 
     public string SkillModifierId;
+    public string VFXPath;
 
     public StatusEffectStackPolicy GetStackPolicy()
         => Enum.TryParse<StatusEffectStackPolicy>(StackPolicy, out var result) ? result : StatusEffectStackPolicy.Ignore;

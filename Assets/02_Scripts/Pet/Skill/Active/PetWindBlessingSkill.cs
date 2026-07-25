@@ -1,4 +1,4 @@
-﻿using System;
+﻿
 using UnityEngine;
 
 public class PetWindBlessingSkill : IPetActiveSkillExecution
@@ -34,6 +34,8 @@ public class PetWindBlessingSkill : IPetActiveSkillExecution
         {
             _playerHealable.Heal(context.PetActiveSkillData.Power);
         }
+
+        VFXSpawner.SpawnVFX(context.PetActiveSkillData.VFXPath, context.PetPos, Quaternion.identity);
 
         //onEndSkill?.Invoke();
     }

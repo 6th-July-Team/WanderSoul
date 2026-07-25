@@ -94,5 +94,25 @@
   {
     "Id": "Scholar/BarrierExplosionEffect",
     "InitSize": 1
+  },
+  {
+    "Id": "EarthPawn_ActiveEffect",
+    "InitSize": 0
+  },
+  {
+    "Id": "FramePawn_ActiveEffect",
+    "InitSize": 0
+  },
+  {
+    "Id": "WaterPawn_ActiveEffect",
+    "InitSize": 0
+  },
+  {
+    "Id": "WindBlass_Pet",
+    "InitSize": 0
+  },
+  {
+    "Id": "WindPawn_ActiveEffect",
+    "InitSize": 0
   }
 ]
