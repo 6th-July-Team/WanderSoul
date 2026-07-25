@@ -76,8 +76,7 @@ public class PetSkillMaker
 
         if (skillData.StatusEffectId != null)
         {
-            string StatusEffectId = skillData.StatusEffectId;
-            effectData = GameManager.DataTable.GetStatusEffectData(StatusEffectId);
+            effectData = GameManager.DataTable.GetStatusEffectData(skillData.StatusEffectId);
         }
 
         PetSkillCreateInfo createInfo 

@@ -1,5 +1,4 @@
 ﻿using Cysharp.Threading.Tasks;
-using GAP_LaserSystem;
 using System;
 using System.Threading;
 using UnityEngine;
@@ -53,7 +52,7 @@ public class ParticleComponent : MonoBehaviour
         }
     }
 
-    public void Play()
+    public void Play(bool continuous = false)
     {
         DisposeToken();
 
@@ -70,6 +69,11 @@ public class ParticleComponent : MonoBehaviour
         for (int i = 0; i < _particles.Length; i++)
         {
             _particles[i].Play(true);
+        }
+
+        if(continuous)
+        {
+            return;
         }
 
         _token = new CancellationTokenSource();
