@@ -1,0 +1,122 @@
+﻿using System;
+using UnityEngine;
+
+public enum EffectColorType
+{
+    Red,
+    Blue,
+    Brown,
+    Yellow,
+    Purple
+}
+
+[Serializable]
+public struct EffectPalette
+{
+    public EffectColorType Type;
+
+    [Range(-1f, 1f)]
+    public float HueOffset;
+
+    [Range(0f, 2f)]
+    public float SaturationScale;
+
+    [Range(0f, 2f)]
+    public float ValueScale;
+}
+
+public class PariclePaletteController : MonoBehaviour
+{
+    [SerializeField] private EffectPalette[] _palettes;
+
+    private ParticleSystem[] _particleSystems;
+    private ParticleSystem.MinMaxGradient[] _originalStartColors;
+
+    private void Awake()
+    {
+        _particleSystems = GetComponentsInChildren<ParticleSystem>(true);
+        _originalStartColors = new ParticleSystem.MinMaxGradient[_particleSystems.Length];
+
+        for (int i = 0; i < _particleSystems.Length; i++)
+        {
+            _originalStartColors[i] = _particleSystems[i].main.startColor;
+        }
+
+        ApplyPalette(EffectColorType.Red);
+    }
+
+    public void ApplyPalette(EffectColorType colorType)
+    {
+        EffectPalette palette = Array.Find(_palettes, palette => palette.Type == colorType);
+
+        for (int i = 0; i < _particleSystems.Length; i++)
+        {
+            ParticleSystem.MainModule main = _particleSystems[i].main;
+
+            main.startColor = ChangeGradient(_originalStartColors[i], palette);
+        }
+    }
+
+    private ParticleSystem.MinMaxGradient ChangeGradient(ParticleSystem.MinMaxGradient source, EffectPalette palette)
+    {
+        switch (source.mode)
+        {
+            case ParticleSystemGradientMode.Color:
+                return new ParticleSystem.MinMaxGradient(ChangeColor(source.color, palette));
+
+            case ParticleSystemGradientMode.TwoColors:
+                return new ParticleSystem.MinMaxGradient(ChangeColor(source.colorMin, palette)
+                    , ChangeColor(source.colorMax, palette));
+
+            case ParticleSystemGradientMode.Gradient:
+                return new ParticleSystem.MinMaxGradient(ChangeGradient(source.gradient, palette));
+
+            case ParticleSystemGradientMode.TwoGradients:
+                return new ParticleSystem.MinMaxGradient(ChangeGradient(source.gradientMin, palette)
+                    , ChangeGradient(source.gradientMax, palette)
+                );
+
+            case ParticleSystemGradientMode.RandomColor:
+                {
+                    var result = new ParticleSystem.MinMaxGradient(ChangeGradient(source.gradient, palette));
+
+                    result.mode = ParticleSystemGradientMode.RandomColor;
+                    return result;
+                }
+
+            default:
+                return source;
+        }
+    }
+
+    private Gradient ChangeGradient(Gradient source, EffectPalette palette)
+    {
+        GradientColorKey[] colorKeys = source.colorKeys;
+        GradientAlphaKey[] alphaKeys = source.alphaKeys;
+
+        for (int i = 0; i < colorKeys.Length; i++)
+        {
+            colorKeys[i].color = ChangeColor(colorKeys[i].color, palette);
+        }
+
+        Gradient result = new Gradient();
+        result.SetKeys(colorKeys, alphaKeys);
+        result.mode = source.mode;
+
+        return result;
+    }
+
+    private Color ChangeColor(Color source, EffectPalette palette)
+    {
+        Color.RGBToHSV(source, out float hue, out float saturation, out float value);
+
+        hue = Mathf.Repeat(hue + palette.HueOffset, 1f);
+        saturation = Mathf.Clamp01(saturation * palette.SaturationScale);
+        value *= palette.ValueScale;
+
+        Color result = Color.HSVToRGB(hue, saturation, value, true);
+        result.a = source.a;
+
+        return result;
+    }
+}
