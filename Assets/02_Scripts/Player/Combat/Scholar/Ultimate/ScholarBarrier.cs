@@ -63,6 +63,7 @@ public class ScholarBarrier : MonoBehaviour, IBarrierable, IDamageable
         var effect = VFXSpawner.SpawnVFX("Scholar/BarrierExplosionEffect"
             , transform.position, Quaternion.identity, _radius * 2);
 
+
         effect.GetComponent<PariclePaletteController>().ApplyPalette(_effectColor);
 
         int count = SearchUtil.FindTargetSphere(transform.position, transform.localScale.x / 2f, LayerMask.GetMask("Enemy"), _colliders);

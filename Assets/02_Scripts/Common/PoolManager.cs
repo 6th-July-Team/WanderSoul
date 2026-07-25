@@ -85,7 +85,8 @@ public class PoolManager
         objectPools[obj.name].Enqueue(obj);
         activedObjects[obj.name].Remove(obj);
 
-        obj.SetActive(false);
+        obj.SetActive(false); 
+        obj.transform.SetParent(_poolRoot, false);
     }
 
     public void AllDespawnToPool()

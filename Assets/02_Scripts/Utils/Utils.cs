@@ -117,7 +117,7 @@ public static class Utils
             PetElement.Water => EffectColorType.Blue,
             PetElement.Earth => EffectColorType.Brown,
             PetElement.Air => EffectColorType.Yellow,
-            PetElement.None => EffectColorType.Purple,
+            PetElement.Magic => EffectColorType.Purple,
             _ => EffectColorType.Purple,
         };
     }
