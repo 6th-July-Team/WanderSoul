@@ -12,6 +12,7 @@ public class PetMovement : MonoBehaviour
     [SerializeField] private float _destinationRefreshInterval = 0.1f;
 
     private NavMeshAgent _agent;
+    private Animator _animator;
 
     private IPositionProvider _anchor;
     private ITargetable _target;
@@ -26,6 +27,7 @@ public class PetMovement : MonoBehaviour
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
+        _animator = GetComponent<Animator>();
     }
 
     public void Init(string petId, int avoidancePriority)
@@ -105,6 +107,7 @@ public class PetMovement : MonoBehaviour
             return;
         }
 
+        _animator.speed = 1f;
         SetDestination(targetPosition, _currentStopDistance, force);
     }
 
@@ -127,6 +130,7 @@ public class PetMovement : MonoBehaviour
             return;
         }
 
+        _animator.speed = 1f;
         SetDestination(destination, _stopDistanceFromAnchor, force);
     }
 
@@ -151,6 +155,7 @@ public class PetMovement : MonoBehaviour
         _agent.isStopped = true;
         _agent.ResetPath();
         _hasDestination = false;
+        _animator.speed = 0f;
     }
 
     private bool CheckUpdateDestination(Vector3 destination)
