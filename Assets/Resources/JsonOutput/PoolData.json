@@ -84,8 +84,8 @@
     "InitSize": 0
   },
   {
-    "Id": "PlayerProjectile",
-    "InitSize": 30
+    "Id": "ProjectileHusks",
+    "InitSize": 50
   },
   {
     "Id": "Scholar/Barrier",
