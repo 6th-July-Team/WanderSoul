@@ -35,6 +35,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 315a0b5c47a0a504bade2040204b4252
+    m_Address: Assets/03_Prefabs/Pet/WindPawn.prefab
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 32cca0270278b20468c1fb16b9f50d90
     m_Address: Scholar/MagicArrowEffect
     m_ReadOnly: 0
@@ -52,6 +57,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 410500729318ebe49a58f9cbe5d86e1b
     m_Address: Scholar/IceExplosionEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 46e2ccb74f2cd3f4fbc2e0b3a331de51
+    m_Address: pet_earth_003
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -97,6 +107,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 7b1cf43efae12ec4381ba6bb09bd7db9
     m_Address: Scholar/Barrier
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7e90f4451bee81d4a9abe5d08bcd2923
+    m_Address: pet_water_002
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -177,6 +192,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e600a49488a90334a92bf1db2d7e0963
     m_Address: Scholar/StoneArrowEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e9f79101c76180d46b7a244fa19a69a8
+    m_Address: pet_fire_001
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
