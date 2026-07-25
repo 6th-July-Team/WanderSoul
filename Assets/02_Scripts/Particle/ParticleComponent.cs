@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using System;
+using System.Threading;
 using UnityEngine;
 
 public class ParticleComponent : MonoBehaviour
@@ -11,6 +12,9 @@ public class ParticleComponent : MonoBehaviour
     [SerializeField] private float _releaseDelay = 2f;
 
     public float ReleaseDelay => _releaseDelay;
+
+    private CancellationTokenSource _token;
+    private bool _isReleased;
 
     private void Awake()
     {
@@ -26,19 +30,16 @@ public class ParticleComponent : MonoBehaviour
 
     private void CacheComponents()
     {
-        if (_particles == null || _particles.Length == 0)
-        {
-            _particles = GetComponentsInChildren<ParticleSystem>(true);
-        }
-
-        if (_trails == null || _trails.Length == 0)
-        {
-            _trails = GetComponentsInChildren<TrailRenderer>(true);
-        }
+        _particles = GetComponentsInChildren<ParticleSystem>(true);
+        _trails = GetComponentsInChildren<TrailRenderer>(true);
     }
 
     public void Play()
     {
+        DisposeToken();
+
+        _isReleased = false;
+
         Clear();
 
         for (int i = 0; i < _trails.Length; i++)
@@ -52,21 +53,8 @@ public class ParticleComponent : MonoBehaviour
             _particles[i].Play(true);
         }
 
-        Despawn().Forget();
-    }
-
-    public void Stop()
-    {
-        for (int i = 0; i < _particles.Length; i++)
-        {
-            _particles[i].Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-        }
-
-        for (int i = 0; i < _trails.Length; i++)
-        {
-            _trails[i].emitting = false;
-            ClearTrails();
-        }
+        _token = new CancellationTokenSource();
+        DespawnAfterDelay(_token.Token).Forget();
     }
 
     public void SetScale(Vector3 scale)
@@ -84,18 +72,59 @@ public class ParticleComponent : MonoBehaviour
         ClearTrails();
     }
 
+    public void ReleaseToPool()
+    {
+        if (_isReleased)
+        {
+            return;
+        }
+
+        _isReleased = true;
+
+        DisposeToken();
+
+        Clear();
+
+        GameManager.Pool.DespawnToPool(gameObject);
+    }
+
     private void ClearTrails()
     {
         for (int i = 0; i < _trails.Length; i++)
         {
-            _trails[i].Clear();
+            TrailRenderer trail = _trails[i];
+
+            if (trail == null)
+            {
+                continue;
+            }
+
+            _trails[i].emitting = false;
+            trail.Clear();
         }
     }
 
-    public async UniTask Despawn()
+    private async UniTask DespawnAfterDelay(CancellationToken token)
     {
-        await UniTask.Delay(TimeSpan.FromSeconds(_releaseDelay));
-        Clear();
-        GameManager.Pool.DespawnToPool(gameObject);
+        bool isCanceled = await UniTask.Delay(TimeSpan.FromSeconds(_releaseDelay), cancellationToken: token)
+            .SuppressCancellationThrow();
+
+        if (isCanceled)
+        {
+            // 외부에서 ReleaseToPool()을 호출한 경우
+            return;
+        }
+
+        ReleaseToPool();
+    }
+
+    private void DisposeToken()
+    {
+        if (_token != null)
+        {
+            _token.Cancel();
+            _token.Dispose();
+            _token = null;
+        }
     }
 }
