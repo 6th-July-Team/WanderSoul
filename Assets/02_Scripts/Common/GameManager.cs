@@ -66,34 +66,19 @@ public class GameManager : SingletonBehaviour<GameManager>
 
         _uiManager.Init();
 
-        InitAsync().Forget();
+        StartupFlow();
     }
 
-    private async UniTaskVoid InitAsync()
+    private void StartupFlow()
     {
         if (_skipStartupUIForTest)
         {
             InitNonAsync();
-            // 여기에 로딩은 없어도 초기화 해야할 것 넣기
+            // 테스트: 타이틀/로딩 없이 바로 전투 진입
             var testPetIds = new List<string> { "pet_fire_001", "pet_water_002", "pet_earth_003" };
             StartConvoy(testPetIds);
             return;
         }
-
-        // 여기에서 로딩 UI 오픈
-
-        _loadingUI = _uiManager.OpenLoadingUI();
-
-        var loadTask = _resourceManager.Init(OnLoadingProgress);
-        var minTimeTask = UniTask.Delay(System.TimeSpan.FromSeconds(1.5f));
-
-
-        await UniTask.WhenAll(loadTask, minTimeTask);
-
-        _uiManager.CloseUI(UIType.LoadingUIView);
-        _loadingUI = null;
-
-        InitNonAsync();
 
         ShowTitle();
     }
@@ -110,6 +95,30 @@ public class GameManager : SingletonBehaviour<GameManager>
     private void OnGameStart()
     {
         _uiManager.CloseUI(UIType.TitleUI);
+        EnterGameAsync().Forget();
+    }
+
+    // 게임 시작 누르면 여기서 로딩 (타이틀 뒤로 옮김)
+    private async UniTaskVoid EnterGameAsync()
+    {
+        _loadingUI = _uiManager.OpenLoadingUI();
+
+        var loadTask = _resourceManager.Init(OnLoadingProgress);
+        var minTimeTask = UniTask.Delay(System.TimeSpan.FromSeconds(1.5f));
+
+        await UniTask.WhenAll(loadTask, minTimeTask);
+
+        if (_loadingUI != null)
+        {
+            _loadingUI.SetProgress(1f);
+            await _loadingUI.WaitUntilFilledAsync();
+        }
+
+        _uiManager.CloseUI(UIType.LoadingUIView);
+        _loadingUI = null;
+
+        InitNonAsync();
+
         // TODO(이태영): 시작 마을 ID를 세이브 데이터나 기획 값에서 가져오기
         EnterVillage("town_lavendil");
     }
