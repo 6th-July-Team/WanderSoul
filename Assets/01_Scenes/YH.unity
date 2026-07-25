@@ -633,57 +633,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 59d085067c3fd104aaa8ac4c95486949, type: 3}
---- !u!1 &589845176 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7584889789157666527, guid: c1f670a8ede792b4ca89a0f761e96b1e, type: 3}
-  m_PrefabInstance: {fileID: 1259060495}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &894361923
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 894361925}
-  - component: {fileID: 894361924}
-  m_Layer: 0
-  m_Name: LocationNavigator
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &894361924
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 894361923}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c270a2ba919b4240ae65b9ed6929b85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LocationNavigator
-  _startLocationPrefab: {fileID: 1123395528}
-  _monsterFarmPrefab: {fileID: 589845176}
---- !u!4 &894361925
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 894361923}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 960, y: 539.825, z: 50}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &947383970
 GameObject:
   m_ObjectHideFlags: 0
@@ -729,11 +678,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1123395528 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2983919527084978667, guid: 59d085067c3fd104aaa8ac4c95486949, type: 3}
-  m_PrefabInstance: {fileID: 485667205}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1259060495
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -899,4 +843,3 @@ SceneRoots:
   - {fileID: 485667205}
   - {fileID: 1259060495}
   - {fileID: 947383972}
-  - {fileID: 894361925}

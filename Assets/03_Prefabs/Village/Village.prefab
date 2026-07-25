@@ -12791,8 +12791,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TowmHallPanel
   _villageLevelText: {fileID: 4022650999639175546}
   _upgradeCostText: {fileID: 5057431225935758828}
-  _reputationText: {fileID: 0}
-  _villageNameText: {fileID: 0}
+  _reputationText: {fileID: 9040907828622899083}
+  _villageNameText: {fileID: 6330493984914724571}
   _townId: town_lavendil
   _villageLevel: 1
   _upgradeCost: 1000
