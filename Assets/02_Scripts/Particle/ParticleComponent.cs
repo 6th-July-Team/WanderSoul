@@ -1,4 +1,5 @@
 ﻿using Cysharp.Threading.Tasks;
+using GAP_LaserSystem;
 using System;
 using System.Threading;
 using UnityEngine;
@@ -32,6 +33,24 @@ public class ParticleComponent : MonoBehaviour
     {
         _particles = GetComponentsInChildren<ParticleSystem>(true);
         _trails = GetComponentsInChildren<TrailRenderer>(true);
+
+        for (int i = 0; i < _particles.Length; i++)
+        {
+            ParticleSystem particle = _particles[i];
+
+            if (particle == null)
+            {
+                continue;
+            }
+
+            ParticleSystem.MainModule main = particle.main;
+            main.stopAction = ParticleSystemStopAction.None;
+        }
+
+        for (int i = 0; i < _trails.Length; i++)
+        {
+            _trails[i].autodestruct = false;
+        }
     }
 
     public void Play()
@@ -69,7 +88,11 @@ public class ParticleComponent : MonoBehaviour
             _particles[i].Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
 
-        ClearTrails();
+        for (int i = 0; i < _trails.Length; i++)
+        {
+            _trails[i].emitting = false;
+            _trails[i].Clear();
+        }
     }
 
     public void ReleaseToPool()
@@ -86,22 +109,6 @@ public class ParticleComponent : MonoBehaviour
         Clear();
 
         GameManager.Pool.DespawnToPool(gameObject);
-    }
-
-    private void ClearTrails()
-    {
-        for (int i = 0; i < _trails.Length; i++)
-        {
-            TrailRenderer trail = _trails[i];
-
-            if (trail == null)
-            {
-                continue;
-            }
-
-            _trails[i].emitting = false;
-            trail.Clear();
-        }
     }
 
     private async UniTask DespawnAfterDelay(CancellationToken token)
