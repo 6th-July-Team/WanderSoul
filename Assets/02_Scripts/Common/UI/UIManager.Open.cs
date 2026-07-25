@@ -262,6 +262,18 @@ public partial class UIManager
         return view;
     }
 
+    public ScreenFadeUIView OpenScreenFade()
+    {
+        var view = OpenUI<ScreenFadeUIView>(UIType.ScreenFadeUIView);
+        if (view == null)
+        {
+            Debug.LogWarning("ScreenFadeUIView를 열 수 없습니다.");
+            return null;
+        }
+
+        return view;
+    }
+
     public void OpenSimplePopup(string message)
     {
         var view = OpenUI<SimplePopupUIView>(UIType.SimplePopupUIView);

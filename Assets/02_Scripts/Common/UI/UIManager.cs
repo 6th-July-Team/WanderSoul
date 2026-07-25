@@ -172,6 +172,9 @@ public partial class UIManager
             case UIType.LoadingUIView:
                 return UIRootType.Front;
 
+            case UIType.ScreenFadeUIView:
+                return UIRootType.Front;
+
             case UIType.SimplePopupUIView:
                 return UIRootType.Popup;
 

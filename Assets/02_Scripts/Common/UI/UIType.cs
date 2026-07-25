@@ -22,6 +22,7 @@
     ConvoyHudUIView,
     LevelUpUIView,
     LoadingUIView,
+    ScreenFadeUIView,
     SimplePopupUIView,
     ConvoySuccessUIView,
     ConvoyFailUIView,
