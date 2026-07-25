@@ -11,18 +11,21 @@ public enum EffectColorType
 }
 
 [Serializable]
-public struct EffectPalette
+public class EffectPalette
 {
     public EffectColorType Type;
 
-    [Range(-1f, 1f)]
-    public float HueOffset;
+    [Range(0f, 360f)]
+    public float TargetHue;
 
     [Range(0f, 2f)]
-    public float SaturationScale;
+    public float SaturationScale = 1f;
 
     [Range(0f, 2f)]
-    public float ValueScale;
+    public float ValueScale = 1f;
+
+    [Range(0f, 1f)]
+    public float MinSaturation = 0.1f;
 }
 
 public class PariclePaletteController : MonoBehaviour
@@ -108,13 +111,18 @@ public class PariclePaletteController : MonoBehaviour
 
     private Color ChangeColor(Color source, EffectPalette palette)
     {
-        Color.RGBToHSV(source, out float hue, out float saturation, out float value);
+        Color.RGBToHSV(source, out _, out float saturation, out float value);
 
-        hue = Mathf.Repeat(hue + palette.HueOffset, 1f);
+        float targetHue = palette.TargetHue / 360f;
+
         saturation = Mathf.Clamp01(saturation * palette.SaturationScale);
+
+        saturation = Mathf.Max(saturation, palette.MinSaturation);
+
         value *= palette.ValueScale;
 
-        Color result = Color.HSVToRGB(hue, saturation, value, true);
+        Color result = Color.HSVToRGB(targetHue, saturation, value, true);
+
         result.a = source.a;
 
         return result;

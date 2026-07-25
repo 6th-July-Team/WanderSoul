@@ -34218,25 +34218,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PariclePaletteController
   _palettes:
   - Type: 0
-    HueOffset: -0.58
+    TargetHue: 0
     SaturationScale: 1
     ValueScale: 1
+    MinSaturation: 0.15
   - Type: 1
-    HueOffset: 0
+    TargetHue: 215
     SaturationScale: 1
     ValueScale: 1
+    MinSaturation: 0.15
   - Type: 2
-    HueOffset: -0.5
+    TargetHue: 25
     SaturationScale: 0.8
     ValueScale: 0.55
+    MinSaturation: 0.2
   - Type: 3
-    HueOffset: -0.43
-    SaturationScale: 0.9
-    ValueScale: 1.15
-  - Type: 4
-    HueOffset: 0.2
+    TargetHue: 55
     SaturationScale: 1
-    ValueScale: 0.9
+    ValueScale: 1
+    MinSaturation: 0.15
+  - Type: 4
+    TargetHue: 285
+    SaturationScale: 1
+    ValueScale: 1
+    MinSaturation: 0.15
 --- !u!114 &1158879159270089518
 MonoBehaviour:
   m_ObjectHideFlags: 0

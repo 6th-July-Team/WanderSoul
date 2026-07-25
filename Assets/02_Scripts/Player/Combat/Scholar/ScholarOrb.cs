@@ -20,6 +20,9 @@ public class ScholarOrb : MonoBehaviour
         _followPoint = followPoint;
 
         transform.position = _destination = followPoint.position;
+        GetComponent<PariclePaletteController>().ApplyPalette(
+            Utils.GetEffectColorByPetElement(GameManager.PetParty.GetPriorityPetElement()));
+        
     }
 
 

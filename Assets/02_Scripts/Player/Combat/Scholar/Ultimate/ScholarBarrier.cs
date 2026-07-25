@@ -27,7 +27,6 @@ public class ScholarBarrier : MonoBehaviour, IBarrierable, IDamageable
         transform.localScale = Vector3.one * _radius * 2;
 
         _effectColor = Utils.GetEffectColorByPetElement(element);
-        GetComponent<PariclePaletteController>().ApplyPalette(_effectColor);
     }
 
     private void Update()
