@@ -86,5 +86,13 @@
   {
     "Id": "PlayerProjectile",
     "InitSize": 30
+  },
+  {
+    "Id": "Scholar/Barrier",
+    "InitSize": 1
+  },
+  {
+    "Id": "Scholar/BarrierExplosionEffect",
+    "InitSize": 1
   }
 ]
