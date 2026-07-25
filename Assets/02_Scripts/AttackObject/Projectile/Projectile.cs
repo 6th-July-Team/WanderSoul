@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
@@ -52,7 +53,7 @@ public class Projectile : MonoBehaviour
 
         if (_duration > 0)
         {
-            Destroy(this.gameObject, _duration);
+            DespawnDelay().Forget();
         }
 
         VFXSpawner.SpawnAttachedVFX(_visualAddress, _visualRoot, Vector3.zero, Quaternion.identity);
@@ -90,7 +91,7 @@ public class Projectile : MonoBehaviour
 
                 if (_pierce <= 0)
                 {
-                    Destroy(gameObject);
+                    GameManager.Pool.DespawnToPool(this.gameObject);
                 }
                 else
                 {
@@ -145,6 +146,12 @@ public class Projectile : MonoBehaviour
 
             damageableTarget.TakeDamage(damageInfo);
         }
+    }
+
+    private async UniTaskVoid DespawnDelay()
+    {
+        await UniTask.Delay((int)(_duration * 1000f));
+        GameManager.Pool.DespawnToPool(this.gameObject);    
     }
 }
 
