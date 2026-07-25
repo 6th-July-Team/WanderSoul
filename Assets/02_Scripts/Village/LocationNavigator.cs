@@ -3,18 +3,30 @@ using UnityEngine;
 
 public class LocationNavigator : MonoBehaviour
 {
-    [SerializeField] private GameObject _startLocation;
-    [SerializeField] private GameObject _monsterFarmRoot;
+    [SerializeField] private GameObject _startLocationPrefab;
+    [SerializeField] private GameObject _monsterFarmPrefab;
 
     private readonly Stack<GameObject> _locationHistory = new();
+
+    private GameObject _startLocation;
+    private GameObject _monsterFarmRoot;
     private GameObject _currentLocation;
 
     public bool IsInMonsterFarm => _currentLocation == _monsterFarmRoot;
 
-    private void Awake()
+    private void Start()
     {
+        if (_startLocationPrefab == null || _monsterFarmPrefab == null)
+        {
+            Debug.LogError("LocationNavigator에 장소 프리팹이 연결되지 않았습니다.");
+            return;
+        }
+
+        _startLocation = Instantiate(_startLocationPrefab, transform);
+        _monsterFarmRoot = Instantiate(_monsterFarmPrefab, transform);
+
         _currentLocation = _startLocation;
-        _currentLocation.SetActive(true);
+        _startLocation.SetActive(true);
         _monsterFarmRoot.SetActive(false);
     }
 
