@@ -175,6 +175,9 @@ public partial class UIManager
             case UIType.ScreenFadeUIView:
                 return UIRootType.Front;
 
+            case UIType.OptionUI:
+                return UIRootType.Popup;
+
             case UIType.SimplePopupUIView:
                 return UIRootType.Popup;
 

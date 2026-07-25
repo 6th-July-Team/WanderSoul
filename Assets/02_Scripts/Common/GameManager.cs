@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : SingletonBehaviour<GameManager>
 {
@@ -81,6 +82,38 @@ public class GameManager : SingletonBehaviour<GameManager>
         }
 
         ShowTitle();
+    }
+
+    private void Update()
+    {
+        if (Keyboard.current == null)
+        {
+            return;
+        }
+
+        if (Keyboard.current.escapeKey.wasPressedThisFrame == false)
+        {
+            return;
+        }
+
+        ToggleOptionUI();
+    }
+
+    private void ToggleOptionUI()
+    {
+        if (_uiManager.IsActiveUI(UIType.OptionUI) == true)
+        {
+            var optionUI = _uiManager.GetUI<OptionUI>(UIType.OptionUI);
+
+            if (optionUI != null)
+            {
+                optionUI.Close();
+            }
+
+            return;
+        }
+
+        _uiManager.OpenOptionUI();
     }
 
     private void ShowTitle()

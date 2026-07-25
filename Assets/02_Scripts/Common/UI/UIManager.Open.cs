@@ -44,6 +44,16 @@ public partial class UIManager
         return _activeUI.Contains(uiType);
     }
 
+    public T GetUI<T>(UIType uiType) where T : BaseUI
+    {
+        if (_createdUIDic.TryGetValue(uiType, out BaseUI ui) == false)
+        {
+            return null;
+        }
+
+        return ui as T;
+    }
+
     public void OpenPetInventoryUI(PetInventoryModel petInventoryModel)
     {
         if (petInventoryModel == null)
@@ -198,7 +208,7 @@ public partial class UIManager
             return;
         }
 
-        var view = GetCreatUI<SkillHudUIView>(UIType.SkillHudUIView);
+        var view = GetUI<SkillHudUIView>(UIType.SkillHudUIView);
 
         if (view == null)
         {
@@ -259,6 +269,18 @@ public partial class UIManager
         }
 
         view.SetupRandom();
+        return view;
+    }
+
+    public OptionUI OpenOptionUI()
+    {
+        var view = OpenUI<OptionUI>(UIType.OptionUI);
+        if (view == null)
+        {
+            Debug.LogWarning("OptionUI를 열 수 없습니다.");
+            return null;
+        }
+
         return view;
     }
 
