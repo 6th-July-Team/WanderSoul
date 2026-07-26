@@ -1580,6 +1580,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TitleIntroAnimation
   _logo: {fileID: 8582389951195920469}
+  _logoImage: {fileID: 8491580138149536977}
   _distantLandscape: {fileID: 4184892465909515894}
   _distantLandscapeImage: {fileID: 2766203325038557320}
   _foreground: {fileID: 1441653702693351993}
@@ -1588,10 +1589,14 @@ MonoBehaviour:
   _barrierShimmer: {fileID: 910000000000000005}
   _logoGlow: {fileID: 920000000000000001}
   _logoParticles: {fileID: 930000000000000003}
+  _objectsToActivateOnComplete: []
   _logoStartOffset: {x: 0, y: 0}
   _logoStartScale: {x: 1.5, y: 1.5, z: 1}
   _distantLandscapeStartOffset: {x: 0, y: -400}
   _foregroundStartOffset: {x: -100, y: -200}
+  _blackHoldDuration: 1
+  _logoFadeInDuration: 1.2
+  _logoHoldDuration: 1.5
   _logoDuration: 2.2
   _landscapeDuration: 3.6
   _foregroundDuration: 3
