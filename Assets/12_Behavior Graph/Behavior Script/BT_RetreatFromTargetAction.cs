@@ -73,7 +73,7 @@ public partial class BT_RetreatFromTargetAction : Action
             return Status.Success;
         }
 
-        _repathTimer += Time.deltaTime;
+        _repathTimer += GameManager.Time.GameDeltaTime;
 
         if (_repathTimer >= RepathInterval.Value)
         {

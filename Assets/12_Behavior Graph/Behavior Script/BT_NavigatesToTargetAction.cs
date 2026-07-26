@@ -87,7 +87,7 @@ public partial class BT_NavigatesToTargetAction : Action
 
         if (_waitTimer > 0f)
         {
-            _waitTimer -= Time.deltaTime;
+            _waitTimer -= GameManager.Time.GameDeltaTime;
 
             if (_waitTimer <= 0f)
             {
@@ -151,7 +151,7 @@ public partial class BT_NavigatesToTargetAction : Action
             return;
         }
 
-        _stuckTimer += Time.deltaTime;
+        _stuckTimer += GameManager.Time.GameDeltaTime;
 
         if (_stuckTimer < STUCK_TIME)
         {
@@ -178,7 +178,7 @@ public partial class BT_NavigatesToTargetAction : Action
     // RepathInterval(=재계산 주기)가 지났고, Target이 REPATH_DISTANCE(=경로 재계산 거리) 이상 움직였을 때만 경로를 재계산하는 메서드
     private void TryRepath()
     {
-        _repathTimer += Time.deltaTime;
+        _repathTimer += GameManager.Time.GameDeltaTime;
 
         if (_repathTimer < RepathInterval.Value)
         {
