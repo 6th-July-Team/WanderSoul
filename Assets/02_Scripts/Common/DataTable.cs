@@ -32,6 +32,7 @@ public class DataTable
     public Dictionary<string, WagonData> WagonDataTable { get; private set; } = new();
     public Dictionary<string, WagonSlowRuleData> WagonSlowRuleDataTable { get; private set; } = new();
     public Dictionary<string, PlayerClassData> PlayerClassDataTable { get; private set; } = new();
+    public Dictionary<string, ProjectileColliderData> ProjectileColliderDataTable { get; private set; } = new();
     #endregion
 
     [Serializable]
@@ -67,6 +68,7 @@ public class DataTable
         AutoSpawnDataTable = LoadData<AutoSpawnData>(nameof(AutoSpawnData));
         PreLoadAssetDataTable = LoadData<PreLoadAssetData>(nameof(PreLoadAssetData));
         PlayerClassDataTable = LoadData<PlayerClassData>(nameof(PlayerClassData));
+        //ProjectileColliderDataTable = LoadData<ProjectileColliderData>(nameof(ProjectileColliderData));
     }
 
     #region Getters
@@ -212,6 +214,12 @@ public class DataTable
     {
         if (null == EnemyDataTable || string.IsNullOrEmpty(id)) return null;
         return EnemyDataTable.TryGetValue(id, out var data) ? data : null;
+    }
+
+    public ProjectileColliderData GetProjectileColliderData(string id)
+    {
+        if (null == ProjectileColliderDataTable || string.IsNullOrEmpty(id)) return null;
+        return ProjectileColliderDataTable.TryGetValue(id, out var data) ? data : null;
     }
 
     #endregion
