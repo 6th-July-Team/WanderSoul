@@ -9,7 +9,7 @@ public class ResourceHudUIView : BaseUI<ResourceHudUIView, ResourceHudViewModel>
     [SerializeField] private TMP_Text _moneyText;
 
     private PlayerOutGameViewModel _outGameViewModel;
-    private Action<string> _soulHandler;
+    private Action<string> _outGameHandler;
 
     [Header("Layout")]
     [SerializeField] private RectTransform _rootRect;
@@ -51,15 +51,11 @@ public class ResourceHudUIView : BaseUI<ResourceHudUIView, ResourceHudViewModel>
 
     protected override void OnPropertyChanged(string propertyName)
     {
-        if (propertyName == nameof(ResourceModel.Money))
-        {
-            _moneyText.text = $"{_viewModel.Money:N0}";
-        }
     }
 
-    public void SetSoulSource(PlayerOutGameViewModel outGameViewModel)
+    public void SetOutGameSource(PlayerOutGameViewModel outGameViewModel)
     {
-        UnbindSoul();
+        UnbindOutGame();
 
         if (outGameViewModel == null)
         {
@@ -67,17 +63,23 @@ public class ResourceHudUIView : BaseUI<ResourceHudUIView, ResourceHudViewModel>
         }
 
         _outGameViewModel = outGameViewModel;
-        _soulHandler = (propertyName) => OnSoulPropertyChanged(propertyName);
-        _outGameViewModel.OnPropertyChanged_View += _soulHandler;
+        _outGameHandler = (propertyName) => OnOutGamePropertyChanged(propertyName);
+        _outGameViewModel.OnPropertyChanged_View += _outGameHandler;
 
         RefreshSoul();
+        RefreshMoney();
     }
 
-    private void OnSoulPropertyChanged(string propertyName)
+    private void OnOutGamePropertyChanged(string propertyName)
     {
         if (propertyName == nameof(PlayerOutGameModel.Soul))
         {
             RefreshSoul();
+        }
+
+        else if (propertyName == nameof(PlayerOutGameModel.Gold))
+        {
+            RefreshMoney();
         }
     }
 
@@ -86,21 +88,26 @@ public class ResourceHudUIView : BaseUI<ResourceHudUIView, ResourceHudViewModel>
         _soulText.text = $"{_outGameViewModel.GetSoul:N0}";
     }
 
-    private void UnbindSoul()
+    private void RefreshMoney()
+    {
+        _moneyText.text = $"{_outGameViewModel.GetGold:N0}";
+    }
+
+    private void UnbindOutGame()
     {
         if (_outGameViewModel == null)
         {
             return;
         }
 
-        _outGameViewModel.OnPropertyChanged_View -= _soulHandler;
+        _outGameViewModel.OnPropertyChanged_View -= _outGameHandler;
         _outGameViewModel = null;
-        _soulHandler = null;
+        _outGameHandler = null;
     }
 
     protected override void OnDestroy()
     {
         base.OnDestroy();
-        UnbindSoul();
+        UnbindOutGame();
     }
 }

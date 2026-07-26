@@ -54,7 +54,7 @@ public partial class UIManager
         return ui as T;
     }
 
-    public void OpenPetInventoryUI(PetInventoryModel petInventoryModel)
+    public void OpenPetInventoryUI(PetInventoryModel petInventoryModel, string questId = null)
     {
         if (petInventoryModel == null)
         {
@@ -68,6 +68,8 @@ public partial class UIManager
             Debug.LogWarning("PetInventoryUIView를 열 수 없습니다.");
             return;
         }
+
+        view.SetQuestId(questId);
 
         var partyModel = new PartyModel();
         var viewModel = new PetInventoryViewModel(petInventoryModel, partyModel);
@@ -132,8 +134,7 @@ public partial class UIManager
         view.CloseWithSlide();
     }
 
-    // TODO(이태영): 평판 데이터가 붙으면 currentReputation 기본값 제거
-    public void OpenQuestDetailUI(string questId, int currentReputation = TEMP_REPUTATION)
+    public void OpenQuestDetailUI(string questId)
     {
         var questData = GameManager.DataTable.GetQuestData(questId);
 
@@ -144,6 +145,7 @@ public partial class UIManager
         }
 
         var questModel = new QuestModel(questData);
+        int currentReputation = GameManager.Network.RequestPlayerOutGameViewModel().GetReputation;
 
         OpenQuestDetailUI(questModel, currentReputation, GetTempPetInventoryModel());
     }
@@ -190,7 +192,7 @@ public partial class UIManager
         }
 
         view.SetCurrentReputation(currentReputation);
-        view.SetAcceptedCallback(() => OpenPetInventoryUI(petInventoryModel));
+        view.SetAcceptedCallback(() => OpenPetInventoryUI(petInventoryModel, questModel.Data.Id));
 
         var viewModel = new QuestViewModel(questModel);
         view.BindViewModel(viewModel);
@@ -254,7 +256,7 @@ public partial class UIManager
         var viewModel = new ResourceHudViewModel(resourceModel);
         view.BindViewModel(viewModel);
 
-        view.SetSoulSource(GameManager.Network.RequestPlayerOutGameViewModel());
+        view.SetOutGameSource(GameManager.Network.RequestPlayerOutGameViewModel());
         return view;
     }
 

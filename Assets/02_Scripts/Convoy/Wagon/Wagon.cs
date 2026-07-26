@@ -45,7 +45,7 @@ public class Wagon : MonoBehaviour, ITargetable, IDamageable
         _wagonViewModel.SetProgress(Mathf.Floor(_splineAnimate.NormalizedTime * 100) / 100);
     }
 
-    public void Init(WagonViewModel wagonViewModel, PlayerEntity player)
+    public void Init(WagonViewModel wagonViewModel, PlayerEntity player, string questId)
     {
         _wagonViewModel = wagonViewModel;
 
@@ -57,7 +57,7 @@ public class Wagon : MonoBehaviour, ITargetable, IDamageable
 
         _baseMoveSpeed = GameManager.DataTable.GetWagonData(WAGON_ID).BaseMoveSpeed;
 
-        InitChildComponent(player);
+        InitChildComponent(player, questId);
     }
 
     public void Release()
@@ -74,11 +74,11 @@ public class Wagon : MonoBehaviour, ITargetable, IDamageable
         _splineAnimate = null;
     }
 
-    private void InitChildComponent(PlayerEntity player)
+    private void InitChildComponent(PlayerEntity player, string questId)
     {
         GetComponentInChildren<WagonBoundary>().Init(_wagonViewModel);
         GetComponentInChildren<WagonMonsterCounter>().Init(_wagonViewModel);
-        GetComponentInChildren<EnemySpawner>().Init(player, this);
+        GetComponentInChildren<EnemySpawner>().Init(player, this, questId);
     }
 
     public void SetSpline(SplineContainer splineContainer)

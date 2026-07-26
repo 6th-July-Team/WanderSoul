@@ -44,6 +44,11 @@ public class GameManager : SingletonBehaviour<GameManager>
     [SerializeField] private bool _skipStartupUIForTest = false;
     private Transform _poolRoot = null;
 
+    private const string START_TOWN_ID = "town_lavendil";
+
+    // 테스트 스킵 진입 전용
+    private const string TEST_QUEST_ID = "quest_001";
+
     private PetSkillMaker _petSkillMaker;
     private PlayerSkillMaker _playerSkillMaker;
     private StatusEffectMaker _statusEffectMaker;
@@ -118,7 +123,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         InitNonAsync();
 
         var testPetIds = new List<string> { "pet_fire_001", "pet_water_002", "pet_earth_003" };
-        StartConvoy(testPetIds);
+        StartConvoy(TEST_QUEST_ID, testPetIds);
     }
 
     private void Update()
@@ -190,7 +195,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         InitNonAsync();
 
         // TODO(이태영): 시작 마을 ID를 세이브 데이터나 기획 값에서 가져오기
-        EnterVillage("town_lavendil");
+        EnterVillage(START_TOWN_ID);
     }
 
     private void OnLoadingProgress(float progress)
@@ -259,6 +264,21 @@ public class GameManager : SingletonBehaviour<GameManager>
     {
         // 여기에서 세이브 데이터 로드하여 설정할 것들 설정하기
         // ex) 저장된 골드, 레벨
+
+        InitReputation();
+    }
+
+    // TODO(이태영): 세이브 데이터가 붙으면 저장된 평판을 우선 사용하도록 교체
+    private void InitReputation()
+    {
+        var townData = _dataTable.GetTownData(START_TOWN_ID);
+
+        if (townData == null)
+        {
+            return;
+        }
+
+        _networkManager.RequestPlayerOutGameViewModel().AddReputation(townData.StartReputation);
     }
 
     #endregion
@@ -268,7 +288,6 @@ public class GameManager : SingletonBehaviour<GameManager>
         _uiManager.OpenUI<MainMenuUI>(UIType.MainMenuUI);
 
         var resourceModel = new ResourceModel();
-        resourceModel.Money = 8520;
 
         var resourceHud = _uiManager.OpenResourceHudUI(resourceModel);
 
@@ -279,7 +298,7 @@ public class GameManager : SingletonBehaviour<GameManager>
 
         var villageModel = new VillageModel();
         villageModel.TownDataId = villageId;
-        villageModel.CurrentReputation = 50;
+        villageModel.CurrentReputation = _networkManager.RequestPlayerOutGameViewModel().GetReputation;
         _uiManager.OpenVillageInfoHudUI(villageModel);
     }
 
@@ -291,20 +310,18 @@ public class GameManager : SingletonBehaviour<GameManager>
         _uiManager.CloseAllQuestUI();
     }
 
-    public void StartConvoy(List<string> selectedPetIds)
+    public void StartConvoy(string questId, List<string> selectedPetIds)
     {
-        EnterConvoyAsync(selectedPetIds).Forget();
+        EnterConvoyAsync(questId, selectedPetIds).Forget();
     }
 
-    private async UniTaskVoid EnterConvoyAsync(List<string> selectedPetIds)
+    private async UniTaskVoid EnterConvoyAsync(string questId, List<string> selectedPetIds)
     {
         ScreenFadeUIView fade = await BeginTransitionAsync();
 
         ExitVillage();
 
-        // 해당 시점 이전에 의뢰 선택 및 펫 선택이 완료되어야 합니다.
-        // 선택된 의뢰 ID 및 선택된 펫 ID 리스트가 아래 필요합니다.
-        await _convoyManager.InitConvoy("TEST_QuestId", selectedPetIds);
+        await _convoyManager.InitConvoy(questId, selectedPetIds);
 
         await EndTransitionAsync(fade);
     }

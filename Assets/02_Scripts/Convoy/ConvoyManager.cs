@@ -23,6 +23,8 @@ public class ConvoyManager
 
     private bool _isConvoyEnded;
 
+    private int _convoyStartSoul;
+
     public ConvoyManager(PetSkillMaker petSkillMaker, PlayerSkillMaker playerSkillMaker)
     {
         _petSkillMaker = petSkillMaker;
@@ -33,6 +35,7 @@ public class ConvoyManager
     public async UniTask InitConvoy(string questId, List<string> selectedPetIds)
     {
         _selectedQuestId = questId;
+        _convoyStartSoul = GameManager.Network.RequestPlayerOutGameViewModel().GetSoul;
 
         _selectedPetIds.Clear();
         _selectedPetIds.AddRange(selectedPetIds);
@@ -72,29 +75,113 @@ public class ConvoyManager
         result.IsSuccess = isSuccess;
         result.FailReason = failReason;
 
-        // TODO(이태영): 실제 집계 값으로 교체
-        result.ClearTime = 185f;
+        result.ClearTime = GetConvoyClearTime();
+        result.GainedSoul = GetGainedSoul();
+
+        // TODO(이태영): 처치 수는 EnemySpawner의 집계, 신기록은 세이브 데이터가 붙어야 채울 수 있음
         result.IsNewRecord = false;
-        result.KilledMonsterCount = 42;
-        result.GainedSoul = 120;
+        result.KilledMonsterCount = 0;
+
+        var questData = GameManager.DataTable.GetQuestData(_selectedQuestId);
 
         if (isSuccess == true)
         {
-            result.GoldReward = 850;
-            result.ReputationReward = 10;
+            result.GoldReward = GetGoldReward(questData);
+            result.ReputationReward = GetReputationReward(questData);
         }
         else
         {
+            // TODO(이태영): 실패 페널티도 기획 데이터에서 가져오기
             result.ReputationPenalty = 5;
             result.RepairCost = 300;
             result.IsRepairCostPaid = true;
             result.ExtraReputationPenalty = 3;
         }
 
+        ApplyReputation(result);
+        ApplyGold(result);
+
         // TODO(이태영): Release()에서 반환하는 마을 ID와 연동 필요
         result.ReturnTownId = "town_lavendil";
 
         return result;
+    }
+
+    private float GetConvoyClearTime()
+    {
+        var wagonViewModel = GameManager.Network.WagonService.GetWagonViewModel();
+
+        if (wagonViewModel == null)
+        {
+            return 0f;
+        }
+
+        return wagonViewModel.GetTime;
+    }
+
+    private int GetGainedSoul()
+    {
+        int currentSoul = GameManager.Network.RequestPlayerOutGameViewModel().GetSoul;
+
+        return Mathf.Max(0, currentSoul - _convoyStartSoul);
+    }
+
+    private int GetReputationReward(QuestData questData)
+    {
+        if (questData == null)
+        {
+            return 0;
+        }
+
+        return questData.ReputationReward;
+    }
+
+    private int GetGoldReward(QuestData questData)
+    {
+        if (questData == null)
+        {
+            return 0;
+        }
+
+        return questData.GoldReward;
+    }
+
+    private void ApplyGold(ConvoyResultModel result)
+    {
+        var outGameViewModel = GameManager.Network.RequestPlayerOutGameViewModel();
+
+        if (result.IsSuccess == true)
+        {
+            outGameViewModel.AddGold(result.GoldReward);
+            return;
+        }
+
+        if (result.IsRepairCostPaid == false)
+        {
+            return;
+        }
+
+        outGameViewModel.ReduceGold(result.RepairCost);
+    }
+
+    private void ApplyReputation(ConvoyResultModel result)
+    {
+        var outGameViewModel = GameManager.Network.RequestPlayerOutGameViewModel();
+
+        if (result.IsSuccess == true)
+        {
+            outGameViewModel.AddReputation(result.ReputationReward);
+            return;
+        }
+
+        int penalty = result.ReputationPenalty;
+
+        if (result.IsRepairCostPaid == false)
+        {
+            penalty += result.ExtraReputationPenalty;
+        }
+
+        outGameViewModel.AddReputation(-penalty);
     }
 
     public string Release()
@@ -147,7 +234,7 @@ public class ConvoyManager
         var wagonViewModel = GameManager.Network.RequestCreateWagon();
 
         _wagon = GameObject.Instantiate(Utils.ResourcesLoad<Wagon>("Wagon/Wagon_ProtoType"));
-        _wagon.Init(wagonViewModel, _playerEntity);
+        _wagon.Init(wagonViewModel, _playerEntity, _selectedQuestId);
         _wagon.SetSpline(splineContainer);
     }
 
@@ -232,8 +319,6 @@ public class ConvoyManager
         }
 
         var resourceModel = new ResourceModel();
-
-        resourceModel.Money = 999999;
 
         var resourceHud = GameManager.UI.OpenResourceHudUI(resourceModel);
 
