@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+﻿
 
 public class WagonModel : BaseModel
 {
@@ -10,8 +10,9 @@ public class WagonModel : BaseModel
         OnPropertyChanged(nameof(WarningTime));
         OnPropertyChanged(nameof(Name));
         OnPropertyChanged(nameof(Capacity));
-        OnPropertyChanged(nameof(Progress));
+        OnPropertyChanged(nameof(Progress)); 
         OnPropertyChanged(nameof(ConvoyTimer));
+        OnPropertyChanged(nameof(IsWarningActive));
     }
 
     private float _durability;
@@ -131,6 +132,21 @@ public class WagonModel : BaseModel
             }
             _convoyTimer = value;
             OnPropertyChanged(nameof(ConvoyTimer));
+        }
+    }
+
+    private bool _isWarningActive;
+    public bool IsWarningActive
+    {
+        get { return _isWarningActive; }
+        set
+        {
+            if (_isWarningActive == value)
+            {
+                return;
+            }
+            _isWarningActive = value;
+            OnPropertyChanged(nameof(IsWarningActive));
         }
     }
 }
