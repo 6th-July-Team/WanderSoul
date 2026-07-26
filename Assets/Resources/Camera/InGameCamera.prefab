@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 6988245773553622055}
   serializedVersion: 2
   m_LocalRotation: {x: 0.44721362, y: 0, z: 0, w: 0.8944272}
-  m_LocalPosition: {x: 0, y: 20, z: -15}
+  m_LocalPosition: {x: 0, y: 15, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -59,7 +59,7 @@ MonoBehaviour:
     LookAtTarget: {fileID: 0}
     CustomLookAtTarget: 0
   Lens:
-    FieldOfView: 55
+    FieldOfView: 35
     OrthographicSize: 9.61
     NearClipPlane: 0.3
     FarClipPlane: 1000
@@ -123,4 +123,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraHandler
   _rotationX: 0
-  _lens: 0
+  _lens: 35
