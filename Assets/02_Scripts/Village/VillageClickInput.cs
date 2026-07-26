@@ -5,8 +5,6 @@ using UnityEngine.InputSystem;
 
 public class VillageClickInput : MonoBehaviour
 {
-
-    [SerializeField] private GameObject _missionPanel;
     [SerializeField] private GameObject _townHallPanel;
 
     [Header("건물 호버 UI")]
@@ -19,7 +17,6 @@ public class VillageClickInput : MonoBehaviour
 
     private void Awake()
     {
-        _missionPanel.SetActive(false);
         _townHallPanel.SetActive(false);
         _facilityHoverPanel.gameObject.SetActive(false);
     }
@@ -52,7 +49,6 @@ public class VillageClickInput : MonoBehaviour
 
         if (facility.FacilityType == VillageFacilityType.MissionGuild)
         {
-            _missionPanel.SetActive(false);
             _townHallPanel.SetActive(false);
 
             GameManager.UI.OpenQuestBoardUI();
@@ -61,7 +57,6 @@ public class VillageClickInput : MonoBehaviour
         if (facility.FacilityType == VillageFacilityType.TownHall)
         {
             _townHallPanel.SetActive(true);
-            _missionPanel.SetActive(false);
         }
     }
 
