@@ -28,7 +28,15 @@ public class MainMenuUI : BaseUI
     protected override void OnOpened()
     {
         CreateLocations();
-        ShowVillage();
+
+        if (_villageInstance != null)
+        {
+            ShowVillage();
+        }
+        else
+        {
+            ShowMonsterFarm();
+        }
 
         if (_slideAnimation == null)
         {
@@ -128,29 +136,27 @@ public class MainMenuUI : BaseUI
 
     private void CreateLocations()
     {
-        if (_villageInstance != null && _monsterFarmInstance != null)
+        if (_gameCamera == null)
         {
-            return;
+            _gameCamera = Camera.main;
         }
 
-        if (_villagePrefab == null || _monsterFarmPrefab == null)
+        if (_villageInstance == null && _villagePrefab != null)
         {
-            Debug.LogWarning("마을 또는 몬스터 팜 프리팹이 연결되지 않았습니다.");
-            return;
+            _villageInstance = Instantiate(_villagePrefab);
+            _villageInstance.SetActive(false);
         }
 
-        _gameCamera = Camera.main;
-
-        _villageInstance = Instantiate(_villagePrefab);
-        _monsterFarmInstance = Instantiate(_monsterFarmPrefab);
-
-        _villageInstance.SetActive(false);
-        _monsterFarmInstance.SetActive(false);
+        if (_monsterFarmInstance == null && _monsterFarmPrefab != null)
+        {
+            _monsterFarmInstance = Instantiate(_monsterFarmPrefab);
+            _monsterFarmInstance.SetActive(false);
+        }
     }
 
     private void ShowVillage()
     {
-        if (_villageInstance == null || _monsterFarmInstance == null)
+        if (_villageInstance == null)
         {
             return;
         }
@@ -160,7 +166,11 @@ public class MainMenuUI : BaseUI
             _gameCamera.gameObject.SetActive(false);
         }
 
-        _monsterFarmInstance.SetActive(false);
+        if (_monsterFarmInstance != null)
+        {
+            _monsterFarmInstance.SetActive(false);
+        }
+
         _villageInstance.SetActive(true);
 
         _isInMonsterFarm = false;
@@ -169,7 +179,7 @@ public class MainMenuUI : BaseUI
 
     private void ShowMonsterFarm()
     {
-        if (_villageInstance == null || _monsterFarmInstance == null)
+        if (_monsterFarmInstance == null)
         {
             return;
         }
@@ -179,7 +189,11 @@ public class MainMenuUI : BaseUI
             _gameCamera.gameObject.SetActive(false);
         }
 
-        _villageInstance.SetActive(false);
+        if (_villageInstance != null)
+        {
+            _villageInstance.SetActive(false);
+        }
+
         _monsterFarmInstance.SetActive(true);
 
         _isInMonsterFarm = true;

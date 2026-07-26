@@ -120,6 +120,11 @@ public class VillageInfoViewModel : BaseViewModel<VillageModel>
         }
     }
 
+    public int VillageLevel
+    {
+        get { return _model.VillageLevel; }
+    }
+
     private ReputationGradeData GetCurrentGrade()
     {
         return GameManager.DataTable.GetReputationGradeByValue(_model.CurrentReputation);
