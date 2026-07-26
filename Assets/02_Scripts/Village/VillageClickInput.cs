@@ -50,31 +50,25 @@ public class VillageClickInput : MonoBehaviour
             return;
         }
 
-        if (facility.FacilityType == VillageFacilityType.Shop)
-        {
-            _missionPanel.SetActive(false);
-            _townHallPanel.SetActive(false);
-        }
+        CloseAllPanels();
 
         if (facility.FacilityType == VillageFacilityType.MissionGuild)
         {
-            _missionPanel.SetActive(false);
-            _townHallPanel.SetActive(false);
-
             GameManager.UI.OpenQuestBoardUI();
         }
 
         if (facility.FacilityType == VillageFacilityType.TownHall)
         {
             _townHallPanel.SetActive(true);
-            _missionPanel.SetActive(false);
         }
+    }
 
-        if (facility.FacilityType == VillageFacilityType.Clinic)
-        {
-            _townHallPanel.SetActive(false);
-            _missionPanel.SetActive(false);
-        }
+    public void CloseAllPanels()
+    {
+        _missionPanel.SetActive(false);
+        _townHallPanel.SetActive(false);
+
+        GameManager.UI.CloseQuestBoardUI();
     }
 
     private void UpdateFacilityHover()

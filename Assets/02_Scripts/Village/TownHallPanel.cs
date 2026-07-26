@@ -34,17 +34,17 @@ public class TownHallPanel : MonoBehaviour
     private void RefreshTexts()
     {
         string townName = "마을 정보 없음";
-        int startReputation = 0;
         string gradeName = "평판 정보 없음";
+
+        int currentReputation = GameManager.Network.RequestPlayerOutGameViewModel().GetReputation;
 
         TownData townData = GameManager.DataTable.GetTownData(_townId);
 
         if ( townData != null)
         {
             townName = townData.Name;
-            startReputation = townData.StartReputation;
 
-            ReputationGradeData gradeData = GameManager.DataTable.GetReputationGradeByValue(startReputation);
+            ReputationGradeData gradeData = GameManager.DataTable.GetReputationGradeByValue(currentReputation);
 
             if (gradeData != null)
             {
@@ -54,7 +54,7 @@ public class TownHallPanel : MonoBehaviour
 
         _villageNameText.text = townName;
         _villageLevelText.text = $"마을 레벨: {_villageLevel}";
-        _reputationText.text = $"평판: {startReputation} ({gradeName})";
+        _reputationText.text = $"평판: {currentReputation} ({gradeName})";
         _upgradeCostText.text = $"업그레이드 비용: {_upgradeCost}";
     }
 }

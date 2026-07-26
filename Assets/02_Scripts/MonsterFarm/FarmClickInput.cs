@@ -59,7 +59,7 @@ public class FarmClickInput : MonoBehaviour
         }
     }
 
-    private void CloseAllPanels()
+    public void CloseAllPanels()
     {
         _summonPanel.SetActive(false);
         _corralPanel.Close();
