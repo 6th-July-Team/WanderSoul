@@ -15,6 +15,16 @@ public class ConvoyFailUIView : BaseUI
         _returnTownButton.BindOnClickButtonEvent(OnClickReturnTown);
     }
 
+    protected override void OnOpened()
+    {
+        GameManager.Time.OnPause();
+    }
+
+    protected override void OnClosed()
+    {
+        GameManager.Time.OnResume();
+    }
+
     public void SetResult(ConvoyResultModel result)
     {
         if (result == null)
