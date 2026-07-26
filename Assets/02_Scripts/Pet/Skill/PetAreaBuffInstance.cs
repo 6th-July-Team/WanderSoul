@@ -2,6 +2,8 @@
 
 public class PetAreaBuffInstance : MonoBehaviour
 {
+    [SerializeField] private Transform _effectRoot;
+
     private StatusEffectData _effectData;
 
     private IStatModifierReceiver _playerAdapter;
@@ -9,6 +11,8 @@ public class PetAreaBuffInstance : MonoBehaviour
     private ModifierHandle _handle;
 
     private SphereCollider _collider;
+
+    private ParticleComponent _effect;
 
     private void Awake()
     {
@@ -20,6 +24,9 @@ public class PetAreaBuffInstance : MonoBehaviour
     {
         _effectData = effectData;
         _collider.radius = petPassiveSkillData.Radius;
+
+        _effect = VFXSpawner.SpawnAttachedVFX(_effectData.VFXPath, _effectRoot, Vector3.zero, Quaternion.identity
+            , continuous: true);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -39,5 +46,10 @@ public class PetAreaBuffInstance : MonoBehaviour
         {
             _playerAdapter.RemoveModifier(_handle);
         }
+    }
+
+    public void Release()
+    {
+        _effect.ReleaseToPool();
     }
 }

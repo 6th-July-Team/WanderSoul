@@ -258,6 +258,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6899906930015009602}
   - component: {fileID: 1750648870957622329}
+  - component: {fileID: -8778205626468638111}
+  - component: {fileID: 2708043240957310815}
+  - component: {fileID: 3456587026209866356}
+  - component: {fileID: 1013537235048205823}
   m_Layer: 0
   m_Name: FlamePawn
   m_TagString: Untagged
@@ -304,6 +308,78 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!195 &-8778205626468638111
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024140384889270956}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 2
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 3
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!135 &2708043240957310815
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024140384889270956}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.35
+  m_Center: {x: 0, y: 0.07, z: 0}
+--- !u!114 &3456587026209866356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024140384889270956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20da1bbc00a984c44bb120019e4abe79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetMovement
+  _stopDistanceFromAnchor: 3
+  _destinationUpdateDistance: 0.5
+  _destinationRefreshInterval: 0.1
+--- !u!114 &1013537235048205823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024140384889270956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08f5f3d4d3307914d80b1e2ed4aa9e25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetController
+  __SOPetSearch: {fileID: 11400000, guid: 6ea5631651619e14f9484c6bf765b215, type: 2}
+  _commandRefreshInterval: 0.2
 --- !u!1 &1500345374331566716
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,7 +405,7 @@ Transform:
   m_GameObject: {fileID: 1500345374331566716}
   serializedVersion: 2
   m_LocalRotation: {x: 0.7015753, y: -0.00337512, z: 0.02235242, w: 0.7122367}
-  m_LocalPosition: {x: 2.3283064e-10, y: 0.27035615, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.8022774, y: 0.8022773, z: 0.8022773}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -364,7 +440,7 @@ Transform:
   m_GameObject: {fileID: 1699396550579587556}
   serializedVersion: 2
   m_LocalRotation: {x: -0.000000037748947, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: -0, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

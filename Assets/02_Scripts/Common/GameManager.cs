@@ -15,6 +15,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     public static UIManager UI { get { return Instance._uiManager; } }
     public static PetPartyController PetParty { get { return Instance._petPartyController; } }
     public static NetworkManager Network { get { return Instance._networkManager; } }
+    public static CameraManager Camera { get { return Instance._cameraManager; } }
 
 
     #region Manager Varialbes
@@ -28,6 +29,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     private UIManager _uiManager = new();
     private PetPartyController _petPartyController = new();
     private NetworkManager _networkManager = new();
+    private CameraManager _cameraManager = new();
 
 
     private ConvoyManager _convoyManager;

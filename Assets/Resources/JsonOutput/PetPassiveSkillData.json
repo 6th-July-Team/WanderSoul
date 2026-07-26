@@ -7,7 +7,7 @@
     "StatusEffectId": 0,
     "ApllyChance": null,
     "ExecutionId": "AreaBuff",
-    "Radius": null
+    "Radius": 5
   },
   {
     "Id": "pet_passive_water_regeneration",
@@ -17,6 +17,6 @@
     "StatusEffectId": 0,
     "ApllyChance": null,
     "ExecutionId": "AreaBuff",
-    "Radius": null
+    "Radius": 5
   }
 ]

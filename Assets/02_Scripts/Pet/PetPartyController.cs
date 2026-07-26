@@ -40,7 +40,7 @@ public class PetPartyController : IPetPartyReader
     {
         int elementMask = 0;
 
-        if(_pets.Count == 0)
+        if (_pets.Count == 0)
             return PetElement.Magic;
 
         if (_pets.Count == 1)
@@ -61,7 +61,7 @@ public class PetPartyController : IPetPartyReader
 
     public void ApplyEffectForAllPet(StatusEffectInstance instance)
     {
-        foreach(var pet in _pets)
+        foreach (var pet in _pets)
         {
             pet.ApplyEffect(instance);
         }
@@ -76,5 +76,15 @@ public class PetPartyController : IPetPartyReader
             receivers[i] = _pets[i];
         }
         return receivers;
+    }
+
+    public void Release()
+    {
+        foreach (var pet in _pets)
+        {
+            pet.Dispose();
+        }
+
+        _pets.Clear();
     }
 }

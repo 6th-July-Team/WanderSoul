@@ -221,6 +221,7 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
     public void Dispose()
     {
+        _combatController.Release();
         StatusEffects.Clear();
         _petViewModel.OnPropertyChanged_View -= OnPropertyChanged;
     }

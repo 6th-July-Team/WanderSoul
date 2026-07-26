@@ -154,7 +154,7 @@ Transform:
   m_GameObject: {fileID: 1042314538679125510}
   serializedVersion: 2
   m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: -0.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -186,7 +186,7 @@ Transform:
   m_GameObject: {fileID: 1619327926704600852}
   serializedVersion: 2
   m_LocalRotation: {x: 0.66060096, y: -0.008124541, z: -0.010752084, w: 0.75061625}
-  m_LocalPosition: {x: -0, y: 0.34895167, z: 0}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 0.8570967, y: 0.85709643, z: 0.85709673}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -960,6 +960,10 @@ GameObject:
   m_Component:
   - component: {fileID: 312243205791711634}
   - component: {fileID: 1471630844086081306}
+  - component: {fileID: -2036816510597291020}
+  - component: {fileID: -4409569063229021880}
+  - component: {fileID: -2749376865911900176}
+  - component: {fileID: -7758288594560223761}
   m_Layer: 0
   m_Name: EarthPawn
   m_TagString: Untagged
@@ -1006,6 +1010,78 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!195 &-2036816510597291020
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8074210599895239358}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 2
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 3
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 0.8
+  m_BaseOffset: 0.5
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!135 &-4409569063229021880
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8074210599895239358}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.39
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-2749376865911900176
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8074210599895239358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20da1bbc00a984c44bb120019e4abe79, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetMovement
+  _stopDistanceFromAnchor: 3
+  _destinationUpdateDistance: 0.5
+  _destinationRefreshInterval: 0.1
+--- !u!114 &-7758288594560223761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8074210599895239358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08f5f3d4d3307914d80b1e2ed4aa9e25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PetController
+  __SOPetSearch: {fileID: 11400000, guid: 6ea5631651619e14f9484c6bf765b215, type: 2}
+  _commandRefreshInterval: 0.2
 --- !u!1 &8362847207950012036
 GameObject:
   m_ObjectHideFlags: 0
