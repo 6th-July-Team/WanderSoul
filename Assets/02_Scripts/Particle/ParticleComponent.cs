@@ -138,4 +138,15 @@ public class ParticleComponent : MonoBehaviour
             _token = null;
         }
     }
+
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        if (!gameObject.activeSelf)
+            return;
+
+        Gizmos.matrix = transform.localToWorldMatrix;
+        Gizmos.DrawWireSphere(Vector3.zero, transform.localScale.x);
+    }
+#endif
 }

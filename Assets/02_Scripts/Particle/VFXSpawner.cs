@@ -14,6 +14,11 @@ public static class VFXSpawner
 
         effect.transform.position = spawnPos;
         effect.transform.rotation = rotation;
+
+        if (scale == 0)
+        {
+            scale = 1f;
+        }
         effect.SetScale(Vector3.one * scale);
 
         effect.Play(continuous);
@@ -35,6 +40,11 @@ public static class VFXSpawner
         effect.transform.SetParent(parent, false);
         effect.transform.localPosition = localPos;
         effect.transform.localRotation = localRot;
+
+        if (scale == 0)
+        {
+            scale = 1f;
+        }
         effect.SetScale(Vector3.one * scale);
 
         effect.Play(continuous);

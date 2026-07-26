@@ -307,6 +307,7 @@ public class PlayerSkillData : BaseData
     public string ExecutionId;
     public string stringSkillSlot;
     public float ExtraDamage;
+    public float VFXRadius;
 
     public DamageType GetDamageType()
         => Enum.TryParse<DamageType>(stringSkillDamageType, out var result) ? result : DamageType.Physical;

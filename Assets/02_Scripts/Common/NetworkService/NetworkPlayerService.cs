@@ -66,8 +66,10 @@ public class NetworkPlayerService
         var playerModel = new PlayerModel();
         playerModel.HP = _statController.GetValue(StatType.MaxHealth);
         playerModel.MP = _statController.GetValue(StatType.MaxMana);
+
         playerModel.MagnetRadius = _statController.GetValue(StatType.MagnetRadius);
         playerModel.DashMaxCount = (int)_statController.GetValue(StatType.MaxDashCount);
+        playerModel.DashCount = playerModel.DashMaxCount;
         playerModel.DashChargeTime = _statController.GetValue(StatType.DashChargeTime);
 
         _playerViewModel = new PlayerViewModel(playerModel, _statController);
