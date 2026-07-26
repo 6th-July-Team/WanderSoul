@@ -30,16 +30,12 @@ public class SkillHudUIView : BaseUI
         SetSlot(_ultimateSlot, SkillSlot.Ultimate, skillId, skillViewModel);
     }
 
+    // TODO(이태영): PlayerSkillMaker의 임시 궁극기 장착(UltimateSkillIds[0])이 정리되면 같이 맞추기
     private string GetEquippedUltimateSkillId(PlayerClassData classData)
     {
         if (classData.UltimateSkillIds == null || classData.UltimateSkillIds.Count == 0)
         {
             return null;
-        }
-
-        if (classData.UltimateSkillIds.Count > 1)
-        {
-            return classData.UltimateSkillIds[1];
         }
 
         return classData.UltimateSkillIds[0];

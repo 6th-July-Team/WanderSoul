@@ -98,11 +98,6 @@ public class ConvoyManager
 
     private async UniTask StartConvoyAsync()
     {
-        // TODO(UI): 로딩 UI 또는 Fade In/Out 처리
-        GameManager.UI.OpenLoadingUI();
-
-        await UniTask.Delay(System.TimeSpan.FromSeconds(1f));
-
         LoadMap();
         SpawnPet();
         InitCamera();

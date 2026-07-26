@@ -16,6 +16,7 @@ public class SkillSlotUiView : MonoBehaviour
     private PlayerSkillViewModel _skillViewModel;
 
     private float _lastCooldown = -1f;
+    private float _totalCooldown = 0f;
 
     private const float DISABLED_ALPHA = 0.5f;
 
@@ -26,6 +27,7 @@ public class SkillSlotUiView : MonoBehaviour
         _skillData = skillData;
         _skillViewModel = skillViewModel;
         _lastCooldown = -1f;
+        _totalCooldown = 0f;
 
         gameObject.SetActive(skillData != null);
 
@@ -47,6 +49,11 @@ public class SkillSlotUiView : MonoBehaviour
         }
 
         float remainingCooldown = GetRemainingCooldown();
+
+        if (remainingCooldown > _lastCooldown)
+        {
+            _totalCooldown = remainingCooldown;
+        }
 
         if (Mathf.Approximately(_lastCooldown, remainingCooldown) == true)
         {
@@ -76,6 +83,16 @@ public class SkillSlotUiView : MonoBehaviour
     private float GetRemainingCooldown()
     {
         return _skillViewModel.GetSkillCoolTime(_slot);
+    }
+
+    private float GetTotalCooldown()
+    {
+        if (_totalCooldown > 0f)
+        {
+            return _totalCooldown;
+        }
+
+        return _skillData.Cooldown;
     }
 
     private void RefreshEmptyState()
@@ -142,7 +159,7 @@ public class SkillSlotUiView : MonoBehaviour
         }
 
         float remaining = GetRemainingCooldown();
-        float total = _skillData.Cooldown;
+        float total = GetTotalCooldown();
 
         if (total <= 0f)
         {
