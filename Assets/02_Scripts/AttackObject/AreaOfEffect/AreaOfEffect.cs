@@ -33,9 +33,11 @@ public class AreaOfEffect : MonoBehaviour
 
         _visualPath = aoeStruct.VisualPath;
 
-        VFXSpawner.SpawnAttachedVFX(_visualPath, _visualRoot, Vector3.zero, Quaternion.identity, _vfxRadius);
+        VFXSpawner.SpawnVFX(_visualPath, _centerPos, Quaternion.identity, _vfxRadius);
 
         BurstDamage();
+
+        //Destroy(gameObject);
     }
 
     private void BurstDamage()
