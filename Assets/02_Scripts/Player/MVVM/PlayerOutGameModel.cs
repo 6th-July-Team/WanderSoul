@@ -5,6 +5,7 @@ public class PlayerOutGameModel : BaseModel
     public override void PropertyChangedOnInit()
     {
         OnPropertyChanged(nameof(Soul));
+        OnPropertyChanged(nameof(Gold));
     }
 
     private int _soul;
@@ -17,6 +18,19 @@ public class PlayerOutGameModel : BaseModel
                 return;
             _soul = value;
             OnPropertyChanged(nameof(Soul));
+        }
+    }
+
+    private int _gold;
+    public int Gold
+    {
+        get => _gold;
+        set
+        {
+            if (_gold == value)
+                return;
+            _gold = value;
+            OnPropertyChanged(nameof(Gold));
         }
     }
 }

@@ -130,6 +130,7 @@ public class PlayerStatData : BaseData
     public float MagnetRadius;
     public int MaxReviveCount;
     public int MaxDashCount;
+    public float DashChargeTime;
 
     public float GetBaseValue(StatType statType)
     {
@@ -153,6 +154,7 @@ public class PlayerStatData : BaseData
             StatType.MaxReviveCount => MaxReviveCount,
             StatType.MaxDashCount => MaxDashCount,
             StatType.MagnetRadius => MagnetRadius,
+            StatType.DashChargeTime => DashChargeTime,
             _ => 0f
         };
     }

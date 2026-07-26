@@ -7,6 +7,11 @@ public class PlayerModel : BaseModel
         OnPropertyChanged(nameof(HP));
         OnPropertyChanged(nameof(MP));
         OnPropertyChanged(nameof(EXP));
+        OnPropertyChanged(nameof(MagnetRadius));
+        OnPropertyChanged(nameof(DashCount)); 
+        OnPropertyChanged(nameof(DashMaxCount)); 
+        OnPropertyChanged(nameof(DashCoolTime));
+        OnPropertyChanged(nameof(DashChargeTime));
     }
 
     private float _hp;
@@ -71,6 +76,66 @@ public class PlayerModel : BaseModel
             }
             _magnetRadius = value;
             OnPropertyChanged(nameof(MagnetRadius));
+        }
+    }
+
+    private int _dashCount;
+    public int DashCount
+    {
+        get { return _dashCount; }
+        set
+        {
+            if (_dashCount == value)
+            {
+                return;
+            }
+            _dashCount = value;
+            OnPropertyChanged(nameof(DashCount));
+        }
+    }
+
+    private int _dashMaxCount;
+    public int DashMaxCount
+    {
+        get { return _dashMaxCount; }
+        set
+        {
+            if (_dashMaxCount == value)
+            {
+                return;
+            }
+            _dashMaxCount = value;
+            OnPropertyChanged(nameof(DashMaxCount));
+        }
+    }
+
+    private float _dashChargeTime;
+    public float DashChargeTime
+    {
+        get { return _dashChargeTime; }
+        set
+        {
+            if (_dashChargeTime == value)
+            {
+                return;
+            }
+            _dashChargeTime = value;
+            OnPropertyChanged(nameof(DashChargeTime));
+        }
+    }
+
+    private float _dashCoolTime;
+    public float DashCoolTime
+    {
+        get { return _dashCoolTime; }
+        set
+        {
+            if (_dashCoolTime == value)
+            {
+                return;
+            }
+            _dashCoolTime = value;
+            OnPropertyChanged(nameof(DashCoolTime));
         }
     }
 }

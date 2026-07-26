@@ -58,6 +58,7 @@ public enum StatType
     MaxReviveCount,
     MaxDashCount,
     MagnetRadius,
+    DashChargeTime,
     COUNT
 }
 

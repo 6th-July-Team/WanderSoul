@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using static UnityEditor.Profiling.HierarchyFrameDataView;
 
 [RequireComponent(typeof(PlayerInputHandle))]
 [RequireComponent(typeof(CharacterController))]
@@ -15,16 +16,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _groundedGravity = -2f;
 
     [Header("Dash")]
+    private Vector3 _dashDirection;
     [SerializeField] private float _dashSpeed = 15f;
     [SerializeField] private float _dashDuration = 0.2f;
     [SerializeField] private float _dashCoolTime = 1f;
     private float _dashTimer;
-    private float _dashChargeTimer;
-    private int _dashMaxCount = 2;
-    private int _dashCount;
     private bool _isDashing;
-    private bool _isDashCharging;
-    private Vector3 _dashDirection;
 
     // Components
     private PlayerInputHandle _inputHandle;
@@ -33,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
 
     // 캐싱
     private Vector3 _horizontalVelocity;
+    private PlayerViewModel _viewModel;
 
     private void Awake()
     {
@@ -40,10 +38,8 @@ public class PlayerMovement : MonoBehaviour
         _characterController = GetComponent<CharacterController>();
         _animationController = GetComponent<PlayerAnimationController>();
 
-        //_dashMaxCount = DataTable.GetPlayerData.DashMaxCount
-        _dashCount = _dashMaxCount;
+        _viewModel = GameManager.Network.RequestCreatePlayer();
         _isDashing = false;
-        _isDashCharging = false;
     }
 
     // TODO(김익환): 바인더 클래스를 만드는 것을 고려
@@ -63,7 +59,6 @@ public class PlayerMovement : MonoBehaviour
             return;
 
         UpdateDash();
-        UpdateChargeDash();
         Move();
         UpdateMoveAnimation();
     }
@@ -135,10 +130,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDash()
     {
-        if (_isDashing || _dashCount <= 0)
+        if (_isDashing || _viewModel.GetDashCount <= 0)
             return;
 
-        _dashCount--;
+        if (_viewModel.TryDash())
+            return;
 
         if (_inputHandle.MoveInputV3.sqrMagnitude > 0.001f)
         {
@@ -157,12 +153,6 @@ public class PlayerMovement : MonoBehaviour
 
         _isDashing = true;
         _dashTimer = _dashDuration;
-
-        if (!_isDashCharging)
-        {
-            _isDashCharging = true;
-            _dashChargeTimer = _dashCoolTime;
-        }
     }
 
     private void UpdateDash()
@@ -175,36 +165,6 @@ public class PlayerMovement : MonoBehaviour
         if (_dashTimer <= 0f)
         {
             _isDashing = false;
-        }
-    }
-
-    private void UpdateChargeDash()
-    {
-        if (!_isDashCharging)
-            return;
-
-        if (_dashCount >= _dashMaxCount)
-        {
-            _isDashCharging = false;
-            _dashChargeTimer = 0f;
-            return;
-        }
-
-        _dashChargeTimer -= Time.deltaTime;
-
-        if (_dashChargeTimer > 0f)
-            return;
-
-        _dashCount++;
-
-        if (_dashCount < _dashMaxCount)
-        {
-            _dashChargeTimer = _dashCoolTime;
-        }
-        else
-        {
-            _isDashCharging = false;
-            _dashChargeTimer = 0f;
         }
     }
 
