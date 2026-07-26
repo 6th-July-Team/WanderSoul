@@ -10,6 +10,7 @@ public class DataTable
     public Dictionary<string, PreLoadAssetData> PreLoadAssetDataTable { get; private set; } = new();
     public Dictionary<string, PoolData> PoolDataTable { get; private set; } = new();
     public Dictionary<string, TownData> TownDataTable { get; private set; } = new();
+    public Dictionary<string, InteractableSpotData> InteractableSpotDataTable {  get; private set; } = new();
     public Dictionary<string, RegionData> RegionDataTable { get; private set; } = new();
     public Dictionary<string, ReputationGradeData> ReputationGradeDataTable { get; private set; } = new();
     public Dictionary<string, ItemData> ItemDataTable { get; private set; } = new();
@@ -44,6 +45,7 @@ public class DataTable
     public void LoadAllData()
     {
         TownDataTable = LoadData<TownData>(nameof(TownData));
+        InteractableSpotDataTable = LoadData<InteractableSpotData>(nameof(InteractableSpotData)); 
         RegionDataTable = LoadData<RegionData>(nameof(RegionData));
         ReputationGradeDataTable = LoadData<ReputationGradeData>(nameof(ReputationGradeData));
         //ItemDataTable = LoadData<ItemData>("Item");
@@ -77,6 +79,12 @@ public class DataTable
     {
         if (null == TownDataTable || string.IsNullOrEmpty(townId)) return null;
         return TownDataTable.TryGetValue(townId, out var data) ? data : null;
+    }
+
+    public InteractableSpotData GetInteractableSpotData(string spotId)
+    {
+        if (null == InteractableSpotDataTable || string.IsNullOrEmpty(spotId)) return null;
+        return InteractableSpotDataTable.TryGetValue(spotId, out var data) ? data : null;
     }
 
     public RegionData GetRegionData(string regionId)

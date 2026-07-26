@@ -31,9 +31,26 @@ public class VillageModel : BaseModel
             OnPropertyChanged(nameof(CurrentReputation));
         }
     }
+
+    private int _villageLevel = 1;
+    public int VillageLevel
+    {
+        get { return _villageLevel; }
+        set
+        {
+            if (_villageLevel == value)
+            {
+                return;
+            }
+            _villageLevel = value;
+            OnPropertyChanged(nameof(VillageLevel));
+        }
+    }
+
     public override void PropertyChangedOnInit()
     {
         OnPropertyChanged(nameof(TownDataId));
         OnPropertyChanged(nameof(CurrentReputation));
+        OnPropertyChanged(nameof(VillageLevel));
     }
 }
