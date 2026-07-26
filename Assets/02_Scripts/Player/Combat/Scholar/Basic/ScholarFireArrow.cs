@@ -7,7 +7,7 @@ public class ScholarFireArrow : IElementArrowVariant
         GameManager.Pool.SpawnFromPool<Projectile>("ProjectileHusks", context.BasicAttackAnchor.position)
             .Init(new ProjectileStruct
         (
-            SkillData.ProjectileSpeed, SkillData.Power, SkillData.Duration
+            SkillData.ProjectileSpeed, damage, SkillData.Duration
             , context.AimWorldPoint - context.BasicAttackAnchor.position
             , SkillData.GetDamageType(), SkillData.GetTargetType()
             , SkillData.VFXPath
