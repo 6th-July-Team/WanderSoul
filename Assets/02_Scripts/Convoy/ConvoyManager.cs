@@ -1,5 +1,4 @@
 ﻿using Cysharp.Threading.Tasks;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Splines;
@@ -21,6 +20,8 @@ public class ConvoyManager
 
     private const string PLAYER_ID = "player_scholar"; // 현재 플레이어 선택 불가능하여, 학자가 고정되어 있음.
 
+    private bool _isConvoyEnded;
+
     public ConvoyManager(PetSkillMaker petSkillMaker, PlayerSkillMaker playerSkillMaker)
     {
         _petSkillMaker = petSkillMaker;
@@ -40,6 +41,11 @@ public class ConvoyManager
 
     public void FaildConvoy(ConvoyFailReason failReason = ConvoyFailReason.WagonDestroyed)
     {
+        if (_isConvoyEnded == true)
+            return;
+
+        _isConvoyEnded = true;
+
         GameManager.UI.CloseAllConvoyHuds();
         var result = MakeConvoyResult(false, failReason);
         GameManager.UI.OpenConvoyFailUI(result);
@@ -47,6 +53,11 @@ public class ConvoyManager
 
     public void SuccessConvoy()
     {
+        if (_isConvoyEnded == true)
+            return;
+
+        _isConvoyEnded = true;
+
         GameManager.UI.CloseAllConvoyHuds();
         var result = MakeConvoyResult(true, ConvoyFailReason.None);
         GameManager.UI.OpenConvoySuccessUI(result);
@@ -184,6 +195,7 @@ public class ConvoyManager
 
     private void StartBattle()
     {
+        _isConvoyEnded = false;
         OpenConvoyHuds();
     }
 
