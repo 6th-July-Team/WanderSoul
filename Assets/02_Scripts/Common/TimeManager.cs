@@ -1,7 +1,13 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using System;
+using System.Threading;
+using UnityEngine;
 
 public class TimeManager
 {
+    public event Action OnPaused;
+    public event Action OnResumed;
+
     public float GameDeltaTime
     {
         get
@@ -28,10 +34,39 @@ public class TimeManager
     public void OnPause()
     {
         _pauseCount++;
+
+        if(_pauseCount == 1)
+        {
+            OnPaused?.Invoke();
+        }
     }
 
     public void OnResume()
     {
         _pauseCount = Mathf.Max(0, _pauseCount - 1);
+
+        if(_pauseCount == 0)
+        {
+            OnResumed?.Invoke();
+        }
+    }
+
+    public async UniTask<bool> WaitForGameSeconds(float duration, CancellationToken token = default)
+    {
+        float remainingTime = duration;
+
+        while (remainingTime > 0f)
+        {
+            await UniTask.Yield(PlayerLoopTiming.Update);
+
+            if (token.IsCancellationRequested)
+            {
+                return false;
+            }
+
+            remainingTime -= GameDeltaTime;
+        }
+
+        return true;
     }
 }

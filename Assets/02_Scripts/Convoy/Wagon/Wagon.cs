@@ -35,6 +35,14 @@ public class Wagon : MonoBehaviour, ITargetable, IDamageable
     private void OnEnable()
     {
         _splineAnimate.Completed += OnSplineCompleted;
+        GameManager.Time.OnPaused += PauseWagon;
+        GameManager.Time.OnResumed += ResumeWagon;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Time.OnPaused -= PauseWagon;
+        GameManager.Time.OnResumed -= ResumeWagon;
     }
 
     private void Update()
@@ -188,6 +196,16 @@ public class Wagon : MonoBehaviour, ITargetable, IDamageable
         }
 
         return false;
+    }
+
+    private void PauseWagon()
+    {
+        _splineAnimate.Pause();
+    }
+
+    private void ResumeWagon()
+    {
+        _splineAnimate.Play();
     }
 
     private void OnSplineCompleted()

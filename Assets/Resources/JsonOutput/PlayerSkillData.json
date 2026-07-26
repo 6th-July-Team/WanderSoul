@@ -21,7 +21,8 @@
     "IconPath": "Sprites/UI/Icon/skill_scholar_basic_fire",
     "ExecutionId": null,
     "stringSkillSlot": "Basic",
-    "ExtraDamage": 10
+    "ExtraDamage": 10,
+    "VFXRadius": null
   },
   {
     "Id": "skill_scholar_basic_water",
@@ -45,7 +46,8 @@
     "IconPath": "Sprites/UI/Icon/skill_scholar_basic_water",
     "ExecutionId": null,
     "stringSkillSlot": "Basic",
-    "ExtraDamage": null
+    "ExtraDamage": null,
+    "VFXRadius": null
   },
   {
     "Id": "skill_scholar_basic_earth",
@@ -69,7 +71,8 @@
     "IconPath": "Sprites/UI/Icon/skill_scholar_basic_earth",
     "ExecutionId": null,
     "stringSkillSlot": "Basic",
-    "ExtraDamage": null
+    "ExtraDamage": null,
+    "VFXRadius": null
   },
   {
     "Id": "skill_scholar_basic_air",
@@ -93,7 +96,8 @@
     "IconPath": "Sprites/UI/Icon/skill_scholar_basic_air",
     "ExecutionId": null,
     "stringSkillSlot": "Basic",
-    "ExtraDamage": null
+    "ExtraDamage": null,
+    "VFXRadius": null
   },
   {
     "Id": "skill_scholar_basic_magic",
@@ -117,7 +121,8 @@
     "IconPath": "Sprites/UI/Icon/skill_scholar_basic_magic",
     "ExecutionId": null,
     "stringSkillSlot": "Basic",
-    "ExtraDamage": null
+    "ExtraDamage": null,
+    "VFXRadius": null
   },
   {
     "Id": "skill_scholar_basic_magic_upgrade",
@@ -141,7 +146,8 @@
     "IconPath": null,
     "ExecutionId": null,
     "stringSkillSlot": "Basic",
-    "ExtraDamage": null
+    "ExtraDamage": null,
+    "VFXRadius": null
   },
   {
     "Id": "skill_scholar_special_fire",
@@ -165,7 +171,8 @@
     "IconPath": "Sprites/UI/Icon/skill_scholar_special_fire",
     "ExecutionId": null,
     "stringSkillSlot": "Special",
-    "ExtraDamage": null
+    "ExtraDamage": null,
+    "VFXRadius": null
   },
   {
     "Id": "skill_scholar_special_water",
@@ -189,7 +196,8 @@
     "IconPath": "Sprites/UI/Icon/skill_scholar_special_water",
     "ExecutionId": null,
     "stringSkillSlot": "Special",
-    "ExtraDamage": null
+    "ExtraDamage": null,
+    "VFXRadius": null
   },
   {
     "Id": "skill_scholar_special_earth",
@@ -213,7 +221,8 @@
     "IconPath": "Sprites/UI/Icon/skill_scholar_special_earth",
     "ExecutionId": null,
     "stringSkillSlot": "Special",
-    "ExtraDamage": null
+    "ExtraDamage": null,
+    "VFXRadius": null
   },
   {
     "Id": "skill_scholar_special_air",
@@ -237,7 +246,8 @@
     "IconPath": "Sprites/UI/Icon/skill_scholar_special_air",
     "ExecutionId": null,
     "stringSkillSlot": "Special",
-    "ExtraDamage": null
+    "ExtraDamage": null,
+    "VFXRadius": null
   },
   {
     "Id": "skill_scholar_special_magic",
@@ -261,7 +271,8 @@
     "IconPath": "Sprites/UI/Icon/skill_scholar_special_magic",
     "ExecutionId": null,
     "stringSkillSlot": "Special",
-    "ExtraDamage": null
+    "ExtraDamage": null,
+    "VFXRadius": 0.1
   },
   {
     "Id": "skill_scholar_ult_summonbarrier",
@@ -285,7 +296,8 @@
     "IconPath": "Sprites/UI/Icon/skill_scholar_ult_summonbarrier_v3",
     "ExecutionId": "ScholarUltBarrier",
     "stringSkillSlot": "Ultimate",
-    "ExtraDamage": null
+    "ExtraDamage": null,
+    "VFXRadius": null
   },
   {
     "Id": "skill_scholar_ult_berserksoul",
@@ -313,7 +325,8 @@
     "IconPath": null,
     "ExecutionId": "ScholarUltBerserkSoul",
     "stringSkillSlot": "Ultimate",
-    "ExtraDamage": null
+    "ExtraDamage": null,
+    "VFXRadius": null
   },
   {
     "Id": "skill_scholar_passive",
@@ -337,7 +350,8 @@
     "IconPath": "Sprites/UI/Icon/skill_scholar_ult_berserksoul_sample_B_charge",
     "ExecutionId": null,
     "stringSkillSlot": null,
-    "ExtraDamage": null
+    "ExtraDamage": null,
+    "VFXRadius": null
   },
   {
     "Id": "skill_scholar_basic",
@@ -361,7 +375,8 @@
     "IconPath": "Sprites/UI/Icon/skill_scholar_basic",
     "ExecutionId": "ScholarBasic",
     "stringSkillSlot": "Basic",
-    "ExtraDamage": null
+    "ExtraDamage": null,
+    "VFXRadius": null
   },
   {
     "Id": "skill_scholar_special",
@@ -385,7 +400,8 @@
     "IconPath": "Sprites/UI/Icon/skill_scholar_special",
     "ExecutionId": "ScholarSpecial",
     "stringSkillSlot": "Special",
-    "ExtraDamage": null
+    "ExtraDamage": null,
+    "VFXRadius": null
   },
   {
     "Id": "skill_mercenary_passive",
@@ -409,7 +425,8 @@
     "IconPath": null,
     "ExecutionId": null,
     "stringSkillSlot": null,
-    "ExtraDamage": null
+    "ExtraDamage": null,
+    "VFXRadius": null
   },
   {
     "Id": "skill_mercenary_basic_slash",
@@ -435,7 +452,8 @@
     "IconPath": null,
     "ExecutionId": null,
     "stringSkillSlot": null,
-    "ExtraDamage": null
+    "ExtraDamage": null,
+    "VFXRadius": null
   },
   {
     "Id": "skill_mercenary_special_whip",
@@ -459,7 +477,8 @@
     "IconPath": null,
     "ExecutionId": null,
     "stringSkillSlot": null,
-    "ExtraDamage": null
+    "ExtraDamage": null,
+    "VFXRadius": null
   },
   {
     "Id": "skill_mercenary_ult_finalblow",
@@ -483,7 +502,8 @@
     "IconPath": null,
     "ExecutionId": null,
     "stringSkillSlot": null,
-    "ExtraDamage": null
+    "ExtraDamage": null,
+    "VFXRadius": null
   },
   {
     "Id": "skill_mercenary_ult_dancestorm",
@@ -507,6 +527,7 @@
     "IconPath": null,
     "ExecutionId": null,
     "stringSkillSlot": null,
-    "ExtraDamage": null
+    "ExtraDamage": null,
+    "VFXRadius": null
   }
 ]

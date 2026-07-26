@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5426964449262604465}
   - component: {fileID: 3593316342665360521}
   - component: {fileID: 1752579652219674068}
+  - component: {fileID: 987022874185320548}
   m_Layer: 0
   m_Name: Barrier
   m_TagString: Untagged
@@ -80,25 +81,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PariclePaletteController
   _palettes:
   - Type: 0
-    HueOffset: -0.58
+    TargetHue: 0
     SaturationScale: 1
     ValueScale: 1
+    MinSaturation: 0.1
   - Type: 1
-    HueOffset: 0
+    TargetHue: 0
     SaturationScale: 1
     ValueScale: 1
+    MinSaturation: 0.1
   - Type: 2
-    HueOffset: -0.5
+    TargetHue: 0
     SaturationScale: 0.8
     ValueScale: 0.55
+    MinSaturation: 0.1
   - Type: 3
-    HueOffset: -0.43
+    TargetHue: 0
     SaturationScale: 0.9
     ValueScale: 1.15
+    MinSaturation: 0.1
   - Type: 4
-    HueOffset: 0.2
+    TargetHue: 0
     SaturationScale: 1
     ValueScale: 0.9
+    MinSaturation: 0.1
+--- !u!135 &987022874185320548
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2738505388320518005}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4602384784113540549
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,7 +138,6 @@ GameObject:
   - component: {fileID: 3028261280286278951}
   - component: {fileID: 9074764762801985945}
   - component: {fileID: 2724439577470189439}
-  - component: {fileID: 1620833699309821806}
   m_Layer: 0
   m_Name: WaterShield (2)
   m_TagString: Untagged
@@ -209,24 +235,3 @@ Animation:
   m_AnimatePhysics: 0
   m_UpdateMode: 0
   m_CullingType: 0
---- !u!135 &1620833699309821806
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4602384784113540549}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
