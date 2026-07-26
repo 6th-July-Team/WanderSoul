@@ -9695,7 +9695,7 @@ TrailRenderer:
     shadowBias: 0
     generateLightingData: 0
   m_MinVertexDistance: 0.01
-  m_Autodestruct: 1
+  m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 0
 --- !u!1 &2690975113969650113
@@ -19775,7 +19775,7 @@ TrailRenderer:
     shadowBias: 0
     generateLightingData: 0
   m_MinVertexDistance: 0.01
-  m_Autodestruct: 1
+  m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 0
 --- !u!1 &6973277795158512157

@@ -104,7 +104,6 @@ public class ConvoyManager
         GameObject.Destroy(_loadedMap.gameObject);
 
 
-        GameManager.Network.InGameServiceRelease();
         GameManager.Pool.AllDespawnToPool();
 
         // TODO 결과에 따라 실패 시 의뢰 출발 마을 ID, 성공 시 도착 마을 ID 반환
