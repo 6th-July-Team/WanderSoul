@@ -8,7 +8,9 @@
     "ActiveSkillIds": [
       "pet_skill_fire_001"
     ],
-    "PassiveSkillIds": null,
+    "PassiveSkillIds": [
+      "pet_passive_fire_force"
+    ],
     "IconPath": "Sprites/UI/Icon/PetIcon_Fire_001"
   },
   {
