@@ -369,6 +369,7 @@ public partial class UIManager
         }
 
         view.BindViewModel(playerViewModel);
+        view.BindOutGameViewModel(GameManager.Network.RequestPlayerOutGameViewModel());
     }
 
     public void OpenConvoySuccessUI(ConvoyResultModel result)
