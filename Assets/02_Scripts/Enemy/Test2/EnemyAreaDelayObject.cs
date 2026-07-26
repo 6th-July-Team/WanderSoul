@@ -109,7 +109,7 @@ public class EnemyAreaDelayObject : MonoBehaviour
 
         foreach (Collider hit in hits)
         {
-            IDamageable damageableTarget = hit.GetComponentInParent<IDamageable>();
+            IDamageable damageableTarget = hit.GetComponent<IDamageable>();
 
             if (damageableTarget == null || damageableTarget.IsAlive == false)
             {

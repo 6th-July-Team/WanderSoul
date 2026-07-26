@@ -47,7 +47,7 @@ public class EnemyProjectileObject : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        IDamageable damageableTarget = other.GetComponentInParent<IDamageable>();
+        IDamageable damageableTarget = other.GetComponent<IDamageable>();
 
         if (damageableTarget == null || damageableTarget.IsAlive == false)
         {
