@@ -62,6 +62,8 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
         , PetSkillMaker petSkillMaker, IStatusEffectReceiver playerEffectReceiver, IHealable playerHealable
         , int avoidancePriority, PetViewModel petViewModel)
     {
+        _isDead = false;
+        DisposeToken();
         _petData = GameManager.DataTable.GetPetData(petId);
 
         PetStatData petStatData = GameManager.DataTable.GetPetStatData(petId);
@@ -246,25 +248,26 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
         float live = 0f; // 디졸브에서 0은 오브젝트가 보이는 것
         float dead = 0.6f; // 디졸브에서 1은 오브젝트가 사라진 것
 
-        await Dissolve(live, dead, DISSOLVEREVERSE_ADDRESS); // 생존 -> 사망
+        await Dissolve(live, dead, DISSOLVEREVERSE_ADDRESS, token); // 생존 -> 사망
         gameObject.SetActive(false);
 
-        await UniTask.Delay(TimeSpan.FromSeconds(2f));
+        await UniTask.Delay(TimeSpan.FromSeconds(2f), cancellationToken: token);
         _petViewModel.SetHp(_petViewModel.GetMaxHp);
 
         gameObject.SetActive(true);
-        await Dissolve(dead, live, DISSOLVE_ADDRESS); // 사망 -> 생존
+        await Dissolve(dead, live, DISSOLVE_ADDRESS, token); // 사망 -> 생존
 
         _isDead = false;
     }
 
-    private async UniTask Dissolve(float start, float end, string vfxAddress)
+    private async UniTask Dissolve(float start, float end, string vfxAddress, CancellationToken token)
     {
         ParticleComponent particleComponent = VFXSpawner.SpawnVFX(vfxAddress, transform.position, Quaternion.identity);
 
         if(particleComponent == null)
         {
             Debug.LogError("VFXSpawner로 생성된 VFX에 particleCompoenet가 없습니다!!");
+            throw new MissingComponentException();
         }
 
         if(particleComponent.TryGetComponent(out PariclePaletteController paletteController) == false)
@@ -278,9 +281,10 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
         while (time < DissolveDuration)
         {
+            await UniTask.Yield(token);
+            
             time += Time.deltaTime;
             _petRenderer.material.SetFloat(DISSOLVE_ID, Mathf.Lerp(start, end, (time / DissolveDuration)));
-            await UniTask.Yield();
         }
 
         _petRenderer.material.SetFloat(DISSOLVE_ID, end);

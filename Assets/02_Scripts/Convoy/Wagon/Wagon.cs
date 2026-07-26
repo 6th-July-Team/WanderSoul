@@ -6,6 +6,8 @@ public class Wagon : MonoBehaviour, ITargetable, IDamageable
 {
     [SerializeField] private float _speedChangeDuration = 1f;
 
+    private const string WAGON_ID = "wagon_001";    // 현재 마차가 1개 뿐이라 하드 코딩
+
     public bool IsAlive => true;
     public Vector3 Position => transform.position;
     public Transform Transform => this.transform;
@@ -47,11 +49,13 @@ public class Wagon : MonoBehaviour, ITargetable, IDamageable
     {
         _wagonViewModel = wagonViewModel;
 
-        WagonData wagonData = GameManager.DataTable.GetWagonData("wagon_001");
+        WagonData wagonData = GameManager.DataTable.GetWagonData(WAGON_ID);
         _wagonSlowRuleData = GameManager.DataTable.GetWagonSlowRuleData(wagonData.SlowDataId);
 
         _wagonViewModel.OnPropertyChanged_View += OnPropertyChanged;
         _wagonViewModel.PropertyChangedOnInit();
+
+        _baseMoveSpeed = GameManager.DataTable.GetWagonData(WAGON_ID).BaseMoveSpeed;
 
         InitChildComponent(player);
     }
