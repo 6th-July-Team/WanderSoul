@@ -15,6 +15,8 @@ public class ConvoyManager
     private PlayerEntity _playerEntity;
     private PlayerSkillMaker _playerSkillMaker;
 
+    private CameraHandler _cameraHandler;
+
     private const string PLAYER_ID = "player_scholar"; // 현재 플레이어 선택 불가능하여, 학자가 고정되어 있음.
 
     public ConvoyManager(PetSkillMaker petSkillMaker, PlayerSkillMaker playerSkillMaker)
@@ -83,6 +85,7 @@ public class ConvoyManager
 
     public string Release()
     {
+        GameManager.Camera.Release();
         // 게임 상태 변경
         // 풀 사용한거 Despawn - 몬스터
         // 펫 소환 해제
@@ -95,16 +98,13 @@ public class ConvoyManager
 
     private async UniTaskVoid StartConvoyAsync()
     {
-        // TODO(UI): 로딩 UI 또는 Fade In/Out 처리
         GameManager.UI.OpenLoadingUI();
 
         await UniTask.Delay(System.TimeSpan.FromSeconds(1f));
 
         LoadMap();
         SpawnPet();
-
-        // CameraManager.SetBattleView(player.transform);
-        // LoadingUI.Hide();
+        InitCamera();
 
         StartBattle();
 
@@ -165,13 +165,14 @@ public class ConvoyManager
         _playerEntity.InitAfterSpawnPet(PLAYER_ID, _playerSkillMaker, GameManager.PetParty.GetStatusEffectReceiverForAllPet());
     }
 
+    private void InitCamera()
+    {
+        GameManager.Camera.InitInGame(_playerEntity.transform);
+    }
+
 
     private void StartBattle()
     {
-        // 호위? HUD 표시
-        // 게임 상태 변경
-        // 아직 펫이 소환이 안 된 시점
-
         OpenConvoyHuds();
     }
 
