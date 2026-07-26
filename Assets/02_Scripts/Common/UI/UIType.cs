@@ -20,6 +20,7 @@
     QuestDetailUIView,
     PetInventoryUIView,
     PlayerHudUIView,
+    DashHudUIView,
     ConvoyHudUIView,
     LevelUpUIView,
     LoadingUIView,

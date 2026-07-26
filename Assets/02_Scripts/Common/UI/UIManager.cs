@@ -150,6 +150,9 @@ public partial class UIManager
             case UIType.PlayerHudUIView:
                 return UIRootType.Main;
 
+            case UIType.DashHudUIView:
+                return UIRootType.Main;
+
             case UIType.SkillHudUIView:
                 return UIRootType.Main;
 
