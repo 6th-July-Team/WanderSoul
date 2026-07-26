@@ -28,7 +28,7 @@ public class EnemyAttackHitbox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        IDamageable damageableTarget = other.GetComponentInParent<IDamageable>();
+        IDamageable damageableTarget = other.GetComponent<IDamageable>();
 
         if (damageableTarget == null || damageableTarget.EntityType == EntityType.Enemy || _targetList.Contains(damageableTarget))
         {
@@ -40,7 +40,7 @@ public class EnemyAttackHitbox : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        IDamageable damageableTarget = other.GetComponentInParent<IDamageable>();
+        IDamageable damageableTarget = other.GetComponent<IDamageable>();
 
         if (damageableTarget == null)
         {
@@ -48,5 +48,14 @@ public class EnemyAttackHitbox : MonoBehaviour
         }
 
         _targetList.Remove(damageableTarget);
+    }
+
+    private void OnDrawGizmos()
+    {
+        BoxCollider boxCollider = GetComponent<BoxCollider>();
+
+        Gizmos.color = Color.red;
+        Gizmos.matrix = transform.localToWorldMatrix;
+        Gizmos.DrawWireCube(boxCollider.center, boxCollider.size);
     }
 }
