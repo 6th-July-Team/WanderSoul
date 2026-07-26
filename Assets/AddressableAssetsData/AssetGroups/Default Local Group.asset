@@ -35,6 +35,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 315a0b5c47a0a504bade2040204b4252
+    m_Address: pet_air_004
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 32cca0270278b20468c1fb16b9f50d90
     m_Address: Scholar/MagicArrowEffect
     m_ReadOnly: 0
@@ -55,6 +60,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 46e2ccb74f2cd3f4fbc2e0b3a331de51
+    m_Address: pet_earth_003
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4b1c4545cd4f5a94197ff225f2b746d9
     m_Address: Scholar/BererkSoulEffect
     m_ReadOnly: 0
@@ -62,6 +72,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 4d0e7664e80901b4089027c478cbbf39
     m_Address: Scholar/BarrierExplosionEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5359673bd41c2924e99ce3053f895901
+    m_Address: WindBlass_Pet
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -95,6 +110,16 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 7e90f4451bee81d4a9abe5d08bcd2923
+    m_Address: pet_water_002
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 812a0ede91804224aafedfd941b5b570
+    m_Address: buff_water_regeneration
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8b09aa011ffed4f42acf797c9b743e7d
     m_Address: Scholar/FireExplosionEffect
     m_ReadOnly: 0
@@ -102,6 +127,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8b9805d661d53a94a9483471f3c188f0
     m_Address: Enemy/Projectile/WindRed
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8dda7d7dddcc40b4ca4d1a2ff92784f3
+    m_Address: WindPawn_ActiveEffect
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -120,6 +150,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9b8776ecb3c53e94eb0ab5549505a76c
+    m_Address: buff_fire_force
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a68f25067db76e144a6538dba43e7c5d
     m_Address: EnemyDropObject/Soul/One
     m_ReadOnly: 0
@@ -135,13 +170,23 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b6a4b7fb066282846aab983a56799397
+    m_Address: FramePawn_ActiveEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c03723f97bc188641873de004b8b5b4a
+    m_Address: EarthPawn_ActiveEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cb8e9c127b5593946b74630f4c8480ff
     m_Address: Scholar/ElectricExplosionEffect
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: cfab79379f606514e85219f0f02db805
-    m_Address: Enemy/Projectile_01
+  - m_GUID: d9fa77424b8302a4db2819b4f0e931ae
+    m_Address: WaterPawn_ActiveEffect
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -152,6 +197,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e600a49488a90334a92bf1db2d7e0963
     m_Address: Scholar/StoneArrowEffect
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e9f79101c76180d46b7a244fa19a69a8
+    m_Address: pet_fire_001
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

@@ -8,6 +8,8 @@ public class PetAreaBuffPassive : IPetPassiveSkillExecution
     private IStatModifierReceiver _playerAdapter;
     private IPet _petEntity;
 
+    private PetAreaBuffInstance _buffInstance;
+
     public PetAreaBuffPassive(StatusEffectData effectData, PetPassiveSkillData passiveSkillData
         , IStatModifierReceiver playerAdapter, IPet petEntity)
     {
@@ -20,12 +22,13 @@ public class PetAreaBuffPassive : IPetPassiveSkillExecution
 
     public void Activate()
     {
-        var a = Object.Instantiate(Utils.ResourcesLoad<PetAreaBuffInstance>("AreaBuff"), _petEntity.Transform);
-        a.Init(_effectData, _playerAdapter, _passiveSkillData);
+        _buffInstance = Object.Instantiate(Utils.ResourcesLoad<PetAreaBuffInstance>("Pet/AreaBuff"), _petEntity.Transform);
+        _buffInstance.Init(_effectData, _playerAdapter, _passiveSkillData);
     }
 
     public void Deactivate()
     {
-        throw new System.NotImplementedException();
+        _buffInstance.Release();
+        Object.Destroy(_buffInstance);
     }
 }

@@ -143,5 +143,50 @@
     "Id": "ProjectileHusks",
     "Address": "ProjectileHusks",
     "AssetType": "GameObject"
+  },
+  {
+    "Id": "EarthPawn_ActiveEffect",
+    "Address": "EarthPawn_ActiveEffect",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "FramePawn_ActiveEffect",
+    "Address": "FramePawn_ActiveEffect",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "WaterPawn_ActiveEffect",
+    "Address": "WaterPawn_ActiveEffect",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "WindBlass_Pet",
+    "Address": "WindBlass_Pet",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "WindPawn_ActiveEffect",
+    "Address": "WindPawn_ActiveEffect",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "pet_fire_001",
+    "Address": "pet_fire_001",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "pet_water_002",
+    "Address": "pet_water_002",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "pet_earth_003",
+    "Address": "pet_earth_003",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "pet_air_004",
+    "Address": "pet_air_004",
+    "AssetType": "GameObject"
   }
 ]
