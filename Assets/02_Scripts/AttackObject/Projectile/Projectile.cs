@@ -9,6 +9,7 @@ public class Projectile : MonoBehaviour
     private float _speed;
     private float _damage;
     private float _duration;
+    private float _remainingDuration;
 
     private Vector3 _direction;
 
@@ -39,7 +40,6 @@ public class Projectile : MonoBehaviour
     // 이펙트
     private ParticleComponent _effect;
 
-    private CancellationTokenSource _token;
     private bool _isReleased;
 
     public void Init(ProjectileStruct projectileData)
@@ -48,6 +48,7 @@ public class Projectile : MonoBehaviour
         _speed = projectileData.Speed;
         _damage = projectileData.Damage;
         _duration = projectileData.Duration;
+        _remainingDuration = _duration;
 
         _direction = projectileData.Direction.normalized;
         _damageType = projectileData.DamageType;
@@ -66,20 +67,11 @@ public class Projectile : MonoBehaviour
         //_hitboxRadius = projectileData.HitboxRadius;
         //_hitboxLength = projectileData.HitboxLength;
 
+        _isReleased = false;
 
         if (_direction.sqrMagnitude > 0f)
         {
             transform.rotation = Quaternion.LookRotation(_direction, Vector3.up);
-        }
-
-        DisposeToken();
-
-        _isReleased = false;
-
-        if (_duration > 0)
-        {
-            _token = new CancellationTokenSource();
-            DespawnDelay(_token.Token).Forget();
         }
 
         _effect = VFXSpawner.SpawnAttachedVFX(_visualAddress, _visualRoot, Vector3.zero, Quaternion.identity);
@@ -87,7 +79,26 @@ public class Projectile : MonoBehaviour
 
     private void Update()
     {
-        transform.position += _direction * _speed * GameManager.Time.GameDeltaTime;
+        float deltaTime = GameManager.Time.GameDeltaTime;
+
+        if (deltaTime <= 0f)
+        {
+            return;
+        }
+
+        transform.position += _direction * _speed * deltaTime;
+
+        if (_duration <= 0f)
+        {
+            return;
+        }
+
+        _remainingDuration -= deltaTime;
+
+        if (_remainingDuration <= 0f)
+        {
+            ReleaseToPool();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -172,19 +183,6 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    private async UniTaskVoid DespawnDelay(CancellationToken token)
-    {
-        bool isCanceled = await UniTask.Delay((int)(_duration * 1000f), cancellationToken: token)
-            .SuppressCancellationThrow();
-
-        if (isCanceled)
-        {
-            return;
-        }
-
-        ReleaseToPool();
-    }
-
     private void ReleaseToPool()
     {
         if (_isReleased)
@@ -194,8 +192,6 @@ public class Projectile : MonoBehaviour
 
         _isReleased = true;
 
-        DisposeToken();
-
         if (_effect != null)
         {
             _effect.ReleaseToPool();
@@ -203,16 +199,6 @@ public class Projectile : MonoBehaviour
         }
 
         GameManager.Pool.DespawnToPool(gameObject);
-    }
-
-    private void DisposeToken()
-    {
-        if (_token != null)
-        {
-            _token.Cancel();
-            _token.Dispose();
-            _token = null;
-        }
     }
 }
 

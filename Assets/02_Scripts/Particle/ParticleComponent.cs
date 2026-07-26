@@ -16,9 +16,14 @@ public class ParticleComponent : MonoBehaviour
     private CancellationTokenSource _token;
     private bool _isReleased;
 
+    private bool _isEffectPaused;
+    private bool[] _trailEmittingStates;
+
     private void Awake()
     {
         CacheComponents();
+
+        _trailEmittingStates = new bool[_trails.Length];
     }
 
 #if UNITY_EDITOR
@@ -27,6 +32,18 @@ public class ParticleComponent : MonoBehaviour
         CacheComponents();
     }
 #endif
+
+    private void OnEnable()
+    {
+        GameManager.Time.Paused += PauseEffect;
+        GameManager.Time.Resumed += ResumeEffect;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Time.Paused -= PauseEffect;
+        GameManager.Time.Resumed -= ResumeEffect;
+    }
 
     private void CacheComponents()
     {
@@ -57,6 +74,7 @@ public class ParticleComponent : MonoBehaviour
         DisposeToken();
 
         _isReleased = false;
+        _isEffectPaused = false;
 
         Clear();
 
@@ -71,7 +89,12 @@ public class ParticleComponent : MonoBehaviour
             _particles[i].Play(true);
         }
 
-        if(continuous)
+        if(GameManager.Time.IsPaused)
+        {
+            PauseEffect();
+        }
+
+        if (continuous)
         {
             return;
         }
@@ -87,6 +110,8 @@ public class ParticleComponent : MonoBehaviour
 
     public void Clear()
     {
+        _isEffectPaused = false;
+
         for (int i = 0; i < _particles.Length; i++)
         {
             _particles[i].Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
@@ -107,6 +132,7 @@ public class ParticleComponent : MonoBehaviour
         }
 
         _isReleased = true;
+        _isEffectPaused = false;
 
         DisposeToken();
 
@@ -117,12 +143,11 @@ public class ParticleComponent : MonoBehaviour
 
     private async UniTask DespawnAfterDelay(CancellationToken token)
     {
-        bool isCanceled = await UniTask.Delay(TimeSpan.FromSeconds(_releaseDelay), cancellationToken: token)
-            .SuppressCancellationThrow();
+        bool isCanceled = await GameManager.Time.WaitForGameSeconds(_releaseDelay, token);
 
-        if (isCanceled)
+
+        if (!isCanceled)
         {
-            // 외부에서 ReleaseToPool()을 호출한 경우
             return;
         }
 
@@ -138,4 +163,91 @@ public class ParticleComponent : MonoBehaviour
             _token = null;
         }
     }
+
+    private void PauseEffect()
+    {
+        if (_isEffectPaused || _isReleased)
+        {
+            return;
+        }
+
+        _isEffectPaused = true;
+
+        for (int i = 0; i < _particles.Length; i++)
+        {
+            ParticleSystem particle = _particles[i];
+
+            if (particle == null)
+            {
+                continue;
+            }
+
+            if (particle.isPlaying)
+            {
+                particle.Pause(true);
+            }
+        }
+
+        for (int i = 0; i < _trails.Length; i++)
+        {
+            TrailRenderer trail = _trails[i];
+
+            if (trail == null)
+            {
+                continue;
+            }
+
+            _trailEmittingStates[i] = trail.emitting;
+            trail.emitting = false;
+        }
+    }
+
+    private void ResumeEffect()
+    {
+        if (!_isEffectPaused || _isReleased)
+        {
+            return;
+        }
+
+        _isEffectPaused = false;
+
+        for (int i = 0; i < _particles.Length; i++)
+        {
+            ParticleSystem particle = _particles[i];
+
+            if (particle == null)
+            {
+                continue;
+            }
+
+            if (particle.isPaused)
+            {
+                particle.Play(true);
+            }
+        }
+
+        for (int i = 0; i < _trails.Length; i++)
+        {
+            TrailRenderer trail = _trails[i];
+
+            if (trail == null)
+            {
+                continue;
+            }
+
+            trail.emitting = _trailEmittingStates[i];
+        }
+    }
+
+
+#if UNITY_EDITOR
+    private void OnDrawGizmosSelected()
+    {
+        if (!gameObject.activeSelf)
+            return;
+
+        Gizmos.matrix = transform.localToWorldMatrix;
+        Gizmos.DrawWireSphere(Vector3.zero, transform.localScale.x);
+    }
+#endif
 }
