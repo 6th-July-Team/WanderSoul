@@ -221,17 +221,15 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
     {
         switch (propertyName)
         {
-            case nameof(PetModel.HP): // << 기웅 : 이벤트를 발행하는 프로퍼티랑 이름이 동일해야 함!! PetViewModel.GetHp는 이벤트를 발행하는 주체는 아니라서 이벤트 전달이 안되고 있었음
+            case nameof(PetModel.HP):
                 {
                     if (_petViewModel.GetHp <= 0f && _isDead == false)
                     {
                         // TODO(김익환): 사망 사운드
-
+                        _isDead = true;
 
                         _aliveToken = new CancellationTokenSource();
                         DieAndRevive(_aliveToken.Token).Forget();
-                        this.gameObject.SetActive(false);
-
                     }
                 }
                 break;
@@ -248,14 +246,14 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
         float live = 0f; // 디졸브에서 0은 오브젝트가 보이는 것
         float dead = 0.6f; // 디졸브에서 1은 오브젝트가 사라진 것
 
-        await Dissolve(live, dead, DISSOLVEREVERSE_ADDRESS); // 생존 > 사망
+        await Dissolve(live, dead, DISSOLVEREVERSE_ADDRESS); // 생존 -> 사망
         gameObject.SetActive(false);
 
         await UniTask.Delay(TimeSpan.FromSeconds(2f));
         _petViewModel.SetHp(_petViewModel.GetMaxHp);
 
         gameObject.SetActive(true);
-        await Dissolve(dead, live, DISSOLVE_ADDRESS); // 사망 > 생존
+        await Dissolve(dead, live, DISSOLVE_ADDRESS); // 사망 -> 생존
 
         _isDead = false;
     }
