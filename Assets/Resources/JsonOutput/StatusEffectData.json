@@ -11,7 +11,8 @@
     "Value": 3,
     "stringStatType": null,
     "stringOperation": "Flat",
-    "SkillModifierId": null
+    "SkillModifierId": null,
+    "VFXPath": null
   },
   {
     "Id": "debuff_poison",
@@ -25,7 +26,8 @@
     "Value": 3,
     "stringStatType": null,
     "stringOperation": "Flat",
-    "SkillModifierId": null
+    "SkillModifierId": null,
+    "VFXPath": null
   },
   {
     "Id": "debuff_frost",
@@ -39,7 +41,8 @@
     "Value": 0.025,
     "stringStatType": "MoveSpeed",
     "stringOperation": "AddPercent",
-    "SkillModifierId": null
+    "SkillModifierId": null,
+    "VFXPath": null
   },
   {
     "Id": "debuff_bleed",
@@ -53,7 +56,8 @@
     "Value": 3,
     "stringStatType": null,
     "stringOperation": "Flat",
-    "SkillModifierId": null
+    "SkillModifierId": null,
+    "VFXPath": null
   },
   {
     "Id": "buff_berserksoul_petattackspeed",
@@ -67,7 +71,8 @@
     "Value": 0.1,
     "stringStatType": "BasicAttackCooldownReduction",
     "stringOperation": "MultiplePercent",
-    "SkillModifierId": null
+    "SkillModifierId": null,
+    "VFXPath": null
   },
   {
     "Id": "buff_berserksoul_petmaxhealth",
@@ -81,7 +86,8 @@
     "Value": 10,
     "stringStatType": "MaxHealth",
     "stringOperation": "MultiplePercent",
-    "SkillModifierId": null
+    "SkillModifierId": null,
+    "VFXPath": null
   },
   {
     "Id": "buff_berserksoul_petmovespeed",
@@ -95,7 +101,8 @@
     "Value": 10,
     "stringStatType": "MoveSpeed",
     "stringOperation": "MultiplePercent",
-    "SkillModifierId": null
+    "SkillModifierId": null,
+    "VFXPath": null
   },
   {
     "Id": "buff_windblessing",
@@ -109,7 +116,8 @@
     "Value": 0.15,
     "stringStatType": "BasicAttackCooldownReduction",
     "stringOperation": "MultiplePercent",
-    "SkillModifierId": null
+    "SkillModifierId": null,
+    "VFXPath": null
   },
   {
     "Id": "buff_taunt",
@@ -123,34 +131,37 @@
     "Value": 50,
     "stringStatType": "Defense",
     "stringOperation": "Flat",
-    "SkillModifierId": null
+    "SkillModifierId": null,
+    "VFXPath": null
   },
   {
     "Id": "buff_water_regeneration",
     "Name": "물의 재생력",
     "Description": "플레이어의 체력 재생력을 초당 0.5 증가시킵니다.",
-    "ExecutionId": null,
-    "StackPolicy": null,
+    "ExecutionId": "PeriodicBuff",
+    "StackPolicy": "Ignore",
     "Duration": null,
     "TickInterval": null,
     "MaxStack": null,
     "Value": 0.5,
     "stringStatType": "HealthRegeneration",
     "stringOperation": "Flat",
-    "SkillModifierId": null
+    "SkillModifierId": null,
+    "VFXPath": "buff_water_regeneration"
   },
   {
     "Id": "buff_fire_force",
     "Name": "불의 힘",
     "Description": "플레이어의 피해량을 10% 증가시킵니다",
-    "ExecutionId": null,
-    "StackPolicy": null,
+    "ExecutionId": "StatModifier",
+    "StackPolicy": "Ignore",
     "Duration": null,
     "TickInterval": null,
     "MaxStack": null,
     "Value": 10,
     "stringStatType": "AdditionalDamage",
     "stringOperation": "Flat",
-    "SkillModifierId": null
+    "SkillModifierId": null,
+    "VFXPath": "buff_fire_force"
   }
 ]

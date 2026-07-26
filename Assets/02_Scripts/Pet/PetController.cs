@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using System;
+using System.Threading;
 using UnityEngine;
 
 
@@ -32,13 +33,15 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
     private PetViewModel _petViewModel;
 
-    private bool isInitialized = false;
-
     private PetCommandResult _commandResult;
+
+    private bool _isInitialized = false;
+
+    private CancellationTokenSource _aliveToken;
 
     private void Awake()
     {
-        isInitialized = false;
+        _isInitialized = false;
         _petMovement = GetComponent<PetMovement>();
     }
 
@@ -71,12 +74,12 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
         // 펫 스킬 강화가 생기면 플레이어 처럼 만들기.
         SkillModifierReceiver = null;
 
-        isInitialized = true;
+        _isInitialized = true;
     }
 
     private void Update()
     {
-        if (false == isInitialized)
+        if (false == _isInitialized)
             return;
 
         if (GameManager.Time.IsPaused)
@@ -92,6 +95,9 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
     private void UpdateCommand(float deltaTime)
     {
+        if (false == _isInitialized)
+            return;
+
         _commandRefreshTimer += deltaTime;
 
         if (_commandRefreshTimer < _commandRefreshInterval)
@@ -104,11 +110,8 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
     private void UpdateCombat()
     {
-        //if (_combatController.IsBusy)
-        //{
-        //    _petMovement.Stop();
-        //    return;
-        //}
+        if (false == _isInitialized)
+            return;
 
         ITargetable target = _commandResult.Target;
 
@@ -141,16 +144,36 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
         GetCommandAndApply();
     }
 
+    public void ApplyEffect(StatusEffectInstance instance)
+    {
+        StatusEffects.Apply(instance);
+    }
+
+    public void Dispose()
+    {
+        _isInitialized = false;
+
+        DisposeToken();
+
+        _combatController.Release();
+        StatusEffects.Clear();
+        _petStatController.ClearModifiers();
+
+
+        if (null != _petViewModel)
+            _petViewModel.OnPropertyChanged_View -= OnPropertyChanged;
+
+        _commandResult = default;
+        _petCommandController = null;
+        _combatController = null;
+        _petViewModel = null;
+    }
+
     private void GetCommandAndApply()
     {
         _commandResult = _petCommandController.GetCommandResult();
 
         _petMovement.ApplyCommand(_commandResult);
-    }
-
-    public void ApplyEffect(StatusEffectInstance instance)
-    {
-        StatusEffects.Apply(instance);
     }
 
     private void ExecuteNoEnemySkill(PetActiveSkill skill)
@@ -190,8 +213,10 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
                         // TODO(김익환): 사망 처리
                         // TODO(김익환): 사망 이펙트
                         // TODO(김익환): 사망 사운드
-                        Debug.Log("사망");
-                        DieAndRevive().Forget();
+
+
+                        _aliveToken = new CancellationTokenSource();
+                        DieAndRevive(_aliveToken.Token).Forget();
                         this.gameObject.SetActive(false);
 
                     }
@@ -200,11 +225,17 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
         }
     }
 
-    private async UniTaskVoid DieAndRevive()
+    private async UniTaskVoid DieAndRevive(CancellationToken token)
     {
-        await UniTask.Delay(TimeSpan.FromSeconds(1f));
+        bool canceled = await UniTask.Delay(TimeSpan.FromSeconds(1f), cancellationToken: token).SuppressCancellationThrow();
+
+        if (canceled)
+            return;
+
         _petViewModel.SetHp(_petViewModel.GetMaxHp);
         this.gameObject.SetActive(true);
+
+        DisposeToken();
     }
 
     private void OnDrawGizmos()
@@ -219,10 +250,13 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
         Gizmos.DrawWireSphere(transform.position, __SOPetSearch.RangeWhenAggressive);
     }
 
-    public void Dispose()
+    private void DisposeToken()
     {
-        _combatController.Release();
-        StatusEffects.Clear();
-        _petViewModel.OnPropertyChanged_View -= OnPropertyChanged;
+        if (null != _aliveToken)
+        {
+            _aliveToken.Cancel();
+            _aliveToken.Dispose();
+            _aliveToken = null;
+        }
     }
 }

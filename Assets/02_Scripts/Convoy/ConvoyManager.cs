@@ -11,6 +11,7 @@ public class ConvoyManager
     private List<string> _selectedPetIds = new();
 
     private Wagon _wagon;
+    private List<GameObject> _petList = new();
 
     private PlayerEntity _playerEntity;
     private PlayerSkillMaker _playerSkillMaker;
@@ -85,12 +86,25 @@ public class ConvoyManager
 
     public string Release()
     {
+
+        // 1. 카메라 해제
         GameManager.Camera.Release();
-        // 게임 상태 변경
-        // 풀 사용한거 Despawn - 몬스터
-        // 펫 소환 해제
-        // 플레이어 제거.
-        // 마차 제거
+
+        // 2. 펫 해제
+        ReleasePet();
+
+        // 3. 플레이어 해제
+        ReleasePlayer();
+
+        // 4. 마차 해제
+        ReleaseWagon();
+
+        // 5. 맵 해제
+
+        // 6. 게임 상태 변경
+
+        // 7. 미쳐 반환하지 못한 풀 반환
+        GameManager.Pool.AllDespawnToPool();
 
         // TODO 결과에 따라 실패 시 의뢰 출발 마을 ID, 성공 시 도착 마을 ID 반환
         return "테스트 ID";
@@ -147,6 +161,7 @@ public class ConvoyManager
         {
             var petOB = GameManager.Resource.GetLoadedAsset<GameObject>(_selectedPetIds[index]);
             GameObject petInstance = GameObject.Instantiate(petOB);
+            _petList.Add(petInstance);
 
             var viewModel = GameManager.Network.CreatePetViewModel(_selectedPetIds[index]);
 
@@ -217,5 +232,40 @@ public class ConvoyManager
         }
 
         GameManager.UI.OpenSkillHudUI(PLAYER_ID);
+    }
+
+    private void ReleasePet()
+    {
+        GameManager.PetParty.Release();
+
+        foreach (var pet in _petList)
+        {
+            GameObject.Destroy(pet);
+        }
+
+        _petList.Clear();
+        _selectedPetIds.Clear();
+    }
+
+    private void ReleasePlayer()
+    {
+        if (_playerEntity == null)
+            return;
+
+        _playerEntity.Release();
+
+        GameObject.Destroy(_playerEntity.gameObject);
+
+        _playerEntity = null;
+    }
+
+    private void ReleaseWagon()
+    {
+        if (_wagon == null)
+            return;
+
+        _wagon.Release();
+        GameObject.Destroy(_wagon.gameObject);
+        _wagon = null;
     }
 }

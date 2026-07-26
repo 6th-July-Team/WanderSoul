@@ -188,5 +188,15 @@
     "Id": "pet_air_004",
     "Address": "pet_air_004",
     "AssetType": "GameObject"
+  },
+  {
+    "Id": "buff_water_regeneration",
+    "Address": "buff_water_regeneration",
+    "AssetType": "GameObject"
+  },
+  {
+    "Id": "buff_fire_force",
+    "Address": "buff_fire_force",
+    "AssetType": "GameObject"
   }
 ]

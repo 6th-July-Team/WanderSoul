@@ -5,7 +5,12 @@ public class PlayerSkillModifier
 {
     private readonly Dictionary<int, SkillModifier> _modifiers = new();
 
-    private int _nextModifierId;
+    private int _nextModifierId = 0;
+
+    public void Init()
+    {
+        // TODO (김익환): 저장된 데이터 불러와서 적용하기
+    }
 
     public ModifierHandle AddModifier(SkillModifier modifier)
     {

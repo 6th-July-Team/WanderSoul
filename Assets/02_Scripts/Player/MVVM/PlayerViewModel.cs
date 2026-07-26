@@ -21,9 +21,14 @@ public class PlayerViewModel : BaseViewModel<PlayerModel>
         _model.EXP += exp;
     }
 
-    public void SetHp(float hp)
+    public void AddHp(float hp)
     {
-        _model.HP = hp;
+        _model.HP += hp;
+    }
+
+    public void ReduceHp(float hp)
+    {
+        _model.HP -= hp;
     }
 
     public void SetMp(float mp)
