@@ -36,12 +36,15 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
     private PetCommandResult _commandResult;
 
+    private const string DISSOLVE_ADDRESS = "Particle/Dissolve"; // 디졸브 효과로 생성될 때 쓸 파티클
+    private const string DISSOLVEREVERSE_ADDRESS = "Particle/DissolveRev"; // 디졸브 효과로 사자리 때 쓸 파티클
+
 
     private Renderer _petRenderer; // 기웅 : 펫 렌더러 << Awake에서 GetComponentInChildren으로 가져오게 했음 나중에 기호에 맞게 Parent나 그냥 GetComponent로 바꾸기 << 아직 프리팹 구조를 몰라서 이렇게 했음
     private bool _isDead = false; // 기웅 : 사망 했을 때 사망 처리가 끝나기 전에 DieAndRevive로 재집입 하는 걸 막기 위해서 임시로 추가 ( 비동기니까 ) << 나중에 맞는 위치로 이동해야 할듯
 
     [Header("Dissolve Effect")]
-    [SerializeField] private float DissolveDuration = 1f; // 디졸브 유지시간 << 이 유지시간 동안 디졸브 이펙트 출력 (아마도?)
+    [SerializeField] private float DissolveDuration = 2f; // 디졸브 유지시간 << 이 유지시간 동안 디졸브 이펙트 출력 (아마도?)
 
     private static readonly int DISSOLVE_ID = Shader.PropertyToID("_DissolveAmount"); // 디졸브 머터리얼 내부에 있는 프로퍼티를 int로 변환하는 메서드 << AI 도움 받음
 
@@ -193,7 +196,7 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
     {
         switch (propertyName)
         {
-            case nameof(PetViewModel.GetHp):
+            case nameof(PetModel.HP): // << 기웅 : 이벤트를 발행하는 프로퍼티랑 이름이 동일해야 함!! PetViewModel.GetHp는 이벤트를 발행하는 주체는 아니라서 이벤트 전달이 안되고 있었음
                 {
                     if (_petViewModel.GetHp <= 0f && _isDead == false)
                     {
@@ -211,22 +214,36 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
     private async UniTaskVoid DieAndRevive()
     {
         float live = 0f; // 디졸브에서 0은 오브젝트가 보이는 것
-        float dead = 1f; // 디졸브에서 1은 오브젝트가 사라진 것
+        float dead = 0.6f; // 디졸브에서 1은 오브젝트가 사라진 것
 
-        await Dissolve(live, dead); // 생존 > 사망
+        await Dissolve(live, dead, DISSOLVEREVERSE_ADDRESS); // 생존 > 사망
         gameObject.SetActive(false);
 
-        await UniTask.Delay(TimeSpan.FromSeconds(1f));
+        await UniTask.Delay(TimeSpan.FromSeconds(2f));
         _petViewModel.SetHp(_petViewModel.GetMaxHp);
 
         gameObject.SetActive(true);
-        await Dissolve(dead, live); // 사망 > 생존
+        await Dissolve(dead, live, DISSOLVE_ADDRESS); // 사망 > 생존
 
         _isDead = false;
     }
 
-    private async UniTask Dissolve(float start, float end)
+    private async UniTask Dissolve(float start, float end, string vfxAddress)
     {
+        ParticleComponent particleComponent = VFXSpawner.SpawnVFX(vfxAddress, transform.position, Quaternion.identity);
+
+        if(particleComponent == null)
+        {
+            Debug.LogError("VFXSpawner로 생성된 VFX에 particleCompoenet가 없습니다!!");
+        }
+
+        if(particleComponent.TryGetComponent(out PariclePaletteController paletteController) == false)
+        {
+            Debug.LogError("파티클 컴포넌트가 부착된 오브젝트에 팔렛트 컨트롤러가 부착되어 있지 않습니다!!");
+        }
+
+        paletteController.ApplyPalette(Utils.GetEffectColorByPetElement(Element));
+
         float time = 0f;
 
         while (time < DissolveDuration)
@@ -259,7 +276,7 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
     }
 
 #if UNITY_EDITOR
-    [ContextMenu("체력 1/2 감소시키기")] // 기웅 : 테스트용
+    [ContextMenu("체력 절반 감소시키기")] // 기웅 : 테스트용
     private void TakeHalfHpDamage()
     {
         Vector3 hitDirection = Vector3.forward;
@@ -267,6 +284,7 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
         DamageInfo damageInfo = new(_petViewModel.GetMaxHp * 0.5f, hitDirection, DamageType.Physical);
 
         TakeDamage(damageInfo);
+        Debug.Log($"남은 체력 = {_petViewModel.GetHp}");
     }
 #endif
 }
