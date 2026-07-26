@@ -1,4 +1,4 @@
-[
+﻿[
   {
     "Id": "Spider",
     "TargetPolicy": "PriorityBased",
@@ -12,7 +12,7 @@
     "LeashRange": 22,
     "Attack": 6,
     "AttackSpeed": 1.25,
-    "AttackRange": 2.5,
+    "AttackRange": 1.5,
     "SoulDropChance": 50,
     "SoulDropAmount": 1,
     "ExpDropChance": 100,

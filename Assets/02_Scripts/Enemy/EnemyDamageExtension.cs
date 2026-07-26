@@ -10,6 +10,7 @@ public static class EnemyDamageExtension
             return;
         }
 
+        Debug.Log($"대상 정보 : {damageableTarget.EntityType}");
         damageableTarget.TakeDamage(damageInfo);
     }
 

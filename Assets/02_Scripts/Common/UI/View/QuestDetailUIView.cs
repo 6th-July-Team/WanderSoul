@@ -23,7 +23,6 @@ public class QuestDetailUIView : BaseUI<QuestDetailUIView, QuestViewModel>
 
     [Header("Button")]
     [SerializeField] private UIButton _acceptButton;
-    [SerializeField] private UIButton _closeButton;
 
     [Header("Animation")]
     [SerializeField] private UISlideAnimation _slideAnimation;
@@ -35,11 +34,6 @@ public class QuestDetailUIView : BaseUI<QuestDetailUIView, QuestViewModel>
     protected override void OnInit()
     {
         _acceptButton.BindOnClickButtonEvent(OnClickAccept);
-
-        if (_closeButton != null)
-        {
-            _closeButton.BindOnClickButtonEvent(OnClickClose);
-        }
     }
 
     protected override void OnOpened()
@@ -179,9 +173,22 @@ public class QuestDetailUIView : BaseUI<QuestDetailUIView, QuestViewModel>
         }
 
         CloseWithSlide(_onAccepted);
+
+        GameManager.UI.CloseQuestBoardUI();
     }
 
     private void OnClickClose()
+    {
+        if (_isClosing == true)
+        {
+            GameManager.UI.CloseUI(UIType.QuestDetailUIView);
+            return;
+        }
+
+        CloseWithSlide(null);
+    }
+
+    public void CloseWithSlide()
     {
         CloseWithSlide(null);
     }

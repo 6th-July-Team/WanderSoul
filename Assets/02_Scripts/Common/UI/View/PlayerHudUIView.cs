@@ -19,12 +19,48 @@ public class PlayerHudUIView : BaseUI<PlayerHudUIView, PlayerViewModel>
     [SerializeField] private Slider _expSlider;
     [SerializeField] private TMP_Text _expText;
 
-    // TODO(이태영): 레벨/요구 경험치 테이블이 생기면 PlayerViewModel에서 가져오도록 교체
     private const float TEMP_MAX_EXP = 100f;
 
 
     [Header("Animation")]
     [SerializeField] private UISlideAnimation _slideAnimation;
+
+    private PlayerOutGameViewModel _outGameViewModel;
+
+    public void BindOutGameViewModel(PlayerOutGameViewModel outGameViewModel)
+    {
+        UnbindOutGameViewModel();
+
+        _outGameViewModel = outGameViewModel;
+
+        if (_outGameViewModel == null)
+        {
+            return;
+        }
+        
+        _outGameViewModel.OnPropertyChanged_View += OnOutGamePropertyChanged;
+
+        RefreshExp();
+    }
+
+    private void UnbindOutGameViewModel()
+    {
+        if (_outGameViewModel == null)
+        {
+            return;
+        }
+
+        _outGameViewModel.OnPropertyChanged_View -= OnOutGamePropertyChanged;
+        _outGameViewModel = null;
+    }
+
+    private void OnOutGamePropertyChanged(string propertyName)
+    {
+        if (propertyName == nameof(PlayerOutGameModel.Exp))
+        {
+            RefreshExp();
+        }
+    }
 
     protected override void OnPropertyChanged(string propertyName)
     {
@@ -37,17 +73,17 @@ public class PlayerHudUIView : BaseUI<PlayerHudUIView, PlayerViewModel>
         {
             RefreshMana();
         }
-
-        //else if (propertyName == nameof(PlayerModel.EXP))
-        //{
-        //    RefreshExp();
-        //}
     }
 
     protected override void OnOpened()
     {
         _slideAnimation.SetHidden();
         _slideAnimation.SlideIn();
+    }
+
+    protected override void OnClosed()
+    {
+        UnbindOutGameViewModel();
     }
 
     private void RefreshHp()
@@ -84,8 +120,6 @@ public class PlayerHudUIView : BaseUI<PlayerHudUIView, PlayerViewModel>
         _manaText.text = $"{(int)_viewModel.GetMp:N0} / {(int)maxMp:N0}";
     }
 
-    // 오브 셰이더가 액체 높이를 그리므로, 오브가 있으면 fillAmount는 건드리지 않는다.
-    // (같은 Image를 공유해서 둘 다 적용하면 이중으로 잘린다)
     private void RefreshOrb(UIOrbLiquid orbLiquid, Image fillImage, float normalizedValue)
     {
         if (orbLiquid != null)
@@ -102,7 +136,7 @@ public class PlayerHudUIView : BaseUI<PlayerHudUIView, PlayerViewModel>
 
     private void RefreshExp()
     {
-        if (_viewModel == null)
+        if (_outGameViewModel == null)
         {
             return;
         }
@@ -114,7 +148,7 @@ public class PlayerHudUIView : BaseUI<PlayerHudUIView, PlayerViewModel>
             return;
         }
 
-        float exp = 0f;// = _viewModel.GetExp;
+        float exp = _outGameViewModel.GetExp;
 
         if (_expSlider != null)
         {

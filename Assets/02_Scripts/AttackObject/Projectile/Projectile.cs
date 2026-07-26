@@ -111,8 +111,6 @@ public class Projectile : MonoBehaviour
 
                 damageable.TakeDamage(damageinfo);
 
-                Debug.Log($"{_damage}");
-
                 HitEffect(transform.position);
 
                 if (_pierce <= 0)

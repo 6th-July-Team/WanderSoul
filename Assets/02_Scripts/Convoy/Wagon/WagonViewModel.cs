@@ -15,6 +15,12 @@ public class WagonViewModel : BaseViewModel<WagonModel>
     public int GetWagonCapacity => _model.Capacity;
     public float GetProgress => _model.Progress;
     public float GetTime => _model.ConvoyTimer;
+    public bool GetIsWarningActive => _model.IsWarningActive;
+
+    public void SetWarningActive(bool isActive)
+    {
+        _model.IsWarningActive = isActive;
+    }
 
     public void ReduceDurability(float amount)
     {
