@@ -24,6 +24,18 @@ public class CameraManager
 
     public void Release()
     {
-        _cinemachineCamera.Follow = null;
+        if (_cinemachineCamera != null)
+        {
+            _cinemachineCamera.Follow = null;
+
+            GameObject.Destroy(_cinemachineCamera.gameObject);
+            _cinemachineCamera = null;
+        }
+
+        if (_mainCamera != null)
+        {
+            GameObject.Destroy(_mainCamera.gameObject);
+            _mainCamera = null;
+        }
     }
 }

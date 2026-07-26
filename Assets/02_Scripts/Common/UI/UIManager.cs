@@ -18,8 +18,6 @@ public partial class UIManager
 
     private PetInventoryModel _tempPetInventoryModel;
 
-    private const int TEMP_REPUTATION = 50;
-
     public void Init()
     {
         var uiHandler = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/UICanvas"));

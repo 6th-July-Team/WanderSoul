@@ -34,6 +34,8 @@ public class PetInventoryUIView : BaseUI<PetInventoryUIView, PetInventoryViewMod
     private bool _isNoPetConfirmed = false;
     private bool _isClosing = false;
 
+    private string _questId;
+
     #endregion
 
     protected override void OnInit()
@@ -44,6 +46,11 @@ public class PetInventoryUIView : BaseUI<PetInventoryUIView, PetInventoryViewMod
         BindCategoryButtons();
         BindPartySlots();
     }
+    public void SetQuestId(string questId)
+    {
+        _questId = questId;
+    }
+
     protected override void OnOpened()
     {
         _isNoPetConfirmed = false;
@@ -256,7 +263,7 @@ public class PetInventoryUIView : BaseUI<PetInventoryUIView, PetInventoryViewMod
 
         GameManager.UI.SlideInHud();
         GameManager.UI.CloseUI(UIType.PetInventoryUIView);
-        GameManager.Instance.StartConvoy(petDataIds);
+        GameManager.Instance.StartConvoy(_questId, petDataIds);
     }
 
     #endregion

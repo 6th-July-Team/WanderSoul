@@ -6,6 +6,7 @@ public class AreaOfEffect : MonoBehaviour
 
     private float _damage;
     private float _radius;
+    private float _vfxRadius;
 
     private DamageType _damageType = DamageType.None;
     private TargetType _targetType;
@@ -25,15 +26,18 @@ public class AreaOfEffect : MonoBehaviour
 
         _damage = aoeStruct.Damage;
         _radius = aoeStruct.Radius;
+        _vfxRadius = aoeStruct.VFXRadius;
 
         _damageType = aoeStruct.DamageType;
         _targetType = aoeStruct.TargetType;
 
         _visualPath = aoeStruct.VisualPath;
 
-        VFXSpawner.SpawnAttachedVFX(_visualPath, _visualRoot, Vector3.zero, Quaternion.identity);
+        VFXSpawner.SpawnVFX(_visualPath, _centerPos, Quaternion.identity, _vfxRadius);
 
         BurstDamage();
+
+        //Destroy(gameObject);
     }
 
     private void BurstDamage()
@@ -64,6 +68,7 @@ public struct AreaOfEffectStruct
 
     public float Damage;
     public float Radius;
+    public float VFXRadius;
 
     public DamageType DamageType;
     public TargetType TargetType;
@@ -71,7 +76,7 @@ public struct AreaOfEffectStruct
     public string VisualPath;
 
     public AreaOfEffectStruct(Vector3 centerPos
-        , float damage, float radius
+        , float damage, float radius, float vfxRadius
         , DamageType damageType, TargetType targetType
         , string visualPath)
     {
@@ -79,6 +84,7 @@ public struct AreaOfEffectStruct
 
         Damage = damage;
         Radius = radius;
+        VFXRadius = vfxRadius;
 
         DamageType = damageType;
         TargetType = targetType;

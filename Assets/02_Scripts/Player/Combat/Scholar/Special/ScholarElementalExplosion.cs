@@ -44,7 +44,7 @@ public class ScholarElementalExplosion : IPlayerSkillExecution, ISkillRangeCheck
 
         aoeInstance.Init(new AreaOfEffectStruct
         (
-            context.AimWorldPoint, damage, _elementSkillData.Radius
+            context.AimWorldPoint, damage, _elementSkillData.Radius, _elementSkillData.VFXRadius
             , _elementSkillData.GetDamageType(), _elementSkillData.GetTargetType()
             , _elementSkillData.VFXPath
         ));

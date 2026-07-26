@@ -8,6 +8,7 @@ public class PlayerOutGameViewModel : BaseViewModel<PlayerOutGameModel>
     public int GetSoul => _model.Soul;
     public int GetGold => _model.Gold;
     public float GetExp => _model.Exp;
+    public int GetReputation => _model.Reputation;
 
     public void AddSoul(int soulAmount)
     {
@@ -32,5 +33,10 @@ public class PlayerOutGameViewModel : BaseViewModel<PlayerOutGameModel>
     public void AddExp(float expAmount)
     {
         _model.Exp += expAmount;
+    }
+
+    public void AddReputation(int reputationAmount)
+    {
+        _model.Reputation += reputationAmount;
     }
 }

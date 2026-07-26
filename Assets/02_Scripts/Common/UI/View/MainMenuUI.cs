@@ -73,12 +73,39 @@ public class MainMenuUI : BaseUI
 
     private void OnClickInventory()
     {
+        CloseLocationPanels();
+
         if (_inventoryModelTest.ItemList.Count == 0)
         {
             CreateTestItemList();
         }
 
         GameManager.UI.OpenInventoryUI(_inventoryModelTest);
+    }
+
+    private void CloseLocationPanels()
+    {
+        if (_villageInstance != null)
+        {
+            var villageInput = _villageInstance.GetComponentInChildren<VillageClickInput>(true);
+
+            if (villageInput != null)
+            {
+                villageInput.CloseAllPanels();
+            }
+        }
+
+        if (_monsterFarmInstance == null)
+        {
+            return;
+        }
+
+        var farmInput = _monsterFarmInstance.GetComponentInChildren<FarmClickInput>(true);
+
+        if (farmInput != null)
+        {
+            farmInput.CloseAllPanels();
+        }
     }
 
     private void CreateTestItemList()
@@ -96,6 +123,8 @@ public class MainMenuUI : BaseUI
 
     private void OnClickFarm()
     {
+        CloseLocationPanels();
+
         if (_isInMonsterFarm)
         {
             ShowVillage();
@@ -173,6 +202,8 @@ public class MainMenuUI : BaseUI
 
     private void OnClickOption()
     {
+        CloseLocationPanels();
+
         GameManager.UI.OpenOptionUI();
     }
 }

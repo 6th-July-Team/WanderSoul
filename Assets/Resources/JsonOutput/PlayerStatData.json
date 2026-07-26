@@ -18,7 +18,8 @@
     "CritMultiplier": 1.5,
     "MaxReviveCount": 0,
     "MaxDashCount": 2,
-    "MagnetRadius": 5
+    "MagnetRadius": 5,
+    "DashChargeTime": 5
   },
   {
     "Id": "player_mercenary",
@@ -39,6 +40,7 @@
     "CritMultiplier": 1.5,
     "MaxReviveCount": 0,
     "MaxDashCount": 2,
-    "MagnetRadius": 4
+    "MagnetRadius": 4,
+    "DashChargeTime": 5
   }
 ]

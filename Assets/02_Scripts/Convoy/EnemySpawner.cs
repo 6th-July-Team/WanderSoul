@@ -20,11 +20,10 @@ public class EnemySpawner : MonoBehaviour
     private List<string> _enemyPoolId = new();
     private List<string> _enemyIds = new();
 
-    public void Init(PlayerEntity player, Wagon wagon)
+    public void Init(PlayerEntity player, Wagon wagon, string questId)
     {
-        // TODO(김익환): 의뢰 아이디 어디서 가져오지?
         // TODO(김익환): 의뢰 데이터에 접근하는 것을 -> 의뢰를 몰라도 데이터를 알 수 있도록 변경하자.
-        List<string> spawnDataIds = GameManager.DataTable.GetQuestData("quest_001").AutoSpawnIds;
+        List<string> spawnDataIds = GameManager.DataTable.GetQuestData(questId).AutoSpawnIds;
         _spawnData = new AutoSpawnData[spawnDataIds.Count];
 
         for (int i = 0; i < spawnDataIds.Count; i++)
@@ -55,7 +54,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        if (!_isInitialized)
+        if (!_isInitialized || GameManager.Time.IsPaused)
             return;
 
         _wagonViewModel.Updata(GameManager.Time.GameDeltaTime);

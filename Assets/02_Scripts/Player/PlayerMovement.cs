@@ -19,7 +19,6 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _dashDirection;
     [SerializeField] private float _dashSpeed = 15f;
     [SerializeField] private float _dashDuration = 0.2f;
-    [SerializeField] private float _dashCoolTime = 1f;
     private float _dashTimer;
     private bool _isDashing;
 
@@ -133,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
         if (_isDashing || _viewModel.GetDashCount <= 0)
             return;
 
-        if (_viewModel.TryDash())
+        if (!_viewModel.TryDash())
             return;
 
         if (_inputHandle.MoveInputV3.sqrMagnitude > 0.001f)

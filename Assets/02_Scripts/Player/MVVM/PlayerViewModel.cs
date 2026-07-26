@@ -27,8 +27,17 @@ public class PlayerViewModel : BaseViewModel<PlayerModel>
     {
         if (_model.DashCount <= 0)
             return false;
+        
+        bool wasFull = _model.DashCount == _model.DashMaxCount;
 
         _model.DashCount--;
+
+        if(wasFull)
+        {
+            _model.DashCoolTime = _model.DashChargeTime;
+            _isDashCharging = true;
+        }
+
         return true;
     }
 
@@ -101,17 +110,17 @@ public class PlayerViewModel : BaseViewModel<PlayerModel>
 
     private void UpdateDashCount(float deltaTime)
     {
-        if (_model.DashCount == _model.DashMaxCount)
-            return;
-
         if (_model.DashCount >= _model.DashMaxCount)
         {
+            _model.DashCount = _model.DashMaxCount;
+            _model.DashCoolTime = 0f;
+
             _isDashCharging = false;
-            _model.DashCoolTime = _model.DashChargeTime;
+
             return;
         }
 
-        _model.DashCoolTime -= Time.deltaTime;
+        _model.DashCoolTime -= deltaTime;
 
         if (_model.DashCoolTime > 0f)
             return;
