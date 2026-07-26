@@ -38,10 +38,10 @@ public class PlayerHudUIView : BaseUI<PlayerHudUIView, PlayerViewModel>
             RefreshMana();
         }
 
-        else if (propertyName == nameof(PlayerModel.EXP))
-        {
-            RefreshExp();
-        }
+        //else if (propertyName == nameof(PlayerModel.EXP))
+        //{
+        //    RefreshExp();
+        //}
     }
 
     protected override void OnOpened()
@@ -114,7 +114,7 @@ public class PlayerHudUIView : BaseUI<PlayerHudUIView, PlayerViewModel>
             return;
         }
 
-        float exp = _viewModel.GetExp;
+        float exp = 0f;// = _viewModel.GetExp;
 
         if (_expSlider != null)
         {

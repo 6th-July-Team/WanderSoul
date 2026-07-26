@@ -40,6 +40,11 @@ public class PlayerViewModel : BaseViewModel<PlayerModel>
     public void ReduceHp(float hp)
     {
         _model.HP -= hp;
+
+        if(_model.HP <= 0f)
+        {
+            GameManager.Convoy.FaildConvoy(ConvoyFailReason.PlayerDefeated);
+        }
     }
 
     public void SetMp(float mp)

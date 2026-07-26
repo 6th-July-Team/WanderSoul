@@ -68,7 +68,7 @@ public class DataTable
         AutoSpawnDataTable = LoadData<AutoSpawnData>(nameof(AutoSpawnData));
         PreLoadAssetDataTable = LoadData<PreLoadAssetData>(nameof(PreLoadAssetData));
         PlayerClassDataTable = LoadData<PlayerClassData>(nameof(PlayerClassData));
-        ProjectileColliderDataTable = LoadData<ProjectileColliderData>(nameof(ProjectileColliderData));
+        //ProjectileColliderDataTable = LoadData<ProjectileColliderData>(nameof(ProjectileColliderData));
     }
 
     #region Getters
