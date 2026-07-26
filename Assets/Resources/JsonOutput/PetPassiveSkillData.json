@@ -4,7 +4,7 @@
     "Name": "불의 힘",
     "Description": "범위 내 아군의 피해량이 오른다",
     "stringTargetType": "Player",
-    "StatusEffectId": 0,
+    "StatusEffectId": "buff_fire_force",
     "ApllyChance": null,
     "ExecutionId": "AreaBuff",
     "Radius": 5
@@ -14,7 +14,7 @@
     "Name": "물의 치유력",
     "Description": "아군의 체력을 조금씩 회복한다",
     "stringTargetType": "Player",
-    "StatusEffectId": 0,
+    "StatusEffectId": "buff_water_regeneration",
     "ApllyChance": null,
     "ExecutionId": "AreaBuff",
     "Radius": 5

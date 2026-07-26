@@ -8,8 +8,10 @@
     "ActiveSkillIds": [
       "pet_skill_fire_001"
     ],
-    "PassiveSkillIds": null,
-    "IconPath": null
+    "PassiveSkillIds": [
+      "pet_passive_fire_force"
+    ],
+    "IconPath": "Sprites/UI/Icon/PetIcon_Fire_001"
   },
   {
     "Id": "pet_water_002",
@@ -23,7 +25,7 @@
     "PassiveSkillIds": [
       "pet_passive_water_regeneration"
     ],
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/PetIcon_Water_001"
   },
   {
     "Id": "pet_earth_003",
@@ -36,7 +38,7 @@
       "pet_skill_taunt"
     ],
     "PassiveSkillIds": null,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/PetIcon_Earth_001"
   },
   {
     "Id": "pet_air_004",
@@ -49,6 +51,6 @@
       "pet_skill_windblessing"
     ],
     "PassiveSkillIds": null,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/PetIcon_Air_001"
   }
 ]

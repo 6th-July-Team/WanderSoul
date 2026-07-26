@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 
 public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffectReceiver, IHealable
 {
@@ -32,12 +33,16 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
     private bool _isInitialized = false;
     private bool _isInBarrier;
 
+    // scholarOrb
+    private ScholarOrb _scholarOrb;
+
 
     private void Awake()
     {
         _combatController = GetComponent<PlayerCombatController>();
 
         _skillModifier = new();
+        _skillModifier.Init();
         StatusEffects = new StatusEffectController();
     }
 
@@ -59,12 +64,12 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
     {
         var build = playerSkillMaker.CreateSkillBuild(playerId, _statController, petStatusEffectReceviers);
 
-        var playerOrb = Instantiate(Utils.ResourcesLoad<ScholarOrb>("Player/ScholarOrb")
+        _scholarOrb = Instantiate(Utils.ResourcesLoad<ScholarOrb>("Player/ScholarOrb")
             , _orbTransform.position, Quaternion.identity);
 
-        playerOrb.Init(_orbTransform);
+        _scholarOrb.Init(_orbTransform);
 
-        _combatController.Init(build, _skillModifier, playerOrb.transform);
+        _combatController.Init(build, _skillModifier, _scholarOrb.transform);
     }
 
     private void Update()
@@ -81,24 +86,37 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
         // TODO 데미지 입는 로직
         if (_isInBarrier)
         {
-            Debug.Log($"{GetType()} 플레이어 베리어로 데미지 흡수!");
+            Logger.Log($"{GetType()} 플레이어 베리어로 데미지 흡수!");
         }
         else
         {
-
-            Debug.Log($"{GetType()} 플레이어 피격!");
+            _playerViewModel.ReduceHp(damageInfo.DamageAmount);
         }
     }
 
-    public float Heal(float amount)
+    public void Heal(float amount)
     {
-        Debug.Log($"{GetType()} 플레이어 회복: {amount}");
-        return 0f;// StatusEffects.Heal(amount);
+        _playerViewModel.AddHp(amount);
     }
 
     public float GetSkillCoolTime(SkillSlot skillSlot)
     {
         return _combatController.GetSkillCoolTime(skillSlot);
+    }
+
+    public void Release()
+    {
+        _isInitialized = false;
+
+        _scholarOrb.Release();
+
+        StatusEffects.Clear();
+        _statController.ClearAll();
+
+        _combatController = null;
+        _playerViewModel = null;
+        _statController = null;
+        _skillModifier = null;
     }
 
     private void OnTriggerEnter(Collider other)

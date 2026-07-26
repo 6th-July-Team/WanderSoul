@@ -166,8 +166,17 @@ public partial class UIManager
             case UIType.UltimateSelectUIView:
                 return UIRootType.Content;
 
+            case UIType.MagicCircleUIView:
+                return UIRootType.Content;
+
             case UIType.LoadingUIView:
                 return UIRootType.Front;
+
+            case UIType.ScreenFadeUIView:
+                return UIRootType.Front;
+
+            case UIType.OptionUI:
+                return UIRootType.Popup;
 
             case UIType.SimplePopupUIView:
                 return UIRootType.Popup;

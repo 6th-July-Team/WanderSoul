@@ -14,7 +14,6 @@ public class PlayerStatController : IDisposable
         for (int i = 0; i < (int)StatType.COUNT; i++)
         {
             _baseValues[(StatType)i] = data.GetBaseValue((StatType)i);
-            Debug.Log($"{GetType()}: {((StatType)i).ToString()}의 base 값 = {_baseValues[(StatType)i]}");
         }
     }
 

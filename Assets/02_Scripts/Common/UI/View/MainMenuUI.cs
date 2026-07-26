@@ -194,7 +194,6 @@ public class MainMenuUI : BaseUI
 
     private void OnClickOption()
     {
-        Debug.Log("설정 열기");
-        // GameManager.UI.OpenUI<OptionUI>(UIType.OptionUI);
+        GameManager.UI.OpenOptionUI();
     }
 }

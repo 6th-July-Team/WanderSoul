@@ -10,7 +10,9 @@ public class ConvoyManager
     private string _selectedQuestId;
     private List<string> _selectedPetIds = new();
 
+    private TradeRouteHandler _loadedMap;
     private Wagon _wagon;
+    private List<GameObject> _petList = new();
 
     private PlayerEntity _playerEntity;
     private PlayerSkillMaker _playerSkillMaker;
@@ -26,14 +28,14 @@ public class ConvoyManager
     }
 
     // 의뢰 시작 -> 펫 선택 -> 로딩 UI를 보여주며 아래 init 함수 호출.
-    public void InitConvoy(string questId, List<string> selectedPetIds)
+    public async UniTask InitConvoy(string questId, List<string> selectedPetIds)
     {
         _selectedQuestId = questId;
 
         _selectedPetIds.Clear();
         _selectedPetIds.AddRange(selectedPetIds);
 
-        StartConvoyAsync().Forget();
+        await StartConvoyAsync();
     }
 
     public void FaildConvoy(ConvoyFailReason failReason = ConvoyFailReason.WagonDestroyed)
@@ -85,39 +87,47 @@ public class ConvoyManager
 
     public string Release()
     {
+
+        // 1. 카메라 해제
         GameManager.Camera.Release();
-        // 게임 상태 변경
-        // 풀 사용한거 Despawn - 몬스터
-        // 펫 소환 해제
-        // 플레이어 제거.
-        // 마차 제거
+
+        // 2. 펫 해제
+        ReleasePet();
+
+        // 3. 플레이어 해제
+        ReleasePlayer();
+
+        // 4. 마차 해제
+        ReleaseWagon();
+
+        // 5. 맵 해제
+        GameObject.Destroy(_loadedMap.gameObject);
+
+
+        GameManager.Pool.AllDespawnToPool();
 
         // TODO 결과에 따라 실패 시 의뢰 출발 마을 ID, 성공 시 도착 마을 ID 반환
         return "테스트 ID";
     }
 
-    private async UniTaskVoid StartConvoyAsync()
+    private async UniTask StartConvoyAsync()
     {
-        GameManager.UI.OpenLoadingUI();
-
-        await UniTask.Delay(System.TimeSpan.FromSeconds(1f));
-
         LoadMap();
         SpawnPet();
         InitCamera();
 
         StartBattle();
 
-        GameManager.UI.CloseUI(UIType.LoadingUIView);
+        await UniTask.NextFrame();
     }
 
     private void LoadMap()
     {
-        var tradeRouteHandler = GameObject.Instantiate(Utils.ResourcesLoad<TradeRouteHandler>("Map/Map_01-TEST"));
+        _loadedMap = GameObject.Instantiate(Utils.ResourcesLoad<TradeRouteHandler>("Map/Map_01-TEST"));
 
         SpawnPlayer();
 
-        SpawnWagon(tradeRouteHandler.SplineContainer);
+        SpawnWagon(_loadedMap.SplineContainer);
     }
 
     private void SpawnWagon(SplineContainer splineContainer)
@@ -143,19 +153,20 @@ public class ConvoyManager
     {
         List<PetController> petControllers = new();
 
-        for(int index = 0; index < _selectedPetIds.Count; index++)
+        var petViewModels = GameManager.Network.PetService.GetPetViewModels(_selectedPetIds);
+
+        for (int index = 0; index < _selectedPetIds.Count; index++)
         {
             var petOB = GameManager.Resource.GetLoadedAsset<GameObject>(_selectedPetIds[index]);
             GameObject petInstance = GameObject.Instantiate(petOB);
-
-            var viewModel = GameManager.Network.CreatePetViewModel(_selectedPetIds[index]);
+            _petList.Add(petInstance);
 
             petInstance.GetComponent<PetController>().Init(_selectedPetIds[index]
                             , _playerEntity, _wagon
                             , _petSkillMaker
                             , _playerEntity, _playerEntity
                             , 30 + index * 10
-                            , viewModel);
+                            , petViewModels[index]);
 
             petControllers.Add(petInstance.GetComponent<PetController>());
         }
@@ -190,11 +201,13 @@ public class ConvoyManager
 
         if (partyHud != null)
         {
-            partyHud.SetWagon("마차", 1f);
+            partyHud.BindWagon(wagonVm);
+
+            var petViewModels = GameManager.Network.GetPetViewModels(_selectedPetIds);
 
             for (int i = 0; i < _selectedPetIds.Count; i++)
             {
-                partyHud.AddPet(_selectedPetIds[i], 1f);
+                partyHud.BindPet(_selectedPetIds[i], petViewModels[i]);
             }
         }
 
@@ -206,7 +219,6 @@ public class ConvoyManager
 
         var resourceModel = new ResourceModel();
 
-        resourceModel.Soul = 5;
         resourceModel.Money = 999999;
 
         var resourceHud = GameManager.UI.OpenResourceHudUI(resourceModel);
@@ -217,5 +229,40 @@ public class ConvoyManager
         }
 
         GameManager.UI.OpenSkillHudUI(PLAYER_ID);
+    }
+
+    private void ReleasePet()
+    {
+        GameManager.PetParty.Release();
+
+        foreach (var pet in _petList)
+        {
+            GameObject.Destroy(pet);
+        }
+
+        _petList.Clear();
+        _selectedPetIds.Clear();
+    }
+
+    private void ReleasePlayer()
+    {
+        if (_playerEntity == null)
+            return;
+
+        _playerEntity.Release();
+
+        GameObject.Destroy(_playerEntity.gameObject);
+
+        _playerEntity = null;
+    }
+
+    private void ReleaseWagon()
+    {
+        if (_wagon == null)
+            return;
+
+        _wagon.Release();
+        GameObject.Destroy(_wagon.gameObject);
+        _wagon = null;
     }
 }

@@ -111,7 +111,7 @@ public class EnemySpawner : MonoBehaviour
                 {
                     var viewModel = GameManager.Network.CreateEnemyViewModel(_enemyIds[i]);
                     enemyView.BindViewModel(viewModel);
-                    enemyView.Init(_player.gameObject, _wagon.gameObject);
+                    enemyView.Init(_wagon.gameObject, _player.gameObject);
                 }
             }
         }

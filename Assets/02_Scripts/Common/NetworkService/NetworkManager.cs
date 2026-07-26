@@ -1,5 +1,7 @@
 ﻿
 
+using System.Collections.Generic;
+
 public class NetworkManager
 {
     public NetworkPlayerService PlayerService { get; private set; } = new();
@@ -11,6 +13,7 @@ public class NetworkManager
     {
         PlayerService.Dispose();
         WagonService.Dispose();
+        PetService.Dispose();
     }
 
     public PlayerViewModel RequestCreatePlayer()
@@ -38,8 +41,8 @@ public class NetworkManager
         return EnemyService.CreateEnemyViewModel(enemyId);
     }
 
-    public PetViewModel CreatePetViewModel(string petId)
+    public IReadOnlyList<PetViewModel> GetPetViewModels(List<string> petIds)
     {
-        return PetService.CreatePetViewModel(petId);
+        return PetService.GetPetViewModels(petIds);
     }
 }

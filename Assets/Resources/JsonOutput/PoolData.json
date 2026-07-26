@@ -114,5 +114,21 @@
   {
     "Id": "WindPawn_ActiveEffect",
     "InitSize": 0
+  },
+  {
+    "Id": "buff_water_regeneration",
+    "InitSize": 0
+  },
+  {
+    "Id": "buff_fire_force",
+    "InitSize": 0
+  },
+  {
+    "Id": "Particle/Dissolve",
+    "InitSize": 0
+  },
+  {
+    "Id": "Particle/DissolveRev",
+    "InitSize": 0
   }
 ]

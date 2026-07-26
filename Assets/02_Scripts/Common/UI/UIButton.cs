@@ -4,18 +4,22 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UIButton : MonoBehaviour, IPointerClickHandler
+public class UIButton : UIHoverScale, IPointerClickHandler
 {
     [SerializeField] private Button _button;
     [SerializeField] private TMP_Text _text;
 
-    private void Awake()
+    protected override void Awake()
     {
         InitButton();
+
+        base.Awake();
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
+
         //if (_button != null)
         //{
         //    _button.onClick.RemoveAllListeners();
@@ -76,8 +80,9 @@ public class UIButton : MonoBehaviour, IPointerClickHandler
 
         _button.interactable = isInteractable;
     }
+
     public void OnPointerClick(PointerEventData eventData)
     {
-        // TODO(태영,07-08): 클릭 애니메이션/사운드 추가 예정
+        // TODO(태영,07-08): 클릭 사운드 추가 예정
     }
 }

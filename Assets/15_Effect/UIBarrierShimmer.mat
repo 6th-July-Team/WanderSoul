@@ -31,13 +31,13 @@ Material:
     m_Floats:
     - _BandSoftness: 0.08
     - _BandWidth: 0.12
+    - _BaseStrength: 0.12
     - _BottomFadeEnd: 0.05
     - _BottomFadePower: 1.5
     - _BottomFadeStart: 0.55
-    - _BaseStrength: 0.12
     - _ColorMask: 15
-    - _CycleDuration: 5.5
     - _CurveStrength: 0.75
+    - _CycleDuration: 4.5
     - _Diagonal: 0
     - _EffectTime: 0
     - _Playing: 0
@@ -47,7 +47,7 @@ Material:
     - _StencilOp: 0
     - _StencilReadMask: 255
     - _StencilWriteMask: 255
-    - _SweepDuration: 2.2
+    - _SweepDuration: 0.7
     - _TopWidth: 0.25
     - _UseUIAlphaClip: 0
     m_Colors:

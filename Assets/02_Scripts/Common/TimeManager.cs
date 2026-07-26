@@ -10,20 +10,28 @@ public class TimeManager
         }
     }
 
-    public bool IsPaused { get; private set; }
+    public bool IsPaused
+    {
+        get
+        {
+            return _pauseCount > 0;
+        }
+    }
+
+    private int _pauseCount = 0;
 
     public void Init()
     {
-        IsPaused = false;
+        _pauseCount = 0;
     }
 
     public void OnPause()
     {
-        IsPaused = true;
+        _pauseCount++;
     }
 
     public void OnResume()
     {
-        IsPaused = false;
+        _pauseCount = Mathf.Max(0, _pauseCount - 1);
     }
 }

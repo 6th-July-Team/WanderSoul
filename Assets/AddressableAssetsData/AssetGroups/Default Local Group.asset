@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: d23e82b11f3c73f429c0814f7fd6f9b0
   m_SerializeEntries:
+  - m_GUID: 012460d8f001937479528e2d09e0f5e1
+    m_Address: Particle/Dissolve
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0797a141aae1dc54fae5fe8befa76765
     m_Address: Enemy/Area_01
     m_ReadOnly: 0
@@ -152,6 +157,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 9b8776ecb3c53e94eb0ab5549505a76c
     m_Address: buff_fire_force
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9e3726183bb898c4b8b7b8cba158ecfc
+    m_Address: Particle/DissolveRev
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

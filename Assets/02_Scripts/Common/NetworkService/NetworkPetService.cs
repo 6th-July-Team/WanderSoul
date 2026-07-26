@@ -1,10 +1,28 @@
-﻿
-
-
+﻿using System.Collections.Generic;
 
 public class NetworkPetService
 {
-    public PetViewModel CreatePetViewModel(string petId)
+    private readonly List<PetViewModel> _petViewModels = new();
+
+    public IReadOnlyList<PetViewModel> GetPetViewModels(List<string> petIds)
+    {
+        if (_petViewModels.Count == 0 && petIds.Count > 0)
+        {
+            CreatePetViewModels(petIds);
+        }
+
+        return _petViewModels;
+    }
+
+    private void CreatePetViewModels(List<string> petIds)
+    {
+        foreach (var petId in petIds)
+        {
+            _petViewModels.Add(CreatePetViewModel(petId));
+        }
+    }
+
+    private PetViewModel CreatePetViewModel(string petId)
     {
         var petBaseData = GameManager.DataTable.GetPetStatData(petId);
 
@@ -12,8 +30,16 @@ public class NetworkPetService
         model.HP = petBaseData.MaxHealth;
         model.MaxHp = petBaseData.MaxHealth;
 
-        PetViewModel viewModel = new(model);
+        return new PetViewModel(model);
+    }
 
-        return viewModel;
+    public void Dispose()
+    {
+        foreach (var viewModel in _petViewModels)
+        {
+            viewModel.Dispose();
+        }
+
+        _petViewModels.Clear();
     }
 }
