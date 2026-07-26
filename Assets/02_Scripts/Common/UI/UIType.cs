@@ -22,11 +22,14 @@
     ConvoyHudUIView,
     LevelUpUIView,
     LoadingUIView,
+    ScreenFadeUIView,
+    OptionUI,
     SimplePopupUIView,
     ConvoySuccessUIView,
     ConvoyFailUIView,
     WagonAreaWarningUIView,
     UltimateSelectUIView,
+    MagicCircleUIView,
 }
 
 public enum UIRootType : byte

@@ -11,6 +11,7 @@ public class NetworkManager
     {
         PlayerService.Dispose();
         WagonService.Dispose();
+        PetService.Dispose();
     }
 
     public PlayerViewModel RequestCreatePlayer()
@@ -36,10 +37,5 @@ public class NetworkManager
     public EnemyViewModel CreateEnemyViewModel(string enemyId)
     {
         return EnemyService.CreateEnemyViewModel(enemyId);
-    }
-
-    public PetViewModel CreatePetViewModel(string petId)
-    {
-        return PetService.CreatePetViewModel(petId);
     }
 }

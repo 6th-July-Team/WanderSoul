@@ -20,6 +20,16 @@ public abstract class CardSelectUIView : BaseUI
 
     protected abstract UIType SelfUIType { get; }
 
+    protected override void OnOpened()
+    {
+        GameManager.Time.OnPause();
+    }
+
+    protected override void OnClosed()
+    {
+        GameManager.Time.OnResume();
+    }
+
     protected void SetSlots(List<string> idList, Action<string> onSelected, Action onClosed)
     {
         ClearSlots();

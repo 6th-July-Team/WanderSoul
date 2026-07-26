@@ -46,7 +46,9 @@ public class WagonBoundary : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            _isWarningActive = true;
+            _isWarningActive = false;
+            _warningTimer = 0f;
+            _viewModel.SetWarningTime(0f);
         }
     }
 
@@ -54,9 +56,7 @@ public class WagonBoundary : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            _isWarningActive = false;
-            _warningTimer = 0f;
-            _viewModel.SetWarningTime(0f);
+            _isWarningActive = true;
         }
     }
 }

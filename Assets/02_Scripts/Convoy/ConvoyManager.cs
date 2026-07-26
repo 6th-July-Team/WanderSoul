@@ -28,14 +28,14 @@ public class ConvoyManager
     }
 
     // 의뢰 시작 -> 펫 선택 -> 로딩 UI를 보여주며 아래 init 함수 호출.
-    public void InitConvoy(string questId, List<string> selectedPetIds)
+    public async UniTask InitConvoy(string questId, List<string> selectedPetIds)
     {
         _selectedQuestId = questId;
 
         _selectedPetIds.Clear();
         _selectedPetIds.AddRange(selectedPetIds);
 
-        StartConvoyAsync().Forget();
+        await StartConvoyAsync();
     }
 
     public void FaildConvoy(ConvoyFailReason failReason = ConvoyFailReason.WagonDestroyed)
@@ -111,19 +111,15 @@ public class ConvoyManager
         return "테스트 ID";
     }
 
-    private async UniTaskVoid StartConvoyAsync()
+    private async UniTask StartConvoyAsync()
     {
-        GameManager.UI.OpenLoadingUI();
-
-        await UniTask.Delay(System.TimeSpan.FromSeconds(1f));
-
         LoadMap();
         SpawnPet();
         InitCamera();
 
         StartBattle();
 
-        GameManager.UI.CloseUI(UIType.LoadingUIView);
+        await UniTask.NextFrame();
     }
 
     private void LoadMap()
@@ -157,6 +153,8 @@ public class ConvoyManager
     private void SpawnPet()
     {
         List<PetController> petControllers = new();
+
+        var petViewModels = GameManager.Network.PetService.GetPetViewModels(_selectedPetIds);
 
         for(int index = 0; index < _selectedPetIds.Count; index++)
         {
@@ -203,11 +201,13 @@ public class ConvoyManager
 
         if (partyHud != null)
         {
-            partyHud.SetWagon("마차", 1f);
+            partyHud.BindWagon(wagonVm);
+
+            var petViewModels = GameManager.Network.PetService.GetPetViewModels(_selectedPetIds);
 
             for (int i = 0; i < _selectedPetIds.Count; i++)
             {
-                partyHud.AddPet(_selectedPetIds[i], 1f);
+                partyHud.BindPet(_selectedPetIds[i], petViewModels[i]);
             }
         }
 
@@ -219,7 +219,6 @@ public class ConvoyManager
 
         var resourceModel = new ResourceModel();
 
-        resourceModel.Soul = 5;
         resourceModel.Money = 999999;
 
         var resourceHud = GameManager.UI.OpenResourceHudUI(resourceModel);
