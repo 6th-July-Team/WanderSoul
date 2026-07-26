@@ -6,6 +6,7 @@ public class PlayerOutGameModel : BaseModel
     {
         OnPropertyChanged(nameof(Soul));
         OnPropertyChanged(nameof(Gold));
+        OnPropertyChanged(nameof(Exp));
     }
 
     private int _soul;
@@ -31,6 +32,19 @@ public class PlayerOutGameModel : BaseModel
                 return;
             _gold = value;
             OnPropertyChanged(nameof(Gold));
+        }
+    }
+
+    private float _exp;
+    public float Exp
+    {
+        get => _exp;
+        set
+        {
+            if (_exp == value)
+                return;
+            _exp = value;
+            OnPropertyChanged(nameof(Exp));
         }
     }
 }

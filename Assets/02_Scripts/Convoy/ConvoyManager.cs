@@ -141,12 +141,12 @@ public class ConvoyManager
 
     private void SpawnPlayer()
     {
-        var playerViewModel = GameManager.Network.RequestCreatePlayer();
+        var inGameViewModel = GameManager.Network.RequestCreatePlayer();
         var playerStatController = GameManager.Network.PlayerService.StatController;
 
         _playerEntity = GameObject.Instantiate(Utils.ResourcesLoad<PlayerEntity>("Test_Scholar"));
 
-        _playerEntity.Init(PLAYER_ID, playerViewModel, playerStatController);
+        _playerEntity.Init(PLAYER_ID, inGameViewModel, playerStatController);
     }
 
     private void SpawnPet()

@@ -6,7 +6,6 @@ public class PlayerModel : BaseModel
     {
         OnPropertyChanged(nameof(HP));
         OnPropertyChanged(nameof(MP));
-        OnPropertyChanged(nameof(EXP));
         OnPropertyChanged(nameof(MagnetRadius));
         OnPropertyChanged(nameof(DashCount)); 
         OnPropertyChanged(nameof(DashMaxCount)); 
@@ -46,21 +45,6 @@ public class PlayerModel : BaseModel
             }
             _mp = value;
             OnPropertyChanged(nameof(MP));
-        }
-    }
-
-    private float _exp;
-    public float EXP
-    {
-        get { return _exp; }
-        set
-        {
-            if (_exp == value)
-            {
-                return;
-            }
-            _exp = value;
-            OnPropertyChanged(nameof(EXP));
         }
     }
 

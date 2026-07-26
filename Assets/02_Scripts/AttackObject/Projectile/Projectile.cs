@@ -87,7 +87,7 @@ public class Projectile : MonoBehaviour
 
     private void Update()
     {
-        transform.position += _direction * _speed * Time.deltaTime;
+        transform.position += _direction * _speed * GameManager.Time.GameDeltaTime;
     }
 
     private void OnTriggerEnter(Collider other)
