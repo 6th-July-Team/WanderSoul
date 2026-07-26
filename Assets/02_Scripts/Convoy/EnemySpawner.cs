@@ -54,7 +54,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void Update()
     {
-        if (!_isInitialized)
+        if (!_isInitialized || GameManager.Time.IsPaused)
             return;
 
         _wagonViewModel.Updata(GameManager.Time.GameDeltaTime);
