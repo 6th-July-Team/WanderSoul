@@ -1093,7 +1093,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 1
-  m_BaseOffset: 0.5
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!135 &-6598880968851381633
@@ -1146,3 +1146,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PetController
   __SOPetSearch: {fileID: 11400000, guid: 6ea5631651619e14f9484c6bf765b215, type: 2}
   _commandRefreshInterval: 0.2
+  DissolveDuration: 1
