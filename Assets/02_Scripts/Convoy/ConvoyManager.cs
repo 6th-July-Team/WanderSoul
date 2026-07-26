@@ -19,6 +19,8 @@ public class ConvoyManager
 
     private CameraHandler _cameraHandler;
 
+    private bool _isConvoyEnded = false;
+
     private const string PLAYER_ID = "player_scholar"; // 현재 플레이어 선택 불가능하여, 학자가 고정되어 있음.
 
     public ConvoyManager(PetSkillMaker petSkillMaker, PlayerSkillMaker playerSkillMaker)
@@ -30,6 +32,7 @@ public class ConvoyManager
     // 의뢰 시작 -> 펫 선택 -> 로딩 UI를 보여주며 아래 init 함수 호출.
     public async UniTask InitConvoy(string questId, List<string> selectedPetIds)
     {
+        _isConvoyEnded = false;
         _selectedQuestId = questId;
 
         _selectedPetIds.Clear();
@@ -40,6 +43,13 @@ public class ConvoyManager
 
     public void FaildConvoy(ConvoyFailReason failReason = ConvoyFailReason.WagonDestroyed)
     {
+        if (_isConvoyEnded == true)
+        {
+            return;
+        }
+
+        _isConvoyEnded = true;
+
         GameManager.UI.CloseAllConvoyHuds();
         var result = MakeConvoyResult(false, failReason);
         GameManager.UI.OpenConvoyFailUI(result);
@@ -47,6 +57,13 @@ public class ConvoyManager
 
     public void SuccessConvoy()
     {
+        if (_isConvoyEnded == true)
+        {
+            return;
+        }
+
+        _isConvoyEnded = true;
+
         GameManager.UI.CloseAllConvoyHuds();
         var result = MakeConvoyResult(true, ConvoyFailReason.None);
         GameManager.UI.OpenConvoySuccessUI(result);
