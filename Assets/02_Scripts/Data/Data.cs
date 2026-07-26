@@ -479,3 +479,11 @@ public class PlayerClassData : BaseData
     public string SpecialSkillId;
     public List<string> UltimateSkillIds;
 }
+
+[Serializable]
+public class ProjectileColliderData : BaseData
+{
+    public List<float> HitboxCenter;
+    public float HitboxRadius;
+    public float HitboxLength;
+}
