@@ -130,6 +130,7 @@ public class PlayerStatData : BaseData
     public float MagnetRadius;
     public int MaxReviveCount;
     public int MaxDashCount;
+    public float DashChargeTime;
 
     public float GetBaseValue(StatType statType)
     {
@@ -153,6 +154,7 @@ public class PlayerStatData : BaseData
             StatType.MaxReviveCount => MaxReviveCount,
             StatType.MaxDashCount => MaxDashCount,
             StatType.MagnetRadius => MagnetRadius,
+            StatType.DashChargeTime => DashChargeTime,
             _ => 0f
         };
     }
@@ -478,4 +480,12 @@ public class PlayerClassData : BaseData
     public string BasicSkillId;
     public string SpecialSkillId;
     public List<string> UltimateSkillIds;
+}
+
+[Serializable]
+public class ProjectileColliderData : BaseData
+{
+    public List<float> HitboxCenter;
+    public float HitboxRadius;
+    public float HitboxLength;
 }

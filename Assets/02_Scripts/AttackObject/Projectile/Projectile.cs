@@ -24,9 +24,17 @@ public class Projectile : MonoBehaviour
     // 폭발형 전용
     private Collider[] _burstTarget = new Collider[32];
 
+    [Header("Visual")]
     [SerializeField] private Transform _visualRoot;
     private string _visualAddress;
     private string _hitEffectAddress;
+
+    // 콜라이더
+    [Header("Collider")]
+    private CapsuleCollider _collider;
+    [SerializeField] private Vector3 _hitboxCenter;
+    [SerializeField] private float _hitboxRadius;
+    [SerializeField] private float _hitboxLength;
 
     // 이펙트
     private ParticleComponent _effect;
@@ -54,7 +62,12 @@ public class Projectile : MonoBehaviour
         _radius = projectileData.Radius;
         _pierce = projectileData.Pierce;
 
-        if(_direction.sqrMagnitude > 0f)
+        //_hitboxCenter = projectileData.HitboxCenter;
+        //_hitboxRadius = projectileData.HitboxRadius;
+        //_hitboxLength = projectileData.HitboxLength;
+
+
+        if (_direction.sqrMagnitude > 0f)
         {
             transform.rotation = Quaternion.LookRotation(_direction, Vector3.up);
         }
@@ -74,7 +87,7 @@ public class Projectile : MonoBehaviour
 
     private void Update()
     {
-        transform.position += _direction * _speed * Time.deltaTime;
+        transform.position += _direction * _speed * GameManager.Time.GameDeltaTime;
     }
 
     private void OnTriggerEnter(Collider other)

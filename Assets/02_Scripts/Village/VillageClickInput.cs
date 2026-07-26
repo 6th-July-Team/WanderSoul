@@ -52,10 +52,12 @@ public class VillageClickInput : MonoBehaviour
 
         if (facility.FacilityType == VillageFacilityType.MissionGuild)
         {
-            _missionPanel.SetActive(true);
+            _missionPanel.SetActive(false);
             _shopPanel.SetActive(false);
             _townHallPanel.SetActive(false);
             _clinicPanel.SetActive(false);
+
+            GameManager.UI.OpenQuestBoardUI();
         }
 
         if (facility.FacilityType == VillageFacilityType.TownHall)
