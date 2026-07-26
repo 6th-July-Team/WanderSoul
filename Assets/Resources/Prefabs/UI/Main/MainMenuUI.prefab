@@ -241,6 +241,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 681fcccb34d6c0642b1f3602363f468e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIButton
+  _scaleTarget: {fileID: 0}
+  _hoverScale: 1.08
+  _pressScale: 0.92
+  _scaleDuration: 0.12
   _button: {fileID: 1231779614314077996}
   _text: {fileID: 5900770412407678879}
 --- !u!1 &2176929948859853918
@@ -377,6 +381,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 681fcccb34d6c0642b1f3602363f468e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIButton
+  _scaleTarget: {fileID: 0}
+  _hoverScale: 1.08
+  _pressScale: 0.92
+  _scaleDuration: 0.12
   _button: {fileID: 5680664363399442558}
   _text: {fileID: 350813200231573740}
 --- !u!1 &2428271942745602636
@@ -725,6 +733,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 681fcccb34d6c0642b1f3602363f468e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIButton
+  _scaleTarget: {fileID: 0}
+  _hoverScale: 1.08
+  _pressScale: 0.92
+  _scaleDuration: 0.12
   _button: {fileID: 3130135147743619894}
   _text: {fileID: 1325702073413798996}
 --- !u!1 &4493176235094025314
@@ -1135,6 +1147,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 681fcccb34d6c0642b1f3602363f468e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIButton
+  _scaleTarget: {fileID: 0}
+  _hoverScale: 1.08
+  _pressScale: 0.92
+  _scaleDuration: 0.12
   _button: {fileID: 7429866227243610823}
   _text: {fileID: 1299384667513466356}
 --- !u!1 &7441734525828258837
@@ -1271,6 +1287,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 681fcccb34d6c0642b1f3602363f468e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIButton
+  _scaleTarget: {fileID: 0}
+  _hoverScale: 1.08
+  _pressScale: 0.92
+  _scaleDuration: 0.12
   _button: {fileID: 4974801566391403706}
   _text: {fileID: 3021333149541226308}
 --- !u!1 &7560151611506898870
