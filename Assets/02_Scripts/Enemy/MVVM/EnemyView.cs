@@ -435,6 +435,9 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
 
         EnemyDropObject dropObject = GameManager.Pool.SpawnFromPool<EnemyDropObject>(poolId, GetDropScatterPosition());
         dropObject.Init(type, digit);
+        Vector3 vector3 = new(-90, 0, 0);
+
+        dropObject.transform.rotation = Quaternion.Euler(vector3);
     }
 
     private Vector3 GetDropScatterPosition()
