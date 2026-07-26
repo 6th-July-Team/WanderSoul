@@ -35,14 +35,14 @@ public class ParticleComponent : MonoBehaviour
 
     private void OnEnable()
     {
-        GameManager.Time.Paused += PauseEffect;
-        GameManager.Time.Resumed += ResumeEffect;
+        GameManager.Time.OnPaused += PauseEffect;
+        GameManager.Time.OnResumed += ResumeEffect;
     }
 
     private void OnDisable()
     {
-        GameManager.Time.Paused -= PauseEffect;
-        GameManager.Time.Resumed -= ResumeEffect;
+        GameManager.Time.OnPaused -= PauseEffect;
+        GameManager.Time.OnResumed -= ResumeEffect;
     }
 
     private void CacheComponents()

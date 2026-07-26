@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class TimeManager
 {
-    public event Action Paused;
-    public event Action Resumed;
+    public event Action OnPaused;
+    public event Action OnResumed;
 
     public float GameDeltaTime
     {
@@ -37,7 +37,7 @@ public class TimeManager
 
         if(_pauseCount == 1)
         {
-            Paused?.Invoke();
+            OnPaused?.Invoke();
         }
     }
 
@@ -47,7 +47,7 @@ public class TimeManager
 
         if(_pauseCount == 0)
         {
-            Resumed?.Invoke();
+            OnResumed?.Invoke();
         }
     }
 
