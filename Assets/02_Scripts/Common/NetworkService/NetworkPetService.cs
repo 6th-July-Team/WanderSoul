@@ -6,7 +6,7 @@ public class NetworkPetService
 
     public IReadOnlyList<PetViewModel> GetPetViewModels(List<string> petIds)
     {
-        if (_petViewModels.Count == 0)
+        if (_petViewModels.Count == 0 && petIds.Count > 0)
         {
             CreatePetViewModels(petIds);
         }

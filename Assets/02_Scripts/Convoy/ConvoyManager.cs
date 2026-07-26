@@ -156,7 +156,7 @@ public class ConvoyManager
 
         var petViewModels = GameManager.Network.PetService.GetPetViewModels(_selectedPetIds);
 
-        for(int index = 0; index < _selectedPetIds.Count; index++)
+        for (int index = 0; index < _selectedPetIds.Count; index++)
         {
             var petOB = GameManager.Resource.GetLoadedAsset<GameObject>(_selectedPetIds[index]);
             GameObject petInstance = GameObject.Instantiate(petOB);
@@ -166,7 +166,8 @@ public class ConvoyManager
                             , _playerEntity, _wagon
                             , _petSkillMaker
                             , _playerEntity, _playerEntity
-                            , 30 + index * 10);
+                            , 30 + index * 10
+                            , petViewModels[index]);
 
             petControllers.Add(petInstance.GetComponent<PetController>());
         }
@@ -203,7 +204,7 @@ public class ConvoyManager
         {
             partyHud.BindWagon(wagonVm);
 
-            var petViewModels = GameManager.Network.PetService.GetPetViewModels(_selectedPetIds);
+            var petViewModels = GameManager.Network.GetPetViewModels(_selectedPetIds);
 
             for (int i = 0; i < _selectedPetIds.Count; i++)
             {
