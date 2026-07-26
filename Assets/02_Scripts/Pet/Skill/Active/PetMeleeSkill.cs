@@ -27,5 +27,8 @@ public class PetMeleeSkill : IPetActiveSkillExecution
                 targetable.TakeDamage(damageInfo);
             }
         }
+
+        Quaternion rotation = Quaternion.LookRotation(direct, Vector3.up);
+        VFXSpawner.SpawnVFX(context.PetActiveSkillData.VFXPath, context.PetPos, rotation);
     }
 }

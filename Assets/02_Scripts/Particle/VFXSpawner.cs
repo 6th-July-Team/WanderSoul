@@ -2,7 +2,8 @@
 
 public static class VFXSpawner
 {
-    public static ParticleComponent SpawnVFX(string address, Vector3 spawnPos, Quaternion rotation, float scale = 1f)
+    public static ParticleComponent SpawnVFX(string address, Vector3 spawnPos, Quaternion rotation
+        , float scale = 1f, bool continuous = false)
     {
         ParticleComponent effect = CreateParticle(address);
 
@@ -15,13 +16,13 @@ public static class VFXSpawner
         effect.transform.rotation = rotation;
         effect.SetScale(Vector3.one * scale);
 
-        effect.Play();
+        effect.Play(continuous);
         return effect;
     }
 
     public static ParticleComponent SpawnAttachedVFX(string address
         , Transform parent, Vector3 localPos, Quaternion localRot
-        , float scale = 1f)
+        , float scale = 1f, bool continuous = false)
 
     {
         ParticleComponent effect = CreateParticle(address);
@@ -36,7 +37,7 @@ public static class VFXSpawner
         effect.transform.localRotation = localRot;
         effect.SetScale(Vector3.one * scale);
 
-        effect.Play();
+        effect.Play(continuous);
         return effect;
     }
 
