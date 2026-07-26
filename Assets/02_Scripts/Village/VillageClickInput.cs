@@ -60,6 +60,8 @@ public class VillageClickInput : MonoBehaviour
         {
             _missionPanel.SetActive(true);
             _townHallPanel.SetActive(false);
+
+            GameManager.UI.OpenQuestBoardUI();
         }
 
         if (facility.FacilityType == VillageFacilityType.TownHall)
