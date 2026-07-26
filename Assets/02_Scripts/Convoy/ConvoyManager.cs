@@ -10,6 +10,7 @@ public class ConvoyManager
     private string _selectedQuestId;
     private List<string> _selectedPetIds = new();
 
+    private TradeRouteHandler _loadedMap;
     private Wagon _wagon;
     private List<GameObject> _petList = new();
 
@@ -100,10 +101,10 @@ public class ConvoyManager
         ReleaseWagon();
 
         // 5. 맵 해제
+        GameObject.Destroy(_loadedMap.gameObject);
 
-        // 6. 게임 상태 변경
 
-        // 7. 미쳐 반환하지 못한 풀 반환
+        GameManager.Network.InGameServiceRelease();
         GameManager.Pool.AllDespawnToPool();
 
         // TODO 결과에 따라 실패 시 의뢰 출발 마을 ID, 성공 시 도착 마을 ID 반환
@@ -127,11 +128,11 @@ public class ConvoyManager
 
     private void LoadMap()
     {
-        var tradeRouteHandler = GameObject.Instantiate(Utils.ResourcesLoad<TradeRouteHandler>("Map/Map_01-TEST"));
+        _loadedMap = GameObject.Instantiate(Utils.ResourcesLoad<TradeRouteHandler>("Map/Map_01-TEST"));
 
         SpawnPlayer();
 
-        SpawnWagon(tradeRouteHandler.SplineContainer);
+        SpawnWagon(_loadedMap.SplineContainer);
     }
 
     private void SpawnWagon(SplineContainer splineContainer)
@@ -163,14 +164,11 @@ public class ConvoyManager
             GameObject petInstance = GameObject.Instantiate(petOB);
             _petList.Add(petInstance);
 
-            var viewModel = GameManager.Network.CreatePetViewModel(_selectedPetIds[index]);
-
             petInstance.GetComponent<PetController>().Init(_selectedPetIds[index]
                             , _playerEntity, _wagon
                             , _petSkillMaker
                             , _playerEntity, _playerEntity
-                            , 30 + index * 10
-                            , viewModel);
+                            , 30 + index * 10);
 
             petControllers.Add(petInstance.GetComponent<PetController>());
         }

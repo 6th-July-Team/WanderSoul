@@ -47,7 +47,7 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
     public void Init(string petId, IPositionProvider playerAnchor, IPositionProvider wagonAnchor
         , PetSkillMaker petSkillMaker, IStatusEffectReceiver playerEffectReceiver, IHealable playerHealable
-        , int avoidancePriority, PetViewModel viewModel)
+        , int avoidancePriority)
     {
         _petData = GameManager.DataTable.GetPetData(petId);
 
@@ -64,7 +64,7 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
         _petMovement.Init(petId, avoidancePriority);
 
-        _petViewModel = viewModel;
+        _petViewModel = GameManager.Network.CreatePetViewModel(petId);
 
         _petViewModel.OnPropertyChanged_View += OnPropertyChanged;
 
@@ -166,7 +166,10 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
         _commandResult = default;
         _petCommandController = null;
         _combatController = null;
+
+        _petViewModel.Dispose();
         _petViewModel = null;
+
     }
 
     private void GetCommandAndApply()

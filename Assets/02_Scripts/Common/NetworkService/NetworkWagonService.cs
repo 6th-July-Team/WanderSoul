@@ -32,5 +32,6 @@ public class NetworkWagonService
     public void Dispose()
     {
         _wagonViewModel.Dispose();
+        _wagonViewModel = null;
     }
 }
