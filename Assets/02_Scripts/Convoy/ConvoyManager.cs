@@ -18,7 +18,8 @@ public class ConvoyManager
 
     private CameraHandler _cameraHandler;
 
-    private const string PLAYER_ID = "player_scholar"; // 현재 플레이어 선택 불가능하여, 학자가 고정되어 있음.
+    private const string PLAYER_ID = "player_scholar";  // 현재 플레이어 선택 불가능하여, 학자가 고정되어 있음.
+    private const string MAP_ID = "Stage_Selvanera";    // 현재 맵이 1개 뿐이라 고정
 
     private bool _isConvoyEnded;
 
@@ -134,7 +135,7 @@ public class ConvoyManager
 
     private void LoadMap()
     {
-        _loadedMap = GameObject.Instantiate(Utils.ResourcesLoad<TradeRouteHandler>("Map/Map_01-TEST"));
+        _loadedMap = GameObject.Instantiate(Utils.ResourcesLoad<TradeRouteHandler>($"Map/{MAP_ID}"));
 
         SpawnPlayer();
 
@@ -155,7 +156,8 @@ public class ConvoyManager
         var inGameViewModel = GameManager.Network.RequestCreatePlayer();
         var playerStatController = GameManager.Network.PlayerService.StatController;
 
-        _playerEntity = GameObject.Instantiate(Utils.ResourcesLoad<PlayerEntity>("Test_Scholar"));
+        _playerEntity = GameObject.Instantiate(Utils.ResourcesLoad<PlayerEntity>("Test_Scholar")
+            , _loadedMap.PlayerSpawnPosition.position, Quaternion.identity);
 
         _playerEntity.Init(PLAYER_ID, inGameViewModel, playerStatController);
     }
