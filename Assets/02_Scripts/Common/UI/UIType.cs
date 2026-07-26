@@ -31,6 +31,7 @@
     WagonAreaWarningUIView,
     UltimateSelectUIView,
     MagicCircleUIView,
+    TownHallUIView,
 }
 
 public enum UIRootType : byte

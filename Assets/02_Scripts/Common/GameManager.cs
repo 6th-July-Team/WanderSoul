@@ -47,6 +47,7 @@ public class GameManager : SingletonBehaviour<GameManager>
     private PetSkillMaker _petSkillMaker;
     private PlayerSkillMaker _playerSkillMaker;
     private StatusEffectMaker _statusEffectMaker;
+    private VillageModel _villageModel;
 
     #endregion
 
@@ -277,10 +278,10 @@ public class GameManager : SingletonBehaviour<GameManager>
             resourceHud.SetVillageLayout();
         }
 
-        var villageModel = new VillageModel();
-        villageModel.TownDataId = villageId;
-        villageModel.CurrentReputation = 50;
-        _uiManager.OpenVillageInfoHudUI(villageModel);
+        _villageModel = new VillageModel();
+        _villageModel.TownDataId = villageId;
+        _villageModel.CurrentReputation = 50;
+        _uiManager.OpenVillageInfoHudUI(_villageModel);
     }
 
     public void ExitVillage()
@@ -288,7 +289,20 @@ public class GameManager : SingletonBehaviour<GameManager>
         _uiManager.CloseUI(UIType.MainMenuUI);
         _uiManager.CloseUI(UIType.ResourceHudUIView);
         _uiManager.CloseUI(UIType.VillageInfoHudUIView);
+        _uiManager.CloseUI(UIType.TownHallUIView);
         _uiManager.CloseAllQuestUI();
+        _villageModel = null;
+    }
+
+    public void OpenTownHall()
+    {
+        if (_villageModel == null)
+        {
+            Debug.LogWarning("현재 마을 정보가 없습니다.");
+            return;
+        }
+
+        _uiManager.OpenTownHallUI(_villageModel);
     }
 
     public void StartConvoy(List<string> selectedPetIds)

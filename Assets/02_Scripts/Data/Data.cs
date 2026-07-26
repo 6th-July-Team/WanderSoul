@@ -489,3 +489,11 @@ public class ProjectileColliderData : BaseData
     public float HitboxRadius;
     public float HitboxLength;
 }
+
+[Serializable]
+public class InteractableSpotData : BaseData
+{
+    public string Name;
+    public string Description;
+    public string IconPath;
+}

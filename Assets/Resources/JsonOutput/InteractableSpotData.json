@@ -1,0 +1,50 @@
+[
+  {
+    "Id": "spot_monsterfarm_magiccircle",
+    "Name": "마법진",
+    "Description": "마법진이다",
+    "IconPath": null
+  },
+  {
+    "Id": "spot_monsterfarm_wagon",
+    "Name": "마차 설비",
+    "Description": "마차 설비다",
+    "IconPath": null
+  },
+  {
+    "Id": "spot_monsterfarm_cage",
+    "Name": "우리",
+    "Description": "우리다",
+    "IconPath": null
+  },
+  {
+    "Id": "spot_monsterfarm_storagebox",
+    "Name": "보관함",
+    "Description": "보관함이다",
+    "IconPath": null
+  },
+  {
+    "Id": "spot_townbuilding_inn",
+    "Name": "여관",
+    "Description": "여관이다",
+    "IconPath": null
+  },
+  {
+    "Id": "spot_townbuilding_market",
+    "Name": "시장",
+    "Description": "현재 사용 불가",
+    "IconPath": null
+  },
+  {
+    "Id": "spot_townbuilding_medicaloffice",
+    "Name": "진료소",
+    "Description": "현재 사용 불가",
+    "IconPath": null
+  },
+  {
+    "Id": "spot_townbuilding_townhall",
+    "Name": "장로회관",
+    "Description": "장로회관이다",
+    "IconPath": null
+  }
+]

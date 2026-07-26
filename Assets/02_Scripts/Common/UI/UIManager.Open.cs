@@ -288,6 +288,26 @@ public partial class UIManager
         view.BindViewModel(viewModel);
     }
 
+    public void OpenTownHallUI(VillageModel villageModel)
+    {
+        if (villageModel == null)
+        {
+            Debug.LogWarning("VillageModel이 null입니다.");
+            return;
+        }
+
+        var view = OpenUI<TownHallUIView>(UIType.TownHallUIView);
+
+        if (view == null)
+        {
+            Debug.LogWarning("TownHallUIView를 열 수 없습니다.");
+            return;
+        }
+
+        var viewModel = new VillageInfoViewModel(villageModel);
+        view.BindViewModel(viewModel);
+    }
+
     public void OpenSkillHudUI(string playerClassId)
     {
         var view = OpenUI<SkillHudUIView>(UIType.SkillHudUIView);
