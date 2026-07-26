@@ -77,12 +77,59 @@ public partial class UIManager
 
     public void OpenQuestBoardUI()
     {
+        if (IsActiveUI(UIType.PetInventoryUIView) == true)
+        {
+            return;
+        }
+
         var view = OpenUI<QuestBoardUIView>(UIType.QuestBoardUIView);
 
         if (view == null)
         {
             Debug.LogWarning("QuestBoardUIView를 열 수 없습니다.");
         }
+    }
+
+    public void CloseAllQuestUI()
+    {
+        CloseUI(UIType.QuestDetailUIView);
+        CloseUI(UIType.QuestBoardUIView);
+    }
+
+    public void CloseQuestDetailUI()
+    {
+        if (IsActiveUI(UIType.QuestDetailUIView) == false)
+        {
+            return;
+        }
+
+        var view = GetUI<QuestDetailUIView>(UIType.QuestDetailUIView);
+
+        if (view == null)
+        {
+            CloseUI(UIType.QuestDetailUIView);
+            return;
+        }
+
+        view.CloseWithSlide();
+    }
+
+    public void CloseQuestBoardUI()
+    {
+        if (IsActiveUI(UIType.QuestBoardUIView) == false)
+        {
+            return;
+        }
+
+        var view = GetUI<QuestBoardUIView>(UIType.QuestBoardUIView);
+
+        if (view == null)
+        {
+            CloseUI(UIType.QuestBoardUIView);
+            return;
+        }
+
+        view.CloseWithSlide();
     }
 
     // TODO(이태영): 평판 데이터가 붙으면 currentReputation 기본값 제거

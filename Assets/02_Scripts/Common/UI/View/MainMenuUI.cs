@@ -3,8 +3,6 @@
 public class MainMenuUI : BaseUI
 {
     [SerializeField] private UIButton _inventoryButton;
-    [SerializeField] private UIButton _characterButton;
-    [SerializeField] private UIButton _startBattleButton;
     [SerializeField] private UIButton _optionButton;
     [SerializeField] private UIButton _farmButton;
 
@@ -23,8 +21,6 @@ public class MainMenuUI : BaseUI
     protected override void OnInit()
     {
         _inventoryButton.BindOnClickButtonEvent(OnClickInventory);
-        _characterButton.BindOnClickButtonEvent(OnClickCharacter);
-        _startBattleButton.BindOnClickButtonEvent(OnClickStartBattleButton);
         _optionButton.BindOnClickButtonEvent(OnClickOption);
         _farmButton.BindOnClickButtonEvent(OnClickFarm);
     }
@@ -45,7 +41,6 @@ public class MainMenuUI : BaseUI
 
     // 임시: 나중에 Model 소유처 정해지면 이동
     private InventoryModel _inventoryModelTest = new InventoryModel();
-    private PetInventoryModel _petInventoryModelTest = new PetInventoryModel();
 
     protected override void OnClosed()
     {
@@ -88,36 +83,6 @@ public class MainMenuUI : BaseUI
             item.StackCount = i;
 
             _inventoryModelTest.AddItem(item);
-        }
-    }
-
-    private void OnClickCharacter()
-    {
-        Debug.Log("캐릭터 창 열기");
-    }
-
-    private void OnClickStartBattleButton()
-    {
-        if (_petInventoryModelTest.PetList.Count == 0)
-        {
-            CreateTestPetList();
-        }
-
-        GameManager.UI.OpenPetInventoryUI(_petInventoryModelTest);
-    }
-
-    private void CreateTestPetList()
-    {
-        long uniqueId = 1;
-
-        foreach (var petData in GameManager.DataTable.PetDataTable.Values)
-        {
-            var pet = new PetSlotModel();
-            pet.PetUniqueId = uniqueId;
-            pet.PetDataId = petData.Id;
-            pet.Level = 1;
-            _petInventoryModelTest.AddPet(pet);
-            uniqueId++;
         }
     }
 
