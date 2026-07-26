@@ -41,7 +41,7 @@ public partial class BT_SmoothLookatAction : Action
             return Status.Failure;
         }
 
-        _elapsedTime += Time.deltaTime;
+        _elapsedTime += GameManager.Time.GameDeltaTime;
 
         if(_elapsedTime >= TIME_OUT)
         {
@@ -58,7 +58,7 @@ public partial class BT_SmoothLookatAction : Action
 
         Quaternion targetRotation = Quaternion.LookRotation(direction);
 
-        _enemySelfTransform.rotation = Quaternion.RotateTowards(_enemySelfTransform.rotation, targetRotation, RotateSpeed.Value * Time.deltaTime);
+        _enemySelfTransform.rotation = Quaternion.RotateTowards(_enemySelfTransform.rotation, targetRotation, RotateSpeed.Value * GameManager.Time.GameDeltaTime);
 
         float remainingAngle = Quaternion.Angle(_enemySelfTransform.rotation, targetRotation);
 

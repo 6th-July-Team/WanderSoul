@@ -130,7 +130,7 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
         {
             if (enemyDropObject.Type == DropObjectType.Exp)
             {
-                _playerViewModel.AddExp(enemyDropObject.Value);
+                _playerOutGameViewModel.AddExp(enemyDropObject.Value);
             }
             else if (enemyDropObject.Type == DropObjectType.Soul)
             {

@@ -25,6 +25,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 0d31c1c4ea1d59e4b9f346f6fbceb607
+    m_Address: EnemyDropObject/Exp/One
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 18ebfa723f6112e49adfc854e10a587b
     m_Address: Scholar/FireArrowEffect
     m_ReadOnly: 0
@@ -82,11 +87,6 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 5359673bd41c2924e99ce3053f895901
     m_Address: WindBlass_Pet
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 57cfa6a90f1a9bd469048e899b9f396f
-    m_Address: EnemyDropObject/Exp/One
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -165,7 +165,7 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: a68f25067db76e144a6538dba43e7c5d
+  - m_GUID: a18d2e88970978d4c971b6fb50e1a6a1
     m_Address: EnemyDropObject/Soul/One
     m_ReadOnly: 0
     m_SerializedLabels: []

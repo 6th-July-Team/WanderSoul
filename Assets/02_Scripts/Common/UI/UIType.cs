@@ -16,6 +16,7 @@
     VillageInfoHudUIView,
     InventoryUIView,
     SkillHudUIView,
+    QuestBoardUIView,
     QuestDetailUIView,
     PetInventoryUIView,
     PlayerHudUIView,

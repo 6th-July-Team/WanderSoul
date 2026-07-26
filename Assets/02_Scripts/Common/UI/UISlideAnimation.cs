@@ -91,7 +91,8 @@ public class UISlideAnimation : MonoBehaviour
 
         _targetRect.DOKill();
 
-        Tween tween = _targetRect.DOAnchorPos(GetHiddenPosition(), _duration).SetEase(Ease.InCubic);
+        Tween tween = _targetRect.DOAnchorPos(GetHiddenPosition(), _duration).SetEase(Ease.InCubic)
+            .SetUpdate(true);
 
         if (onComplete != null)
         {
@@ -105,7 +106,8 @@ public class UISlideAnimation : MonoBehaviour
 
         _targetRect.DOKill();
 
-        Tween tween = _targetRect.DOAnchorPos(_originPos, _duration).SetEase(Ease.OutCubic);
+        Tween tween = _targetRect.DOAnchorPos(_originPos, _duration).SetEase(Ease.OutCubic)
+            .SetUpdate(true);
 
         if (onComplete != null)
         {

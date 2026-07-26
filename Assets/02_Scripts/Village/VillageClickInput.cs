@@ -58,7 +58,7 @@ public class VillageClickInput : MonoBehaviour
 
         if (facility.FacilityType == VillageFacilityType.MissionGuild)
         {
-            _missionPanel.SetActive(true);
+            _missionPanel.SetActive(false);
             _townHallPanel.SetActive(false);
 
             GameManager.UI.OpenQuestBoardUI();

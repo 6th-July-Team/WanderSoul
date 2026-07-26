@@ -45,6 +45,8 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
     private ITargetable _wagonTargetable;
     private ITargetable _playerTargetable;
 
+    private bool _isPausedCached;
+
     public event System.Action OnEnemyDied;
 
     private float _deadDelay = 2f;
@@ -65,6 +67,10 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
     {
         _wagon = wagon;
         _player = player;
+
+        // 풀 재사용 대비 일시정지 관련 상태 초기화
+        _isPausedCached = false;
+        Animator_Self.speed = 1f;
 
         SetWagonAndPlayerTargetable();
 
@@ -169,6 +175,56 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
         _groundLayerMask = LayerMask.GetMask("Ground");
     }
 
+    #endregion
+
+    #region Pause
+
+    // BG는 켜둔 채 노드들이 GameDeltaTime을 쓰게 해서(=0) 타이머가 멈추도록 함
+    private void Update()
+    {
+        bool isPaused = GameManager.Time.IsPaused;
+
+        if (isPaused)
+        {
+            // 전환 프레임에 NavMesh 밖이었거나 일시정지 중 새로 올라온 경우도
+            // 확실히 얼리기 위해 매 프레임 강제
+            EnforcePausedState();
+        }
+        else if (_isPausedCached)
+        {
+            ResumeFromPause();
+        }
+
+        _isPausedCached = isPaused;
+    }
+
+    private void EnforcePausedState()
+    {
+        if (Animator_Self.speed != 0f)
+        {
+            Animator_Self.speed = 0f;
+        }
+
+        if (NavMeshAgent_Self != null && NavMeshAgent_Self.isOnNavMesh)
+        {
+            NavMeshAgent_Self.velocity = Vector3.zero;
+
+            if (NavMeshAgent_Self.isStopped == false)
+            {
+                NavMeshAgent_Self.isStopped = true;
+            }
+        }
+    }
+
+    private void ResumeFromPause()
+    {
+        Animator_Self.speed = 1f;
+
+        if (NavMeshAgent_Self != null && NavMeshAgent_Self.isOnNavMesh)
+        {
+            NavMeshAgent_Self.isStopped = false;
+        }
+    }
     #endregion
 
     #region OnPropertyChanged
@@ -435,6 +491,9 @@ public class EnemyView : BaseView<EnemyViewModel>, IEnemy, ISensorListener
 
         EnemyDropObject dropObject = GameManager.Pool.SpawnFromPool<EnemyDropObject>(poolId, GetDropScatterPosition());
         dropObject.Init(type, digit);
+        Vector3 vector3 = new(-90, 0, 0);
+
+        dropObject.transform.rotation = Quaternion.Euler(vector3);
     }
 
     private Vector3 GetDropScatterPosition()
