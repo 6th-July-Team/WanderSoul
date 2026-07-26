@@ -75,7 +75,7 @@ public class PlayerInputHandle : MonoBehaviour
 
     private void Update()
     {
-        if (_inputSystem.Player.BasicAttack.IsPressed())
+        if (GameOption.IsAutoAttack || _inputSystem.Player.BasicAttack.IsPressed())
         {
             OnBasicAttackEvent?.Invoke();
         }

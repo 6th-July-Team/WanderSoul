@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 
 public class ResourceHudUIView : BaseUI<ResourceHudUIView, ResourceHudViewModel>
@@ -6,6 +7,9 @@ public class ResourceHudUIView : BaseUI<ResourceHudUIView, ResourceHudViewModel>
 
     [SerializeField] private TMP_Text _soulText;
     [SerializeField] private TMP_Text _moneyText;
+
+    private PlayerOutGameViewModel _outGameViewModel;
+    private Action<string> _soulHandler;
 
     [Header("Layout")]
     [SerializeField] private RectTransform _rootRect;
@@ -47,14 +51,56 @@ public class ResourceHudUIView : BaseUI<ResourceHudUIView, ResourceHudViewModel>
 
     protected override void OnPropertyChanged(string propertyName)
     {
-        if (propertyName == nameof(ResourceModel.Soul))
-        {
-            _soulText.text = $"{_viewModel.Soul:N0}";
-        }
-
-        else if (propertyName == nameof(ResourceModel.Money))
+        if (propertyName == nameof(ResourceModel.Money))
         {
             _moneyText.text = $"{_viewModel.Money:N0}";
         }
+    }
+
+    public void SetSoulSource(PlayerOutGameViewModel outGameViewModel)
+    {
+        UnbindSoul();
+
+        if (outGameViewModel == null)
+        {
+            return;
+        }
+
+        _outGameViewModel = outGameViewModel;
+        _soulHandler = (propertyName) => OnSoulPropertyChanged(propertyName);
+        _outGameViewModel.OnPropertyChanged_View += _soulHandler;
+
+        RefreshSoul();
+    }
+
+    private void OnSoulPropertyChanged(string propertyName)
+    {
+        if (propertyName == nameof(PlayerOutGameModel.Soul))
+        {
+            RefreshSoul();
+        }
+    }
+
+    private void RefreshSoul()
+    {
+        _soulText.text = $"{_outGameViewModel.GetSoul:N0}";
+    }
+
+    private void UnbindSoul()
+    {
+        if (_outGameViewModel == null)
+        {
+            return;
+        }
+
+        _outGameViewModel.OnPropertyChanged_View -= _soulHandler;
+        _outGameViewModel = null;
+        _soulHandler = null;
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        UnbindSoul();
     }
 }

@@ -44,6 +44,16 @@ public partial class UIManager
         return _activeUI.Contains(uiType);
     }
 
+    public T GetUI<T>(UIType uiType) where T : BaseUI
+    {
+        if (_createdUIDic.TryGetValue(uiType, out BaseUI ui) == false)
+        {
+            return null;
+        }
+
+        return ui as T;
+    }
+
     public void OpenPetInventoryUI(PetInventoryModel petInventoryModel)
     {
         if (petInventoryModel == null)
@@ -62,6 +72,49 @@ public partial class UIManager
         var partyModel = new PartyModel();
         var viewModel = new PetInventoryViewModel(petInventoryModel, partyModel);
 
+        view.BindViewModel(viewModel);
+    }
+
+    public void OpenQuestDetailUI(QuestModel questModel, int currentReputation, PetInventoryModel petInventoryModel)
+    {
+        if (questModel == null)
+        {
+            Debug.LogWarning("QuestModel이 null입니다.");
+            return;
+        }
+
+        var view = OpenUI<QuestDetailUIView>(UIType.QuestDetailUIView);
+        if (view == null)
+        {
+            Debug.LogWarning("QuestDetailUIView를 열 수 없습니다.");
+            return;
+        }
+
+        view.SetCurrentReputation(currentReputation);
+        view.SetAcceptedCallback(() => OpenPetInventoryUI(petInventoryModel));
+
+        var viewModel = new QuestViewModel(questModel);
+        view.BindViewModel(viewModel);
+    }
+
+    public void OpenMagicCircleUI(MagicCircleModel magicCircleModel)
+    {
+        if (magicCircleModel == null)
+        {
+            Debug.LogWarning("MagicCircleModel이 null입니다.");
+            return;
+        }
+
+        var view = OpenUI<MagicCircleUIView>(UIType.MagicCircleUIView);
+        if (view == null)
+        {
+            Debug.LogWarning("MagicCircleUIView를 열 수 없습니다.");
+            return;
+        }
+
+        view.SetSoulSource(GameManager.Network.RequestPlayerOutGameViewModel());
+
+        var viewModel = new MagicCircleViewModel(magicCircleModel);
         view.BindViewModel(viewModel);
     }
 
@@ -101,6 +154,8 @@ public partial class UIManager
 
         var viewModel = new ResourceHudViewModel(resourceModel);
         view.BindViewModel(viewModel);
+
+        view.SetSoulSource(GameManager.Network.RequestPlayerOutGameViewModel());
         return view;
     }
 
@@ -153,7 +208,7 @@ public partial class UIManager
             return;
         }
 
-        var view = GetCreatUI<SkillHudUIView>(UIType.SkillHudUIView);
+        var view = GetUI<SkillHudUIView>(UIType.SkillHudUIView);
 
         if (view == null)
         {
@@ -214,6 +269,30 @@ public partial class UIManager
         }
 
         view.SetupRandom();
+        return view;
+    }
+
+    public OptionUI OpenOptionUI()
+    {
+        var view = OpenUI<OptionUI>(UIType.OptionUI);
+        if (view == null)
+        {
+            Debug.LogWarning("OptionUI를 열 수 없습니다.");
+            return null;
+        }
+
+        return view;
+    }
+
+    public ScreenFadeUIView OpenScreenFade()
+    {
+        var view = OpenUI<ScreenFadeUIView>(UIType.ScreenFadeUIView);
+        if (view == null)
+        {
+            Debug.LogWarning("ScreenFadeUIView를 열 수 없습니다.");
+            return null;
+        }
+
         return view;
     }
 

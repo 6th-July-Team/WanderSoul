@@ -17,21 +17,20 @@ public class SkillHudUIView : BaseUI
         }
 
         var skillViewModel = GameManager.Network.RequestPlayerSkillViewModel();
-        var playerViewModel = GameManager.Network.RequestCreatePlayer();
 
-        SetSlot(_basicSlot, SkillSlot.Basic, classData.BasicSkillId, skillViewModel, playerViewModel);
-        SetSlot(_specialSlot, SkillSlot.Special, classData.SpecialSkillId, skillViewModel, playerViewModel);
+        SetSlot(_basicSlot, SkillSlot.Basic, classData.BasicSkillId, skillViewModel);
+        SetSlot(_specialSlot, SkillSlot.Special, classData.SpecialSkillId, skillViewModel);
         SetSlot(_ultimateSlot, SkillSlot.Ultimate, GetEquippedUltimateSkillId(classData)
-            , skillViewModel, playerViewModel);
+            , skillViewModel);
     }
     public void SetUltimateSkill(string skillId)
     {
         var skillViewModel = GameManager.Network.RequestPlayerSkillViewModel();
-        var playerViewModel = GameManager.Network.RequestCreatePlayer();
 
-        SetSlot(_ultimateSlot, SkillSlot.Ultimate, skillId, skillViewModel, playerViewModel);
+        SetSlot(_ultimateSlot, SkillSlot.Ultimate, skillId, skillViewModel);
     }
 
+    // TODO(이태영): PlayerSkillMaker의 임시 궁극기 장착(UltimateSkillIds[0])이 정리되면 같이 맞추기
     private string GetEquippedUltimateSkillId(PlayerClassData classData)
     {
         if (classData.UltimateSkillIds == null || classData.UltimateSkillIds.Count == 0)
@@ -39,16 +38,11 @@ public class SkillHudUIView : BaseUI
             return null;
         }
 
-        if (classData.UltimateSkillIds.Count > 1)
-        {
-            return classData.UltimateSkillIds[1];
-        }
-
         return classData.UltimateSkillIds[0];
     }
 
     private void SetSlot(SkillSlotUiView slotView, SkillSlot slot, string skillId
-        , PlayerSkillViewModel skillViewModel, PlayerViewModel playerViewModel)
+        , PlayerSkillViewModel skillViewModel)
     {
         if (slotView == null)
         {
@@ -67,6 +61,6 @@ public class SkillHudUIView : BaseUI
             }
         }
 
-        slotView.SetSkill(slot, skillData, skillViewModel, playerViewModel);
+        slotView.SetSkill(slot, skillData, skillViewModel);
     }
 }

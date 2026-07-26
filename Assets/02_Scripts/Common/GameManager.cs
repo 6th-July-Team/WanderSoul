@@ -1,6 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : SingletonBehaviour<GameManager>
 {
@@ -68,36 +69,84 @@ public class GameManager : SingletonBehaviour<GameManager>
 
         _uiManager.Init();
 
-        InitAsync().Forget();
+        StartupFlow();
     }
 
-    private async UniTaskVoid InitAsync()
+    private void StartupFlow()
     {
         if (_skipStartupUIForTest)
         {
-            InitNonAsync();
-            // 여기에 로딩은 없어도 초기화 해야할 것 넣기
-            var testPetIds = new List<string> { "pet_fire_001", "pet_water_002", "pet_earth_003" };
-            StartConvoy(testPetIds);
+            // 테스트: 타이틀/로딩 화면 없이 바로 전투 진입
+            SkipStartupAsync().Forget();
             return;
         }
 
-        // 여기에서 로딩 UI 오픈
+        ShowTitleAsync().Forget();
+    }
 
-        _loadingUI = _uiManager.OpenLoadingUI();
+    private async UniTaskVoid ShowTitleAsync()
+    {
+        ScreenFadeUIView fade = _uiManager.OpenScreenFade();
 
-        var loadTask = _resourceManager.Init(OnLoadingProgress);
-        var minTimeTask = UniTask.Delay(System.TimeSpan.FromSeconds(1.5f));
+        if (fade != null)
+        {
+            fade.SetBlackImmediate();
+        }
 
+        ShowTitle();
 
-        await UniTask.WhenAll(loadTask, minTimeTask);
+        if (fade != null)
+        {
+            await UniTask.NextFrame();
 
-        _uiManager.CloseUI(UIType.LoadingUIView);
-        _loadingUI = null;
+            await fade.PlayIntroAsync();
+
+            await fade.FadeInAsync();
+
+            _uiManager.CloseUI(UIType.ScreenFadeUIView);
+        }
+    }
+
+    private async UniTaskVoid SkipStartupAsync()
+    {
+        await _resourceManager.Init();
 
         InitNonAsync();
 
-        ShowTitle();
+        var testPetIds = new List<string> { "pet_fire_001", "pet_water_002", "pet_earth_003" };
+        StartConvoy(testPetIds);
+    }
+
+    private void Update()
+    {
+        if (Keyboard.current == null)
+        {
+            return;
+        }
+
+        if (Keyboard.current.escapeKey.wasPressedThisFrame == false)
+        {
+            return;
+        }
+
+        ToggleOptionUI();
+    }
+
+    private void ToggleOptionUI()
+    {
+        if (_uiManager.IsActiveUI(UIType.OptionUI) == true)
+        {
+            var optionUI = _uiManager.GetUI<OptionUI>(UIType.OptionUI);
+
+            if (optionUI != null)
+            {
+                optionUI.Close();
+            }
+
+            return;
+        }
+
+        _uiManager.OpenOptionUI();
     }
 
     private void ShowTitle()
@@ -112,6 +161,30 @@ public class GameManager : SingletonBehaviour<GameManager>
     private void OnGameStart()
     {
         _uiManager.CloseUI(UIType.TitleUI);
+        EnterGameAsync().Forget();
+    }
+
+    // 게임 시작 누르면 여기서 로딩 (타이틀 뒤로 옮김)
+    private async UniTaskVoid EnterGameAsync()
+    {
+        _loadingUI = _uiManager.OpenLoadingUI();
+
+        var loadTask = _resourceManager.Init(OnLoadingProgress);
+        var minTimeTask = UniTask.Delay(System.TimeSpan.FromSeconds(1.5f));
+
+        await UniTask.WhenAll(loadTask, minTimeTask);
+
+        if (_loadingUI != null)
+        {
+            _loadingUI.SetProgress(1f);
+            await _loadingUI.WaitUntilFilledAsync();
+        }
+
+        _uiManager.CloseUI(UIType.LoadingUIView);
+        _loadingUI = null;
+
+        InitNonAsync();
+
         // TODO(이태영): 시작 마을 ID를 세이브 데이터나 기획 값에서 가져오기
         EnterVillage("town_lavendil");
     }
@@ -191,7 +264,6 @@ public class GameManager : SingletonBehaviour<GameManager>
         _uiManager.OpenUI<MainMenuUI>(UIType.MainMenuUI);
 
         var resourceModel = new ResourceModel();
-        resourceModel.Soul = 12413451;
         resourceModel.Money = 8520;
 
         var resourceHud = _uiManager.OpenResourceHudUI(resourceModel);
@@ -216,18 +288,61 @@ public class GameManager : SingletonBehaviour<GameManager>
 
     public void StartConvoy(List<string> selectedPetIds)
     {
-        // 해당 시점 이전에 의뢰 선택 및 펫 선택이 완료되어야 합니다.
-        // 선택된 의뢰 ID 및 선택된 펫 ID 리스트가 아래 필요합니다.
-        _convoyManager.InitConvoy("TEST_QuestId", selectedPetIds);
+        EnterConvoyAsync(selectedPetIds).Forget();
+    }
+
+    private async UniTaskVoid EnterConvoyAsync(List<string> selectedPetIds)
+    {
+        ScreenFadeUIView fade = await BeginTransitionAsync();
 
         ExitVillage();
+
+        // 해당 시점 이전에 의뢰 선택 및 펫 선택이 완료되어야 합니다.
+        // 선택된 의뢰 ID 및 선택된 펫 ID 리스트가 아래 필요합니다.
+        await _convoyManager.InitConvoy("TEST_QuestId", selectedPetIds);
+
+        await EndTransitionAsync(fade);
     }
 
     public void EndConvoy()
     {
-        // TODO 간단 로딩 실행
+        ExitConvoyAsync().Forget();
+    }
+
+    private async UniTaskVoid ExitConvoyAsync()
+    {
+        ScreenFadeUIView fade = await BeginTransitionAsync();
+
         string resultVillageId = _convoyManager.Release();
         EnterVillage(resultVillageId);
         _networkManager.InGameServiceRelease();
+
+        await EndTransitionAsync(fade);
+    }
+
+    private async UniTask<ScreenFadeUIView> BeginTransitionAsync()
+    {
+        var fade = _uiManager.OpenScreenFade();
+
+        if (fade == null)
+        {
+            return null;
+        }
+
+        await fade.FadeOutAsync();
+
+        return fade;
+    }
+
+    private async UniTask EndTransitionAsync(ScreenFadeUIView fade)
+    {
+        if (fade == null)
+        {
+            return;
+        }
+
+        await fade.FadeInAsync();
+
+        _uiManager.CloseUI(UIType.ScreenFadeUIView);
     }
 }
