@@ -279,8 +279,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uD30C\uD2F0 \uD3B8\uC131"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 01f1f87ed77e91549926d357df36cbaf, type: 2}
-  m_sharedMaterial: {fileID: -5133006135524207413, guid: 01f1f87ed77e91549926d357df36cbaf, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 523f922e01b82e040b4eb52a0f93b874, type: 2}
+  m_sharedMaterial: {fileID: -7001813311022958052, guid: 523f922e01b82e040b4eb52a0f93b874, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -482,6 +482,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 681fcccb34d6c0642b1f3602363f468e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIButton
+  _scaleTarget: {fileID: 0}
+  _hoverScale: 1.08
+  _pressScale: 0.92
+  _scaleDuration: 0.12
   _button: {fileID: 5323391843550629634}
   _text: {fileID: 0}
 --- !u!1 &1229185458223593200
@@ -685,6 +689,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 681fcccb34d6c0642b1f3602363f468e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIButton
+  _scaleTarget: {fileID: 0}
+  _hoverScale: 1.08
+  _pressScale: 0.92
+  _scaleDuration: 0.12
   _button: {fileID: 317439788823349312}
   _text: {fileID: 2399882567210880240}
 --- !u!1 &1674616564603616965

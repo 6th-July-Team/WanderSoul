@@ -158,6 +158,14 @@ public class SkillSlotUiView : MonoBehaviour
             return;
         }
 
+        if (IsAutoAttackBasic() == true)
+        {
+            SetIconFill(1f);
+            _cooldownText.gameObject.SetActive(false);
+            RefreshUsable();
+            return;
+        }
+
         float remaining = GetRemainingCooldown();
         float total = GetTotalCooldown();
 
@@ -189,12 +197,22 @@ public class SkillSlotUiView : MonoBehaviour
             return;
         }
 
-        bool isReady = (GetRemainingCooldown() <= 0f);
-
-        if (_readyEffectObject != null)
+        if (_readyEffectObject == null)
         {
-            _readyEffectObject.SetActive(isReady);
+            return;
         }
+
+        _readyEffectObject.SetActive(IsAutoAttackBasic());
+    }
+
+    private bool IsAutoAttackBasic()
+    {
+        if (_slot != SkillSlot.Basic)
+        {
+            return false;
+        }
+
+        return GameOption.IsAutoAttack;
     }
 
     private void SetIconFill(float amount)

@@ -81,9 +81,12 @@ public class GameManager : SingletonBehaviour<GameManager>
             return;
         }
 
-        ShowTitleAsync().Forget();
+        ShowTitle();
     }
 
+    /*
+    // 타이틀 인트로는 TitleIntroAnimation이 단독으로 담당합니다.
+    // ScreenFadeUIView의 시작 전용 인트로는 중복 연출을 막기 위해 비활성화합니다.
     private async UniTaskVoid ShowTitleAsync()
     {
         ScreenFadeUIView fade = _uiManager.OpenScreenFade();
@@ -106,6 +109,7 @@ public class GameManager : SingletonBehaviour<GameManager>
             _uiManager.CloseUI(UIType.ScreenFadeUIView);
         }
     }
+    */
 
     private async UniTaskVoid SkipStartupAsync()
     {

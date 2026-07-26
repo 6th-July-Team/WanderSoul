@@ -16,6 +16,10 @@ public partial class UIManager
 
     private HashSet<UIType> _activeUI = new HashSet<UIType>();
 
+    private PetInventoryModel _tempPetInventoryModel;
+
+    private const int TEMP_REPUTATION = 50;
+
     public void Init()
     {
         var uiHandler = GameObject.Instantiate(Resources.Load<GameObject>("Prefabs/UICanvas"));
@@ -150,6 +154,9 @@ public partial class UIManager
 
             case UIType.SkillHudUIView:
                 return UIRootType.Main;
+
+            case UIType.QuestBoardUIView:
+                return UIRootType.Content;
 
             case UIType.QuestDetailUIView:
                 return UIRootType.Content;

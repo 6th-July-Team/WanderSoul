@@ -19,6 +19,9 @@ public class PlayerHudUIView : BaseUI<PlayerHudUIView, PlayerViewModel>
     [SerializeField] private Slider _expSlider;
     [SerializeField] private TMP_Text _expText;
 
+    // TODO(이태영): 레벨/요구 경험치 테이블이 생기면 PlayerViewModel에서 가져오도록 교체
+    private const float TEMP_MAX_EXP = 100f;
+
 
     [Header("Animation")]
     [SerializeField] private UISlideAnimation _slideAnimation;
@@ -35,11 +38,10 @@ public class PlayerHudUIView : BaseUI<PlayerHudUIView, PlayerViewModel>
             RefreshMana();
         }
 
-        // TODO(이태영): PlayerModel에 Exp/Level 추가되면 주석 해제
-        // else if (propertyName == nameof(PlayerModel.Exp) || propertyName == nameof(PlayerModel.Level))
-        // {
-        //     RefreshExp();
-        // }
+        else if (propertyName == nameof(PlayerModel.EXP))
+        {
+            RefreshExp();
+        }
     }
 
     protected override void OnOpened()
@@ -105,19 +107,23 @@ public class PlayerHudUIView : BaseUI<PlayerHudUIView, PlayerViewModel>
             return;
         }
 
-        // TODO(이태영): PlayerViewModel에 GetExp/GetMaxExp/GetLevel 추가되면 연결
-        // float maxExp = _viewModel.GetMaxExp;
-        // if (maxExp <= 0f)
-        // {
-        //     _expSlider.value = 0f;
-        //     return;
-        // }
-        //
-        // _expSlider.value = _viewModel.GetExp / maxExp;
-        //
-        // if (_expText != null)
-        // {
-        //     _expText.text = $"Lv.{_viewModel.GetLevel}";
-        // }
+        float maxExp = TEMP_MAX_EXP;
+
+        if (maxExp <= 0f)
+        {
+            return;
+        }
+
+        float exp = _viewModel.GetExp;
+
+        if (_expSlider != null)
+        {
+            _expSlider.value = Mathf.Clamp01(exp / maxExp);
+        }
+
+        if (_expText != null)
+        {
+            _expText.text = $"{(int)exp:N0} / {(int)maxExp:N0}";
+        }
     }
 }

@@ -306,7 +306,7 @@ MonoBehaviour:
   _manaOrbLiquid: {fileID: 4988047108967053272}
   _manaText: {fileID: 782095163507905114}
   _expSlider: {fileID: 706141314831645946}
-  _expText: {fileID: 0}
+  _expText: {fileID: 1918609117348415670}
   _slideAnimation: {fileID: 5657114373959171592}
 --- !u!114 &5657114373959171592
 MonoBehaviour:
@@ -567,8 +567,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uCD5C\uB300/\uD604\uC7AC"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 01f1f87ed77e91549926d357df36cbaf, type: 2}
-  m_sharedMaterial: {fileID: -5133006135524207413, guid: 01f1f87ed77e91549926d357df36cbaf, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 97659cb3ddf1abe47ab1acad734b59ba, type: 2}
+  m_sharedMaterial: {fileID: 6462545548369077948, guid: 97659cb3ddf1abe47ab1acad734b59ba, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -598,7 +598,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1481,8 +1481,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uCD5C\uB300/\uD604\uC7AC"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 01f1f87ed77e91549926d357df36cbaf, type: 2}
-  m_sharedMaterial: {fileID: -5133006135524207413, guid: 01f1f87ed77e91549926d357df36cbaf, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 97659cb3ddf1abe47ab1acad734b59ba, type: 2}
+  m_sharedMaterial: {fileID: 6462545548369077948, guid: 97659cb3ddf1abe47ab1acad734b59ba, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1512,7 +1512,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535

@@ -75,6 +75,58 @@ public partial class UIManager
         view.BindViewModel(viewModel);
     }
 
+    public void OpenQuestBoardUI()
+    {
+        var view = OpenUI<QuestBoardUIView>(UIType.QuestBoardUIView);
+
+        if (view == null)
+        {
+            Debug.LogWarning("QuestBoardUIView를 열 수 없습니다.");
+        }
+    }
+
+    // TODO(이태영): 평판 데이터가 붙으면 currentReputation 기본값 제거
+    public void OpenQuestDetailUI(string questId, int currentReputation = TEMP_REPUTATION)
+    {
+        var questData = GameManager.DataTable.GetQuestData(questId);
+
+        if (questData == null)
+        {
+            Debug.LogWarning($"QuestData를 찾을 수 없습니다: {questId}");
+            return;
+        }
+
+        var questModel = new QuestModel(questData);
+
+        OpenQuestDetailUI(questModel, currentReputation, GetTempPetInventoryModel());
+    }
+
+    // TODO(이태영): PetInventoryModel 소유처가 정해지면 그쪽에서 받아오도록 교체
+    private PetInventoryModel GetTempPetInventoryModel()
+    {
+        if (_tempPetInventoryModel != null)
+        {
+            return _tempPetInventoryModel;
+        }
+
+        _tempPetInventoryModel = new PetInventoryModel();
+
+        long uniqueId = 1;
+
+        foreach (var petData in GameManager.DataTable.PetDataTable.Values)
+        {
+            var pet = new PetSlotModel();
+            pet.PetUniqueId = uniqueId;
+            pet.PetDataId = petData.Id;
+            pet.Level = 1;
+
+            _tempPetInventoryModel.AddPet(pet);
+            uniqueId++;
+        }
+
+        return _tempPetInventoryModel;
+    }
+
     public void OpenQuestDetailUI(QuestModel questModel, int currentReputation, PetInventoryModel petInventoryModel)
     {
         if (questModel == null)
