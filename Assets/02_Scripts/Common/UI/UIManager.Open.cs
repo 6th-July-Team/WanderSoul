@@ -421,6 +421,19 @@ public partial class UIManager
         view.BindOutGameViewModel(GameManager.Network.RequestPlayerOutGameViewModel());
     }
 
+    public void OpenDashHudUI(PlayerViewModel playerViewModel, Transform followTarget)
+    {
+        var view = OpenUI<DashHudUIView>(UIType.DashHudUIView);
+
+        if (view == null)
+        {
+            Debug.LogWarning("DashHudUIView를 열 수 없습니다.");
+            return;
+        }
+
+        view.SetSource(playerViewModel, followTarget);
+    }
+
     public void OpenConvoySuccessUI(ConvoyResultModel result)
     {
         if (result == null)
@@ -483,6 +496,7 @@ public partial class UIManager
         CloseUI(UIType.ResourceHudUIView);
         CloseUI(UIType.SkillHudUIView);
         CloseUI(UIType.WagonAreaWarningUIView);
+        CloseUI(UIType.DashHudUIView);
     }
 }
 
