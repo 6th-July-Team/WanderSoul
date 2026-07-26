@@ -23,7 +23,16 @@ public class EnemySpawner : MonoBehaviour
     public void Init(PlayerEntity player, Wagon wagon, string questId)
     {
         // TODO(김익환): 의뢰 데이터에 접근하는 것을 -> 의뢰를 몰라도 데이터를 알 수 있도록 변경하자.
-        List<string> spawnDataIds = GameManager.DataTable.GetQuestData(questId).AutoSpawnIds;
+        QuestData questData = GameManager.DataTable.GetQuestData(questId);
+
+        if (questData == null)
+        {
+            Debug.LogWarning($"의뢰 데이터를 찾을 수 없어 몬스터 스폰을 건너뜁니다: {questId}");
+            return;
+        }
+
+        List<string> spawnDataIds = questData.AutoSpawnIds;
+
         _spawnData = new AutoSpawnData[spawnDataIds.Count];
 
         for (int i = 0; i < spawnDataIds.Count; i++)
