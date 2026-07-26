@@ -20,6 +20,11 @@ public class PlayerModel : BaseModel
                 return;
             }
             _hp = value;
+
+            if(_hp < 0)
+            {
+                _hp = 0;
+            }
             OnPropertyChanged(nameof(HP));
         }
     }
