@@ -15,9 +15,12 @@ public class ConvoyManager
     private List<GameObject> _petList = new();
 
     private PlayerEntity _playerEntity;
+    private PlayerViewModel _playerViewModel;
     private PlayerSkillMaker _playerSkillMaker;
 
     private CameraHandler _cameraHandler;
+
+    private bool _isConvoyEnded = false;
 
     private const string PLAYER_ID = "player_scholar"; // 현재 플레이어 선택 불가능하여, 학자가 고정되어 있음.
 
@@ -30,6 +33,7 @@ public class ConvoyManager
     // 의뢰 시작 -> 펫 선택 -> 로딩 UI를 보여주며 아래 init 함수 호출.
     public async UniTask InitConvoy(string questId, List<string> selectedPetIds)
     {
+        _isConvoyEnded = false;
         _selectedQuestId = questId;
 
         _selectedPetIds.Clear();
@@ -40,6 +44,13 @@ public class ConvoyManager
 
     public void FaildConvoy(ConvoyFailReason failReason = ConvoyFailReason.WagonDestroyed)
     {
+        if (_isConvoyEnded == true)
+        {
+            return;
+        }
+
+        _isConvoyEnded = true;
+
         GameManager.UI.CloseAllConvoyHuds();
         var result = MakeConvoyResult(false, failReason);
         GameManager.UI.OpenConvoyFailUI(result);
@@ -47,6 +58,13 @@ public class ConvoyManager
 
     public void SuccessConvoy()
     {
+        if (_isConvoyEnded == true)
+        {
+            return;
+        }
+
+        _isConvoyEnded = true;
+
         GameManager.UI.CloseAllConvoyHuds();
         var result = MakeConvoyResult(true, ConvoyFailReason.None);
         GameManager.UI.OpenConvoySuccessUI(result);
@@ -141,12 +159,29 @@ public class ConvoyManager
 
     private void SpawnPlayer()
     {
-        var playerViewModel = GameManager.Network.RequestCreatePlayer();
+        _playerViewModel = GameManager.Network.RequestCreatePlayer();
+        _playerViewModel.OnPropertyChanged_View += OnPlayerPropertyChanged;
+
         var playerStatController = GameManager.Network.PlayerService.StatController;
 
         _playerEntity = GameObject.Instantiate(Utils.ResourcesLoad<PlayerEntity>("Test_Scholar"));
 
-        _playerEntity.Init(PLAYER_ID, playerViewModel, playerStatController);
+        _playerEntity.Init(PLAYER_ID, _playerViewModel, playerStatController);
+    }
+
+    private void OnPlayerPropertyChanged(string propertyName)
+    {
+        if (propertyName != nameof(PlayerModel.HP))
+        {
+            return;
+        }
+
+        if (_playerViewModel.GetHp > 0f)
+        {
+            return;
+        }
+
+        FaildConvoy(ConvoyFailReason.PlayerDefeated);
     }
 
     private void SpawnPet()
@@ -246,6 +281,12 @@ public class ConvoyManager
 
     private void ReleasePlayer()
     {
+        if (_playerViewModel != null)
+        {
+            _playerViewModel.OnPropertyChanged_View -= OnPlayerPropertyChanged;
+            _playerViewModel = null;
+        }
+
         if (_playerEntity == null)
             return;
 

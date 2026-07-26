@@ -16,6 +16,16 @@ public class ConvoySuccessUIView : BaseUI
         _moveTownButton.BindOnClickButtonEvent(OnClickMoveTown);
     }
 
+    protected override void OnOpened()
+    {
+        GameManager.Time.OnPause();
+    }
+
+    protected override void OnClosed()
+    {
+        GameManager.Time.OnResume();
+    }
+
     public void SetResult(ConvoyResultModel result)
     {
         if (result == null)

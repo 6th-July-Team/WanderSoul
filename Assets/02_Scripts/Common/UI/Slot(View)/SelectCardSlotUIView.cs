@@ -85,6 +85,7 @@ public abstract class SelectCardSlotUIView : MonoBehaviour, IPointerEnterHandler
         _rootRect.localScale = Vector3.one * 0.8f;
 
         Sequence sequence = DOTween.Sequence();
+        sequence.SetUpdate(true);
         sequence.AppendInterval(delay);
         sequence.Append(_canvasGroup.DOFade(1f, 0.5f));
         sequence.Join(_rootRect.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack));
@@ -95,6 +96,7 @@ public abstract class SelectCardSlotUIView : MonoBehaviour, IPointerEnterHandler
         _rootRect.DOKill();
 
         Sequence sequence = DOTween.Sequence();
+        sequence.SetUpdate(true);
         sequence.Append(_rootRect.DOScale(Vector3.one * 1.2f, 0.2f).SetEase(Ease.OutBack));
         sequence.Append(_canvasGroup.DOFade(0f, 0.2f));
         sequence.OnComplete(() =>

@@ -119,7 +119,8 @@ public class UIHoverScale : MonoBehaviour
     {
         _scaleTarget.DOKill();
 
-        _scaleTarget.DOScale(_originScale * ratio, _scaleDuration).SetEase(ease);
+        _scaleTarget.DOScale(_originScale * ratio, _scaleDuration).SetEase(ease)
+            .SetUpdate(true);
     }
 
     private void ResetScale()
