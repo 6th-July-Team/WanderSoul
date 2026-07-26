@@ -10,7 +10,9 @@ public class ConvoyManager
     private string _selectedQuestId;
     private List<string> _selectedPetIds = new();
 
+    private TradeRouteHandler _loadedMap;
     private Wagon _wagon;
+    private List<GameObject> _petList = new();
 
     private PlayerEntity _playerEntity;
     private PlayerSkillMaker _playerSkillMaker;
@@ -85,12 +87,24 @@ public class ConvoyManager
 
     public string Release()
     {
+
+        // 1. 카메라 해제
         GameManager.Camera.Release();
-        // 게임 상태 변경
-        // 풀 사용한거 Despawn - 몬스터
-        // 펫 소환 해제
-        // 플레이어 제거.
-        // 마차 제거
+
+        // 2. 펫 해제
+        ReleasePet();
+
+        // 3. 플레이어 해제
+        ReleasePlayer();
+
+        // 4. 마차 해제
+        ReleaseWagon();
+
+        // 5. 맵 해제
+        GameObject.Destroy(_loadedMap.gameObject);
+
+
+        GameManager.Pool.AllDespawnToPool();
 
         // TODO 결과에 따라 실패 시 의뢰 출발 마을 ID, 성공 시 도착 마을 ID 반환
         return "테스트 ID";
@@ -109,11 +123,11 @@ public class ConvoyManager
 
     private void LoadMap()
     {
-        var tradeRouteHandler = GameObject.Instantiate(Utils.ResourcesLoad<TradeRouteHandler>("Map/Map_01-TEST"));
+        _loadedMap = GameObject.Instantiate(Utils.ResourcesLoad<TradeRouteHandler>("Map/Map_01-TEST"));
 
         SpawnPlayer();
 
-        SpawnWagon(tradeRouteHandler.SplineContainer);
+        SpawnWagon(_loadedMap.SplineContainer);
     }
 
     private void SpawnWagon(SplineContainer splineContainer)
@@ -141,10 +155,11 @@ public class ConvoyManager
 
         var petViewModels = GameManager.Network.PetService.GetPetViewModels(_selectedPetIds);
 
-        for(int index = 0; index < _selectedPetIds.Count; index++)
+        for (int index = 0; index < _selectedPetIds.Count; index++)
         {
             var petOB = GameManager.Resource.GetLoadedAsset<GameObject>(_selectedPetIds[index]);
             GameObject petInstance = GameObject.Instantiate(petOB);
+            _petList.Add(petInstance);
 
             petInstance.GetComponent<PetController>().Init(_selectedPetIds[index]
                             , _playerEntity, _wagon
@@ -188,7 +203,7 @@ public class ConvoyManager
         {
             partyHud.BindWagon(wagonVm);
 
-            var petViewModels = GameManager.Network.PetService.GetPetViewModels(_selectedPetIds);
+            var petViewModels = GameManager.Network.GetPetViewModels(_selectedPetIds);
 
             for (int i = 0; i < _selectedPetIds.Count; i++)
             {
@@ -214,5 +229,40 @@ public class ConvoyManager
         }
 
         GameManager.UI.OpenSkillHudUI(PLAYER_ID);
+    }
+
+    private void ReleasePet()
+    {
+        GameManager.PetParty.Release();
+
+        foreach (var pet in _petList)
+        {
+            GameObject.Destroy(pet);
+        }
+
+        _petList.Clear();
+        _selectedPetIds.Clear();
+    }
+
+    private void ReleasePlayer()
+    {
+        if (_playerEntity == null)
+            return;
+
+        _playerEntity.Release();
+
+        GameObject.Destroy(_playerEntity.gameObject);
+
+        _playerEntity = null;
+    }
+
+    private void ReleaseWagon()
+    {
+        if (_wagon == null)
+            return;
+
+        _wagon.Release();
+        GameObject.Destroy(_wagon.gameObject);
+        _wagon = null;
     }
 }

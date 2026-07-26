@@ -29,6 +29,7 @@ public class PetAreaBuffPassive : IPetPassiveSkillExecution
     public void Deactivate()
     {
         _buffInstance.Release();
-        Object.Destroy(_buffInstance);
+        Object.Destroy(_buffInstance.gameObject);
+        _buffInstance = null;
     }
 }

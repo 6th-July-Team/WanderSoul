@@ -44,8 +44,6 @@ public class PariclePaletteController : MonoBehaviour
         {
             _originalStartColors[i] = _particleSystems[i].main.startColor;
         }
-
-        ApplyPalette(EffectColorType.Red);
     }
 
     public void ApplyPalette(EffectColorType colorType)

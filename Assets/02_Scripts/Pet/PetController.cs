@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using System;
+using System.Threading;
 using UnityEngine;
 
 
@@ -32,8 +33,6 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
     private PetViewModel _petViewModel;
 
-    private bool isInitialized = false;
-
     private PetCommandResult _commandResult;
 
     private const string DISSOLVE_ADDRESS = "Particle/Dissolve"; // 디졸브 효과로 생성될 때 쓸 파티클
@@ -48,16 +47,20 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
     private static readonly int DISSOLVE_ID = Shader.PropertyToID("_DissolveAmount"); // 디졸브 머터리얼 내부에 있는 프로퍼티를 int로 변환하는 메서드 << AI 도움 받음
 
+    private bool _isInitialized = false;
+
+    private CancellationTokenSource _aliveToken;
+
     private void Awake()
     {
-        isInitialized = false;
+        _isInitialized = false;
         _petMovement = GetComponent<PetMovement>();
         _petRenderer = GetComponentInChildren<Renderer>();
     }
 
     public void Init(string petId, IPositionProvider playerAnchor, IPositionProvider wagonAnchor
         , PetSkillMaker petSkillMaker, IStatusEffectReceiver playerEffectReceiver, IHealable playerHealable
-        , int avoidancePriority, PetViewModel viewModel)
+        , int avoidancePriority, PetViewModel petViewModel)
     {
         _petData = GameManager.DataTable.GetPetData(petId);
 
@@ -74,7 +77,7 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
         _petMovement.Init(petId, avoidancePriority);
 
-        _petViewModel = viewModel;
+        _petViewModel = petViewModel;
 
         _petViewModel.OnPropertyChanged_View += OnPropertyChanged;
 
@@ -84,12 +87,12 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
         // 펫 스킬 강화가 생기면 플레이어 처럼 만들기.
         SkillModifierReceiver = null;
 
-        isInitialized = true;
+        _isInitialized = true;
     }
 
     private void Update()
     {
-        if (false == isInitialized)
+        if (false == _isInitialized)
             return;
 
         if (GameManager.Time.IsPaused)
@@ -105,6 +108,9 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
     private void UpdateCommand(float deltaTime)
     {
+        if (false == _isInitialized)
+            return;
+
         _commandRefreshTimer += deltaTime;
 
         if (_commandRefreshTimer < _commandRefreshInterval)
@@ -117,11 +123,8 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
     private void UpdateCombat()
     {
-        //if (_combatController.IsBusy)
-        //{
-        //    _petMovement.Stop();
-        //    return;
-        //}
+        if (false == _isInitialized)
+            return;
 
         ITargetable target = _commandResult.Target;
 
@@ -154,16 +157,38 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
         GetCommandAndApply();
     }
 
+    public void ApplyEffect(StatusEffectInstance instance)
+    {
+        StatusEffects.Apply(instance);
+    }
+
+    public void Dispose()
+    {
+        _isInitialized = false;
+
+        DisposeToken();
+
+        _combatController.Release();
+        StatusEffects.Clear();
+        _petStatController.ClearModifiers();
+
+
+        if (null != _petViewModel)
+            _petViewModel.OnPropertyChanged_View -= OnPropertyChanged;
+
+        _commandResult = default;
+        _petCommandController = null;
+        _combatController = null;
+        
+        _petViewModel = null;
+
+    }
+
     private void GetCommandAndApply()
     {
         _commandResult = _petCommandController.GetCommandResult();
 
         _petMovement.ApplyCommand(_commandResult);
-    }
-
-    public void ApplyEffect(StatusEffectInstance instance)
-    {
-        StatusEffects.Apply(instance);
     }
 
     private void ExecuteNoEnemySkill(PetActiveSkill skill)
@@ -196,34 +221,39 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
     {
         switch (propertyName)
         {
-            case nameof(PetModel.HP): // << 기웅 : 이벤트를 발행하는 프로퍼티랑 이름이 동일해야 함!! PetViewModel.GetHp는 이벤트를 발행하는 주체는 아니라서 이벤트 전달이 안되고 있었음
+            case nameof(PetModel.HP):
                 {
                     if (_petViewModel.GetHp <= 0f && _isDead == false)
                     {
                         // TODO(김익환): 사망 사운드
-                        Debug.Log("사망");
                         _isDead = true;
-                        DieAndRevive().Forget(); // 기웅 : DieAndRevive에 사망 이펙트 및 소환 이펙트 추가함
 
+                        _aliveToken = new CancellationTokenSource();
+                        DieAndRevive(_aliveToken.Token).Forget();
                     }
                 }
                 break;
         }
     }
 
-    private async UniTaskVoid DieAndRevive()
+    private async UniTaskVoid DieAndRevive(CancellationToken token)
     {
+        bool canceled = await UniTask.Delay(TimeSpan.FromSeconds(1f), cancellationToken: token).SuppressCancellationThrow();
+
+        if (canceled)
+            return;
+
         float live = 0f; // 디졸브에서 0은 오브젝트가 보이는 것
         float dead = 0.6f; // 디졸브에서 1은 오브젝트가 사라진 것
 
-        await Dissolve(live, dead, DISSOLVEREVERSE_ADDRESS); // 생존 > 사망
+        await Dissolve(live, dead, DISSOLVEREVERSE_ADDRESS); // 생존 -> 사망
         gameObject.SetActive(false);
 
         await UniTask.Delay(TimeSpan.FromSeconds(2f));
         _petViewModel.SetHp(_petViewModel.GetMaxHp);
 
         gameObject.SetActive(true);
-        await Dissolve(dead, live, DISSOLVE_ADDRESS); // 사망 > 생존
+        await Dissolve(dead, live, DISSOLVE_ADDRESS); // 사망 -> 생존
 
         _isDead = false;
     }
@@ -268,11 +298,14 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
         Gizmos.DrawWireSphere(transform.position, __SOPetSearch.RangeWhenAggressive);
     }
 
-    public void Dispose()
+    private void DisposeToken()
     {
-        _combatController.Release();
-        StatusEffects.Clear();
-        _petViewModel.OnPropertyChanged_View -= OnPropertyChanged;
+        if (null != _aliveToken)
+        {
+            _aliveToken.Cancel();
+            _aliveToken.Dispose();
+            _aliveToken = null;
+        }
     }
 
 #if UNITY_EDITOR

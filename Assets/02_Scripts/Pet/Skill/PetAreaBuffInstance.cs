@@ -51,5 +51,6 @@ public class PetAreaBuffInstance : MonoBehaviour
     public void Release()
     {
         _effect.ReleaseToPool();
+        _effect = null;
     }
 }
