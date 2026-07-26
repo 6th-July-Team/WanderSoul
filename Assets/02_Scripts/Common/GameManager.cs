@@ -288,6 +288,7 @@ public class GameManager : SingletonBehaviour<GameManager>
         _uiManager.CloseUI(UIType.MainMenuUI);
         _uiManager.CloseUI(UIType.ResourceHudUIView);
         _uiManager.CloseUI(UIType.VillageInfoHudUIView);
+        _uiManager.CloseAllQuestUI();
     }
 
     public void StartConvoy(List<string> selectedPetIds)

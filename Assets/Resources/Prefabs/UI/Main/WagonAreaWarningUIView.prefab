@@ -15,7 +15,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &6641790184889267085
 RectTransform:
   m_ObjectHideFlags: 0
@@ -371,14 +371,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.78431374, g: 0.11764706, b: 0.11764706, a: 0.9019608}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.9019608}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bc872b53bb9acc543900cb010f6baadd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9751cc1818275a240b8ab80361e1cc2d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -443,9 +443,9 @@ MonoBehaviour:
   _vignettePulseImage: {fileID: 7853271403723355174}
   _warningDuration: 10
   _fadeInDuration: 0.6
-  _startAlpha: 0.15
-  _endAlpha: 0.7
-  _pulseAlpha: 0.25
+  _startAlpha: 0.4
+  _endAlpha: 1
+  _pulseAlpha: 0.5
   _pulseDuration: 0.9
   _pulseSpeedRate: 1.5
 --- !u!1 &5843082023563158319
@@ -506,14 +506,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.78431374, g: 0.11764706, b: 0.11764706, a: 0.9019608}
+  m_Color: {r: 0.5283019, g: 0.05731578, b: 0.05731578, a: 0.9019608}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: bc872b53bb9acc543900cb010f6baadd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 178a15f9d13e7394f81ed9fcb15a704f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

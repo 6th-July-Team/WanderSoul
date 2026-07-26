@@ -12,6 +12,8 @@ public class QuestBoardUIView : BaseUI
 
     private List<QuestBoardSlotUIView> _slotList = new();
 
+    private bool _isClosing = false;
+
     protected override void OnInit()
     {
         if (_closeButton != null)
@@ -22,6 +24,8 @@ public class QuestBoardUIView : BaseUI
 
     protected override void OnOpened()
     {
+        _isClosing = false;
+
         RefreshQuests();
 
         if (_slideAnimation == null)
@@ -36,8 +40,6 @@ public class QuestBoardUIView : BaseUI
     protected override void OnClosed()
     {
         ClearSlots();
-
-        GameManager.UI.CloseUI(UIType.QuestDetailUIView);
     }
 
     private void RefreshQuests()
@@ -59,6 +61,13 @@ public class QuestBoardUIView : BaseUI
 
             _slotList.Add(slot);
         }
+
+        if (questList.Count == 0)
+        {
+            return;
+        }
+
+        OnQuestSelected(questList[0].Id);
     }
 
     private List<QuestData> GetSortedQuestList()
@@ -82,7 +91,33 @@ public class QuestBoardUIView : BaseUI
 
     private void OnClickClose()
     {
-        GameManager.UI.CloseUI(UIType.QuestBoardUIView);
+        if (_isClosing == true)
+        {
+            GameManager.UI.CloseUI(UIType.QuestBoardUIView);
+            return;
+        }
+
+        CloseWithSlide();
+    }
+
+    public void CloseWithSlide()
+    {
+        if (_isClosing == true)
+        {
+            return;
+        }
+
+        _isClosing = true;
+
+        GameManager.UI.CloseQuestDetailUI();
+
+        if (_slideAnimation == null)
+        {
+            GameManager.UI.CloseUI(UIType.QuestBoardUIView);
+            return;
+        }
+
+        _slideAnimation.SlideOut(() => GameManager.UI.CloseUI(UIType.QuestBoardUIView));
     }
 
     private void ClearSlots()
