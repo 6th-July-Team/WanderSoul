@@ -1,5 +1,7 @@
 ﻿
 
+using System.Collections.Generic;
+
 public class NetworkManager
 {
     public NetworkPlayerService PlayerService { get; private set; } = new();
@@ -37,5 +39,10 @@ public class NetworkManager
     public EnemyViewModel CreateEnemyViewModel(string enemyId)
     {
         return EnemyService.CreateEnemyViewModel(enemyId);
+    }
+
+    public IReadOnlyList<PetViewModel> GetPetViewModels(List<string> petIds)
+    {
+        return PetService.GetPetViewModels(petIds);
     }
 }

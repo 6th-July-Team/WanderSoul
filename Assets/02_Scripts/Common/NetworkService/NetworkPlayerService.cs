@@ -44,6 +44,9 @@ public class NetworkPlayerService
     {
         _playerViewModel.Dispose();
         _statController.Dispose();
+
+        _statController = null;
+        _playerViewModel = null;
     }
 
     private PlayerSkillViewModel CreatePlayerSkillViewModel()

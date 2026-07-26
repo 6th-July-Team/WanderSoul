@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class ScholarOrb : MonoBehaviour
 {
@@ -26,12 +25,17 @@ public class ScholarOrb : MonoBehaviour
     }
 
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         _destination = Vector3.SmoothDamp(_destination, _followPoint.position, ref _followVelocity, _followingTime);
 
         float yOffset = Mathf.Sin(Time.time * _speed) * _height;
 
         transform.position = _destination + Vector3.up * yOffset;
+    }
+
+    public void Release()
+    {
+        Destroy(gameObject);
     }
 }

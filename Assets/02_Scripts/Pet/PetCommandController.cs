@@ -2,8 +2,6 @@
 
 public class PetCommandController
 {
-    //private Dictionary<EPetCommand, IPetCommandState> _commandStates = new();
-
     public PetCommand CurrentCommand { get; private set; }
 
     private Collider[] _searchBuffer;

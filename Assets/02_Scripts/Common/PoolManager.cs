@@ -82,6 +82,21 @@ public class PoolManager
 
     public void DespawnToPool(GameObject obj)
     {
+        if (obj == null)
+            return;
+
+        if (!objectPools.TryGetValue(obj.name, out Queue<GameObject> pool))
+        {
+            Debug.LogError($"Pool Id({obj.name})에 해당하는 풀이 없습니다.");
+            return;
+        }
+
+        if (!activedObjects.TryGetValue(obj.name, out List<GameObject> activeList))
+        {
+            Debug.LogWarning($"Pool Id({obj.name}) 오브젝트는 이미 반환되었거나 활성 목록에 없습니다.");
+            return;
+        }
+
         objectPools[obj.name].Enqueue(obj);
         activedObjects[obj.name].Remove(obj);
 
@@ -98,8 +113,6 @@ public class PoolManager
                 DespawnToPool(activedList[i]);
             }
         }
-
-        activedObjects.Clear();
     }
 
     private GameObject GetFromPool(string poolId, Vector3 position, Quaternion rotation, Transform parent = null, bool orginTF = false)

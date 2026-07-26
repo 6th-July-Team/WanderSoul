@@ -22,6 +22,7 @@ public class Wagon : MonoBehaviour, ITargetable, IDamageable
 
     private float _baseMoveSpeed;
     private int _slowLevel = 0; // [0, 4]
+    private bool _isRelease = false;
 
     private void Awake()
     {
@@ -34,17 +35,11 @@ public class Wagon : MonoBehaviour, ITargetable, IDamageable
         _splineAnimate.Completed += OnSplineCompleted;
     }
 
-    private void OnDisable()
-    {
-        _splineAnimate.Completed -= OnSplineCompleted;
-
-        _wagonViewModel.OnPropertyChanged_View -= OnPropertyChanged;
-        _wagonViewModel.Dispose();
-        _wagonViewModel = null;
-    }
-
     private void Update()
     {
+        if(_isRelease)
+            return;
+
         _wagonViewModel.SetProgress(Mathf.Floor(_splineAnimate.NormalizedTime * 100) / 100);
     }
 
@@ -59,6 +54,20 @@ public class Wagon : MonoBehaviour, ITargetable, IDamageable
         _wagonViewModel.PropertyChangedOnInit();
 
         InitChildComponent(player);
+    }
+
+    public void Release()
+    {
+        _isRelease = true;
+
+
+        _splineAnimate.Completed -= OnSplineCompleted;
+
+        _wagonViewModel.OnPropertyChanged_View -= OnPropertyChanged;
+        _wagonViewModel.Dispose();
+        _wagonViewModel = null;
+
+        _splineAnimate = null;
     }
 
     private void InitChildComponent(PlayerEntity player)
