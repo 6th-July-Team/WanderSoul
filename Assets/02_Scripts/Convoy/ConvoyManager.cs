@@ -316,6 +316,7 @@ public class ConvoyManager
         if (playerVm != null)
         {
             GameManager.UI.OpenPlayerHudUI(playerVm);
+            GameManager.UI.OpenDashHudUI(playerVm, _playerEntity.transform);
         }
 
         var resourceModel = new ResourceModel();

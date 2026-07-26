@@ -32,7 +32,13 @@
     "ReputationReward": 50,
     "StartTownId": null,
     "ArrivalTownId": null,
-    "AutoSpawnIds": null,
+    "AutoSpawnIds": [
+      "auto_spawn_phase_01",
+      "auto_spawn_phase_02",
+      "auto_spawn_phase_03",
+      "auto_spawn_phase_04",
+      "auto_spawn_phase_05"
+    ],
     "DifficultyImagePath": null
   }
 ]
