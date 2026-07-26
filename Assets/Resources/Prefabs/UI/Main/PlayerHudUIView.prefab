@@ -344,7 +344,7 @@ MonoBehaviour:
   _manaFillImage: {fileID: 6280056130721284397}
   _manaOrbLiquid: {fileID: 4988047108967053272}
   _manaText: {fileID: 782095163507905114}
-  _expSlider: {fileID: 0}
+  _expSlider: {fileID: 7060238690789477891}
   _expText: {fileID: 1918609117348415670}
   _slideAnimation: {fileID: 5657114373959171592}
 --- !u!114 &5657114373959171592
