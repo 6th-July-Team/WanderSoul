@@ -44,6 +44,8 @@ public class VillageClickInput : MonoBehaviour
             return;
         }
 
+        CloseAllPanels();
+
         if (facility.FacilityType == VillageFacilityType.MissionGuild)
         {
             GameManager.UI.OpenQuestBoardUI();
@@ -110,5 +112,11 @@ public class VillageClickInput : MonoBehaviour
 
         _hoveredFacility = null;
         _facilityHoverPanel.gameObject.SetActive(false);
+    }
+
+    public void CloseAllPanels()
+    {
+        GameManager.UI.CloseAllQuestUI();
+        GameManager.UI.CloseUI(UIType.TownHallUIView);
     }
 }
