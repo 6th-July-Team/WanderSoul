@@ -36,6 +36,13 @@ public class ReputationGradeData : BaseData
 }
 
 [Serializable]
+public class PlayerLevelData : BaseData
+{
+    public int Level;
+    public int RequiredExp;
+}
+
+[Serializable]
 public class CharacterData : BaseData
 {
     public string Name;
