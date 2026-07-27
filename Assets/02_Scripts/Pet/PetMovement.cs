@@ -139,6 +139,12 @@ public class PetMovement : MonoBehaviour
     /// <param name="force">강제로 목적지 설정 옵션</param>
     private void SetDestination(Vector3 destination, float stoppingDistance, bool force)
     {
+        if(!IsAgentReady())
+        {
+            _hasDestination = false;
+            return;
+        }
+
         if (!force && !CheckUpdateDestination(destination))
             return;
 
@@ -152,10 +158,16 @@ public class PetMovement : MonoBehaviour
 
     public void Stop()
     {
-        _agent.isStopped = true;
-        _agent.ResetPath();
+        if (IsAgentReady())
+        {
+            _agent.isStopped = true;
+            _agent.ResetPath();
+        }
+
         _hasDestination = false;
-        _animator.speed = 0f;
+
+        if(_animator != null)
+            _animator.speed = 0f;
     }
 
     private bool CheckUpdateDestination(Vector3 destination)
@@ -170,4 +182,10 @@ public class PetMovement : MonoBehaviour
     }
 
     private bool IsValidTarget(ITargetable target) => target != null && target.IsAlive;
+
+    private bool IsAgentReady()
+    {
+        return _agent != null && _agent.enabled && _agent.isActiveAndEnabled && _agent.isOnNavMesh;
+    }
+
 }
