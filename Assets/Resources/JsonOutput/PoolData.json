@@ -130,5 +130,9 @@
   {
     "Id": "Particle/DissolveRev",
     "InitSize": 0
+  },
+  {
+    "Id": "Scholar/BererkSoulEffect",
+    "InitSize": 0
   }
 ]

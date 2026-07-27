@@ -39,6 +39,14 @@ public class ScholarBererkSoul : IPlayerSkillExecution
         }
 
         VFXSpawner.SpawnVFX(SkillData.VFXPath, context.Owner.position, Quaternion.identity);
+
+        var viewModel = GameManager.Network.RequestPlayerSkillViewModel();
+
+        float coolTime = context.PlayerSkillModifier.GetValue(SkillData.Id, SkillData.GetSkillSlot()
+            , SkillValueType.Cooldown, SkillData.Cooldown) - coolTimeReductionOfStat;
+
+
+        viewModel.UseSkill(SkillData.GetSkillSlot(), coolTime);
     }
 
     private void ApplyBuff(StatusEffectData data)
