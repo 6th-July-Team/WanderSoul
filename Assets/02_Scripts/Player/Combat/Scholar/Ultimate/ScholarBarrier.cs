@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class ScholarBarrier : MonoBehaviour, IBarrierable, IDamageable
 {
+    public event Action OnDestoryBarrier;
+
     public bool IsAlive => _durability > 0 && _duration > 0;
     public EntityType EntityType => EntityType.Player;
     public Vector3 Position => transform.position;
@@ -76,6 +79,8 @@ public class ScholarBarrier : MonoBehaviour, IBarrierable, IDamageable
                 damageable.TakeDamage(damageInfo);
             }
         }
+
+        OnDestoryBarrier?.Invoke();
         Destroy(gameObject);
     }
 }
