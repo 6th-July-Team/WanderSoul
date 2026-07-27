@@ -4,7 +4,7 @@
     "Name": "초반 적응",
     "Description": "전투 시작 직후 준비 시간을 준 뒤 근접 적을 소량 공급합니다. 다음 단계 시작 시 이 규칙을 교체합니다.",
     "StartTime": 6,
-    "Endtime": 42,
+    "EndTime": 42,
     "EnemyIds": [
       "Spider"
     ],
@@ -19,7 +19,7 @@
     "Name": "기본 압박",
     "Description": "근접 적 중심의 기본 압박에 원거리 적을 섞습니다. 다음 단계 시작 시 이 규칙을 교체합니다.",
     "StartTime": 42,
-    "Endtime": 87,
+    "EndTime": 87,
     "EnemyIds": [
       "Spider",
       "EvilMageRed"
@@ -36,7 +36,7 @@
     "Name": "중반 압박",
     "Description": "정상 속도 기준 후반 구간입니다. 처치가 늦으면 감속 기준에 가까워지도록 공급량을 높입니다.",
     "StartTime": 87,
-    "Endtime": 132,
+    "EndTime": 132,
     "EnemyIds": [
       "Spider",
       "EvilMageRed"
@@ -53,7 +53,7 @@
     "Name": "지연 누적",
     "Description": "150초를 넘긴 지연 상태입니다. 공급량이 기본 처치력을 앞서기 시작해 마차 감속을 유도합니다.",
     "StartTime": 132,
-    "Endtime": 232,
+    "EndTime": 232,
     "EnemyIds": [
       "Spider",
       "EvilMageRed"
@@ -70,7 +70,7 @@
     "Name": "장기전 한계",
     "Description": "240초를 넘긴 장기전입니다. 전투를 정리하지 못하면 강한 누적 압박으로 5분 내 결론을 유도합니다.",
     "StartTime": 232,
-    "Endtime": null,
+    "EndTime": null,
     "EnemyIds": [
       "Spider",
       "EvilMageRed"
