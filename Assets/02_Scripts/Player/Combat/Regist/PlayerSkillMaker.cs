@@ -58,7 +58,7 @@ public class PlayerSkillMaker
         }
 
         // 테스트 삭제하기
-        PlayerSkillData ultimateSkillData = GameManager.DataTable.GetPlayerSkillData(playerClassData.UltimateSkillIds[0]);
+        PlayerSkillData ultimateSkillData = GameManager.DataTable.GetPlayerSkillData(playerClassData.UltimateSkillIds[1]);
         Debug.Log($"UltimateSkillData : {ultimateSkillData.Name} / {ultimateSkillData.ExecutionId}");
         var ultimateExecution = _skillRegistry.Create(ultimateSkillData.ExecutionId, createInfo);
 
