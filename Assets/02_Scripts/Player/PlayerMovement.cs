@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using static UnityEditor.Profiling.HierarchyFrameDataView;
 
 [RequireComponent(typeof(PlayerInputHandle))]
 [RequireComponent(typeof(CharacterController))]
