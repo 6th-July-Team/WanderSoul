@@ -197,6 +197,8 @@ public class GameManager : SingletonBehaviour<GameManager>
 
         // TODO(이태영): 시작 마을 ID를 세이브 데이터나 기획 값에서 가져오기
         EnterVillage(START_TOWN_ID);
+
+        _uiManager.OpenHelperUI();
     }
 
     private void OnLoadingProgress(float progress)

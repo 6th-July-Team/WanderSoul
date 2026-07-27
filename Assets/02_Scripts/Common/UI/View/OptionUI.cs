@@ -17,6 +17,7 @@ public class OptionUI : BaseUI
 
     [Header("Button")]
     [SerializeField] private UIButton _closeButton;
+    [SerializeField] private UIButton _helperButton;
 
     [Header("Animation")]
     [SerializeField] private UISlideAnimation _slideAnimation;
@@ -40,6 +41,11 @@ public class OptionUI : BaseUI
         if (_closeButton != null)
         {
             _closeButton.BindOnClickButtonEvent(OnClickClose);
+        }
+
+        if (_helperButton != null)
+        {
+            _helperButton.BindOnClickButtonEvent(OnClickHelper);
         }
 
         if (_bgmSlider != null)
@@ -262,6 +268,13 @@ public class OptionUI : BaseUI
     public void Close()
     {
         OnClickClose();
+    }
+
+    private void OnClickHelper()
+    {
+        OnClickClose();
+
+        GameManager.UI.OpenHelperUI();
     }
 
     private void OnClickClose()

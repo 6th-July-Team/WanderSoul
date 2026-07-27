@@ -77,6 +77,16 @@ public partial class UIManager
         view.BindViewModel(viewModel);
     }
 
+    public void OpenHelperUI()
+    {
+        var view = OpenUI<HelperUI>(UIType.HelperUI);
+
+        if (view == null)
+        {
+            Debug.LogWarning("HelperUI를 열 수 없습니다.");
+        }
+    }
+
     public void OpenQuestBoardUI()
     {
         if (IsActiveUI(UIType.PetInventoryUIView) == true)

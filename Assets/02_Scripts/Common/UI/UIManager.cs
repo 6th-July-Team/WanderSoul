@@ -156,6 +156,9 @@ public partial class UIManager
             case UIType.SkillHudUIView:
                 return UIRootType.Main;
 
+            case UIType.HelperUI:
+                return UIRootType.Content;
+
             case UIType.QuestBoardUIView:
                 return UIRootType.Content;
 
