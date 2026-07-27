@@ -68,7 +68,7 @@ public class EnemySpawner : MonoBehaviour
 
         _wagonViewModel.Updata(GameManager.Time.GameDeltaTime);
 
-        if (_spawnData[_currentWave].StartTime < _wagonViewModel.GetProgress)
+        if (_spawnData[_currentWave].StartTime > _wagonViewModel.GetTime)
             return;
             
         UpdateWave();
@@ -89,7 +89,7 @@ public class EnemySpawner : MonoBehaviour
         if (_currentWave >= _spawnData.Length - 1)
             return;
 
-        if (_spawnData[_currentWave].EndTime >= _wagonViewModel.GetTime)
+        if (_spawnData[_currentWave].EndTime <= _wagonViewModel.GetTime)
         {
             _currentWave++;
 
