@@ -22,6 +22,19 @@ public class PlayerOutGameModel : BaseModel
         _levelUpPicks.Clear();
     }
 
+    private string _selectedUltimateSkillId;
+    public string SelectedUltimateSkillId
+    {
+        get => _selectedUltimateSkillId;
+        set
+        {
+            if (_selectedUltimateSkillId == value)
+                return;
+            _selectedUltimateSkillId = value;
+            OnPropertyChanged(nameof(SelectedUltimateSkillId));
+        }
+    }
+
     public override void PropertyChangedOnInit()
     {
         OnPropertyChanged(nameof(Soul));

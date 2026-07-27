@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UltimateSelectUIView : CardSelectUIView
@@ -6,6 +7,11 @@ public class UltimateSelectUIView : CardSelectUIView
     protected override UIType SelfUIType
     {
         get { return UIType.UltimateSelectUIView; }
+    }
+
+    public void SetUltimates(List<string> skillIdList, Action<string> onSelected, Action onClosed = null)
+    {
+        SetSlots(skillIdList, onSelected, onClosed);
     }
 
     public void SetUltimates(string playerClassId, Action<string> onSelected)

@@ -57,6 +57,8 @@ public class PlayerSkillMaker
             _build.SetSkill(SkillSlot.Special, specialSkill);
         }
 
+        // 궁극기는 해금 레벨에 도달해 선택했을 때 CreatePlayerSkill로 추가된다
+
         return _build;
     }
 
@@ -73,7 +75,7 @@ public class PlayerSkillMaker
         {
             PlayerSkill playerSkill = new PlayerSkill(skillData, execution, _playerViewModel, _statController);
 
-            _build.SetSkill(SkillSlot.Basic, playerSkill);
+            _build.SetSkill(skillData.GetSkillSlot(), playerSkill);
         }
     }
 }

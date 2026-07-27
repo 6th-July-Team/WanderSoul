@@ -21,6 +21,8 @@ public class ConvoyManager
     private const string PLAYER_ID = "player_scholar";  // 현재 플레이어 선택 불가능하여, 학자가 고정되어 있음.
     private const string MAP_ID = "Stage_Selvanera";    // 현재 맵이 1개 뿐이라 고정
 
+    private const string DEFAULT_TOWN_ID = "town_lavendil";
+
     private bool _isConvoyEnded;
 
     private int _convoyStartSoul;
@@ -31,6 +33,10 @@ public class ConvoyManager
     private bool _isLevelUpUIOpened;
 
     private const int LEVEL_UP_OPTION_COUNT = 3;
+
+    // TODO(이태영): 선택지가 늘어나면 클래스 데이터의 UltimateSkillIds를 그대로 넘기기
+    private const int ULTIMATE_UNLOCK_LEVEL = 10;
+    private const string UNLOCK_ULTIMATE_SKILL_ID = "skill_scholar_ult_summonbarrier";
 
     public ConvoyManager(PetSkillMaker petSkillMaker, PlayerSkillMaker playerSkillMaker)
     {
@@ -141,7 +147,52 @@ public class ConvoyManager
     {
         _isLevelUpUIOpened = false;
 
+        if (TryOpenUltimateSelectUI() == true)
+        {
+            return;
+        }
+
         OpenNextLevelUpUI();
+    }
+
+    private bool TryOpenUltimateSelectUI()
+    {
+        if (_outGameViewModel.GetLevel < ULTIMATE_UNLOCK_LEVEL)
+        {
+            return false;
+        }
+
+        if (string.IsNullOrEmpty(_outGameViewModel.GetSelectedUltimateSkillId) == false)
+        {
+            return false;
+        }
+
+        var skillIds = new List<string> { UNLOCK_ULTIMATE_SKILL_ID };
+
+        GameManager.UI.OpenUltimateSelectUI(skillIds, OnUltimateSelected, OpenNextLevelUpUI);
+        return true;
+    }
+
+    private void OnUltimateSelected(string skillId)
+    {
+        _outGameViewModel.SetSelectedUltimateSkillId(skillId);
+
+        ApplySelectedUltimate();
+    }
+
+    // 궁극기는 스킬 빌드에 등록돼야 발동되므로 판 시작 때도 다시 붙인다
+    private void ApplySelectedUltimate()
+    {
+        string skillId = _outGameViewModel.GetSelectedUltimateSkillId;
+
+        if (string.IsNullOrEmpty(skillId) == true)
+        {
+            return;
+        }
+
+        _playerSkillMaker.CreatePlayerSkill(skillId);
+
+        GameManager.UI.SetSkillHudUltimate(skillId);
     }
 
     public void FaildConvoy(ConvoyFailReason failReason = ConvoyFailReason.WagonDestroyed)
@@ -194,18 +245,25 @@ public class ConvoyManager
         {
             // TODO(이태영): 실패 페널티도 기획 데이터에서 가져오기
             result.ReputationPenalty = 5;
-            result.RepairCost = 300;
-            result.IsRepairCostPaid = true;
+            result.RepairCost = 100;
             result.ExtraReputationPenalty = 3;
+
+            int currentGold = GameManager.Network.RequestPlayerOutGameViewModel().GetGold;
+            result.IsRepairCostPaid = (currentGold >= result.RepairCost);
         }
 
         ApplyReputation(result);
         ApplyGold(result);
 
-        // TODO(이태영): Release()에서 반환하는 마을 ID와 연동 필요
-        result.ReturnTownId = "town_lavendil";
+        result.ReturnTownId = GetReturnTownId();
 
         return result;
+    }
+
+    // TODO(이태영): 마을이 늘어나면 QuestData의 StartTownId/ArrivalTownId로 분기
+    private string GetReturnTownId()
+    {
+        return DEFAULT_TOWN_ID;
     }
 
     private float GetConvoyClearTime()
@@ -308,8 +366,7 @@ public class ConvoyManager
 
         GameManager.Pool.AllDespawnToPool();
 
-        // TODO 결과에 따라 실패 시 의뢰 출발 마을 ID, 성공 시 도착 마을 ID 반환
-        return "테스트 ID";
+        return GetReturnTownId();
     }
 
     private async UniTask StartConvoyAsync()
@@ -382,6 +439,8 @@ public class ConvoyManager
         GameManager.PetParty.Init(petControllers);
 
         _playerEntity.InitAfterSpawnPet(PLAYER_ID, _playerSkillMaker, GameManager.PetParty.GetStatusEffectReceiverForAllPet());
+
+        ApplySelectedUltimate();
     }
 
     private void InitCamera()
