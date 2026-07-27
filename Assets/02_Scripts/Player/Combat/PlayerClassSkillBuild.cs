@@ -4,10 +4,14 @@ public class PlayerClassSkillBuild
 {
     private Dictionary<SkillSlot, PlayerSkill> _skills = new();
 
+    private PlayerSkillModifier _skillModifier;
+
     private bool _isInitialized = false;
 
     public void Init(PlayerSkillModifier skillModifier)
     {
+        _skillModifier = skillModifier;
+
         foreach (var skill in _skills.Values)
         {
             skill.Init(skillModifier);
@@ -62,6 +66,12 @@ public class PlayerClassSkillBuild
         }
 
         _skills[slot] = skill;
+
+        // Init 이후에 추가된 스킬도 모디파이어를 받아야 한다
+        if (_isInitialized == true)
+        {
+            skill.Init(_skillModifier);
+        }
     }
 
     public PlayerSkillData GetSkillInfo(SkillSlot slot)

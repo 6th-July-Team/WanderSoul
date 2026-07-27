@@ -1,53 +1,53 @@
-[
+﻿[
   {
     "Id": "level_001",
     "Level": 1,
-    "RequiredExp": 30
+    "RequiredExp": 2
   },
   {
     "Id": "level_002",
     "Level": 2,
-    "RequiredExp": 45
+    "RequiredExp": 2
   },
   {
     "Id": "level_003",
     "Level": 3,
-    "RequiredExp": 60
+    "RequiredExp": 2
   },
   {
     "Id": "level_004",
     "Level": 4,
-    "RequiredExp": 75
+    "RequiredExp": 2
   },
   {
     "Id": "level_005",
     "Level": 5,
-    "RequiredExp": 90
+    "RequiredExp": 2
   },
   {
     "Id": "level_006",
     "Level": 6,
-    "RequiredExp": 105
+    "RequiredExp": 2
   },
   {
     "Id": "level_007",
     "Level": 7,
-    "RequiredExp": 120
+    "RequiredExp": 2
   },
   {
     "Id": "level_008",
     "Level": 8,
-    "RequiredExp": 135
+    "RequiredExp": 2
   },
   {
     "Id": "level_009",
     "Level": 9,
-    "RequiredExp": 150
+    "RequiredExp": 2
   },
   {
     "Id": "level_010",
     "Level": 10,
-    "RequiredExp": 165
+    "RequiredExp": 2
   },
   {
     "Id": "level_011",
