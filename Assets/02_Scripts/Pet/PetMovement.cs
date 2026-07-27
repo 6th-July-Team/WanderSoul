@@ -24,17 +24,32 @@ public class PetMovement : MonoBehaviour
 
     private float _currentStopDistance;
 
+
+    private bool _isPaused;
+
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
     }
 
-    public void Init(string petId, int avoidancePriority)
+    public void Init(float moveSpeed, int avoidancePriority)
     {
         // TODO(김익환): petId로 PetData들 설정하기.
-        _agent.speed = 5f;
+        _agent.speed = moveSpeed;
         _agent.avoidancePriority = avoidancePriority;
+    }
+
+    private void OnEnable()
+    {
+        GameManager.Time.OnPaused += PauseMovement;
+        GameManager.Time.OnResumed += ResumeMovement;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.Time.OnPaused -= PauseMovement;
+        GameManager.Time.OnResumed -= ResumeMovement;
     }
 
     private void Update()
@@ -54,6 +69,9 @@ public class PetMovement : MonoBehaviour
 
     public void ApplyCommand(PetCommandResult result)
     {
+        if (_isPaused)
+            return;
+
         bool targetChanged = !ReferenceEquals(_target, result.Target);
 
         _anchor = result.Anchor;
@@ -64,6 +82,9 @@ public class PetMovement : MonoBehaviour
 
     public void SetCombatRange(float castRange)
     {
+        if (_isPaused)
+            return;
+
         if (Mathf.Approximately(_currentStopDistance, castRange))
             return;
 
@@ -84,6 +105,9 @@ public class PetMovement : MonoBehaviour
 
     public void RefreshDestination(bool force)
     {
+        if (_isPaused)
+            return;
+
         if (IsValidTarget(_target))
         {
             MoveToTarget(force);
@@ -139,7 +163,10 @@ public class PetMovement : MonoBehaviour
     /// <param name="force">강제로 목적지 설정 옵션</param>
     private void SetDestination(Vector3 destination, float stoppingDistance, bool force)
     {
-        if(!IsAgentReady())
+        if (_isPaused)
+            return;
+
+        if (!IsAgentReady())
         {
             _hasDestination = false;
             return;
@@ -188,4 +215,28 @@ public class PetMovement : MonoBehaviour
         return _agent != null && _agent.enabled && _agent.isActiveAndEnabled && _agent.isOnNavMesh;
     }
 
+    private void PauseMovement()
+    {
+        _isPaused = true;
+
+        if (IsAgentReady())
+        {
+            _agent.isStopped = true;
+        }
+
+        if (_animator != null)
+        {
+            _animator.speed = 0f;
+        }
+    }
+
+    private void ResumeMovement()
+    {
+        if (!_isPaused)
+            return;
+
+        _isPaused = false;
+
+        RefreshDestination(true);
+    }
 }
