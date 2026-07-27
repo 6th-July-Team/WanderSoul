@@ -8,7 +8,6 @@ public class VillageInfoHudUIView : BaseUI<VillageInfoHudUIView, VillageInfoView
     [SerializeField] private TMP_Text _gradeNameText;
     [SerializeField] private Slider _reputationSlider;
     [SerializeField] private Image _regionLogoImage;
-    [SerializeField] private Image _gradeIconImage;
 
     protected override void OnPropertyChanged(string propertyName)
     {

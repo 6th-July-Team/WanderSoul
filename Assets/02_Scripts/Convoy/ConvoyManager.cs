@@ -21,6 +21,8 @@ public class ConvoyManager
     private const string PLAYER_ID = "player_scholar";  // 현재 플레이어 선택 불가능하여, 학자가 고정되어 있음.
     private const string MAP_ID = "Stage_Selvanera";    // 현재 맵이 1개 뿐이라 고정
 
+    private const string DEFAULT_TOWN_ID = "town_lavendil";
+
     private bool _isConvoyEnded;
 
     private int _convoyStartSoul;
@@ -194,7 +196,7 @@ public class ConvoyManager
         {
             // TODO(이태영): 실패 페널티도 기획 데이터에서 가져오기
             result.ReputationPenalty = 5;
-            result.RepairCost = 300;
+            result.RepairCost = 100;
             result.IsRepairCostPaid = true;
             result.ExtraReputationPenalty = 3;
         }
@@ -202,10 +204,15 @@ public class ConvoyManager
         ApplyReputation(result);
         ApplyGold(result);
 
-        // TODO(이태영): Release()에서 반환하는 마을 ID와 연동 필요
-        result.ReturnTownId = "town_lavendil";
+        result.ReturnTownId = GetReturnTownId();
 
         return result;
+    }
+
+    // TODO(이태영): 마을이 늘어나면 QuestData의 StartTownId/ArrivalTownId로 분기
+    private string GetReturnTownId()
+    {
+        return DEFAULT_TOWN_ID;
     }
 
     private float GetConvoyClearTime()
@@ -308,8 +315,7 @@ public class ConvoyManager
 
         GameManager.Pool.AllDespawnToPool();
 
-        // TODO 결과에 따라 실패 시 의뢰 출발 마을 ID, 성공 시 도착 마을 ID 반환
-        return "테스트 ID";
+        return GetReturnTownId();
     }
 
     private async UniTask StartConvoyAsync()
