@@ -103,9 +103,9 @@ public class PlayerViewModel : BaseViewModel<PlayerModel>
         _model.MP = MaxMP;
     }
     
-    public void SetMagnetRadius(float radius)
+    public void AddMagnetRadius(float radius)
     {
-        _model.MagnetRadius = radius;
+        _model.MagnetRadius += radius;
     }
 
     private void UpdateDashCount(float deltaTime)

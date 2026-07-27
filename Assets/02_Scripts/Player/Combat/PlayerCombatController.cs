@@ -116,6 +116,12 @@ public class PlayerCombatController : MonoBehaviour
 
     private bool TryExecuteSkill(SkillSlot skillSlot)
     {
+        if(!_skillBuild.CheckSkill(skillSlot))
+        {
+            Debug.Log($"{skillSlot}에 스킬이 장착되어 있지 않습니다.");
+            return false;
+        }
+
         if (!_isInitialized)
             return false;
 
