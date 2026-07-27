@@ -15,7 +15,7 @@
     "Value": 0.08,
     "MaxStack": 5,
     "Weight": 100,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Epic_B_SoulLattice"
   },
   {
     "Id": "levelup_health_rare",
@@ -33,7 +33,7 @@
     "Value": 0.12,
     "MaxStack": 4,
     "Weight": 45,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Rare_B_HollowWing"
   },
   {
     "Id": "levelup_health_epic",
@@ -51,7 +51,7 @@
     "Value": 0.18,
     "MaxStack": 3,
     "Weight": 18,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Legendary_B_AscendantSoulMoth"
   },
   {
     "Id": "levelup_health_legendary",
@@ -69,7 +69,7 @@
     "Value": 0.25,
     "MaxStack": 2,
     "Weight": 5,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Rare_A_TidalCoil"
   },
   {
     "Id": "levelup_damage_common",
@@ -87,7 +87,7 @@
     "Value": 0.06,
     "MaxStack": 5,
     "Weight": 100,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Epic_B_SoulLattice"
   },
   {
     "Id": "levelup_damage_rare",
@@ -105,7 +105,7 @@
     "Value": 0.1,
     "MaxStack": 4,
     "Weight": 45,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Rare_B_HollowWing"
   },
   {
     "Id": "levelup_damage_epic",
@@ -123,7 +123,7 @@
     "Value": 0.15,
     "MaxStack": 3,
     "Weight": 18,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Legendary_B_AscendantSoulMoth"
   },
   {
     "Id": "levelup_damage_legendary",
@@ -141,7 +141,7 @@
     "Value": 0.22,
     "MaxStack": 2,
     "Weight": 5,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Rare_A_TidalCoil"
   },
   {
     "Id": "levelup_move_speed_common",
@@ -159,7 +159,7 @@
     "Value": 0.15,
     "MaxStack": 5,
     "Weight": 100,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Epic_B_SoulLattice"
   },
   {
     "Id": "levelup_move_speed_rare",
@@ -177,7 +177,7 @@
     "Value": 0.25,
     "MaxStack": 4,
     "Weight": 45,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Rare_B_HollowWing"
   },
   {
     "Id": "levelup_move_speed_epic",
@@ -195,7 +195,7 @@
     "Value": 0.4,
     "MaxStack": 3,
     "Weight": 18,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Legendary_B_AscendantSoulMoth"
   },
   {
     "Id": "levelup_move_speed_legendary",
@@ -213,7 +213,7 @@
     "Value": 0.6,
     "MaxStack": 2,
     "Weight": 5,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Rare_A_TidalCoil"
   },
   {
     "Id": "levelup_health_regen_common",
@@ -231,7 +231,7 @@
     "Value": 0.15,
     "MaxStack": 5,
     "Weight": 100,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Epic_B_SoulLattice"
   },
   {
     "Id": "levelup_health_regen_rare",
@@ -249,7 +249,7 @@
     "Value": 0.25,
     "MaxStack": 4,
     "Weight": 45,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Rare_B_HollowWing"
   },
   {
     "Id": "levelup_health_regen_epic",
@@ -267,7 +267,7 @@
     "Value": 0.4,
     "MaxStack": 3,
     "Weight": 18,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Legendary_B_AscendantSoulMoth"
   },
   {
     "Id": "levelup_health_regen_legendary",
@@ -285,7 +285,7 @@
     "Value": 0.6,
     "MaxStack": 2,
     "Weight": 5,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Rare_A_TidalCoil"
   },
   {
     "Id": "levelup_mana_regen_common",
@@ -303,7 +303,7 @@
     "Value": 0.3,
     "MaxStack": 5,
     "Weight": 100,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Epic_B_SoulLattice"
   },
   {
     "Id": "levelup_mana_regen_rare",
@@ -321,7 +321,7 @@
     "Value": 0.5,
     "MaxStack": 4,
     "Weight": 45,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Rare_B_HollowWing"
   },
   {
     "Id": "levelup_mana_regen_epic",
@@ -339,7 +339,7 @@
     "Value": 0.8,
     "MaxStack": 3,
     "Weight": 18,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Legendary_B_AscendantSoulMoth"
   },
   {
     "Id": "levelup_mana_regen_legendary",
@@ -357,7 +357,7 @@
     "Value": 1.2,
     "MaxStack": 2,
     "Weight": 5,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Rare_A_TidalCoil"
   },
   {
     "Id": "levelup_magnet_radius_common",
@@ -375,7 +375,7 @@
     "Value": 0.5,
     "MaxStack": 5,
     "Weight": 100,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Epic_B_SoulLattice"
   },
   {
     "Id": "levelup_magnet_radius_rare",
@@ -393,7 +393,7 @@
     "Value": 0.8,
     "MaxStack": 4,
     "Weight": 45,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Rare_B_HollowWing"
   },
   {
     "Id": "levelup_magnet_radius_epic",
@@ -411,7 +411,7 @@
     "Value": 1.2,
     "MaxStack": 3,
     "Weight": 18,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Legendary_B_AscendantSoulMoth"
   },
   {
     "Id": "levelup_magnet_radius_legendary",
@@ -429,7 +429,7 @@
     "Value": 1.8,
     "MaxStack": 2,
     "Weight": 5,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Rare_A_TidalCoil"
   },
   {
     "Id": "levelup_dash_count_epic",
@@ -447,7 +447,7 @@
     "Value": 1,
     "MaxStack": 2,
     "Weight": 8,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Legendary_B_AscendantSoulMoth"
   },
   {
     "Id": "levelup_all_stats_legendary",
@@ -465,7 +465,7 @@
     "Value": null,
     "MaxStack": 1,
     "Weight": 2,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Rare_A_TidalCoil"
   },
   {
     "Id": "levelup_revive_count_legendary",
@@ -483,6 +483,6 @@
     "Value": 1,
     "MaxStack": 1,
     "Weight": 2,
-    "IconPath": null
+    "IconPath": "Sprites/UI/Icon/Rare_A_TidalCoil"
   }
 ]
