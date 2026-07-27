@@ -20,6 +20,7 @@
     QuestDetailUIView,
     PetInventoryUIView,
     PlayerHudUIView,
+    DashHudUIView,
     ConvoyHudUIView,
     LevelUpUIView,
     LoadingUIView,
@@ -31,6 +32,7 @@
     WagonAreaWarningUIView,
     UltimateSelectUIView,
     MagicCircleUIView,
+    TownHallUIView,
 }
 
 public enum UIRootType : byte

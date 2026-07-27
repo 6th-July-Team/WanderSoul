@@ -150,6 +150,9 @@ public partial class UIManager
             case UIType.PlayerHudUIView:
                 return UIRootType.Main;
 
+            case UIType.DashHudUIView:
+                return UIRootType.Main;
+
             case UIType.SkillHudUIView:
                 return UIRootType.Main;
 
@@ -198,6 +201,9 @@ public partial class UIManager
             default:
                 Debug.LogError($"{uiType}에 지정된 UIRootType이 없습니다.");
                 return UIRootType.Main;
+
+            case UIType.TownHallUIView:
+                return UIRootType.Content;
         }
     }
 
