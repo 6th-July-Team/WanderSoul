@@ -26,6 +26,7 @@
     LoadingUIView,
     ScreenFadeUIView,
     OptionUI,
+    HelperUI,
     SimplePopupUIView,
     ConvoySuccessUIView,
     ConvoyFailUIView,
