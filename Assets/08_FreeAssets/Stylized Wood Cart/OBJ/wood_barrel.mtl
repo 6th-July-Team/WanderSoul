@@ -1,0 +1,14 @@
+# Blender 4.1.1 MTL File: 'stylized_cart.blend'
+# www.blender.org
+
+newmtl cart
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.500000
+d 1.000000
+illum 2
+map_Kd D:/Projetos/Modelagens e Pixel Art/Vídeos/Stylized Cart/Stylized Wood Cart/Textures/PNG/T_cart_BaseColor.<UDIM>.png
+map_Ns D:/Projetos/Modelagens e Pixel Art/Vídeos/Stylized Cart/Stylized Wood Cart/Textures/PNG/T_cart_Roughness.<UDIM>.png
+map_refl D:/Projetos/Modelagens e Pixel Art/Vídeos/Stylized Cart/Stylized Wood Cart/Textures/PNG/T_cart_Metallic.<UDIM>.png
+map_Bump -bm 1.000000 D:/Projetos/Modelagens e Pixel Art/Vídeos/Stylized Cart/Stylized Wood Cart/Textures/PNG/T_cart_Normal.<UDIM>.png
