@@ -143,10 +143,10 @@ public class ParticleComponent : MonoBehaviour
 
     private async UniTask DespawnAfterDelay(CancellationToken token)
     {
-        bool isCanceled = await GameManager.Time.WaitForGameSeconds(_releaseDelay, token);
+        bool isCompleted = await GameManager.Time.WaitForGameSeconds(_releaseDelay, token);
 
 
-        if (!isCanceled)
+        if (!isCompleted)
         {
             return;
         }
