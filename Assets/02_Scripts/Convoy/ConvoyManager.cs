@@ -363,7 +363,10 @@ public class ConvoyManager
         for (int index = 0; index < _selectedPetIds.Count; index++)
         {
             var petOB = GameManager.Resource.GetLoadedAsset<GameObject>(_selectedPetIds[index]);
-            GameObject petInstance = GameObject.Instantiate(petOB);
+
+            var randomOffset = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
+
+            GameObject petInstance = GameObject.Instantiate(petOB, _playerEntity.transform.position + randomOffset, Quaternion.identity);
             _petList.Add(petInstance);
 
             petInstance.GetComponent<PetController>().Init(_selectedPetIds[index]
