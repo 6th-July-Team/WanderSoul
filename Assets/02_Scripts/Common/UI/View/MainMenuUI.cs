@@ -20,9 +20,30 @@ public class MainMenuUI : BaseUI
 
     protected override void OnInit()
     {
-        _inventoryButton.BindOnClickButtonEvent(OnClickInventory);
-        _optionButton.BindOnClickButtonEvent(OnClickOption);
-        _farmButton.BindOnClickButtonEvent(OnClickFarm);
+        if (_inventoryButton != null)
+        {
+            _inventoryButton.BindOnClickButtonEvent(OnClickInventory);
+        }
+
+        if (_optionButton != null)
+        {
+            _optionButton.BindOnClickButtonEvent(OnClickOption);
+        }
+
+        if (_farmButton != null)
+        {
+            _farmButton.BindOnClickButtonEvent(OnClickFarm);
+        }
+    }
+
+    private void ChangeFarmButtonText(string content)
+    {
+        if (_farmButton == null)
+        {
+            return;
+        }
+
+        _farmButton.ChangeText(content);
     }
 
     protected override void OnOpened()
@@ -68,7 +89,7 @@ public class MainMenuUI : BaseUI
         }
 
         _isInMonsterFarm = false;
-        _farmButton.ChangeText("팜");
+        ChangeFarmButtonText("팜");
     }
 
     private void OnClickInventory()
@@ -174,7 +195,7 @@ public class MainMenuUI : BaseUI
         _villageInstance.SetActive(true);
 
         _isInMonsterFarm = false;
-        _farmButton.ChangeText("팜");
+        ChangeFarmButtonText("팜");
     }
 
     private void ShowMonsterFarm()
@@ -197,7 +218,7 @@ public class MainMenuUI : BaseUI
         _monsterFarmInstance.SetActive(true);
 
         _isInMonsterFarm = true;
-        _farmButton.ChangeText("마을 복귀");
+        ChangeFarmButtonText("마을 복귀");
     }
 
     private void OnClickOption()
