@@ -77,7 +77,7 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
         // TODO(김익환): SO 제거
         _petCommandController = new(playerAnchor, wagonAnchor, this, __SOPetSearch, 32);
 
-        _petMovement.Init(petId, avoidancePriority);
+        _petMovement.Init(_petStatController.GetValue(StatType.MoveSpeed), avoidancePriority);
 
         _petViewModel = petViewModel;
 

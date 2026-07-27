@@ -28,36 +28,39 @@ public class HelperUI : MonoBehaviour
 
     private void ShowPrev()
     {
-        if (_currentPage > 0)
-        {
-            _currentPage--;
-        }
-
+        _currentPage--;
         ShowPage(_currentPage);
     }
 
     private void ShowNext()
     {
-        if(_currentPage < 3)
-        {
-            _currentPage++;
-        }
-
+        _currentPage++;
         ShowPage(_currentPage);
     }
 
     private void ShowPage(int index)
     {
-        for(int i = 0; i < Page.Length; i++)
+        if (index < 0)
         {
-            if (i == index)
+            ExitUI();
+        }
+        else if (0 <= index && index <= 3)
+        {
+            for (int i = 0; i < Page.Length; i++)
             {
-                Page[i].SetActive(true);
+                if (i == index)
+                {
+                    Page[i].SetActive(true);
+                }
+                else
+                {
+                    Page[i].SetActive(false);
+                }
             }
-            else
-            {
-                Page[i].SetActive(false);
-            }
+        }
+        else if(index > 3)
+        {
+            ExitUI();
         }
     }
 

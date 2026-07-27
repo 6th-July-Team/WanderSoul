@@ -124,6 +124,7 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
         if (other.TryGetComponent(out IBarrierable barrierable))
         {
             _isInBarrier = true;
+            Debug.Log("베리어 들어옴");
         }
 
         if (other.TryGetComponent<EnemyDropObject>(out var enemyDropObject))
@@ -146,6 +147,7 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
         if (other.TryGetComponent(out IBarrierable barrierable))
         {
             _isInBarrier = false;
+            Debug.Log("베리어에서 나감");
         }
     }
 }

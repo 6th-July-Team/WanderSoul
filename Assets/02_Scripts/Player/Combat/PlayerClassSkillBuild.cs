@@ -73,4 +73,9 @@ public class PlayerClassSkillBuild
     {
         return _skills[slot].RemainingCooldTime;
     }
+
+    public bool CheckSkill(SkillSlot slot)
+    {
+        return _skills.ContainsKey(slot);
+    }
 }

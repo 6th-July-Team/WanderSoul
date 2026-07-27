@@ -72,7 +72,7 @@ public class PlayerSkill
         if (!_playerViewModel.TrySpendMP(SkillData.ManaCost))
             return false;
 
-        float skillDamage = GetSkillDamage() * _statController.GetValue(StatType.AdditionalDamage);
+        float skillDamage = GetSkillDamage() + _statController.GetValue(StatType.AdditionalDamage);
 
         float coolTimeReductionOfStat = _statController.GetValue(StatType.CooldownReduction);
 

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿
 
 public class ScholarMagicArrow : IElementArrowVariant
 {
@@ -22,14 +22,14 @@ public class ScholarMagicArrow : IElementArrowVariant
         if (_upgradeDamage == 0f)
             _upgradeDamage = context.PlayerSkillModifier.GetValue(_upgradeSkillData.Id, SkillSlot.Basic, SkillValueType.Power, _upgradeSkillData.Power);
 
-
+        var additionalDamage = GameManager.Network.PlayerService.StatController.GetValue(StatType.AdditionalDamage);
 
         if (_castCount % 4 != 0)
         {
             GameManager.Pool.SpawnFromPool<Projectile>("ProjectileHusks", context.BasicAttackAnchor.position)
                 .Init(new ProjectileStruct
                 (
-                    SkillData.ProjectileSpeed, _basicDamage, SkillData.Duration
+                    SkillData.ProjectileSpeed, _basicDamage + additionalDamage, SkillData.Duration
                     , context.AimWorldPoint - context.BasicAttackAnchor.position
                     , SkillData.GetDamageType(), SkillData.GetTargetType()
                     , SkillData.VFXPath
@@ -41,7 +41,7 @@ public class ScholarMagicArrow : IElementArrowVariant
             GameManager.Pool.SpawnFromPool<Projectile>("ProjectileHusks", context.BasicAttackAnchor.position)
                 .Init(new ProjectileStruct
                 (
-                    _upgradeSkillData.ProjectileSpeed, _upgradeDamage, _upgradeSkillData.Duration
+                    _upgradeSkillData.ProjectileSpeed, _upgradeDamage + additionalDamage, _upgradeSkillData.Duration
                     , context.AimWorldPoint - context.BasicAttackAnchor.position
                     , _upgradeSkillData.GetDamageType(), _upgradeSkillData.GetTargetType()
                     , _upgradeSkillData.VFXPath

@@ -25,6 +25,13 @@ public class ConvoyManager
 
     private int _convoyStartSoul;
 
+    private PlayerOutGameViewModel _outGameViewModel;
+    private LevelUpOptionPicker _levelUpOptionPicker = new();
+    private int _pendingLevelUpCount;
+    private bool _isLevelUpUIOpened;
+
+    private const int LEVEL_UP_OPTION_COUNT = 3;
+
     public ConvoyManager(PetSkillMaker petSkillMaker, PlayerSkillMaker playerSkillMaker)
     {
         _petSkillMaker = petSkillMaker;
@@ -35,12 +42,106 @@ public class ConvoyManager
     public async UniTask InitConvoy(string questId, List<string> selectedPetIds)
     {
         _selectedQuestId = questId;
-        _convoyStartSoul = GameManager.Network.RequestPlayerOutGameViewModel().GetSoul;
+
+        _outGameViewModel = GameManager.Network.RequestPlayerOutGameViewModel();
+        _convoyStartSoul = _outGameViewModel.GetSoul;
+
+        BindLevelUp();
 
         _selectedPetIds.Clear();
         _selectedPetIds.AddRange(selectedPetIds);
 
         await StartConvoyAsync();
+    }
+
+    private void BindLevelUp()
+    {
+        UnbindLevelUp();
+
+        _pendingLevelUpCount = 0;
+        _isLevelUpUIOpened = false;
+
+        _outGameViewModel.OnLevelUp += OnLevelUp;
+    }
+
+    private void UnbindLevelUp()
+    {
+        if (_outGameViewModel == null)
+        {
+            return;
+        }
+
+        _outGameViewModel.OnLevelUp -= OnLevelUp;
+    }
+
+    private void OnLevelUp(int level)
+    {
+        _pendingLevelUpCount++;
+
+        OpenNextLevelUpUI();
+    }
+
+    private void OpenNextLevelUpUI()
+    {
+        if (_isLevelUpUIOpened == true || _pendingLevelUpCount <= 0)
+        {
+            return;
+        }
+
+        var optionIds = _levelUpOptionPicker.PickOptionIds(_outGameViewModel.GetLevel
+            , PLAYER_ID, LEVEL_UP_OPTION_COUNT, _outGameViewModel.GetLevelUpPicks);
+
+        if (optionIds.Count == 0)
+        {
+            _pendingLevelUpCount = 0;
+            return;
+        }
+
+        _pendingLevelUpCount--;
+        _isLevelUpUIOpened = true;
+
+        GameManager.UI.OpenLevelUpUI(optionIds, OnLevelUpOptionSelected, OnLevelUpUIClosed);
+    }
+
+    private void OnLevelUpOptionSelected(string optionId)
+    {
+        _outGameViewModel.AddLevelUpPick(optionId);
+
+        ApplyLevelUpOption(optionId);
+    }
+
+    private void ApplyLevelUpOption(string optionId)
+    {
+        if (_playerEntity == null)
+        {
+            return;
+        }
+
+        if (_levelUpOptionPicker.TryGetStatModifier(optionId, out StatModifier modifier) == false)
+        {
+            return;
+        }
+
+        _playerEntity.StatModifierReceiver.AddModifier(modifier);
+    }
+
+    // 스탯 모디파이어는 의뢰마다 새로 만들어지는 StatController에 붙으므로 판 시작 때 다시 적용한다
+    private void ApplySavedLevelUpPicks()
+    {
+        foreach (var pick in _outGameViewModel.GetLevelUpPicks)
+        {
+            for (int i = 0; i < pick.Value; i++)
+            {
+                ApplyLevelUpOption(pick.Key);
+            }
+        }
+    }
+
+    private void OnLevelUpUIClosed()
+    {
+        _isLevelUpUIOpened = false;
+
+        OpenNextLevelUpUI();
     }
 
     public void FaildConvoy(ConvoyFailReason failReason = ConvoyFailReason.WagonDestroyed)
@@ -186,6 +287,8 @@ public class ConvoyManager
 
     public string Release()
     {
+        UnbindLevelUp();
+        _outGameViewModel = null;
 
         // 1. 카메라 해제
         GameManager.Camera.Release();
@@ -247,6 +350,8 @@ public class ConvoyManager
             , _loadedMap.PlayerSpawnPosition.position, Quaternion.identity);
 
         _playerEntity.Init(PLAYER_ID, inGameViewModel, playerStatController);
+
+        ApplySavedLevelUpPicks();
     }
 
     private void SpawnPet()
@@ -258,7 +363,10 @@ public class ConvoyManager
         for (int index = 0; index < _selectedPetIds.Count; index++)
         {
             var petOB = GameManager.Resource.GetLoadedAsset<GameObject>(_selectedPetIds[index]);
-            GameObject petInstance = GameObject.Instantiate(petOB);
+
+            var randomOffset = new Vector3(Random.Range(-1f, 1f), 0, Random.Range(-1f, 1f));
+
+            GameObject petInstance = GameObject.Instantiate(petOB, _playerEntity.transform.position + randomOffset, Quaternion.identity);
             _petList.Add(petInstance);
 
             petInstance.GetComponent<PetController>().Init(_selectedPetIds[index]

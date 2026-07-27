@@ -19,7 +19,6 @@ public class PlayerHudUIView : BaseUI<PlayerHudUIView, PlayerViewModel>
     [SerializeField] private Slider _expSlider;
     [SerializeField] private TMP_Text _expText;
 
-    private const float TEMP_MAX_EXP = 100f;
 
 
     [Header("Animation")]
@@ -57,6 +56,11 @@ public class PlayerHudUIView : BaseUI<PlayerHudUIView, PlayerViewModel>
     private void OnOutGamePropertyChanged(string propertyName)
     {
         if (propertyName == nameof(PlayerOutGameModel.Exp))
+        {
+            RefreshExp();
+        }
+
+        else if (propertyName == nameof(PlayerOutGameModel.Level))
         {
             RefreshExp();
         }
@@ -141,9 +145,9 @@ public class PlayerHudUIView : BaseUI<PlayerHudUIView, PlayerViewModel>
             return;
         }
 
-        float maxExp = TEMP_MAX_EXP;
+        float requiredExp = _outGameViewModel.GetRequiredExp;
 
-        if (maxExp <= 0f)
+        if (requiredExp <= 0f)
         {
             return;
         }
@@ -152,12 +156,12 @@ public class PlayerHudUIView : BaseUI<PlayerHudUIView, PlayerViewModel>
 
         if (_expSlider != null)
         {
-            _expSlider.value = Mathf.Clamp01(exp / maxExp);
+            _expSlider.value = Mathf.Clamp01(exp / requiredExp);
         }
 
         if (_expText != null)
         {
-            _expText.text = $"{(int)exp:N0} / {(int)maxExp:N0}";
+            _expText.text = $"Lv.{_outGameViewModel.GetLevel}";
         }
     }
 }
