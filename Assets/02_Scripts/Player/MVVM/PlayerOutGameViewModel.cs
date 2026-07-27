@@ -96,9 +96,17 @@ public class PlayerOutGameViewModel : BaseViewModel<PlayerOutGameModel>
         _model.AddLevelUpPick(optionId);
     }
 
+    public string GetSelectedUltimateSkillId => _model.SelectedUltimateSkillId;
+
+    public void SetSelectedUltimateSkillId(string skillId)
+    {
+        _model.SelectedUltimateSkillId = skillId;
+    }
+
     public void ResetLevel()
     {
         _model.ClearLevelUpPicks();
+        _model.SelectedUltimateSkillId = null;
         _model.Level = 1;
         _model.Exp = 0f;
     }

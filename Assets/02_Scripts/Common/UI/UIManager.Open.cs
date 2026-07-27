@@ -366,6 +366,20 @@ public partial class UIManager
         view.SetUltimates(playerClassId, onSelected);
     }
 
+    public void OpenUltimateSelectUI(List<string> skillIdList, Action<string> onSelected
+        , Action onClosed = null)
+    {
+        var view = OpenUI<UltimateSelectUIView>(UIType.UltimateSelectUIView);
+
+        if (view == null)
+        {
+            Debug.LogWarning("UltimateSelectUIView를 열 수 없습니다.");
+            return;
+        }
+
+        view.SetUltimates(skillIdList, onSelected, onClosed);
+    }
+
     public void OpenConvoyHudUI(WagonViewModel wagonViewModel, string questId)
     {
         var view = OpenUI<ConvoyHudUIView>(UIType.ConvoyHudUIView);

@@ -57,14 +57,7 @@ public class PlayerSkillMaker
             _build.SetSkill(SkillSlot.Special, specialSkill);
         }
 
-        // 테스트 삭제하기
-        PlayerSkillData ultimateSkillData = GameManager.DataTable.GetPlayerSkillData(playerClassData.UltimateSkillIds[0]);
-        Debug.Log($"UltimateSkillData : {ultimateSkillData.Name} / {ultimateSkillData.ExecutionId}");
-        var ultimateExecution = _skillRegistry.Create(ultimateSkillData.ExecutionId, createInfo);
-
-        PlayerSkill ultimateSkill = new PlayerSkill(ultimateSkillData, ultimateExecution
-                , _playerViewModel, statController);
-        _build.SetSkill(SkillSlot.Ultimate, ultimateSkill);
+        // 궁극기는 해금 레벨에 도달해 선택했을 때 CreatePlayerSkill로 추가된다
 
         return _build;
     }
@@ -82,7 +75,7 @@ public class PlayerSkillMaker
         {
             PlayerSkill playerSkill = new PlayerSkill(skillData, execution, _playerViewModel, _statController);
 
-            _build.SetSkill(SkillSlot.Basic, playerSkill);
+            _build.SetSkill(skillData.GetSkillSlot(), playerSkill);
         }
     }
 }
