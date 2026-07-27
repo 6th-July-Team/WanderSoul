@@ -53,6 +53,11 @@ public class TimeManager
 
     public async UniTask<bool> WaitForGameSeconds(float duration, CancellationToken token = default)
     {
+        if (token.IsCancellationRequested)
+        {
+            return false;
+        }
+
         float remainingTime = duration;
 
         while (remainingTime > 0f)
