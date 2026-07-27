@@ -1,0 +1,102 @@
+[
+  {
+    "Id": "level_001",
+    "Level": 1,
+    "RequiredExp": 30
+  },
+  {
+    "Id": "level_002",
+    "Level": 2,
+    "RequiredExp": 45
+  },
+  {
+    "Id": "level_003",
+    "Level": 3,
+    "RequiredExp": 60
+  },
+  {
+    "Id": "level_004",
+    "Level": 4,
+    "RequiredExp": 75
+  },
+  {
+    "Id": "level_005",
+    "Level": 5,
+    "RequiredExp": 90
+  },
+  {
+    "Id": "level_006",
+    "Level": 6,
+    "RequiredExp": 105
+  },
+  {
+    "Id": "level_007",
+    "Level": 7,
+    "RequiredExp": 120
+  },
+  {
+    "Id": "level_008",
+    "Level": 8,
+    "RequiredExp": 135
+  },
+  {
+    "Id": "level_009",
+    "Level": 9,
+    "RequiredExp": 150
+  },
+  {
+    "Id": "level_010",
+    "Level": 10,
+    "RequiredExp": 165
+  },
+  {
+    "Id": "level_011",
+    "Level": 11,
+    "RequiredExp": 180
+  },
+  {
+    "Id": "level_012",
+    "Level": 12,
+    "RequiredExp": 195
+  },
+  {
+    "Id": "level_013",
+    "Level": 13,
+    "RequiredExp": 210
+  },
+  {
+    "Id": "level_014",
+    "Level": 14,
+    "RequiredExp": 225
+  },
+  {
+    "Id": "level_015",
+    "Level": 15,
+    "RequiredExp": 240
+  },
+  {
+    "Id": "level_016",
+    "Level": 16,
+    "RequiredExp": 255
+  },
+  {
+    "Id": "level_017",
+    "Level": 17,
+    "RequiredExp": 270
+  },
+  {
+    "Id": "level_018",
+    "Level": 18,
+    "RequiredExp": 285
+  },
+  {
+    "Id": "level_019",
+    "Level": 19,
+    "RequiredExp": 300
+  },
+  {
+    "Id": "level_020",
+    "Level": 20,
+    "RequiredExp": 315
+  }
+]
