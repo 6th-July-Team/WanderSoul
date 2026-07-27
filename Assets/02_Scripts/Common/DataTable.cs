@@ -13,6 +13,7 @@ public class DataTable
     public Dictionary<string, InteractableSpotData> InteractableSpotDataTable {  get; private set; } = new();
     public Dictionary<string, RegionData> RegionDataTable { get; private set; } = new();
     public Dictionary<string, ReputationGradeData> ReputationGradeDataTable { get; private set; } = new();
+    public Dictionary<string, PlayerLevelData> PlayerLevelDataTable { get; private set; } = new();
     public Dictionary<string, ItemData> ItemDataTable { get; private set; } = new();
     public Dictionary<string, CharacterData> CharacterDataTable { get; private set; } = new();
     public Dictionary<string, PlayerStatData> PlayerStatDataTable { get; private set; } = new();
@@ -48,6 +49,7 @@ public class DataTable
         InteractableSpotDataTable = LoadData<InteractableSpotData>(nameof(InteractableSpotData)); 
         RegionDataTable = LoadData<RegionData>(nameof(RegionData));
         ReputationGradeDataTable = LoadData<ReputationGradeData>(nameof(ReputationGradeData));
+        PlayerLevelDataTable = LoadData<PlayerLevelData>(nameof(PlayerLevelData));
         //ItemDataTable = LoadData<ItemData>("Item");
         //CharacterDataTable = LoadData<CharacterData>("Character");
         PoolDataTable = LoadData<PoolData>(nameof(PoolData));
@@ -115,6 +117,38 @@ public class DataTable
     {
         if (null == StageDataTable || string.IsNullOrEmpty(stageId)) return null;
         return StageDataTable.TryGetValue(stageId, out var data) ? data : null;
+    }
+
+    public int GetMaxPlayerLevel()
+    {
+        if (null == PlayerLevelDataTable) return 0;
+
+        int maxLevel = 0;
+
+        foreach (var kv in PlayerLevelDataTable)
+        {
+            if (kv.Value.Level > maxLevel)
+            {
+                maxLevel = kv.Value.Level;
+            }
+        }
+
+        return maxLevel;
+    }
+
+    public PlayerLevelData GetPlayerLevelData(int level)
+    {
+        if (null == PlayerLevelDataTable) return null;
+
+        foreach (var kv in PlayerLevelDataTable)
+        {
+            if (kv.Value.Level == level)
+            {
+                return kv.Value;
+            }
+        }
+
+        return null;
     }
 
     public ReputationGradeData GetReputationGradeByValue(int reputation)

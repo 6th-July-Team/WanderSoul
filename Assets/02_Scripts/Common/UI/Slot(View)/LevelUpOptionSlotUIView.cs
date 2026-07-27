@@ -8,6 +8,7 @@ public class LevelUpOptionSlotUIView : SelectCardSlotUIView
     [SerializeField] private Image _backgroundImage;
     [SerializeField] private TMP_Text _gradeText;
     [SerializeField] private TMP_Text _statValueText;
+    [SerializeField] private LevelUpOptionSparkleUIView _sparkleEffect;
 
     [Header("Grade Colors")]
     [SerializeField] private Color _commonColor;
@@ -127,8 +128,17 @@ public class LevelUpOptionSlotUIView : SelectCardSlotUIView
         Color gradeColor = GetGradeColor(grade);
 
         _backgroundImage.color = gradeColor;
-        _gradeText.color = gradeColor;
-        _gradeText.text = GetGradeLabel(grade);
+
+        if (_gradeText != null)
+        {
+            _gradeText.color = gradeColor;
+            _gradeText.text = GetGradeLabel(grade);
+        }
+
+        if (_sparkleEffect != null)
+        {
+            _sparkleEffect.ApplyGrade(grade, gradeColor);
+        }
     }
 
     private string GetGradeLabel(string grade)

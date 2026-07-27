@@ -1,12 +1,33 @@
 ﻿
+using System.Collections.Generic;
 
 public class PlayerOutGameModel : BaseModel
 {
+    // TODO(이태영): 세이브 데이터가 붙으면 저장/복원 대상에 포함
+    private readonly Dictionary<string, int> _levelUpPicks = new();
+    public IReadOnlyDictionary<string, int> LevelUpPicks => _levelUpPicks;
+
+    public void AddLevelUpPick(string optionId)
+    {
+        if (_levelUpPicks.ContainsKey(optionId) == false)
+        {
+            _levelUpPicks.Add(optionId, 0);
+        }
+
+        _levelUpPicks[optionId]++;
+    }
+
+    public void ClearLevelUpPicks()
+    {
+        _levelUpPicks.Clear();
+    }
+
     public override void PropertyChangedOnInit()
     {
         OnPropertyChanged(nameof(Soul));
         OnPropertyChanged(nameof(Gold));
         OnPropertyChanged(nameof(Exp));
+        OnPropertyChanged(nameof(Level));
         OnPropertyChanged(nameof(Reputation));
     }
 
@@ -46,6 +67,19 @@ public class PlayerOutGameModel : BaseModel
                 return;
             _exp = value;
             OnPropertyChanged(nameof(Exp));
+        }
+    }
+
+    private int _level = 1;
+    public int Level
+    {
+        get => _level;
+        set
+        {
+            if (_level == value)
+                return;
+            _level = value;
+            OnPropertyChanged(nameof(Level));
         }
     }
 
