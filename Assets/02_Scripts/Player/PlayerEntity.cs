@@ -1,40 +1,44 @@
 ﻿
 using UnityEngine;
 
-public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffectReceiver, IHealable
+public class PlayerEntity : MonoBehaviour, IDamageable, IStatusEffectReceiver, IHealable
 {
     [SerializeField] // TEST
     private bool _testIsHealthFull;
     [Header("Orb")]
     [SerializeField] private Transform _orbTransform;
 
+    // IStatusEffectReceiver
     public StatusEffectController StatusEffects { get; private set; }
     public IStatModifierReceiver StatModifierReceiver { get; private set; }
     public ISkillModifierReceiver SkillModifierReceiver { get; private set; }
 
+    // IDamageable
     public bool IsAlive => true;
-
     public EntityType EntityType => EntityType.Player;
-
     public Vector3 Position => transform.position;
     public Transform Transform => this.transform;
 
+    // IHealable
     public bool IsHealthFull => _testIsHealthFull;
 
-
+    // MVVM
     private PlayerViewModel _playerViewModel;
     private PlayerOutGameViewModel _playerOutGameViewModel;
 
-
+    // Components
     private PlayerCombatController _combatController;
     private PlayerStatController _statController;
     private PlayerSkillModifier _skillModifier;
 
-    private bool _isInitialized = false;
-    private bool _isInBarrier;
+    // Barrier
+    private ScholarBarrier _currentBarrier;
 
     // scholarOrb
     private ScholarOrb _scholarOrb;
+
+    // variables
+    private bool _isInitialized = false;
 
 
     private void Awake()
@@ -83,15 +87,17 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
 
     public void TakeDamage(DamageInfo damageInfo)
     {
-        // TODO 데미지 입는 로직
-        if (_isInBarrier)
+        float remainDamage = damageInfo.DamageAmount;
+
+        if (_currentBarrier != null)
         {
-            Logger.Log($"{GetType()} 플레이어 베리어로 데미지 흡수!");
+            remainDamage = _currentBarrier.AbsorbDamage(remainDamage);
         }
-        else
-        {
-            _playerViewModel.ReduceHp(damageInfo.DamageAmount);
-        }
+
+        if (remainDamage <= 0f)
+            return;
+
+        _playerViewModel.ReduceHp(remainDamage);
     }
 
     public void Heal(float amount)
@@ -121,10 +127,11 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out IBarrierable barrierable))
+        if (other.TryGetComponent(out ScholarBarrier barrier))
         {
-            _isInBarrier = true;
-            Debug.Log("베리어 들어옴");
+            _currentBarrier = barrier; 
+            Debug.Log($"{GetType()}: 베리어 들어옴");
+
         }
 
         if (other.TryGetComponent<EnemyDropObject>(out var enemyDropObject))
@@ -144,10 +151,11 @@ public class PlayerEntity : MonoBehaviour, ITargetable, IDamageable, IStatusEffe
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent(out IBarrierable barrierable))
+        if (other.TryGetComponent(out ScholarBarrier barrierable))
         {
-            _isInBarrier = false;
-            Debug.Log("베리어에서 나감");
+            _currentBarrier = null;
+            Debug.Log($"{GetType()}: 베리어 나감");
+
         }
     }
 }

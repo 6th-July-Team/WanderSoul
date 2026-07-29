@@ -4,36 +4,45 @@ using System.Threading;
 using UnityEngine;
 
 
-public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEffectReceiver, IPet, IDisposable
+public class PetController : MonoBehaviour, IDamageable, IStatusEffectReceiver, IPet, IDisposable
 {
+    public PetElement Element => _petData.GetElementType();
+
+
+    // IStatusEffectReceiver
     public StatusEffectController StatusEffects { get; private set; }
     public IStatModifierReceiver StatModifierReceiver { get; private set; }
     public ISkillModifierReceiver SkillModifierReceiver { get; private set; }
 
 
+    // IDamageable
     public Vector3 Position => transform.position;
     public Transform Transform => this.transform;
     public EntityType EntityType => EntityType.Pet;
     public bool IsAlive => _petViewModel.GetHp > 0;
-    public PetElement Element => _petData.GetElementType();
+
 
     // Data
     private PetData _petData;
-    [SerializeField] private SOPetSearch __SOPetSearch; // 거리 체크 용 - 추후 삭제
-
+    [SerializeField] private SOPetSearch __SOPetSearch;
+    private PetViewModel _petViewModel;
+    private PetCommandResult _commandResult;
 
     [Header("Command Setting")]
     [SerializeField] private float _commandRefreshInterval = 0.2f;
     private float _commandRefreshTimer;
 
+
+    // Components
     private PetMovement _petMovement;
     private PetStatController _petStatController;
     private PetCombatController _combatController;
     private PetCommandController _petCommandController;
 
-    private PetViewModel _petViewModel;
 
-    private PetCommandResult _commandResult;
+    // Barrier
+    private ScholarBarrier _currentBarrier;
+
 
     private const string DISSOLVE_ADDRESS = "Particle/Dissolve"; // 디졸브 효과로 생성될 때 쓸 파티클
     private const string DISSOLVEREVERSE_ADDRESS = "Particle/DissolveRev"; // 디졸브 효과로 사자리 때 쓸 파티클
@@ -150,7 +159,19 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
     public void TakeDamage(DamageInfo damageInfo)
     {
         // TODO(김익환): 저항 적용하기
-        _petViewModel.SetHp(_petViewModel.GetHp - damageInfo.DamageAmount);
+
+        float remainDamage = damageInfo.DamageAmount;
+
+        if (null != _currentBarrier)
+        {
+            remainDamage = _currentBarrier.AbsorbDamage(remainDamage);
+            return;
+        }
+
+        if(remainDamage <= 0f)
+            return;
+
+        _petViewModel.ReduceHp(remainDamage);
     }
 
     public void SetCommandMode(PetCommand commandMode)
@@ -290,16 +311,22 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
         _petRenderer.material.SetFloat(DISSOLVE_ID, end);
     }
 
-    private void OnDrawGizmos()
+    private void OnTriggerEnter(Collider other)
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, __SOPetSearch.RangeWhenGuardCart);
+        if (other.TryGetComponent(out ScholarBarrier barrier))
+        {
+            _currentBarrier = barrier;
+            Debug.Log($"{GetType()}: 베리어 들어옴");
+        }
+    }
 
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position, __SOPetSearch.RangeWhenFollowPlayer);
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, __SOPetSearch.RangeWhenAggressive);
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.TryGetComponent(out ScholarBarrier barrierable))
+        {
+            _currentBarrier = null;
+            Debug.Log($"{GetType()}: 베리어 나감");
+        }
     }
 
     private void DisposeToken()
@@ -322,6 +349,18 @@ public class PetController : MonoBehaviour, ITargetable, IDamageable, IStatusEff
 
         TakeDamage(damageInfo);
         Debug.Log($"남은 체력 = {_petViewModel.GetHp}");
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, __SOPetSearch.RangeWhenGuardCart);
+
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, __SOPetSearch.RangeWhenFollowPlayer);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, __SOPetSearch.RangeWhenAggressive);
     }
 #endif
 }

@@ -1,16 +1,8 @@
 ﻿using System;
 using UnityEngine;
 
-public class ScholarBarrier : MonoBehaviour, IBarrierable, IDamageable
+public class ScholarBarrier : MonoBehaviour//, IBarrierable
 {
-    public event Action OnDestoryBarrier;
-
-    public bool IsAlive => _durability > 0 && _duration > 0;
-    public EntityType EntityType => EntityType.Player;
-    public Vector3 Position => transform.position;
-    public Transform Transform => this.transform;
-
-
     private float _totalDamage;
     private float _durability;
     private float _duration;
@@ -45,20 +37,19 @@ public class ScholarBarrier : MonoBehaviour, IBarrierable, IDamageable
         }
     }
 
-    public void AbsorbDamage(float damage)
+    public float AbsorbDamage(float damage)
     {
-        _durability -= damage;
-        _totalDamage += damage;
+        float absorbedDamage = Mathf.Min(damage, _durability);
+
+        _durability -= absorbedDamage;
+        _totalDamage += absorbedDamage;
 
         if (_durability <= 0)
         {
             BarrierDestory();
         }
-    }
 
-    public void TakeDamage(DamageInfo damageInfo)
-    {
-        AbsorbDamage(damageInfo.DamageAmount);
+        return damage - absorbedDamage;
     }
 
     private void BarrierDestory()
@@ -80,7 +71,6 @@ public class ScholarBarrier : MonoBehaviour, IBarrierable, IDamageable
             }
         }
 
-        OnDestoryBarrier?.Invoke();
         Destroy(gameObject);
     }
 }
