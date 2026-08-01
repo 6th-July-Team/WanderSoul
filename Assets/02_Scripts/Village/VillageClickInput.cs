@@ -83,7 +83,7 @@ public class VillageClickInput : MonoBehaviour
         if (_hoveredFacility != facility)
         {
             _hoveredFacility = facility;
-            _facilityInfoText.text = $"<b>{facility.FacilityName}</b>({facility.FacilityDescription})";
+            _facilityInfoText.text = $"</b>{facility.FacilityName}</b>({facility.FacilityDescription})";
             _facilityHoverPanel.gameObject.SetActive(true);
         }
 
